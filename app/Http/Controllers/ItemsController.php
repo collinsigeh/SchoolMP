@@ -1,0 +1,330 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Auth;
+use App\User;
+use App\School;
+use App\Schoolclass;
+use App\Director;
+use App\Staff;
+use App\Term;
+use App\Arm;
+use App\Item;
+use App\Setting;
+use Illuminate\Http\Request;
+
+class ItemsController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        $data['school'] = School::find($school_id);
+
+        if(!$this->resource_manager($data['user'], $school_id))
+        {
+            return redirect()->route('dashboard');
+        }
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+        
+        $db_check = array(
+            'term_id' => $term_id
+        );
+        $data['items'] = Item::where($db_check)->orderBy('schoolclass_id', 'asc')->simplePaginate(20);
+
+        return view('items.index')->with($data);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if(!$this->resource_manager($data['user'], $school_id))
+        {
+            return redirect()->route('dashboard');
+        }
+        
+        $data['school'] = School::find($school_id);
+
+        if(empty($data['school']->schoolclasses))
+        {
+            $request->session()->flash('error', "Please create at least a school class before attempting to create fees and other items for students." );
+            return redirect()->route('classes.create');
+        }
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+
+        $db_check = array(
+            'school_id' => $school_id
+        );
+        $data['schoolclasses'] = Schoolclass::where($db_check)->orderBy('name', 'asc')->get();
+        
+        $data['setting'] = Setting::first();
+        if(empty($data['setting']))
+        {
+            $request->session()->flash('success', 'Error: Settings not found. Configure settings before creating product package.');
+            return redirect()->route('settings.index');
+        }
+
+        return view('items.create')->with($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if(!$this->resource_manager($data['user'], $school_id))
+        {
+            return redirect()->route('dashboard');
+        }
+        
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        $this->validate($request, [
+            'type' => ['required'],
+            'name' => ['required'],
+            'nature' => ['required'],
+            'amount' => ['required', 'numeric'],
+            'schoolclass_id' => ['required', 'numeric'],
+        ]);
+
+        $name = ucwords(strtolower(trim($request->input('name'))));
+
+        $db_check = array(
+            'name' => $name,
+            'term_id' => $term_id,
+            'school_id' => $school_id,
+            'schoolclass_id' => $request->input('schoolclass_id')
+        );
+        if(!empty(Item::where($db_check)->get()))
+        {
+            $request->session()->flash('error', 'The Item exits already.' );
+            return redirect()->route('items.create');
+        }
+
+        $item = new Item;
+
+        $item->school_id = $school_id;
+        $item->term_id = $term_id;
+        $item->type = $request->input('type');
+        $item->name = $name;
+        $item->nature = $request->input('nature');
+        $item->amount = $request->input('amount');
+        $item->schoolclass_id = $request->input('schoolclass_id');
+        $item->user_id = $user_id;
+
+        $item->save();
+
+        $request->session()->flash('success', 'Item created.');
+
+        return redirect()->route('items.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
+    /**
+     * Check if the logged-in user can manipulate this resource by special privilege.
+     * All directors are managers already but staff earn it by special privilege
+     *
+     * @return boolean
+     */
+    public function resource_manager($user, $school_id)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+        
+        $resource_manager = false;
+
+        if($user->usertype == 'Client')
+        {
+            foreach($user->schools as $school)
+            {
+                if($school->id == $school_id)
+                {
+                    $resource_manager = true;
+                }
+            }
+        }
+        elseif($user->role == 'Director')
+        {
+            $db_check = array(
+                'user_id'   => $user->id,
+                'school_id' => $school_id
+            );
+            if(!empty(Director::where($db_check)->get()))
+            {
+                $resource_manager = true;
+            }
+        }
+        elseif($user->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'       => $user->id,
+                'school_id'     => $school_id,
+                'manage_fees_products'  => 'Yes'
+            );
+            if(!empty(Staff::where($db_check)->get()))
+            {
+                $resource_manager = true;
+            }
+        }
+
+        return $resource_manager;
+    }
+}

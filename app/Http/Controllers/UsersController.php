@@ -1,0 +1,665 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Auth;
+use App\User;
+use App\School;
+use App\Director;
+use App\Staff;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Image;
+use Storage;
+
+class UsersController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+        
+        $data['users'] = User::where('role', '!=', 'Owner')->orderBy('name', 'asc')->simplePaginate(20);
+
+        return view('users.index')->with($data);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        return view('users.create')->with($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            'role'      => ['required', 'string', 'max:191'],
+            'name'      => ['required', 'string', 'max:191'],
+            'email'     => ['required', 'string', 'email', 'max:191', 'unique:users'],
+            'password'  => ['required', 'string', 'min:8', 'confirmed'],
+            'pic'       => ['sometimes', 'image', 'max:1999']
+        ]);
+
+        $user = new User;
+
+        if($request->input('role') == 'System')
+        {
+            $usertype = 'Admin';
+        }
+        elseif($request->input('role') == 'Consultant')
+        {
+            $usertype = 'Client';
+        }
+        else
+        {
+            $usertype = 'Non-client';
+        }
+
+        $user->usertype = $usertype;
+        $user->role     = $request->input('role');
+        $user->name     = ucwords($request->input('name'));
+        $user->email    = strtolower($request->input('email'));
+        $user->password = Hash::make($request->input('password'));
+
+        if($request->hasFile('pic'))
+        {
+            $image = $request->file('pic');
+            $filename = time() . '-' . rand(1,9) . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/profile/' . $filename);
+            Image::make($image)->resize(300,300)->save($location);
+
+            $user->pic = $filename;
+        }
+        else
+        {
+            $user->pic = 'default_userimage.png';
+        }
+
+        $user->save();
+        
+        $request->session()->flash('success', 'User created.');
+
+        return redirect()->route('users.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+        
+        $data['thisuser'] = User::find($id);
+
+        if(empty($data['thisuser']))
+        {
+            return redirect()->route('dashboard');
+        }
+
+        return view('users.show')->with($data);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $data['thisuser'] = User::find($id);
+
+        if(empty($data['thisuser']))
+        {
+            return redirect()->route('dashboard');
+        }
+
+        return view('users.edit')->with($data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            'name'      => ['required', 'string', 'max:191'],
+            'gender'    => ['required'],
+            'email'     => ['required', 'string', 'email', 'max:191', "unique:users,email,$id"],
+            'status'    => ['required'],
+            'pic'       => ['sometimes', 'image', 'max:1999']
+        ]);
+
+        $user = User::find($id);
+
+        $user->name     = ucwords($request->input('name'));
+        $user->gender   = $request->input('gender');
+        $user->email    = strtolower($request->input('email'));
+        $user->status   = $request->input('status');
+
+        if($request->hasFile('pic'))
+        {
+            $image = $request->file('pic');
+            $filename = time() . '-' . rand(1,9) . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/profile/' . $filename);
+            Image::make($image)->resize(300,300)->save($location);
+
+            $user->pic = $filename;
+        }
+
+        $user->save();
+        
+        $request->session()->flash('success', 'Update saved.');
+
+        return redirect()->route('users.edit', $id);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, $id=0)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+
+        if($id == $user_id)
+        {
+            $request->session()->flash('error', "Error: Attempt to delete own resource.");
+            return redirect()->route('users.show', $id);
+        }
+        
+        $db_check = array(
+            'id' => $id
+        );
+        $user = User::where($db_check)->get();
+        if(empty($user))
+        {
+            $request->session()->flash('error', "Error: Attempt to delete unavailable resource.");
+            return redirect()->route('users.show', $id);
+        }
+        else
+        {
+            if(count($user) != 1)
+            {
+                $request->session()->flash('error', "Error: Issue with resource specification.");
+                return redirect()->route('users.show', $id);
+            }
+        }
+        $user = $user[0];
+
+        if($user->role == 'Director')
+        {
+            $db_check = array(
+                'user_id' => $user->id
+            );
+            $director = Director::where($db_check)->get();
+            $director[0]->status = 'Inactive';
+            $director[0]->save();
+        }
+        elseif($user->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id' => $user->id
+            );
+            $staff = Staff::where($db_check)->get();
+            $staff[0]->status = 'Inactive';
+            $staff[0]->save();
+        }
+        elseif($user->role == 'Student')
+        {
+            $db_check = array(
+                'user_id' => $user->id
+            );
+            $student = Student::where($db_check)->get();
+            $student[0]->status = 'Inactive';
+            $student[0]->save();
+        }
+
+        $user->status = 'Inactive';
+        $user->save();
+        $request->session()->flash('success', 'Deactivation successful.');
+        return redirect()->route('users.index');
+    }
+
+    /**
+     * Display the logged-in user resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function profile()
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+
+        $db_check = array(
+            'user_id' => $user_id
+        );
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype == 'Client')
+        {
+            return view('clients.profile')->with($data);
+        }
+        elseif($data['user']->usertype == 'Non-client')
+        {
+            if($data['user']->role == 'Student')
+            {
+                if(session('school_id') < 1)
+                {
+                    return redirect()->route('dashboard');
+                }
+                $school_id = session('school_id');
+                
+                $data['school'] = School::find($school_id);
+
+                return view('students.profile')->with($data);
+            }
+            elseif($data['user']->role == 'Director')
+            {
+                if(session('school_id') < 1)
+                {
+                    return redirect()->route('dashboard');
+                }
+                $school_id = session('school_id');
+                
+                $data['school'] = School::find($school_id);
+
+                return view('directors.profile')->with($data);
+            }
+            elseif($data['user']->role == 'Staff')
+            {
+                if(session('school_id') < 1)
+                {
+                    return redirect()->route('dashboard');
+                }
+                $school_id = session('school_id');
+                
+                $data['school'] = School::find($school_id);
+                
+                $db_check = array(
+                    'user_id'   => $data['user']->id,
+                    'school_id' => $data['school']->id
+                );
+                $staff = Staff::where($db_check)->get();
+                if(empty($staff))
+                {
+                    return  redirect()->route('dashboard');
+                }
+                $data['staff'] = $staff[0];
+
+                return view('staff.profile')->with($data);
+            }
+            elseif($data['user']->role == 'Guardian')
+            {
+                if(session('school_id') < 1)
+                {
+                    return redirect()->route('dashboard');
+                }
+                $school_id = session('school_id');
+                
+                $data['school'] = School::find($school_id);
+                
+                return view('guardians.profile');
+            }
+            elseif($data['user']->role == 'Affiliate')
+            {
+                return view('affiliates.profile')->with($data);
+            }
+            elseif($data['user']->role == 'Partner')
+            {
+                return view('partners.profile')->with($data);
+            }
+        }
+        elseif($data['user']->usertype == 'Admin')
+        {
+            if($data['user']->role == 'System')
+            {
+                return view('system.profile')->with($data);
+            }
+            elseif($data['user']->role == 'Owner')
+            {
+                return view('owner.profile')->with($data);
+            }
+        }
+
+        return redirect()->route('dashboard');
+    }
+
+    /**
+     * Change password for the logged-in user in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function changepassword(Request $request, $id)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($user_id != $id)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            'password' => ['required', 'string', 'min:8', 'confirmed']
+        ]);
+
+        $user = User::find($id);
+
+        $user->password = Hash::make($request->input('password'));
+
+        $user->save();
+        
+        $request->session()->flash('success', 'Password updated.');
+
+        return redirect()->route('users.profile');
+    }
+
+    /**
+     * Change password for the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function changeuserpassword(Request $request, $id)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            'password' => ['required', 'string', 'min:8', 'confirmed']
+        ]);
+
+        $user = User::find($id);
+
+        $user->password = Hash::make($request->input('password'));
+
+        $user->save();
+        
+        $request->session()->flash('success', 'Password updated.');
+
+        return redirect()->route('users.show', $id);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function profileedit()
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+
+        $db_check = array(
+            'user_id' => $user_id
+        );
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype == 'Client')
+        {
+            return view('clients.profileedit')->with($data);
+        }
+        elseif($data['user']->usertype == 'Non-client')
+        {
+            if($data['user']->role == 'Student')
+            {
+                if(session('school_id') < 1)
+                {
+                    return redirect()->route('dashboard');
+                }
+                $school_id = session('school_id');
+                
+                $data['school'] = School::find($school_id);
+
+                return view('students.profileedit')->with($data);
+            }
+            elseif($data['user']->role == 'Director')
+            {
+                if(session('school_id') < 1)
+                {
+                    return redirect()->route('dashboard');
+                }
+                $school_id = session('school_id');
+                
+                $data['school'] = School::find($school_id);
+
+                return view('directors.profileedit')->with($data);
+            }
+            elseif($data['user']->role == 'Staff')
+            {
+                if(session('school_id') < 1)
+                {
+                    return redirect()->route('dashboard');
+                }
+                $school_id = session('school_id');
+                
+                $data['school'] = School::find($school_id);
+
+                return view('staff.profileedit')->with($data);
+            }
+            elseif($data['user']->role == 'Guardian')
+            {
+                if(session('school_id') < 1)
+                {
+                    return redirect()->route('dashboard');
+                }
+                $school_id = session('school_id');
+                
+                $data['school'] = School::find($school_id);
+                
+                return view('guardians.profileedit')->with($data);
+            }
+            elseif($data['user']->role == 'Affiliate')
+            {
+                return view('affiliates.profileedit')->with($data);
+            }
+            elseif($data['user']->role == 'Partner')
+            {
+                return view('partners.profileedit');
+            }
+        }
+        elseif($data['user']->usertype == 'Admin')
+        {
+            if($data['user']->role == 'System')
+            {
+                return view('system.profileedit')->with($data);
+            }
+            elseif($data['user']->role == 'Owner')
+            {
+                return view('owner.profileedit')->with($data);
+            }
+        }
+
+        return redirect()->route('dashboard');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function profileupdate(Request $request)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+        
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        $this->validate($request, [
+            'name'      => ['required', 'string', 'max:191'],
+            'gender'    => ['required'],
+            'email'     => ['required', 'string', 'email', 'max:191', "unique:users,email,$user_id"],
+            'pic'       => ['sometimes', 'image', 'max:1999']
+        ]);
+
+        $user = User::find($user_id);
+        
+        $user->name     = ucwords(strtolower($request->input('name')));
+        $user->gender   = $request->input('gender');
+        $user->email    = strtolower($request->input('email'));
+
+        if($request->hasFile('pic'))
+        {
+            $image = $request->file('pic');
+            $filename = time() . '-' . rand(1,9) . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/profile/' . $filename);
+            Image::make($image)->resize(300,300)->save($location);
+
+            $user->pic = $filename;
+        }
+
+        $user->save();
+        
+        $request->session()->flash('success', 'Update saved.');
+
+        return redirect()->route('profile.edit');
+    }
+}

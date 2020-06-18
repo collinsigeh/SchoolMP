@@ -1,0 +1,111 @@
+.sidebar{
+    padding: 20px;
+    color: #5a5a5a;
+    background-color: #ffffff;
+}
+.sidebar .profilepic{
+    width: 100%;
+    max-width: 150px;
+    align-self: center;
+    border: 3px solid #d3d3d3;
+    border-radius: 50%;
+}
+.sidebar .profilename{
+    font-size: 1.1em;
+    padding-top: 20px;
+    text-align: center;
+}
+.sidebar .profile-email{
+    font-size: 0.9em;
+    font-weight: 700;
+    padding-bottom: 30px;
+    text-align: center;
+}
+.sidebar .link{
+    border-top: 1px solid #d3d3d3;
+    padding: 10px;
+}
+.sidebar .link a{
+    color: #7a7a7a;
+}
+.sidebar .link a:hover{
+    color: #5a5a5a;
+    text-decoration: none;
+}
+.sidebar .top{
+    border-top: none;
+}
+.main{
+    min-height: 700px;
+    color: #333333;
+    padding: 20px;
+}
+.pagenav{
+    padding-bottom: 20px;
+    margin-top: -15px;
+}
+.pagenav .breadcrumb{
+    background-color: #ffffff;
+    padding: 5px;
+    border-radius: 0;
+}
+.pagenav ul{
+    margin-top: -9px;
+}
+.more-options{
+    margin: 70px 0;
+    border-top: 1px solid #d3d3d3;
+}
+.more-options .head{
+    padding: 10px 15px;
+    font-weight: 700;
+    background-color: #f7f7f7;
+}
+.more-options .option{
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 10px 15px;
+    margin: 15px 0;
+    background-color: #fdfdfd;
+}
+.resource-details{
+    background-color: #ffffff;
+    border: 1px solid #d5d5d5;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+.resource-details .row{
+    padding-bottom: 20px;
+}
+.resource-details .title{
+    background-color: #f3f3f3;
+    font-size: 1.1em;
+    padding: 8px 20px;
+    border-radius: 4px 4px 0 0;
+}
+.resource-details .title2{
+    background-color: #f3f3f3;
+    padding: 8px 10px 15px 10px;
+    text-align: center;
+}
+.resource-details .body{
+    padding: 20px;
+}
+.resource-details .body .packages{
+    padding-top: 30px;
+}
+.school-logo, .user-pic{
+    width: 150px;
+}
+.welcome-title{
+    padding: 50px 0 15px 0;
+}
+.feature{
+    min-height: 140px;
+}
+.feature .paragraph{
+    padding-top: 5px;
+}
+.feature .buttons a, .feature .buttons button{
+    margin-top: 8px;
+}
