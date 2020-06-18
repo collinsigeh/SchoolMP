@@ -18,7 +18,7 @@
       <a href="{{ route('users.index') }}">Users</a>
     </div>
     <div class="link">
-      <a href="#">Schools</a>
+      <a href="{{ route('schools.all') }}">Schools</a>
     </div>
     <div class="link">
       <a href="{{ route('products.index') }}">Products & packages</a>

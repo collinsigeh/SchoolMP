@@ -6,6 +6,7 @@ use Auth;
 use App\User;
 use App\School;
 use App\Staff;
+use App\Setting;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
@@ -325,5 +326,31 @@ class SchoolsController extends Controller
             }
         }
         return $accessible;
+    }
+
+    /**
+     * Display a listing of the resource to system administrator.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+        $data['schools'] = School::orderBy('school', 'asc')->paginate(50);
+
+        $data['setting'] = Setting::first();
+
+        return view('schools.all')->with($data);
     }
 }

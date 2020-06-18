@@ -37,7 +37,7 @@
           <ul>
             <li><a href="{{ route('users.profile') }}">My profile</a></li>
             <li><a href="{{ route('users.index') }}">Users</a></li>
-            <li><a href="#">Schools (List schools, View school details/report/summary, Create school manager. i.e. school_user, etc.)</a></li>
+            <li><a href="{{ route('schools.all') }}">Schools (List schools, View school details/report/summary, Create school manager. i.e. school_user, etc.)</a></li>
             <li><a href="{{ route('products.index') }}">Products & packages</a></li>
             <li><a href="{{ route('orders.all') }}">Orders</a></li>
             <li><a href="{{ route('payments.index') }}">Payments</a></li>
