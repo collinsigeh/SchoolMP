@@ -237,10 +237,14 @@ class SubscriptionsController extends Controller
                 'school_id' => $data['school']->id,
                 'status' => 'Approved-unpaid'
             );
-            if(!empty(Order::where($db_check)->get()))
+            $unpaid_cases = Order::where($db_check)->get();
+            if(!empty($unpaid_cases))
             {
-                $request->session()->flash('error', '<p>This institution has unpaid invoice/order.</p>Buy other prepaid packages. OR pay off the unpiad invoice/order.' );
-                return redirect()->route('subscriptions.create');
+                if(count($unpaid_cases) > 0)
+                {
+                    $request->session()->flash('error', '<p>This institution has unpaid invoice/order.</p>Buy other prepaid packages. OR pay off the unpiad invoice/order.' );
+                    return redirect()->route('subscriptions.create');
+                }
             }
         }
 

@@ -240,10 +240,14 @@ class TermsController extends Controller
             'session' => $request->input('session'),
             'name' => $request->input('name')
         );
-        if(!empty(Term::where($db_check)->get()))
+        $term_cases = Term::where($db_check)->get();
+        if(!empty($term_cases))
         {
-            $request->session()->flash('error', "Error: An attempt to create duplicate academic term." );
-            return redirect()->route('terms.index');
+            if($term_cases->count() > 0)
+            {
+                $request->session()->flash('error', "Error: An attempt to create duplicate academic term." );
+                return redirect()->route('terms.index');
+            }
         }
 
         $term = new Term;
