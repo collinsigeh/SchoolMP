@@ -111,7 +111,7 @@
                     <label for="resumption_date" class="col-md-4 col-form-label text-md-right">{{ __('Resumption date') }}</label>
 
                     <div class="col-md-6">
-                        <input id="resumption_date" type="text" class="form-control @error('resumption_date') is-invalid @enderror" name="resumption_date" value="{{ $term->resumption_date }}" required autocomplete="resumption_date" autofocus>
+                        <input id="resumption_date" type="date" class="form-control @error('resumption_date') is-invalid @enderror" name="resumption_date" value="{{ $term->resumption_date }}" required autocomplete="resumption_date" autofocus>
                         <small class="text-muted">Hint: what date will the term start. E.g. 7th January, 2020</small>
 
                         @error('resumption_date')
@@ -126,7 +126,7 @@
                     <label for="closing_date" class="col-md-4 col-form-label text-md-right">{{ __('Closing date') }}</label>
 
                     <div class="col-md-6">
-                        <input id="closing_date" type="text" class="form-control @error('closing_date') is-invalid @enderror" name="closing_date" value="{{ $term->closing_date }}" required autocomplete="closing_date" autofocus>
+                        <input id="closing_date" type="date" class="form-control @error('closing_date') is-invalid @enderror" name="closing_date" value="{{ $term->closing_date }}" required autocomplete="closing_date" autofocus>
                         <small class="text-muted">Hint: what date will the term close. E.g. 14th April, 2020</small>
 
                         @error('closing_date')

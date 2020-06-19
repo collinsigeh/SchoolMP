@@ -215,7 +215,7 @@ class ArmsController extends Controller
         $arm->name = $name;
         $arm->description = $request->input('description');
         $arm->term_id = $term_id;
-        $arm->resulttemplate = $request->input('resulttemplate_id');
+        $arm->resulttemplate_id = $request->input('resulttemplate_id');
         $arm->schoolclass_id = $request->input('schoolclass_id');
         $arm->user_id = 0;
         $arm->created_by = $user_id;

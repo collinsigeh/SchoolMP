@@ -185,10 +185,11 @@ class ClassesController extends Controller
 
         $schoolclass = new Schoolclass;
 
-        $schoolclass->school_id = $school_id;
-        $schoolclass->name = $name;
-        $schoolclass->description = $request->input('description');
-        $schoolclass->user_id = $user_id;
+        $schoolclass->school_id         = $school_id;
+        $schoolclass->school_segment    = $request->input('schoolsegment');
+        $schoolclass->name              = $name;
+        $schoolclass->description       = $request->input('description');
+        $schoolclass->user_id           = $user_id;
 
         $schoolclass->save();
 

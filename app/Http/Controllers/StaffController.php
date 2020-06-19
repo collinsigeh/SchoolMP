@@ -442,6 +442,10 @@ class StaffController extends Controller
         }
 
         $staff = Staff::find($id);
+
+        $staffuser = User::find($staff->user_id);
+        $staffuser->status = $request->input('status');
+        $staffuser->save();
         
         $staff->designation                 = ucwords(strtolower($request->input('designation')));
         $staff->phone                       = $request->input('phone');

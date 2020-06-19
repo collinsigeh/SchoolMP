@@ -91,7 +91,7 @@
                       School terms
                   </div>
                   <div class="body">
-                    @if (count($previousterms) < 2)
+                    @if (count($previousterms) < 1)
                         None
                     @else
                     <div class="table-responsive">    

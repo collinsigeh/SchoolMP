@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-            <h3>New arm</h3>
+            <h3>New class arm</h3>
           </div>
           <div class="col-4 text-right">
             
@@ -33,11 +33,11 @@
               @if ($user->usertype == 'Client')
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('arms.index') }}">Class arms</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create</li>
+                <li class="breadcrumb-item active" aria-current="page">Add new</li>
               @else
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('arms.index') }}">Class arms</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create</li>
+                <li class="breadcrumb-item active" aria-current="page">Add new</li>
               @endif
             </ol>
           </nav>
@@ -49,7 +49,7 @@
                 @csrf
 
                 <div class="form-group row"> 
-                    <label for="schoolclass_id" class="col-md-4 col-form-label text-md-right">{{ __('School class ID') }}</label>
+                    <label for="schoolclass_id" class="col-md-4 col-form-label text-md-right">{{ __('Class group') }}</label>
 
                     <div class="col-md-6">
                         <select id="schoolclass_id" type="text" class="form-control @error('schoolclass_id') is-invalid @enderror" name="schoolclass_id" required autocomplete="schoolclass_id" autofocus>
@@ -70,7 +70,7 @@
                 </div>
                 
                 <div class="form-group row"> 
-                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Class arm name') }}</label>
+                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Class arm') }}</label>
 
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
