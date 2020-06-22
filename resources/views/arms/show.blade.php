@@ -63,6 +63,11 @@
                                     @if ($arm->user_id < 1)
                                         <td>
                                             {!! '<span class="badge badge-danger">No assigned teacher</span>' !!}
+                                            @if ($classarm_manager == 'Yes')
+                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newTeacherModal">
+                                                    Assign class teacher
+                                                </button>
+                                            @endif
                                         </td>
                                     @else
                                         <td>{{ $arm->user->name }}</td>
@@ -163,7 +168,6 @@
                             </div>
                             @endif
 
-
                         </div>
                     </div>
                     
@@ -188,111 +192,9 @@
             </div>
 
         </div>
-
-        <div class="more-options">
-            <div class="head">More options</div>
-            <div class="body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="option feature">
-                            <h5>Class assignments</h5>
-                            <div class="paragraph">
-                                You can add and manage class assignments for this class.
-                            </div>
-                            <div class="buttons">
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssignmentModal">
-                                    New assignment
-                                </button>
-                                <a href="#" class="btn btn-sm btn-primary">View all</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    @if ($classarm_manager == 'Yes')
-                    @if ($arm->user_id < 1)
-                    <div class="col-md-4">
-                        <div class="option feature">
-                            <h5>Class teacher</h5>
-                            <div class="paragraph">
-                                You can assign a staff to administer this class arm.
-                            </div>
-                            <div class="buttons">
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newTeacherModal">
-                                    Assign class teacher
-                                </button><!--
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssistantModal">
-                                    Add assistant class teacher
-                                </button> -->
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                    <div class="col-md-4">
-                        <div class="option feature">
-                            <h5>Class subjects</h5>
-                            <div class="paragraph">
-                                You can add class subjects for this class arm.
-                            </div>
-                            <div class="buttons">
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newSubjectModal">
-                                    Add new
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                </div>
-            </div>
-        </div>
         
     </div>
   </div>
-
-
-   <!-- newAssignmentModal -->
-   <div class="modal fade" id="newAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="newAssignmentModalLabel">New Class Assignment</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="create-form">
-                <form method="POST" action="#">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="form-group row">
-                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('New assignment') }}</label>
-        
-                        <div class="col-md-6">
-                            <input id="password" type="text" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-        
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Send') }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-      </div>
-    </div>
-</div>
-<!-- End newAssignmentModal -->
 
 <!-- newTeacherModal -->
 <div class="modal fade" id="newTeacherModal" tabindex="-1" role="dialog" aria-labelledby="newTeacherModalLabel" aria-hidden="true">

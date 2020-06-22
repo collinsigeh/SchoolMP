@@ -30,8 +30,6 @@ Route::resource('/classes', 'ClassesController');
 
 Route::resource('/classsubjects', 'ClasssubjectsController');
 
-Route::resource('/arms', 'ArmsController');
-
 Route::get('/dashboard/relogin', 'DashboardController@relogin')->name('dashboard.relogin');
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 

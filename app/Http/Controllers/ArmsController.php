@@ -302,7 +302,7 @@ class ArmsController extends Controller
         if(Auth::user()->role == 'Consultant' || Auth::user()->role == 'Director')
         {
             $data['student_manager'] = 'Yes';
-            $data['classarm_manager'] = 'yes';
+            $data['classarm_manager'] = 'Yes';
             $data['fees_manager'] = 'Yes';
             $data['calendar_manager'] = 'Yes';
             $data['sessionterm_manager'] = 'Yes';
@@ -489,9 +489,13 @@ class ArmsController extends Controller
                 'school_id'     => $school_id,
                 'manage_class_arms'  => 'Yes'
             );
-            if(!empty(Staff::where($db_check)->get()))
+            $arm_cases = Staff::where($db_check)->get();
+            if(!empty($arm_cases))
             {
-                $resource_manager = true;
+                if($arm_cases->count() > 0)
+                {
+                    $resource_manager = true;
+                }
             }
         }
 

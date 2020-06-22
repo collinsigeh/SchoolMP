@@ -82,7 +82,7 @@
                                 <div class="table-responsive bg-light">
                                   <table class="table table-striped table-hover table-sm">
                                     <tr class="bg-secondary">
-                                        <th style="font-size: 1.2em; color: #ffffff;" colspan="3">Class arms</th>
+                                        <th style="font-size: 1.2em; color: #ffffff;" colspan="3">Available classes:</th>
                                     </tr>
                                       <tr>
                                         <th>No. of class arms:</th>
@@ -170,7 +170,7 @@
                                   <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('terms.edit', $term->id) }}">Term information</a></td>
                                 </tr>
                                 <tr>
-                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="#">Calendar of activities</a></td>
+                                  <td><button class="btn btn-sm btn-block btn-outline-primary" data-toggle="modal" data-target="#calendarModal">Calendar of activities</button></td>
                                 </tr>
                                 <tr>
                                   <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('subscriptions.show', $term->subscription_id) }}">Linked subscription details</a></td>
@@ -299,7 +299,7 @@
                                 </tr>
                                 @endif
                                 <tr>
-                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="#">Calendar of activities</a></td>
+                                  <td><button class="btn btn-sm btn-block btn-outline-primary" data-toggle="modal" data-target="#calendarModal">Calendar of activities</button></td>
                                 </tr>
                                 @if ($subscription_manager == 'Yes')
                                 <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('subscriptions.show', $term->subscription_id) }}">Linked subscription details</a></td>
@@ -317,4 +317,34 @@
     </div>
   </div>
 
+
+  
+<!-- calendarModal -->
+<div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="calendarModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="calendarModalLabel">Calendar of Activities</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <h5>{!! $term->name.' - <small>'.$term->session.'</small>' !!}</h5>
+          @foreach ($calendar as $item)
+              <div style="padding-bottom: 15px;">
+                <h6>Week {{ $item->week }}</h6>
+                <p>{{ $item->activity }}</p>
+              </div>
+          @endforeach
+          <div class="text-center">
+            @if ($calendar_manager == 'Yes')
+            <a href="{{ route('calendars.index') }}" class="btn bnt-sm btn-outline-primary">Modify</a>
+            @endif
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End calendarModal -->
 @endsection

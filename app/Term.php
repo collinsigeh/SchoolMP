@@ -49,4 +49,12 @@ class Term extends Model
     {
         return $this->hasmany('App\Result');
     }
+    
+    /**
+     * Get the calendar activities for the term.
+     */
+    public function calendars()
+    {
+        return $this->hasmany('App\Calendar');
+    }
 }

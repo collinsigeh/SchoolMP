@@ -11,6 +11,7 @@ use App\Term;
 use App\Subscription;
 use App\Classsubject;
 use App\Arm;
+use App\Calendar;
 use Illuminate\Http\Request;
 
 class TermsController extends Controller
@@ -250,18 +251,31 @@ class TermsController extends Controller
             }
         }
 
+        $no_weeks = $request->input('no_of_weeks');
+
         $term = new Term;
 
         $term->school_id = $school_id;
         $term->subscription_id = $subscription->id;
         $term->session = $request->input('session');
         $term->name = $request->input('name');
-        $term->no_of_weeks = $request->input('no_of_weeks');
+        $term->no_of_weeks = $no_weeks;
         $term->resumption_date = ucwords(strtolower($request->input('resumption_date')));
         $term->closing_date = ucwords(strtolower($request->input('closing_date')));
+        $term->next_term_resumption_date = ucwords(strtolower($request->input('next_term_resumption_date')));
         $term->created_by = $user_id;
 
         $term->save();
+
+        for ($i=1; $i <= $no_weeks; $i++) { 
+            $calendar = new Calendar;
+
+            $calendar->term_id = $term->id;
+            $calendar->week = $i;
+            $calendar->activity = 'Noting yet!';
+
+            $calendar->save();
+        }
 
         $request->session()->flash('success', 'Term created.');
 
@@ -317,6 +331,11 @@ class TermsController extends Controller
             return redirect()->route('dashboard');
         }
         session(['term_id' => $data['term']->id]);
+
+        $db_check = array(
+            'term_id' => $id
+        );
+        $data['calendar'] = Calendar::where($db_check)->orderBy('week', 'asc')->get();
 
         $data['student_manager'] = 'No';
         $data['classarm_manager'] = 'No';
@@ -474,22 +493,43 @@ class TermsController extends Controller
         $this->validate($request, [
             'session' => ['required'],
             'name' => ['required'],
-            'description' => ['sometimes', 'max:191'],
             'no_of_weeks' => ['required', 'numeric', 'min:1'],
             'resumption_date' => ['required'],
-            'closing_date' => ['required']
+            'closing_date' => ['required', 'date', 'after:resumption_date'],
+            'next_term_resumption_date' => ['nullable', 'date', 'after:closing_date']
         ]);
 
         $term = Term::find($id);
+
+        $original_no_weeks = $term->no_of_weeks;
+        $new_no_weeks = $request->input('no_of_weeks');
         
         $term->session = $request->input('session');
         $term->name = $request->input('name');
-        $term->description = $request->input('description');
-        $term->no_of_weeks = $request->input('no_of_weeks');
+        $term->no_of_weeks = $new_no_weeks;
         $term->resumption_date = ucwords(strtolower($request->input('resumption_date')));
         $term->closing_date = ucwords(strtolower($request->input('closing_date')));
+        $term->next_term_resumption_date = ucwords(strtolower($request->input('next_term_resumption_date')));
 
         $term->save();
+
+        if($original_no_weeks != $new_no_weeks)
+        {
+            $db_check = array(
+                'term_id' => $term->id
+            );
+            Calendar::where($db_check)->delete();
+
+            for ($i=1; $i <= $new_no_weeks; $i++) { 
+                $calendar = new Calendar;
+    
+                $calendar->term_id = $term->id;
+                $calendar->week = $i;
+                $calendar->activity = 'Noting yet!';
+    
+                $calendar->save();
+            }
+        }
 
         $request->session()->flash('success', 'Update saved.');
 

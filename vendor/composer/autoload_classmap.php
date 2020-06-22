@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Alternative_currency' => $baseDir . '/app/Alternative_currency.php',
     'App\\Arm' => $baseDir . '/app/Arm.php',
+    'App\\Calendar' => $baseDir . '/app/Calendar.php',
     'App\\Classsubject' => $baseDir . '/app/Classsubject.php',
     'App\\Classteacher' => $baseDir . '/app/Classteacher.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',

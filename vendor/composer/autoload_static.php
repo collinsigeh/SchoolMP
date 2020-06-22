@@ -417,6 +417,7 @@ class ComposerStaticInitff26e42c6ab7030c2455ad8f8b7fa658
     public static $classMap = array (
         'App\\Alternative_currency' => __DIR__ . '/../..' . '/app/Alternative_currency.php',
         'App\\Arm' => __DIR__ . '/../..' . '/app/Arm.php',
+        'App\\Calendar' => __DIR__ . '/../..' . '/app/Calendar.php',
         'App\\Classsubject' => __DIR__ . '/../..' . '/app/Classsubject.php',
         'App\\Classteacher' => __DIR__ . '/../..' . '/app/Classteacher.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
