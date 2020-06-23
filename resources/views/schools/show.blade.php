@@ -6,7 +6,7 @@
 
 <div class="container-fluid">
     <div class="row">
-      @include('partials._school_sidebar')
+      @include('partials._clients_sidebar')
 
       <div class="col-md-10 main">
 
@@ -38,33 +38,19 @@
             Welcome to <b><em>{{ $school->school }}</em></b> dashboard. You can explore the following areas:
           </p>
           <ul>
+            <li><a href="{{ route('schools.edit', $school->id) }}">School Information</a></li>
+            <li><a href="{{ route('resulttemplates.index') }}">Result templates</a></li>
             <li><a href="{{ route('directors.index') }}">Directors</a></li>
-            <li><a href="#">Staff</a></li>
-            <li><a href="#">Students / Pupils</a></li>
-            <li><a href="#">Parents / Guardians</a></li>
-            <li><a href="#">Terms</a></li>
-            <li><a href="#">Classes</a></li>
-            <li><a href="#">Subjects</a></li>
+            <li><a href="{{ route('subjects.index') }}">Subjects</a></li>
+            <li><a href="{{ route('classes.index') }}">Classes</a></li>
+            <li><a href="{{ route('staff.index') }}">Staff</a></li>
+            <li><a href="{{ route('terms.index') }}">Terms</a></li>
             <li><a href="#">Report</a></li>
             <li><a href="{{ route('subscriptions.index') }}">Subscriptions</a></li>
           </ul>
           <p>
             Enjoy!
           </p>
-        </div>
-
-        <div class="more-options">
-            <div class="head">More options</div>
-            <div class="body">
-                <div class="option">
-                    <h5>School information</h5>
-                    <div class="row">
-                        <div class="col-md-10 offset-md-2">
-                        <a href="{{ route('schools.edit', $school->id) }}" class="btn btn-primary">View / Modify</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
       </div>
