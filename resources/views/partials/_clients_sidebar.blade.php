@@ -15,6 +15,12 @@
       <a href="{{ route('users.profile') }}">My profile</a>
     </div>
     <div class="link">
-      <a href="{{ route('schools.index') }}">My schools</a>
+      <a href="#" id="navbarDropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My schools</a>
+      
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+        @foreach ($user->schools as $school_item)
+          <a class="dropdown-item" href="{{ route('schools.show', $school_item->id) }}">{{ $school_item->school }}</a>
+        @endforeach
+      </div>
     </div>
   </div>
