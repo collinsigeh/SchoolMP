@@ -31,9 +31,9 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               @if ($user->usertype == 'Client')
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('schools.index') }}">Schools</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $school->school }}</li>
+                <li class="breadcrumb-item" aria-current="page"><a href="{{ route('schools.show', $school->id) }}">{{ $school->school }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit school information</li>
               @else
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Edit school information</li>
