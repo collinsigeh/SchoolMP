@@ -47,7 +47,9 @@
                     <label for="session" class="col-md-4 col-form-label text-md-right">{{ __('Session') }}</label>
 
                     <div class="col-md-6">
-                        <select id="session" type="text" class="form-control @error('session') is-invalid @enderror" name="session" required autocomplete="session" autofocus>
+                        <select id="session" type="text" class="form-control @error('session') is-invalid @enderror" name="session" required autocomplete="session" autofocus @if ($term_editable == 'No')
+                            {{ 'disabled' }}
+                        @endif>
                             <option value="{{ $term->session }}">{{ $term->session }}</option>
                             <option value="{{ $session['option1'] }}">{{ $session['option1'] }}</option>
                             <option value="{{ $session['option2'] }}">{{ $session['option2'] }}</option>
@@ -66,7 +68,9 @@
                     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Term name') }}</label>
 
                     <div class="col-md-6">
-                        <select id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus>
+                        <select id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus @if ($term_editable == 'No')
+                        {{ 'disabled' }}
+                    @endif>
                             <option value="1st Term" @if ($term->name == '1st Term')
                                 {{ 'selected' }}
                             @endif>1st Term</option>

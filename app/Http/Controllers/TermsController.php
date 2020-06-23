@@ -452,6 +452,19 @@ class TermsController extends Controller
             'option3' => ($thisyear+1).'/'.($thisyear+2)
         );
 
+        $data['term_editable'] = 'Yes';
+        if(strtotime($data['term']->resumption_date) <= time())
+        {
+            $data['term_editable'] = 'No';            
+        }
+        if(!empty($term->enrolments))
+        {
+            if(count($term->enrolments) > 0)
+            {
+                $data['term_editable'] = 'No';
+            }
+        }
+
         return view('terms.edit')->with($data);
     }
 
@@ -491,8 +504,6 @@ class TermsController extends Controller
         $data['school'] = School::find($school_id);
 
         $this->validate($request, [
-            'session' => ['required'],
-            'name' => ['required'],
             'no_of_weeks' => ['required', 'numeric', 'min:1'],
             'resumption_date' => ['required'],
             'closing_date' => ['required', 'date', 'after:resumption_date'],
@@ -501,11 +512,32 @@ class TermsController extends Controller
 
         $term = Term::find($id);
 
+        $term_editable = 'Yes';
+        if(strtotime($term->resumption_date) <= time())
+        {
+            $term_editable = 'No';            
+        }
+        if(!empty($term->enrolments))
+        {
+            if(count($term->enrolments) > 0)
+            {
+                $term_editable = 'No';
+            }
+        }
+
         $original_no_weeks = $term->no_of_weeks;
         $new_no_weeks = $request->input('no_of_weeks');
         
-        $term->session = $request->input('session');
-        $term->name = $request->input('name');
+        if($term_editable == 'Yes')
+        {
+            $this->validate($request, [
+                'session' => ['required'],
+                'name' => ['required']
+            ]);
+
+            $term->session = $request->input('session');
+            $term->name = $request->input('name');
+        }
         $term->no_of_weeks = $new_no_weeks;
         $term->resumption_date = ucwords(strtolower($request->input('resumption_date')));
         $term->closing_date = ucwords(strtolower($request->input('closing_date')));
