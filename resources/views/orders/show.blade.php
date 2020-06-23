@@ -184,9 +184,13 @@
                                         <td>{{ $order->term_limit }}</td>
                                         <td>
                                             @if ($order->subscription_id > 0)
-                                            {{ count($order->subscription->terms) }}
+                                                @if (!empty($order->subscription->terms))
+                                                    {{ count($order->subscription->terms) }}
+                                                @else
+                                                    {{ '0'}}
+                                                @endif
                                             @else
-                                            {{ '0' }}
+                                                {{ '0' }}
                                             @endif
                                         </td>
                                     </tr>
@@ -201,7 +205,11 @@
                                         </td>
                                         <td>
                                             @if ($order->subscription_id > 0)
-                                            {{ count($order->subscription->enrolments) }}
+                                                @if (!empty($order->subscription->enrolments))
+                                                    {{ count($order->subscription->enrolments) }}
+                                                @else
+                                                    {{ '0'}}
+                                                @endif
                                             @else
                                             {{ '0' }}
                                             @endif
@@ -217,10 +225,8 @@
                                 Payments for order:
                             </div>
                             <div class="col-md-9">
-                                @if (count($order->payments) < 1)
-                                    None
-                                @else
-                                  <div class="table-responsive">    
+                                @if (!empty($order->payments))
+                                <div class="table-responsive">    
                                     <table class="table table-striped table-bordered table-hover table-sm">
                                           <thead>
                                               <tr>
@@ -253,6 +259,8 @@
                                           </tbody>
                                       </table>
                                     </div>
+                                @else
+                                    None
                                 @endif
                             </div>
                         </div>
@@ -346,20 +354,16 @@
                         Subscription for the order
                     </div>
                     <div class="body">
-                        @if (count($order->subscription) != 1)
-                            None
-                        @else
-                          <div class="table-responsive">    
+                        <div class="table-responsive">    
                             <table class="table table-striped table-hover table-sm">
-                                  <tbody>
-                                      <tr>
-                                          <td>{{ $order->subscription->name }}</td>
-                                          <td class="text-right"><a href="{{ route('subscriptions.show', $order->subscription->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
-                                       </tr>
-                                  </tbody>
-                              </table>
-                            </div>
-                        @endif
+                                <tbody>
+                                    <tr>
+                                        <td>{{ $order->subscription->name }}</td>
+                                        <td class="text-right"><a href="{{ route('subscriptions.show', $order->subscription->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
