@@ -324,13 +324,12 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="calendarModalLabel">Calendar of Activities</h5>
+        <h5 class="modal-title" id="calendarModalLabel">Calendar of Activities for {!! $term->name.' - <small>'.$term->session.'</small>' !!}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-          <h5>{!! $term->name.' - <small>'.$term->session.'</small>' !!}</h5>
           @foreach ($calendar as $item)
               <div style="padding-bottom: 15px;">
                 <h6>Week {{ $item->week }}</h6>

@@ -56,10 +56,18 @@ class CalendarsController extends Controller
         {
             $db_check = array(
                 'user_id'   => $data['user']->id,
-                'school_id' => $data['school']->id
+                'school_id' => $data['school']->id,
+                'manage_calendars' => 'Yes'
             );
             $staff = Staff::where($db_check)->get();
-            if(empty($staff))
+            if(!empty($staff))
+            {
+                if($staff->count() != 1)
+                {
+                    return  redirect()->route('dashboard');
+                }
+            }
+            else
             {
                 return  redirect()->route('dashboard');
             }
@@ -126,7 +134,71 @@ class CalendarsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');                
+        $data['school'] = School::find($school_id);
+        
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(!empty($staff))
+            {
+                if($staff->count() != 1)
+                {
+                    return  redirect()->route('dashboard');
+                }
+            }
+            else
+            {
+                return  redirect()->route('dashboard');
+            }
+        }
+        
+        $db_check = array(
+            'term_id' => $id
+        );
+        $calendars = Calendar::where($db_check)->orderBy('week', 'asc')->get();
+        if(!empty($calendars))
+        {
+            $no_weeks = $calendars->count();
+            if($calendars->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+        }
+        else
+        {
+            return  redirect()->route('dashboard');
+        }
+        $i = 1;
+        foreach ($calendars as $calendar_week) {
+            $week_to_change = Calendar::find($calendar_week->id);
+            if($i == $week_to_change->week)
+            {
+                $week_to_change->activity = $request->input('week'.$i);
+            }
+            $week_to_change->save();
+
+            $i++;
+        }
+
+        $request->session()->flash('success', 'Update saved.');
+        return redirect()->route('calendars.index');
     }
 
     /**
