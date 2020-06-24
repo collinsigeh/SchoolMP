@@ -33,110 +33,125 @@
           @include('partials._messages')
         </div>
 
-        <div class="resource-details">
-            <div class="title">
-                Product Details
+        <div class="row">
+            <div class="col-md-8">
+                <div class="resource-details">
+                    <div class="title">
+                        Product Details
+                    </div>
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                Name:
+                            </div>
+                            <div class="col-md-10">
+                                <h4>{{ $product->name }}</h4>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                Type:
+                            </div>
+                            <div class="col-md-10">
+                                {{ $product->type }} ( <i>{{ $product->payment }}</i> )
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                Student limit:
+                            </div>
+                            <div class="col-md-10">
+                                {{ $product->student_limit }}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                Features:
+                            </div>
+                            <div class="col-md-10">
+                                {!! $product->features !!}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                <small>Created since:</small>
+                            </div>
+                            <div class="col-md-10">
+                                <small>{{ $product->created_at }}</small>
+                            </div>
+                        </div>
+        
+                        <div class="packages">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h5>List of packages</h5>
+                                </div>
+                                <div class="col-5 text-right">
+                                    <a class="btn btn-sm btn-primary" href="{{ route('packages.create') }}">New package</a>
+                                </div>
+                            </div>
+                            @if(count($product->packages) < 1)
+                                <div class="alert alert-info" sr-only="alert">
+                                    No package (<i>plan/offer that can be ordered or subscribed to</i>).
+                                </div>
+                            @else
+                                <div class="table-responsive">    
+                                <table class="table table-striped table-hover table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Package</th>
+                                                <th class="text-right">Price ( {{ $setting->base_currency_symbol }} )</th>
+                                                <th class="text-right">Status</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($product->packages as $package)
+                                                <tr>
+                                                    <td>{{ $product->name }} ( <i>{{ $product->payment.' '.$package->name }}</i> )</td>
+                                                    <td class="text-right">{{ $setting->base_currency_symbol }} {{$package->price }} ( <i>{{ $package->price_type }}</i> )</td>
+                                                    <td class="text-right">{{ $package->status }}</td>
+                                                    <td class="text-right"><a href="{{ route('packages.show', $package->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="body">
-                <div class="row">
-                    <div class="col-md-2">
-                        Name:
-                    </div>
-                    <div class="col-md-10">
-                        <h4>{{ $product->name }}</h4>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-2">
-                        Type:
-                    </div>
-                    <div class="col-md-10">
-                        {{ $product->type }} ( <i>{{ $product->payment }}</i> )
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-2">
-                        Student limit:
-                    </div>
-                    <div class="col-md-10">
-                        {{ $product->student_limit }}
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-2">
-                        Features:
-                    </div>
-                    <div class="col-md-10">
-                        {!! $product->features !!}
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-2">
-                        <small>Created since:</small>
-                    </div>
-                    <div class="col-md-10">
-                        <small>{{ $product->created_at }}</small>
-                    </div>
-                </div>
 
-                <div class="packages">
-                    <h5>List of packages</h5>
-                    @if(count($product->packages) < 1)
-                        <div class="alert alert-info" sr-only="alert">
-                            No package (<i>plan/offer that can be ordered or subscribed to</i>).
-                        </div>
-                    @else
-                        <div class="table-responsive">    
-                        <table class="table table-striped table-hover table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>Package</th>
-                                        <th class="text-right">Price ( {{ $setting->base_currency_symbol }} )</th>
-                                        <th class="text-right">Status</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($product->packages as $package)
-                                        <tr>
-                                            <td>{{ $product->name }} ( <i>{{ $product->payment.' '.$package->name }}</i> )</td>
-                                            <td class="text-right">{{ $setting->base_currency_symbol }} {{$package->price }} ( <i>{{ $package->price_type }}</i> )</td>
-                                            <td class="text-right">{{ $package->status }}</td>
-                                            <td class="text-right"><a href="{{ route('packages.show', $package->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
+            <div class="col-md-4">
+                <div class="resource-details">
+                    <div class="title">
+                        Product options
+                    </div>
+                    <div class="body">
+                      <div class="table-responsive">    
+                        <table class="table">
+                            <tr>
+                                <td><a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-block btn-outline-primary">Edit details</a></td>
+                            </tr>
+                            <tr>
+                                <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('packages.create') }}">Add package</a></td>
+                            </tr>
+                        </table>
+                      </div>
+                    </div>
                 </div>
             </div>
         </div>
 
+
         <div class="more-options">
             <div class="head">More options</div>
             <div class="body">
-                <div class="option">
-                    <h5>Create product packages</h5>
-                    <div class="row">
-                        <div class="col-md-10 offset-md-2">
-                        <a href="{{ route('packages.create') }}" class="btn btn-primary">New package</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="option">
-                    <h5>Edit details</h5>
-                    <div class="row">
-                        <div class="col-md-10 offset-md-2">
-                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary">Edit</a>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="option">
                 <form method="POST" action="{{ route('products.destroy', $product->id) }}">
