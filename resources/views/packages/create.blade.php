@@ -98,10 +98,10 @@
                 </div>
 
                 <div class="form-group row"> 
-                    <label for="term_limit" class="col-md-4 col-form-label text-md-right">{{ __('Term limit (optional)') }}</label>
+                    <label for="term_limit" class="col-md-4 col-form-label text-md-right">{{ __('Term limit') }}</label>
 
                     <div class="col-md-6">
-                        <input id="term_limit" type="text" class="form-control @error('term_limit') is-invalid @enderror" name="term_limit" value="{{ old('term_limit') }}" placeholder="E.g. 3" autocomplete="term_limit" autofocus>
+                        <input id="term_limit" type="text" class="form-control @error('term_limit') is-invalid @enderror" name="term_limit" value="{{ old('term_limit') }}" placeholder="E.g. 3" autocomplete="term_limit" autofocus required>
                         <small class="text-muted">How many terms will this package be valid for.</small>
 
                         @error('term_limit')
@@ -113,10 +113,10 @@
                 </div>
 
                 <div class="form-group row"> 
-                    <label for="day_limit" class="col-md-4 col-form-label text-md-right">{{ __('Day limit (optional)') }}</label>
+                    <label for="day_limit" class="col-md-4 col-form-label text-md-right">{{ __('Day limit') }}</label>
 
                     <div class="col-md-6">
-                        <input id="day_limit" type="text" class="form-control @error('day_limit') is-invalid @enderror" name="day_limit" value="{{ old('day_limit') }}" placeholder="E.g. 400" autocomplete="day_limit" autofocus>
+                        <input id="day_limit" type="text" class="form-control @error('day_limit') is-invalid @enderror" name="day_limit" value="{{ old('day_limit') }}" placeholder="E.g. 400" autocomplete="day_limit" autofocus required>
                         <small class="text-muted">How many days will this package be valid for.</small>
 
                         @error('day_limit')
