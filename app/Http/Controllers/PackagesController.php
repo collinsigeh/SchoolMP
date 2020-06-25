@@ -152,7 +152,7 @@ class PackagesController extends Controller
         {
             if(count($packages_set) > 0)
             {
-                $request->session->flash('error', 'There is a package with name: '.$name.' for this product.');
+                $request->session()->flash('error', 'There is a package with name: '.$name.' for this product.');
                 return redirect()->route('packages.create');
             }
         }
@@ -335,10 +335,14 @@ class PackagesController extends Controller
             'product_id'    => $product_id,
             'name'          => $name
         );
-        if(!empty(Package::where($db_check)->where('id', '!=', $id)->get()))
+        $packages_set = Package::where($db_check)->where('id', '!=', $id)->get();
+        if(!empty($packages_set))
         {
-            $request->session->flash('error', 'There is another package with name: '.$name.' for this product.');
-            return redirect()->route('packages.create');
+            if($packages_set->count() > 0)
+            {
+                $request->session()->flash('error', 'There is another package with name: '.$name.' for this product.');
+                return redirect()->route('packages.create');
+            }
         }
 
         $package = Package::find($id);
