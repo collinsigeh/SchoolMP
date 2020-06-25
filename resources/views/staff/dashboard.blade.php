@@ -38,10 +38,16 @@
                     <div class="body">
                       @if (!$currentterm)
                           <span style="font-size: 3em;">Not Available!</span><br />
-                          @if (count($previousterms) < 1)
-                            <a href="{{ route('terms.index') }}" class="btn btn-lg btn-primary" style="margin-top:- 15px;">View terms</a>
+                          @if (count($previousterms) >= 1)
+                            <a href="{{ route('terms.index') }}" class="btn btn-lg btn-primary" style="margin-top:- 15px;">View session terms</a>
                           @else
-                            <a href="{{ route('terms.create') }}" class="btn btn-lg btn-primary" style="margin-top:- 15px;">New term</a>
+                            @if ($staff->manage_session_terms == 'Yes')
+                                <a href="{{ route('terms.create') }}" class="btn btn-lg btn-primary" style="margin-top:- 15px;">New term</a>
+                            @else
+                                <div class="alert alert-info">
+                                  There's <b>no active term</b> at present. Please contact the school admin.
+                                </div>
+                            @endif
                           @endif
                       @else
 
