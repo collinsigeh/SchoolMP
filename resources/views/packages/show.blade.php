@@ -33,80 +33,101 @@
           @include('partials._messages')
         </div>
 
-        <div class="resource-details">
-            <div class="title">
-                Product Package Details
+        <div class="row">
+            <div class="col-md-8">
+                <div class="resource-details">
+                    <div class="title">
+                        Product Package Details
+                    </div>
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                Name:
+                            </div>
+                            <div class="col-md-10">
+                                <h4>{{ $package->product->name }} ( <i>{{ $package->product->payment.' '.$package->name }}</i> )</h4>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                Price:
+                            </div>
+                            <div class="col-md-10">
+                                {{ $setting->base_currency_symbol.' '.$package->price }} ( <i>{{ $package->price_type }}</i> )
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                Student limit:
+                            </div>
+                            <div class="col-md-10">
+                                {{ $package->product->student_limit }}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                Features:
+                            </div>
+                            <div class="col-md-10">
+                                {!! $package->product->features !!}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                Term limit:
+                            </div>
+                            <div class="col-md-10">
+                                {{ $package->term_limit }}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                Day limit:
+                            </div>
+                            <div class="col-md-10">
+                                {{ $package->day_limit }}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                Status:
+                            </div>
+                            <div class="col-md-10">
+                                {{ $package->status }}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                <small>Created since:</small>
+                            </div>
+                            <div class="col-md-10">
+                                <small>{{ $package->created_at }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="body">
-                <div class="row">
-                    <div class="col-md-2">
-                        Name:
+
+            <div class="col-md-4">
+                <div class="resource-details">
+                    <div class="title">
+                        Package options
                     </div>
-                    <div class="col-md-10">
-                        <h4>{{ $package->product->name }} ( <i>{{ $package->product->payment.' '.$package->name }}</i> )</h4>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-2">
-                        Price:
-                    </div>
-                    <div class="col-md-10">
-                        {{ $setting->base_currency_symbol.' '.$package->price }} ( <i>{{ $package->price_type }}</i> )
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-2">
-                        Student limit:
-                    </div>
-                    <div class="col-md-10">
-                        {{ $package->product->student_limit }}
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-2">
-                        Features:
-                    </div>
-                    <div class="col-md-10">
-                        {!! $package->product->features !!}
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-2">
-                        Term limit:
-                    </div>
-                    <div class="col-md-10">
-                        {{ $package->term_limit }}
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-2">
-                        Day limit:
-                    </div>
-                    <div class="col-md-10">
-                        {{ $package->day_limit }}
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-2">
-                        Status:
-                    </div>
-                    <div class="col-md-10">
-                        {{ $package->status }}
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-2">
-                        <small>Created since:</small>
-                    </div>
-                    <div class="col-md-10">
-                        <small>{{ $package->created_at }}</small>
+                    <div class="body">
+                      <div class="table-responsive">    
+                        <table class="table">
+                            <tr>
+                                <a href="{{ route('packages.edit', $package->id) }}" class="btn btn-sm btn-block btn-outline-primary">Edit package</a>
+                            </tr>
+                        </table>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -115,15 +136,6 @@
         <div class="more-options">
             <div class="head">More options</div>
             <div class="body">
-                <div class="option">
-                    <h5>Edit details</h5>
-                    <div class="row">
-                        <div class="col-md-10 offset-md-2">
-                        <a href="{{ route('packages.edit', $package->id) }}" class="btn btn-primary">Edit</a>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="option">
                 <form method="POST" action="{{ route('packages.destroy', $package->id) }}">
                     @csrf
