@@ -77,11 +77,13 @@
                             @endphp
                             <li>Term limit: {{ $package->term_limit }}</li>
                             <li>
-                              Student limit: @if ($package->product->student_limit !== 'n')
-                                  {{ $package->product->student_limit }}
+                            <em><b>
+                              @if ($package->product->student_limit !== 'n')
+                                  Student limit:  {{ $package->product->student_limit }}
                               @else
-                                  {{ 'NOT Applicable' }}
+                                  No student limit
                               @endif
+                            </b></em>
                             </li>
                           </ul>
                         </div>
