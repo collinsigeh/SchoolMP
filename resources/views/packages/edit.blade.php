@@ -115,9 +115,11 @@
     
                     <div class="col-md-6">
                         <select id="price_type" class="form-control @error('price_type') is-invalid @enderror" name="price_type" required>
-                            <option value="Per-student" @if ($package->price_type == 'Per-student')
-                                {{ 'selected' }}
-                            @endif>Per-student</option>
+                            @if ($package->product->payment == 'Post-paid')
+                                <option value="Per-student" @if ($package->price_type == 'Per-student')
+                                    {{ 'selected' }}
+                                @endif>Per-student</option>
+                            @endif
                             <option value="Per-package" @if ($package->price_type == 'Per-package')
                                 {{ 'selected' }}
                             @endif>Per-package</option>

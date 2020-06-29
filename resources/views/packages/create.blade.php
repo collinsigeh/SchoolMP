@@ -132,7 +132,9 @@
     
                     <div class="col-md-6">
                         <select id="price_type" class="form-control @error('price_type') is-invalid @enderror" name="price_type" required>
-                            <option value="Per-student">Per-student</option>
+                            @if ($product->payment == 'Post-paid')
+                                <option value="Per-student">Per-student</option>
+                            @endif
                             <option value="Per-package">Per-package</option>
                         </select>
     
