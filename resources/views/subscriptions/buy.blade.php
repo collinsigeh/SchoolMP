@@ -93,8 +93,7 @@
                             
                             <input type="hidden" name="package_id" value="{{ $package->id }}">
                             
-                            @if (($package->product->payment == 'Prepaid' && $package->price_type == 'Per-student') OR
-                                ($package->product->payment == 'Trial' && $package->price_type == 'Per-student'))
+                            @if ($package->product->student_limit == 'n')
         
                                 <input type="hidden" id="price_type" value="{{ $package->price_type }}">
                                 <input type="hidden" id="package_price" value="{{ $package->price }}">
