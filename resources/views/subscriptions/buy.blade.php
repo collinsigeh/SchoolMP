@@ -92,40 +92,33 @@
                             @csrf
                             
                             <input type="hidden" name="package_id" value="{{ $package->id }}">
-                            
-                            @if ($package->product->student_limit == 'n')
-        
-                                <input type="hidden" id="price_type" value="{{ $package->price_type }}">
-                                <input type="hidden" id="package_price" value="{{ $package->price }}">
-        
+
+                            @if ($package->product->student_limit != 'n')
                                 <div class="form-group row"> 
-                                    <label for="no_students" class="col-md-3 col-form-label text-md-right">{{ __('Number of students:') }}</label>
+                                    <label class="col-md-3 col-form-label text-md-right">{{ __('Order amount:') }}</label>
                                     
                                     <div class="col-md-7">
-                                        <input id="no_students" type="text" class="form-control @error('no_students') is-invalid @enderror" name="no_students" value="{{ old('no_students') }}" placeholder="E.g. 621" required autocomplete="no_students" autofocus onkeyup="totalPrice()">
-                
-                                        @error('no_students')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <div style="font-size: 1.3em; padding-top: 5px;">{{ $setting->base_currency_symbol }} <span id="total_price">@if ($package->price_type == 'Per-package')
+                                            {{ $package->price }}
+                                        @else
+                                            0.00
+                                        @endif</span></div>
                                     </div>
                                 </div>
-                                
-                            @endif
-                            
-                            <div class="form-group row"> 
-                                <label class="col-md-3 col-form-label text-md-right">{{ __('Order amount:') }}</label>
-                                
-                                <div class="col-md-7">
-                                    <div style="font-size: 1.3em; padding-top: 5px;">{{ $setting->base_currency_symbol }} <span id="total_price">@if ($package->price_type == 'Per-package')
-                                        {{ $package->price }}
-                                    @else
-                                        0.00
-                                    @endif</span></div>
+                            @else
+                                <div class="row">
+                                    <div class="col-md-7 offset-md-3">
+                                        <div class="alert alert-info">
+                                            <b>Note: </b>
+                                            <ul>
+                                                <li>This is a post-paid order</li>
+                                                <li>The total value of this order will be determined at the end of the term when the total number of students have been known.</li>
+                                                <li>At end of term, when total cost will be determeined, the rate will remain the same as stated in the table above.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            
+                            @endif
             
                             <div class="form-group row mb-0">
                                 <div class="col-md-7 offset-md-3">
