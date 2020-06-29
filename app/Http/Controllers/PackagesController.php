@@ -118,31 +118,15 @@ class PackagesController extends Controller
         $this->validate($request, [
             'name'          => ['required', 'string', 'max:191'],
             'image'         => ['sometimes', 'image', 'max:1999'],
-            'term_limit'    => ['required'],
-            'day_limit'     => ['required'],
+            'term_limit'    => ['required', 'integer', 'min: 1'],
+            'day_limit'     => ['required', 'integer', 'min: 1'],
             'price_type'    => ['required'],
-            'price'         => ['required', 'numeric'],
+            'price'         => ['required', 'numeric', 'min: 0'],
             'status'        => ['required']
         ]);
 
-        if($request->input('term_limit') < 1 OR !is_numeric($request->input('term_limit')))
-        {
-            $term_limit = 'n';
-        }
-        else{
-            $term_limit = $request->input('term_limit');
-        }
-
-        if($request->input('day_limit') < 1 OR !is_numeric($request->input('day_limit')))
-        {
-            $day_limit = 'n';
-        }
-        else{
-            $day_limit = $request->input('day_limit');
-        }
-
         $name = ucwords(strtolower($request->input('name')));
-
+        
         $db_check = array(
             'product_id'    => $product_id,
             'name'          => $name
@@ -161,8 +145,8 @@ class PackagesController extends Controller
 
         $package->product_id    = $product_id;
         $package->name          = $name;
-        $package->term_limit    = $term_limit;
-        $package->day_limit     = $day_limit;
+        $package->term_limit    = $request->input('term_limit');
+        $package->day_limit     = $request->input('day_limit');
         $package->price_type    = $request->input('price_type');
         $package->price         = $request->input('price');
         $package->status        = $request->input('status');
@@ -306,28 +290,12 @@ class PackagesController extends Controller
 
         $this->validate($request, [
             'name'          => ['required', 'string', 'max:191'],
-            'term_limit'    => ['required'],
-            'day_limit'     => ['required'],
+            'term_limit'    => ['required', 'integer', 'min: 1'],
+            'day_limit'     => ['required', 'integer', 'min: 1'],
             'price_type'    => ['required'],
-            'price'         => ['required', 'numeric'],
+            'price'         => ['required', 'numeric', 'min: 0'],
             'status'        => ['required']
         ]);
-
-        if($request->input('term_limit') < 1 OR !is_numeric($request->input('term_limit')))
-        {
-            $term_limit = 'n';
-        }
-        else{
-            $term_limit = $request->input('term_limit');
-        }
-
-        if($request->input('day_limit') < 1 OR !is_numeric($request->input('day_limit')))
-        {
-            $day_limit = 'n';
-        }
-        else{
-            $day_limit = $request->input('day_limit');
-        }
 
         $name = ucwords(strtolower($request->input('name')));
 
@@ -349,8 +317,8 @@ class PackagesController extends Controller
 
         $package->product_id    = $product_id;
         $package->name          = $name;
-        $package->term_limit    = $term_limit;
-        $package->day_limit     = $day_limit;
+        $package->term_limit    = $request->input('term_limit');
+        $package->day_limit     = $request->input('$day_limit');
         $package->price_type    = $request->input('price_type');
         $package->price         = $request->input('price');
         $package->status        = $request->input('status');
