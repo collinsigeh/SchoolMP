@@ -64,7 +64,7 @@
                             </div>
                             <div class="col-md-10">
                                 @if ($product->student_limit == 'n')
-                                    Not Applicable
+                                    NOT Applicable
                                 @else
                                     {{ $product->student_limit }}
                                 @endif

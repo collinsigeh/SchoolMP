@@ -56,7 +56,11 @@
                     <label for="student_limit" class="col-md-4 col-form-label text-md-right">{{ __('Student limit') }}</label>
 
                     <div class="col-md-6">
-                        <input id="student_limit" type="text" class="form-control @error('student_limit') is-invalid @enderror" name="student_limit" value="{{ $package->product->student_limit }}" disabled autocomplete="student_limit" autofocus>
+                        <input id="student_limit" type="text" class="form-control @error('student_limit') is-invalid @enderror" name="student_limit" value="@if ($product->student_limit == 'n')
+                        NOT Applicable
+                                            @else
+                        {{ $product->student_limit }}
+                                            @endif" disabled autocomplete="student_limit" autofocus>
                         
                         @error('student_limit')
                             <span class="invalid-feedback" role="alert">
@@ -120,9 +124,11 @@
                                     {{ 'selected' }}
                                 @endif>Per-student</option>
                             @endif
-                            <option value="Per-package" @if ($package->price_type == 'Per-package')
-                                {{ 'selected' }}
-                            @endif>Per-package</option>
+                            @if ($product->student_limit != 'n')
+                                <option value="Per-package" @if ($package->price_type == 'Per-package')
+                                    {{ 'selected' }}
+                                @endif>Per-package</option>
+                            @endif
                         </select>
     
                         @error('price_type')
