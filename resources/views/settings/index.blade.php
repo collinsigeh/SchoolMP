@@ -41,9 +41,15 @@
                     <div class="body">
         
                         @if (empty($setting))
-                            <p>The required setting is missing.</p>
+                            <div class="alert alert-info">
+                                The required setting is missing.
+                                @if ($no_paymentprocessors < 1)
+                                    <br /><br /><b>NOTE: </b>There are no payments processors yet.
+                                @endif
+                            </div>
                             <div>
-                                <a href="{{ route('settings.create') }}" class="btn btn-primary">Configure settings</a>
+                                <a href="{{ route('settings.create') }}" class="btn btn-primary">Configure Settings</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#" class="btn btn-outline-primary">Add Payment Processor</a>
                             </div>
                         @else
                             <div class="row">

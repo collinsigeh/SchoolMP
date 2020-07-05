@@ -2,10 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\User;
+use App\Paymentprocessors;
+
 use Illuminate\Http\Request;
 
 class PaymentprocessorsController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +27,22 @@ class PaymentprocessorsController extends Controller
      */
     public function index()
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+        
+        $data['paymentprocessors'] = Paymentprocessors::orderBy('name', 'asc')->simplePaginate(20);
+
+        return view('paymentprocessors.index')->with($data);
     }
 
     /**

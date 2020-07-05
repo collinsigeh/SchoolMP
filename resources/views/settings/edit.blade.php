@@ -98,6 +98,27 @@
                         @enderror
                     </div>
                 </div>
+                
+                <div class="form-group row"> 
+                    <label for="payment_processor" class="col-md-4 col-form-label text-md-right">{{ __('Payment Processor') }}</label>
+    
+                    <div class="col-md-6">
+                        <select id="payment_processor" class="form-control @error('payment_processor') is-invalid @enderror" name="payment_processor" required>
+                            @foreach ($paymentprocessors as $payment_processor)
+                                <option value="{{ $payment_processor->id }}" @if ($setting->paymentprocessor_id == $payment_processor->id)
+                                    {{ 'selected' }}
+                                @endif>{{ $payment_processor->name }}</option>
+                                <option value="0">None (Off-line payments)</option>
+                            @endforeach
+                        </select>
+    
+                        @error('payment_processor')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
 
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">

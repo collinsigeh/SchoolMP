@@ -103,8 +103,10 @@
     
                     <div class="col-md-6">
                         <select id="payment_processor" class="form-control @error('payment_processor') is-invalid @enderror" name="payment_processor" required>
-                            <option value="None">Select a payment processor for base currency</option>
-                            <option value="None">None (Off-line payments)</option>
+                            <option value="0">Select a payment processor for base currency</option>
+                            @foreach ($paymentprocessors as $payment_processor)
+                                <option value="{{ $payment_processor->id }}">{{ $payment_processor->name }}</option>
+                            @endforeach                            
                         </select>
     
                         @error('payment_processor')

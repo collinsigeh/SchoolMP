@@ -41,7 +41,18 @@ class SettingsController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $data['paymentprocessors'] = Paymentprocessors::all();
+        $no_paymentprocessors = 0;
+        $processors = Paymentprocessors::all();
+        if(!empty($processors))
+        {
+            $processor_cases = $processors->count();
+            if($processor_cases > 0)
+            {
+                $no_paymentprocessors = $processor_cases;
+            }
+        }
+
+        $data['no_paymentprocessors'] = $no_paymentprocessors;
         $data['setting'] = Setting::first();
         $data['alternative_currencies'] = Alternative_currency::all();
 
@@ -67,6 +78,8 @@ class SettingsController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        
+        $data['paymentprocessors'] = Paymentprocessors::orderBy('name', 'asc')->get();
 
         return view('settings.create')->with($data);
     }
