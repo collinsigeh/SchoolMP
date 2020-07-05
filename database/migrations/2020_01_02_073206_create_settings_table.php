@@ -19,6 +19,7 @@ class CreateSettingsTable extends Migration
             $table->string('base_currency_symbol', 25);
             $table->integer('try_limit');
             $table->integer('order_expriation');
+            $table->integer('paymentprocessor_id');
             $table->integer('created_by');
             $table->timestamps();
         });

@@ -6,6 +6,7 @@ use Auth;
 use App\User;
 use App\Setting;
 use App\Alternative_currency;
+use App\Paymentprocessors;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -40,6 +41,7 @@ class SettingsController extends Controller
             return redirect()->route('dashboard');
         }
 
+        $data['paymentprocessors'] = Paymentprocessors::all();
         $data['setting'] = Setting::first();
         $data['alternative_currencies'] = Alternative_currency::all();
 
