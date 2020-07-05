@@ -52,7 +52,20 @@ class PaymentprocessorsController extends Controller
      */
     public function create()
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        return view('paymentprocessors.create')->with($data);
     }
 
     /**

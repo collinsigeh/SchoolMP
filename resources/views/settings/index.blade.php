@@ -49,7 +49,7 @@
                             </div>
                             <div>
                                 <a href="{{ route('settings.create') }}" class="btn btn-primary">Configure Settings</a> &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="#" class="btn btn-outline-primary">Add Payment Processor</a>
+                                <a href="{{ route('payment_processors.create') }}" class="btn btn-outline-primary">Add payment processor</a>
                             </div>
                         @else
                             <div class="row">

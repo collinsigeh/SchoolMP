@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Users | ')
+@section('title', 'Payment Processors | ')
 
 @section('content')
 
@@ -15,7 +15,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-            <h3>Users</h3>
+            <h3>Payment processors</h3>
           </div>
           <div class="col-4 text-right">
             <a href="{{ route('payment_processors.create') }}" class="btn btn-primary">New payment processor</a>

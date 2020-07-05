@@ -16,7 +16,7 @@ class CreatePaymentprocessorsTable extends Migration
         Schema::create('paymentprocessors', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('merchant_id');
+            $table->string('merchant_id')->nullable();
             $table->string('secret_word')->nullable();
             $table->string('secret_public')->nullable();
             $table->string('secret_key')->nullable();
