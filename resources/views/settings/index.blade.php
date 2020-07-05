@@ -140,7 +140,7 @@
             <div class="col-md-4">
                 <div class="resource-details">
                     <div class="title">
-                        Product options
+                        More options
                     </div>
                     <div class="body">
                         @if (!empty($setting))
@@ -154,6 +154,8 @@
                                 </tr>
                             </table>
                             </div>
+                        @else
+                            None
                         @endif
                     </div>
                 </div>
