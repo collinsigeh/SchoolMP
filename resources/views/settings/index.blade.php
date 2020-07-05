@@ -143,6 +143,9 @@
                         More options
                     </div>
                     <div class="body">
+                        <tr>
+                            <td><a href="{{ route('payment_processors.index') }}" class="btn btn-sm btn-block btn-outline-primary">Payment processors</a></td>
+                        </tr>
                         @if (!empty($setting))
                             <div class="table-responsive">    
                             <table class="table">
@@ -154,8 +157,6 @@
                                 </tr>
                             </table>
                             </div>
-                        @else
-                            None
                         @endif
                     </div>
                 </div>

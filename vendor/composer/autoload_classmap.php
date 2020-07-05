@@ -60,6 +60,7 @@ return array(
     'App\\Order' => $baseDir . '/app/Order.php',
     'App\\Package' => $baseDir . '/app/Package.php',
     'App\\Payment' => $baseDir . '/app/Payment.php',
+    'App\\Paymentprocessors' => $baseDir . '/app/Paymentprocessors.php',
     'App\\Product' => $baseDir . '/app/Product.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
