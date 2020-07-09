@@ -76,7 +76,40 @@ class PaymentprocessorsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            'name'          => ['required', 'string', 'max:191', 'unique:paymentprocessors'],
+            'merchant_id'   => ['nullable', 'string', 'max:191'],
+            'secret_word'   => ['nullable', 'string', 'max:191'],
+            'public_key'    => ['nullable', 'string', 'max:191'],
+            'secret_key'    => ['nullable', 'string', 'max:191']
+        ]);
+
+        $paymentprocessor = new Paymentprocessors;
+
+        $paymentprocessor->name         = ucwords(strtolower($request->input('name')));
+        $paymentprocessor->merchant_id  = $request->input('merchant_id');
+        $paymentprocessor->secret_word  = $request->input('secret_word');
+        $paymentprocessor->public_key   = $request->input('public_key');
+        $paymentprocessor->secret_key   = $request->input('secret_key');
+
+        $paymentprocessor->save();
+        
+        $request->session()->flash('success', 'Saved!');
+
+        return redirect()->route('payment_processors.index');
     }
 
     /**

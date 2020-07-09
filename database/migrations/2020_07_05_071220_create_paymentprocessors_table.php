@@ -18,7 +18,7 @@ class CreatePaymentprocessorsTable extends Migration
             $table->string('name');
             $table->string('merchant_id')->nullable();
             $table->string('secret_word')->nullable();
-            $table->string('secret_public')->nullable();
+            $table->string('public_key')->nullable();
             $table->string('secret_key')->nullable();
             $table->timestamps();
         });

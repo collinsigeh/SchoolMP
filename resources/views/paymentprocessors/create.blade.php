@@ -83,7 +83,7 @@
                     <label for="public_key" class="col-md-4 col-form-label text-md-right">{{ __('Public Key (Optional)') }}</label>
 
                     <div class="col-md-6">
-                        <input id="public_key" type="text" class="form-control @error('public_key') is-invalid @enderror" name="public_key" value="{{ old('merchant_id') }}" autocomplete="merchant_id" autofocus>
+                        <input id="public_key" type="text" class="form-control @error('public_key') is-invalid @enderror" name="public_key" value="{{ old('public_key') }}" autocomplete="public_key" autofocus>
 
                         @error('public_key')
                             <span class="invalid-feedback" role="alert">
@@ -97,7 +97,7 @@
                     <label for="secret_key" class="col-md-4 col-form-label text-md-right">{{ __('Secret Key (Optional)') }}</label>
 
                     <div class="col-md-6">
-                        <input id="secret_key" type="text" class="form-control @error('secret_key') is-invalid @enderror" name="secret_key" value="{{ old('merchant_id') }}" autocomplete="merchant_id" autofocus>
+                        <input id="secret_key" type="text" class="form-control @error('secret_key') is-invalid @enderror" name="secret_key" value="{{ old('secret_key') }}" autocomplete="secret_key" autofocus>
 
                         @error('secret_key')
                             <span class="invalid-feedback" role="alert">
