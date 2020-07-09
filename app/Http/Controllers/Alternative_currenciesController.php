@@ -79,12 +79,27 @@ class Alternative_currenciesController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        
+        $setting = Setting::first();
+        if(empty($setting))
+        {
+            return redirect()->route('dashboard');
+        }
 
         $this->validate($request, [
             'name'      => ['required', 'string', 'max:75', 'unique:alternative_currencies'],
             'symbol'    => ['required', 'string', 'max:25', 'unique:alternative_currencies'],
             'rate'      => ['required', 'numeric']
         ]);
+
+        if($setting->count() >= 1)
+        {
+            if(($setting->base_currency == $request->input('name')) OR ($setting->base_currency_symbol == $request->input('symbol')))
+            {
+                $request->session()->flash('error', 'The specified currency is the base currency.');
+                return redirect()->route('alternative_currencies.create');
+            }
+        }
 
         $currency = new Alternative_currency;
 
