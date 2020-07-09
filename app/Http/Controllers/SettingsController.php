@@ -109,7 +109,8 @@ class SettingsController extends Controller
             'base_currency'         => ['required', 'string', 'max:75'],
             'base_currency_symbol'  => ['required', 'string', 'max:25'],
             'try_limit'             => ['required', 'numeric', 'min:0'],
-            'order_expiration'      => ['required', 'numeric', 'min:0']
+            'order_expiration'      => ['required', 'numeric', 'min:0'],
+            'payment_processor'     => ['required']
         ]);
 
         $setting = new Setting;
@@ -118,6 +119,7 @@ class SettingsController extends Controller
         $setting->base_currency_symbol  = $request->input('base_currency_symbol');
         $setting->try_limit             = $request->input('try_limit');
         $setting->order_expiration      = $request->input('order_expiration');
+        $setting->paymentprocessor_id   = $request->input('payment_processor');
         $setting->created_by            = $user_id;
 
         $setting->save();
