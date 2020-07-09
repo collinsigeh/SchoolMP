@@ -34,7 +34,7 @@
         </div>
 
         <div class="create-form">
-            <form method="POST" action="{{ route('payment_processors.update') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('payment_processors.update', $paymentprocessor->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -42,7 +42,7 @@
                     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                     <div class="col-md-6">
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $paymentprocessor->name }}" required autocomplete="name" autofocus>
 
                         @error('name')
                             <span class="invalid-feedback" role="alert">
@@ -56,7 +56,7 @@
                     <label for="merchant_id" class="col-md-4 col-form-label text-md-right">{{ __('Merchant ID (Optional)') }}</label>
 
                     <div class="col-md-6">
-                        <input id="merchant_id" type="text" class="form-control @error('merchant_id') is-invalid @enderror" name="merchant_id" value="{{ old('merchant_id') }}" autocomplete="merchant_id" autofocus>
+                        <input id="merchant_id" type="text" class="form-control @error('merchant_id') is-invalid @enderror" name="merchant_id" value="{{ $paymentprocessor->merchant_id }}" autocomplete="merchant_id" autofocus>
 
                         @error('merchant_id')
                             <span class="invalid-feedback" role="alert">
@@ -70,7 +70,7 @@
                     <label for="secret_word" class="col-md-4 col-form-label text-md-right">{{ __('Secret Word (Optional)') }}</label>
 
                     <div class="col-md-6">
-                        <input id="secret_word" type="text" class="form-control @error('secret_word') is-invalid @enderror" name="secret_word" value="{{ old('merchant_id') }}" autocomplete="merchant_id" autofocus>
+                        <input id="secret_word" type="text" class="form-control @error('secret_word') is-invalid @enderror" name="secret_word" value="{{ $paymentprocessor->secret_word }}" autocomplete="secret_word" autofocus>
 
                         @error('secret_word')
                             <span class="invalid-feedback" role="alert">
@@ -84,7 +84,7 @@
                     <label for="public_key" class="col-md-4 col-form-label text-md-right">{{ __('Public Key (Optional)') }}</label>
 
                     <div class="col-md-6">
-                        <input id="public_key" type="text" class="form-control @error('public_key') is-invalid @enderror" name="public_key" value="{{ old('public_key') }}" autocomplete="public_key" autofocus>
+                        <input id="public_key" type="text" class="form-control @error('public_key') is-invalid @enderror" name="public_key" value="{{ $paymentprocessor->public_key }}" autocomplete="public_key" autofocus>
 
                         @error('public_key')
                             <span class="invalid-feedback" role="alert">
@@ -98,7 +98,7 @@
                     <label for="secret_key" class="col-md-4 col-form-label text-md-right">{{ __('Secret Key (Optional)') }}</label>
 
                     <div class="col-md-6">
-                        <input id="secret_key" type="text" class="form-control @error('secret_key') is-invalid @enderror" name="secret_key" value="{{ old('secret_key') }}" autocomplete="secret_key" autofocus>
+                        <input id="secret_key" type="text" class="form-control @error('secret_key') is-invalid @enderror" name="secret_key" value="{{ $paymentprocessor->secret_key }}" autocomplete="secret_key" autofocus>
 
                         @error('secret_key')
                             <span class="invalid-feedback" role="alert">
