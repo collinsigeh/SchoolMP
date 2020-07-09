@@ -62,6 +62,14 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
+                                    Payment processor:
+                                </div>
+                                <div class="col-md-9">
+                                    {{ $paymentprocessor }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
                                     Try limit:<br /><small>(<i>per user or school</i>)</small>
                                 </div>
                                 <div class="col-md-9">

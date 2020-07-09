@@ -55,6 +55,16 @@ class SettingsController extends Controller
         $data['no_paymentprocessors'] = $no_paymentprocessors;
         $data['setting'] = Setting::first();
         $data['alternative_currencies'] = Alternative_currency::all();
+        
+        $data['paymentprocessor'] = 'None (Off-line payments)';
+        if($data['setting']->paymentprocessor_id > 0)
+        {
+            $paymentprocessor = Paymentprocessors::find($data['setting']->paymentprocessor_id);
+            if(!empty($paymentprocessor))
+            {
+                $data['paymentprocessor'] = $paymentprocessor->name;
+            }
+        }
 
         return view('settings.index')->with($data);
     }
@@ -167,6 +177,8 @@ class SettingsController extends Controller
         {
             return redirect()->route('dashboard');
         }
+
+        $data['paymentprocessors'] = Paymentprocessors::all();
 
         return view('settings.edit')->with($data);
     }

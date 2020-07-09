@@ -108,8 +108,8 @@
                                 <option value="{{ $payment_processor->id }}" @if ($setting->paymentprocessor_id == $payment_processor->id)
                                     {{ 'selected' }}
                                 @endif>{{ $payment_processor->name }}</option>
-                                <option value="0">None (Off-line payments)</option>
                             @endforeach
+                            <option value="0">None (Off-line payments)</option>
                         </select>
     
                         @error('payment_processor')
