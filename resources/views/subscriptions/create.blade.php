@@ -65,6 +65,15 @@
                             </div>
                           </div>
                           <ul>
+                            <li>
+                            <em><b>
+                              @if ($package->product->student_limit !== 'n')
+                                  Student limit:  {{ $package->product->student_limit }}
+                              @else
+                                  No student limit
+                              @endif
+                            </b></em>
+                            </li>
                             @php
                                 if($package->day_limit == 1)
                                 {
@@ -76,15 +85,6 @@
                                 }
                             @endphp
                             <li>Term limit: {{ $package->term_limit }}</li>
-                            <li>
-                            <em><b>
-                              @if ($package->product->student_limit !== 'n')
-                                  Student limit:  {{ $package->product->student_limit }}
-                              @else
-                                  No student limit
-                              @endif
-                            </b></em>
-                            </li>
                           </ul>
                         </div>
                       </div>
