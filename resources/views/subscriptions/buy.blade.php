@@ -111,9 +111,9 @@
                                         <div class="alert alert-info">
                                             <b>Note: </b>
                                             <ul>
-                                                <li>This is a post-paid order</li>
+                                                <li>This is a post-paid order.</li>
                                                 <li>The total value of this order will be determined at the end of the term when the total number of students have been known.</li>
-                                                <li>At end of term, when total cost will be determeined, the rate will remain the same as stated in the table above.</li>
+                                                <li>The rate of this package will remain the same at the end of the term.</li>
                                             </ul>
                                         </div>
                                     </div>
