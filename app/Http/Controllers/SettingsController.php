@@ -42,7 +42,7 @@ class SettingsController extends Controller
         }
 
         $no_paymentprocessors = 0;
-        $processors = Paymentprocessors::all();
+        $data['processors'] = $processors = Paymentprocessors::all();
         if(!empty($processors))
         {
             $processor_cases = $processors->count();

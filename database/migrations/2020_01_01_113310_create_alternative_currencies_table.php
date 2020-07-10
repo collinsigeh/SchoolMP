@@ -18,6 +18,7 @@ class CreateAlternativeCurrenciesTable extends Migration
             $table->string('name');
             $table->string('symbol', 25);
             $table->string('rate', 25);
+            $table->integer('paymentprocessor_id');
             $table->integer('created_by');
             $table->timestamps();
         });

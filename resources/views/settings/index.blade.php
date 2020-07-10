@@ -118,6 +118,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Currency</th>
+                                                    <th>Payment processor</th>
                                                     <th class="text-right">Rate ( per {{ $setting->base_currency_symbol }} )</th>
                                                     <th></th>
                                                     <th></th>
@@ -127,6 +128,11 @@
                                                 @foreach ($alternative_currencies as $currency)
                                                     <tr>
                                                         <td>{{ $currency->name }} ( <i>{{ $currency->symbol }}</i> )</td>
+                                                        <td>@foreach ($processors as $processor)
+                                                            @if ($processor->id == $currency->paymentprocessor_id)
+                                                                {{ $processor->name }}
+                                                            @endif
+                                                        @endforeach</td>
                                                         <td class="text-right">{{ $currency->symbol }} {{ $currency->rate }}</td>
                                                         <td class="text-right"><a href="{{ route('alternative_currencies.edit', $currency->id) }}" class="btn btn-sm btn-outline-primary">Edit</a></td>
                                                         <td class="text-right">

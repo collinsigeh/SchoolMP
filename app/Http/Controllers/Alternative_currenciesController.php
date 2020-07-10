@@ -6,6 +6,7 @@ use Auth;
 use App\User;
 use App\Setting;
 use App\Alternative_currency;
+use App\Paymentprocessors;
 use Illuminate\Http\Request;
 
 class Alternative_currenciesController extends Controller
@@ -55,6 +56,8 @@ class Alternative_currenciesController extends Controller
         {
             return redirect()->route('dashboard');
         }
+
+        $data['paymentprocessors'] = Paymentprocessors::all();
 
         return view('alternative_currencies.create')->with($data);
     }
@@ -159,6 +162,8 @@ class Alternative_currenciesController extends Controller
             return redirect()->route('dashboard');
         }
 
+        $data['paymentprocessors'] = Paymentprocessors::all();
+
         return view('alternative_currencies.edit')->with($data);
     }
 
@@ -187,7 +192,8 @@ class Alternative_currenciesController extends Controller
         $this->validate($request, [
             'name'      => ['required', 'string', 'max:75', "unique:alternative_currencies,name,$id"],
             'symbol'    => ['required', 'string', 'max:25', "unique:alternative_currencies,symbol,$id"],
-            'rate'      => ['required', 'numeric']
+            'rate'      => ['required', 'numeric'],
+            'payment_processor' => ['required']
         ]);
 
         $currency = Alternative_currency::find($id);
@@ -195,6 +201,7 @@ class Alternative_currenciesController extends Controller
         $currency->name     = $request->input('name');
         $currency->symbol   = $request->input('symbol');
         $currency->rate     = $request->input('rate');
+        $currency->paymentprocessor_id  = $request->input('payment_processor');
 
         $currency->save();
         
