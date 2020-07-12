@@ -318,7 +318,7 @@ class PackagesController extends Controller
         $package->product_id    = $product_id;
         $package->name          = $name;
         $package->term_limit    = $request->input('term_limit');
-        $package->day_limit     = $request->input('$day_limit');
+        $package->day_limit     = $request->input('day_limit');
         $package->price_type    = $request->input('price_type');
         $package->price         = $request->input('price');
         $package->status        = $request->input('status');
