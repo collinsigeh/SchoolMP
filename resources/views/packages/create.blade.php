@@ -138,9 +138,12 @@ NOT Applicable
                         <select id="price_type" class="form-control @error('price_type') is-invalid @enderror" name="price_type" required>
                             @if ($product->payment == 'Post-paid')
                                 <option value="Per-student">Per-student</option>
-                            @endif
-                            @if ($product->student_limit != 'n')
-                                <option value="Per-package">Per-package</option>
+                            @else
+                                @if ($product->student_limit == 'n')
+                                    <option value="Per-package">Per-package</option>
+                                @else
+                                    <option value="Per-student">Per-student</option>
+                                @endif
                             @endif
                         </select>
     

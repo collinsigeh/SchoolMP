@@ -54,6 +54,21 @@
                         @enderror
                     </div>
                 </div>
+
+                <div class="form-group row"> 
+                    <label for="features" class="col-md-4 col-form-label text-md-right">{{ __('Features') }}</label>
+
+                    <div class="col-md-6">
+                        <textarea id="features" class="form-control @error('features') is-invalid @enderror" name="features" placeholder="Describe this product features" required autocomplete="name" autofocus>{{ old('features') }}</textarea>
+                        <small class="text-muted">HTML tags allowed for features clarity.</small>
+
+                        @error('features')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
                 
                 <div class="form-group row"> 
                     <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Type') }}</label>
@@ -83,21 +98,6 @@
                         </select>
     
                         @error('payment')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row"> 
-                    <label for="features" class="col-md-4 col-form-label text-md-right">{{ __('Features') }}</label>
-
-                    <div class="col-md-6">
-                        <textarea id="features" class="form-control @error('features') is-invalid @enderror" name="features" required autocomplete="name" autofocus>{{ old('features') }}</textarea>
-                        <small class="text-muted">HTML tags allowed for features clarity.</small>
-
-                        @error('features')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

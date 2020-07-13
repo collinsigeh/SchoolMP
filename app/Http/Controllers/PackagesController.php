@@ -328,7 +328,7 @@ class PackagesController extends Controller
         
         $request->session()->flash('success', 'Update saved.');
 
-        return redirect()->route('packages.show', $id);
+        return redirect()->route('packages.edit', $id);
     }
 
     /**

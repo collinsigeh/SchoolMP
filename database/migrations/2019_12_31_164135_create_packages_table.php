@@ -18,6 +18,7 @@ class CreatePackagesTable extends Migration
             $table->integer('product_id');
             $table->string('name');
             $table->string('image');
+            $table->string('student_limit', 25);
             $table->string('term_limit', 25);
             $table->string('day_limit', 25);
             $table->enum('price_type', ['Per-student', 'Per-package']);

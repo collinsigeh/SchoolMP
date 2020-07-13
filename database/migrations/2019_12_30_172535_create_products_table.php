@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->enum('type', ['Subscription', 'Non-subscription']);
             $table->enum('payment', ['Prepaid', 'Post-paid', 'Trial']);
             $table->text('features');
-            $table->string('student_limit', 25);
             $table->integer('created_by');
             $table->timestamps();
         });
