@@ -93,7 +93,30 @@
                             
                             <input type="hidden" name="package_id" value="{{ $package->id }}">
 
-                            @if ($package->product->student_limit != 'n')
+                            @if ($package->product->payment == 'Post-paid')
+                                <div class="row">
+                                    <div class="col-md-7 offset-md-3">
+                                        <div class="alert alert-info">
+                                            <b>Note: </b>
+                                            <ul>
+                                                <li>This is a <b>post-paid</b> order.</li>
+                                                <li>The total value of this order will be determined at the end of the term when the total number of students have been known.</li>
+                                                <li>The rate of this package will remain the same at the end of the term.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @elseif($package->product->payment == 'Prepaid' && $package->price_type == 'Per-student')
+                                <div class="row">
+                                    <div class="col-md-7 offset-md-3">
+                                        <div class="alert alert-info">
+                                            <b>Note: </b>
+                                            <ul>
+                                                <li>This is a <b>prepaid</b> plan and will be billed per student at the rate stated above.</li>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
                                 <div class="form-group row"> 
                                     <label class="col-md-3 col-form-label text-md-right">{{ __('Order amount:') }}</label>
                                     
@@ -103,19 +126,6 @@
                                         @else
                                             0.00
                                         @endif</span></div>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="row">
-                                    <div class="col-md-7 offset-md-3">
-                                        <div class="alert alert-info">
-                                            <b>Note: </b>
-                                            <ul>
-                                                <li>This is a post-paid order.</li>
-                                                <li>The total value of this order will be determined at the end of the term when the total number of students have been known.</li>
-                                                <li>The rate of this package will remain the same at the end of the term.</li>
-                                            </ul>
-                                        </div>
                                     </div>
                                 </div>
                             @endif

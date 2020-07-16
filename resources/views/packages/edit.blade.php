@@ -125,11 +125,11 @@ NOT Applicable
                                 @endif>Per-student</option>
                             @else
                                 @if($package->product->student_limit == 'n')
-                                    <option value="Per-package" @if ($package->price_type == 'Per-package')
-                                        {{ 'selected' }}
-                                    @endif>Per-package</option>
-                                @else
                                     <option value="Per-student" @if ($package->price_type == 'Per-student')
+                                        {{ 'selected' }}
+                                    @endif>Per-student</option>
+                                @else
+                                    <option value="Per-package" @if ($package->price_type == 'Per-package')
                                         {{ 'selected' }}
                                     @endif>Per-package</option>
                                 @endif

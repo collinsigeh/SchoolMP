@@ -140,9 +140,9 @@ NOT Applicable
                                 <option value="Per-student">Per-student</option>
                             @else
                                 @if ($product->student_limit == 'n')
-                                    <option value="Per-package">Per-package</option>
-                                @else
                                     <option value="Per-student">Per-student</option>
+                                @else
+                                    <option value="Per-package">Per-package</option>
                                 @endif
                             @endif
                         </select>
