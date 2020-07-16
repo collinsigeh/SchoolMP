@@ -354,7 +354,8 @@
                         Subscription for the order
                     </div>
                     <div class="body">
-                        <div class="table-responsive">    
+                        <div class="table-responsive">
+                            @if ($order->subscription > 0 && !empty($order->subscription))
                             <table class="table table-striped table-hover table-sm">
                                 <tbody>
                                     <tr>
@@ -363,6 +364,13 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            @else
+                                <b>No subscription</b> (<i>@if ($order->payment == 'Post-paid')
+                                    {{ 'pending approval' }}
+                                @else
+                                    {{ 'pending payment' }}
+                                @endif</i>)
+                            @endif
                         </div>
                     </div>
                 </div>
