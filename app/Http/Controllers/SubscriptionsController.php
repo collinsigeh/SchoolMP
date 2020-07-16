@@ -331,11 +331,7 @@ class SubscriptionsController extends Controller
         {
             if ($package->price_type == 'Per-student') 
             {
-                $this->validate($request, [
-                    'no_students' => ['required', 'numeric']
-                ]);
-
-                $total_price = round(($request->input('no_students') * $package->price), 2);
+                $total_price = 0;
             }
             else
             {
@@ -418,8 +414,34 @@ class SubscriptionsController extends Controller
         }
         else
         {
-            $request->session()->flash('success', 'Order saved. Make payment.');
-            return redirect()->route('orders.show', $order->id);
+            if($order->student_limit == 'n')
+            {
+                $end_at = ($order->day_limit * 24 * 60 * 60) + $time;
+    
+                $subscription = new Subscription;
+    
+                $subscription->school_id = $order->school_id;
+                $subscription->name = $order->name;
+                $subscription->start_at = $time;
+                $subscription->end_at = $end_at;
+                $subscription->term_limit = $order->term_limit;
+                $subscription->student_limit = $order->student_limit;
+    
+                $subscription->save();
+    
+                $order_to_update = Order::find($order->id);
+                $order_to_update->subscription_id = $subscription->id;
+                $order_to_update->status = 'Completed';
+                $order_to_update->save();
+                
+                $request->session()->flash('success', 'Congratulations! Subscription was successful.');
+                return redirect()->route('subscriptions.index');
+            }
+            else
+            {
+                $request->session()->flash('success', 'Order saved. Make payment.');
+                return redirect()->route('orders.show', $order->id);
+            }
         }
     }
 
