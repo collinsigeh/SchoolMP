@@ -128,9 +128,9 @@
                                             <div class="alert alert-info">
                                                 <b>Note: </b>
                                                 <ul>
-                                                    <li>This is a <b>post-paid</b> order.</li>
-                                                    <li>The total value of this order will be determined at the end of the term when the total number of students have been known.</li>
-                                                    <li>The rate of this package will remain the same at the end of the term.</li>
+                                                    <li style="padding-bottom: 12px;">This is a <b>post-paid</b> order.</li>
+                                                    <li style="padding-bottom: 12px;">The total value of this order will be determined at the end of the term when the total number of students have been known.</li>
+                                                    <li style="padding-bottom: 12px;">The rate of this package will remain the same at the end of the term.</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -141,7 +141,12 @@
                                             <div class="alert alert-info">
                                                 <b>Note: </b>
                                                 <ul>
-                                                    <li>This is a <b>prepaid</b> plan and will be billed per student at the rate stated above.</li>
+                                                    <li style="padding-bottom: 12px;">This is a <b>prepaid</b> plan and can be paid for either by the school or the student.</li>
+                                                    <li style="padding-bottom: 12px;">The <b>School asking price is the amount</b> the school wants each student to pay for the subscription.</li>
+                                                    <li style="padding-bottom: 12px;">The <b>School asking price can be changed</b> at anytime. <a href="#">Click to change</a>.</li>
+                                                    <li style="padding-bottom: 12px;">If the <b>school makes payment</b>, it will be billed at the price stated above.</li>
+                                                    <li style="padding-bottom: 12px;">If the <b>student makes payment</b>, it will be billed at the School asking price specified above.</li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
