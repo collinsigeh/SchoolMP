@@ -106,8 +106,8 @@
                             </div>
                             <div class="col-md-5">
                                 @if ($order->expiry >= time())
-                                    @if (($order->status == 'Pending' && $order->payment == 'Prepaid') OR 
-                                            ($order->status == 'Pending' && $order->payment == 'Trial' && $order->amount))
+                                    @if (($order->status == 'Pending' && $order->payment == 'Prepaid' && $order->price_type == 'Per-package') OR 
+                                            ($order->status == 'Pending' && $order->payment == 'Trial' && $order->amount > 0))
                                         <a href="#" class="btn btn-primary">Pay for order</a>
                                     @endif
                                 @endif
@@ -122,15 +122,43 @@
                                 Order specification:
                             </div>
                             <div class="col-md-9">
+                                @if ($order->product->payment == 'Post-paid')
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="alert alert-info">
+                                                <b>Note: </b>
+                                                <ul>
+                                                    <li>This is a <b>post-paid</b> order.</li>
+                                                    <li>The total value of this order will be determined at the end of the term when the total number of students have been known.</li>
+                                                    <li>The rate of this package will remain the same at the end of the term.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @elseif($order->product->payment == 'Prepaid' && $order->price_type == 'Per-student')
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="alert alert-info">
+                                                <b>Note: </b>
+                                                <ul>
+                                                    <li>This is a <b>prepaid</b> plan and will be billed per student at the rate stated above.</li>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="table-responsive">    
                                 <table class="table table-striped table-bordered table-hover table-sm">
-                                    <tr>
-                                        <th>Order amount:</th>
-                                        <th>
-                                            {{ $order->currency_symbol }} {{ $order->final_price }}
-                                        </th>
-                                    </tr>
                                     @php
+                                        if($order->payment_type == 'Per-package')
+                                        {
+                                            echo '
+                                                <tr>
+                                                    <th>Order amount:</th>
+                                                    <th>
+                                                        {{ $order->currency_symbol }} {{ $order->final_price }}
+                                                    </th>
+                                                </tr>';
+                                        }
                                         if($order->day_limit == 1)
                                         {
                                           echo '<tr><th>Validity:</th><td>'.$order->day_limit.' day</td></tr>';
@@ -355,7 +383,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            @if ($order->subscription > 0 && !empty($order->subscription))
+                            @if ($order->subscription_id > 0 && !empty($order->subscription))
                             <table class="table table-striped table-hover table-sm">
                                 <tbody>
                                     <tr>
@@ -374,124 +402,10 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="resource-details">
-                    <div class="title">
-                        Payments for order
-                    </div>
-                    <div class="body">
-                        <div class="text-right">
-                            @if ($order->status != 'Completed')
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addPaymentModal">Add payment details</button>
-                            @endif
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         
     </div>
   </div>
-  <!-- addPaymentModal -->
-  <div class="modal fade" id="addPaymentModal" tabindex="-1" role="dialog" aria-labelledby="addPaymentModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addPaymentModalLabel">Add payment details</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-              <div class="create-form">
-                  <form method="POST" action="{{ route('payments.store') }}">
-                      @csrf
-  
-                      <input type="hidden" name="id" value="{{ $order->id }}">
-  
-                      <div class="form-group row">
-                          <label for="" class="col-md-4 col-form-label text-md-right">Order number</label>
-  
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" value="{{ $order->number }}" disabled>
-                          </div>
-                      </div>
-  
-                      <div class="form-group row"> 
-                          <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Amount ('.$order->currency_symbol.')') }}</label>
-      
-                          <div class="col-md-6">
-                              <input id="amount" type="text" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{ old('amount') }}" required autocomplete="amount" autofocus>
-      
-                              @error('amount')
-                                  <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $message }}</strong>
-                                  </span>
-                              @enderror
-                          </div>
-                      </div>
-  
-                      <div class="form-group row">
-                          <label for="method" class="col-md-4 col-form-label text-md-right">{{ __('Method of payment') }}</label>
-          
-                          <div class="col-md-6">
-                              <select name="method" id="method" class="form-control @error('method') is-invalid @enderror" required>
-                                  <option value="Offline">Offline</option>
-                                  <option value="Online">Online</option>
-                              </select>
-          
-                              @error('method')
-                                  <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $message }}</strong>
-                                  </span>
-                              @enderror
-                          </div>
-                      </div>
-  
-                      <div class="form-group row">
-                          <label for="status" class="col-md-4 col-form-label text-md-right">{{ __('Status of payment') }}</label>
-          
-                          <div class="col-md-6">
-                              <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
-                                  <option value="Pending">Unconfirmed</option>
-                                  <option value="Confirmed">Confirmed</option>
-                              </select>
-          
-                              @error('status')
-                                  <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $message }}</strong>
-                                  </span>
-                              @enderror
-                          </div>
-                      </div>
-  
-                      <div class="form-group row"> 
-                          <label for="special_note" class="col-md-4 col-form-label text-md-right">{{ __('Special note (Optional):') }}</label>
-                          
-                          <div class="col-md-6">
-                              <textarea id="special_note" class="form-control @error('special_note') is-invalid @enderror" name="special_note" placeholder="More details, if any!">{{ old('special_note') }}</textarea>
-      
-                              @error('special_note')
-                                  <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $message }}</strong>
-                                  </span>
-                              @enderror
-                          </div>
-                      </div>
-  
-                      <div class="form-group row mb-0">
-                          <div class="col-md-6 offset-md-4">
-                              <button type="submit" class="btn btn-primary">
-                                  {{ __('Save') }}
-                              </button>
-                          </div>
-                      </div>
-                  </form>
-              </div>
-          </div>
-        </div>
-      </div>
-  </div>
-  <!-- End addPaymentModal -->
 
 @endsection

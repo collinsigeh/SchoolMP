@@ -265,15 +265,23 @@
                         Subscription delivered
                     </div>
                     <div class="body">
-                        <div class="table-responsive">    
+                        <div class="table-responsive">  
+                            @if ($order->subscription > 0 && !empty($order->subscription))
                             <table class="table table-striped table-hover table-sm">
                                 <tbody>
                                     <tr>
                                         <td>{{ $order->subscription->name }}</td>
                                         <td class="text-right"><a href="{{ route('subscriptions.show', $order->subscription->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
-                                     </tr>
+                                    </tr>
                                 </tbody>
                             </table>
+                            @else
+                                <b>No subscription</b> (<i>@if ($order->payment == 'Post-paid')
+                                    {{ 'pending approval' }}
+                                @else
+                                    {{ 'pending payment' }}
+                                @endif</i>)
+                            @endif
                         </div>
                     </div>
                 </div>

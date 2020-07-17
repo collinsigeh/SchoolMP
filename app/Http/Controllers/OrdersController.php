@@ -232,12 +232,15 @@ class OrdersController extends Controller
 
             if(!empty($order->payments))
             {
-                $request->session()->flash('error', 'ERROR: Orders with payment can NOT be deleted or canceled.');
-                if($data['user']->usertype == 'Admin')
+                if($order->payments->count() > 0)
                 {
-                    return redirect()->route('orders.detail', $id);
+                    $request->session()->flash('error', 'ERROR: Orders with payment can NOT be deleted or canceled.');
+                    if($data['user']->usertype == 'Admin')
+                    {
+                        return redirect()->route('orders.detail', $id);
+                    }
+                    return redirect()->route('orders.show', $id);
                 }
-                return redirect()->route('orders.show', $id);
             }
 
             $order->delete();
