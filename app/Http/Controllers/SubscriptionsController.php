@@ -121,6 +121,10 @@ class SubscriptionsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
 
@@ -133,6 +137,11 @@ class SubscriptionsController extends Controller
             $request->session()->flash('error', 'New subscription orders are suspended at the moment.' );
             return redirect()->route('subscriptions.index');
         }
+        elseif($packages->count() < 1)
+        {
+            $request->session()->flash('error', 'New subscription orders are suspended at the moment.' );
+            return redirect()->route('subscriptions.index');
+        }
 
         $data['products'] = Product::orderBy('name', 'asc')->get();
         if(empty($data['products']))
@@ -140,9 +149,19 @@ class SubscriptionsController extends Controller
             $request->session()->flash('error', 'New subscription orders are suspended at the moment.' );
             return redirect()->route('subscriptions.index');
         }
+        elseif($data['products']->count() < 1)
+        {
+            $request->session()->flash('error', 'New subscription orders are suspended at the moment.' );
+            return redirect()->route('subscriptions.index');
+        }
 
         $data['setting'] = Setting::first();
         if(empty($data['setting']))
+        {
+            $request->session()->flash('error', 'New subscription orders are suspended at the moment.' );
+            return redirect()->route('subscriptions.index');
+        }
+        elseif($data['setting']->count() < 1)
         {
             $request->session()->flash('error', 'New subscription orders are suspended at the moment.' );
             return redirect()->route('subscriptions.index');
@@ -192,6 +211,10 @@ class SubscriptionsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
 
@@ -201,9 +224,19 @@ class SubscriptionsController extends Controller
             $request->session()->flash('error', 'Invalid package selection');
             return redirect()->route('subscriptions.create');
         }
+        elseif($data['package']->count() < 1)
+        {
+            $request->session()->flash('error', 'Invalid package selection');
+            return redirect()->route('subscriptions.create');
+        }
 
         $data['setting'] = Setting::first();
         if(empty($data['setting']))
+        {
+            $request->session()->flash('error', 'New subscription orders are suspended at the moment.' );
+            return redirect()->route('subscriptions.index');
+        }
+        elseif($data['setting']->count() < 1)
         {
             $request->session()->flash('error', 'New subscription orders are suspended at the moment.' );
             return redirect()->route('subscriptions.index');
@@ -281,6 +314,11 @@ class SubscriptionsController extends Controller
 
         $package = Package::find($request->input('package_id'));
         if(empty($package))
+        {
+            $request->session()->flash('error', '<p>Invalid package selection.</p>Please pick from one of the following packages.');
+            return redirect()->route('subscriptions.create');
+        }
+        elseif($package->count() < 1)
         {
             $request->session()->flash('error', '<p>Invalid package selection.</p>Please pick from one of the following packages.');
             return redirect()->route('subscriptions.create');
@@ -494,6 +532,10 @@ class SubscriptionsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -503,6 +545,10 @@ class SubscriptionsController extends Controller
         );
         $subscriptions = Subscription::where($db_check)->get();
         if(empty($subscriptions))
+        {
+            return  redirect()->route('dashboard');
+        }
+        elseif($subscriptions->count() < 1)
         {
             return  redirect()->route('dashboard');
         }
