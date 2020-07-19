@@ -104,12 +104,21 @@ class DashboardController extends Controller
                 {
                     return redirect()->route('dashboard.relogin');
                 }
+                elseif($data['school']->count() < 1)
+                {
+                    return  redirect()->route('dashboard.relogin');
+                }
 
                 $db_check = array(
                     'user_id'   => $data['user']->id,
                     'school_id' => $data['school']->id
                 );
-                if(empty(Director::where($db_check)->get()))
+                $no_directors = Director::where($db_check)->get();
+                if(empty($no_directors))
+                {
+                    return  redirect()->route('dashboard.relogin');
+                }
+                elseif($no_directors->count() < 1)
                 {
                     return  redirect()->route('dashboard.relogin');
                 }
@@ -151,6 +160,10 @@ class DashboardController extends Controller
                 {
                     return redirect()->route('dashboard.relogin');
                 }
+                elseif($data['school']->count() < 1)
+                {
+                    return  redirect()->route('dashboard.relogin');
+                }
                 
                 $db_check = array(
                     'user_id'   => $data['user']->id,
@@ -158,6 +171,10 @@ class DashboardController extends Controller
                 );
                 $staff = Staff::where($db_check)->get();
                 if(empty($staff))
+                {
+                    return  redirect()->route('dashboard.relogin');
+                }
+                elseif($staff->count() < 1)
                 {
                     return  redirect()->route('dashboard.relogin');
                 }

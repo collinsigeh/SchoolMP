@@ -203,6 +203,10 @@ class SchoolsController extends Controller
         if(empty($data['school'])){
             return redirect()->route('dashboard');
         }
+        elseif($data['school']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
 
         if($data['user']->role == 'Staff')
         {
@@ -212,6 +216,10 @@ class SchoolsController extends Controller
             );
             $staff = Staff::where($db_check)->get();
             if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
             {
                 return  redirect()->route('dashboard');
             }
@@ -249,6 +257,10 @@ class SchoolsController extends Controller
 
         if(empty($school)){
             return redirect()->route('dashboard');
+        }
+        elseif($school->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $school->school     = ucwords(strtolower($request->input('school')));

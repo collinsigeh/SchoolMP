@@ -75,6 +75,10 @@ class StudentsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -126,6 +130,12 @@ class StudentsController extends Controller
             <a class="btn btn-sm btn-primary" href="'.config('app.url').'/classes/create">New class</a>');
             return redirect()->route('students.index');
         }
+        elseif($data['school']->schoolclasses->count() < 1)
+        {
+            $request->session()->flash('error', 'Please create at least a school class before attempting to enrol students.</p>
+            <a class="btn btn-sm btn-primary" href="'.config('app.url').'/classes/create">New class</a>');
+            return redirect()->route('students.index');
+        }
 
         $no_classarms = 0;
         foreach($data['school']->schoolclasses as $schoolclass)
@@ -157,6 +167,11 @@ class StudentsController extends Controller
             $request->session()->flash('error', "<p>Subscription recognition error.</p>" );
             return redirect()->route('students.index');
         }
+        elseif($data['term']->subscription->count() < 1)
+        {
+            $request->session()->flash('error', "<p>Subscription recognition error.</p>" );
+            return redirect()->route('students.index');
+        }
 
         $subscription_enrolments = 0;
         if(!empty($data['term']->subscription->enrolments))
@@ -179,6 +194,10 @@ class StudentsController extends Controller
             );
             $staff = Staff::where($db_check)->get();
             if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
             {
                 return  redirect()->route('dashboard');
             }
@@ -386,6 +405,10 @@ class StudentsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -400,17 +423,29 @@ class StudentsController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['term']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
         
         $data['enrolment'] = Enrolment::find($id);
         if(empty($data['enrolment']))
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['enrolment']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
         
         $data['arm'] = Arm::find($data['enrolment']->arm->id);
         if(empty($data['arm']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['arm']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
         session(['arm_id' => $data['arm']->id]);
 

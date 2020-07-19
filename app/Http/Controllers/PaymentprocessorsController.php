@@ -150,6 +150,10 @@ class PaymentprocessorsController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['paymentprocessor']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
 
         return view('paymentprocessors.edit')->with($data);
     }

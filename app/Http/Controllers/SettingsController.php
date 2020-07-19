@@ -177,6 +177,10 @@ class SettingsController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['setting']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
 
         $data['paymentprocessors'] = Paymentprocessors::all();
 
@@ -217,6 +221,10 @@ class SettingsController extends Controller
         if(empty($setting))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($setting->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $setting->base_currency         = $request->input('base_currency');

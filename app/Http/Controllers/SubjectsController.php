@@ -62,6 +62,10 @@ class SubjectsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -112,6 +116,10 @@ class SubjectsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
 
@@ -155,6 +163,10 @@ class SubjectsController extends Controller
             );
             $staff = Staff::where($db_check)->get();
             if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
             {
                 return  redirect()->route('dashboard');
             }
@@ -242,6 +254,10 @@ class SubjectsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -250,6 +266,10 @@ class SubjectsController extends Controller
         if(empty($data['subject']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['subject']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $data['subject_manager'] = 'No';
@@ -313,6 +333,10 @@ class SubjectsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -321,6 +345,10 @@ class SubjectsController extends Controller
         if(empty($data['subject']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['subject']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         return view('subjects.edit')->with($data);
@@ -385,6 +413,10 @@ class SubjectsController extends Controller
         if(empty($subject))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($subject->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $subject->name = $name;

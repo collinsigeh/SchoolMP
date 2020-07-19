@@ -60,6 +60,10 @@ class TermsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -107,6 +111,10 @@ class TermsController extends Controller
             );
             $staff = Staff::where($db_check)->get();
             if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
             {
                 return  redirect()->route('dashboard');
             }
@@ -209,6 +217,11 @@ class TermsController extends Controller
 
         $subscription = Subscription::find($request->input('subscription_id')); 
         if(empty($subscription))
+        {
+            $request->session()->flash('error', 'Invalid subscription error.');
+            return redirect()->route('terms.create');
+        }
+        elseif($subscription->count() < 1)
         {
             $request->session()->flash('error', 'Invalid subscription error.');
             return redirect()->route('terms.create');
@@ -322,6 +335,10 @@ class TermsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
 
@@ -329,6 +346,10 @@ class TermsController extends Controller
         if(empty($data['term']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['term']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
         session(['term_id' => $data['term']->id]);
 
@@ -435,6 +456,10 @@ class TermsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -443,6 +468,10 @@ class TermsController extends Controller
         if(empty($data['term']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['term']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $thisyear = date('Y', time());

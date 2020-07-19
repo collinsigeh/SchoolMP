@@ -62,6 +62,10 @@ class ResulttemplatesController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -112,6 +116,10 @@ class ResulttemplatesController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
 
@@ -155,6 +163,10 @@ class ResulttemplatesController extends Controller
             );
             $staff = Staff::where($db_check)->get();
             if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
             {
                 return  redirect()->route('dashboard');
             }
@@ -348,6 +360,10 @@ class ResulttemplatesController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -356,6 +372,10 @@ class ResulttemplatesController extends Controller
         if(empty($data['resulttemplate']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['resulttemplate']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $data['resulttemplate_manager'] = 'No';
@@ -419,6 +439,10 @@ class ResulttemplatesController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -427,6 +451,10 @@ class ResulttemplatesController extends Controller
         if(empty($data['resulttemplate']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['resulttemplate']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         return view('resulttemplates.edit')->with($data);
@@ -648,6 +676,11 @@ class ResulttemplatesController extends Controller
         }
         else
         {
+            if($resulttemplate->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+
             if(!empty($resulttemplate->arms))
             {
                 if(count($resulttemplate->arms) > 0)

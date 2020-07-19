@@ -64,9 +64,18 @@ class PackagesController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['product']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
         
         $data['setting'] = Setting::first();
         if(empty($data['setting']))
+        {
+            $request->session()->flash('success', 'Error: Settings not found. Configure settings before creating product package.');
+            return redirect()->route('settings.index');
+        }
+        elseif($data['setting']->count() < 1)
         {
             $request->session()->flash('success', 'Error: Settings not found. Configure settings before creating product package.');
             return redirect()->route('settings.index');
@@ -107,9 +116,18 @@ class PackagesController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['product']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
         
         $data['setting'] = Setting::first();
         if(empty($data['setting']))
+        {
+            $request->session()->flash('error', 'Settings not found. Configure settings before creating product package.');
+            return redirect()->route('settings.index');
+        }
+        elseif($data['setting']->count() < 1)
         {
             $request->session()->flash('error', 'Settings not found. Configure settings before creating product package.');
             return redirect()->route('settings.index');
@@ -205,9 +223,18 @@ class PackagesController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['package']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
         
         $data['setting'] = Setting::first();
         if(empty($data['setting']))
+        {
+            $request->session()->flash('error', 'Settings not found. Configure settings to view product package details.');
+            return redirect()->route('settings.index');
+        }
+        elseif($data['setting']->count() < 1)
         {
             $request->session()->flash('error', 'Settings not found. Configure settings to view product package details.');
             return redirect()->route('settings.index');
@@ -243,9 +270,18 @@ class PackagesController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['package']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
         
         $data['setting'] = Setting::first();
         if(empty($data['setting']))
+        {
+            $request->session()->flash('error', 'Settings not found. Configure settings to view product package details.');
+            return redirect()->route('settings.index');
+        }
+        elseif($data['setting']->count() < 1)
         {
             $request->session()->flash('error', 'Settings not found. Configure settings to view product package details.');
             return redirect()->route('settings.index');
@@ -286,6 +322,10 @@ class PackagesController extends Controller
         if(empty($data['product']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['product']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $this->validate($request, [

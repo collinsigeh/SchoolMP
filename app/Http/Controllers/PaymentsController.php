@@ -79,6 +79,11 @@ class PaymentsController extends Controller
                 $request->session()->flash('error', 'A valid order is required.');
                 return redirect()->route('order.details', $id);
             }
+            elseif($order->count() < 1)
+            {
+                $request->session()->flash('error', 'A valid order is required.');
+                return redirect()->route('order.details', $id);
+            }
 
             $payment = new Payment;
 
@@ -121,6 +126,10 @@ class PaymentsController extends Controller
             );
             $staff = Staff::where($db_check)->get();
             if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
             {
                 return  redirect()->route('dashboard');
             }

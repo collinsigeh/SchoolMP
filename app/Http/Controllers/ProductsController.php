@@ -152,9 +152,18 @@ class ProductsController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['product']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
         
         $data['setting'] = Setting::first();
         if(empty($data['setting']))
+        {
+            $request->session()->flash('error', 'Settings not found. Configure settings to view product details.');
+            return redirect()->route('settings.index');
+        }
+        elseif($data['setting']->count() < 1)
         {
             $request->session()->flash('error', 'Settings not found. Configure settings to view product details.');
             return redirect()->route('settings.index');
@@ -191,6 +200,10 @@ class ProductsController extends Controller
         if(empty($data['product']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['product']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         return view('products.edit')->with($data);
@@ -280,6 +293,12 @@ class ProductsController extends Controller
             $request->session()->flash('error', 'ERROR: An attempt to delete unavailable resource.');
             return redirect()->route('products.index');
         }
+        elseif($product->count() < 1)
+        {
+            $request->session()->flash('error', 'ERROR: An attempt to delete unavailable resource.');
+            return redirect()->route('products.index');
+        }
+
         if(!empty($product->packages))
         {
             $request->session()->flash('error', '<p>ERROR: An attempt to delete a product with available packages.</p>You have to delete each of the product packages before attempting to delete the product itself.');

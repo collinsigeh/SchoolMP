@@ -63,6 +63,10 @@ class StaffController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
 
@@ -110,6 +114,10 @@ class StaffController extends Controller
             );
             $staff = Staff::where($db_check)->get();
             if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
             {
                 return  redirect()->route('dashboard');
             }
@@ -310,6 +318,10 @@ class StaffController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -318,6 +330,10 @@ class StaffController extends Controller
         if(empty($data['this_staff']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['this_staff']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         return view('staff.show')->with($data);
@@ -363,6 +379,10 @@ class StaffController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -371,6 +391,10 @@ class StaffController extends Controller
         if(empty($data['this_staff']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['this_staff']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         return view('staff.edit')->with($data);
@@ -499,6 +523,11 @@ class StaffController extends Controller
         }
         else
         {
+            if($subscriptions->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+
             if(Auth::user()->id == $staff->user_id)
             {
                 $request->session()->flash('error', 'ERROR: An attempt to delete own resource.');
@@ -584,6 +613,11 @@ class StaffController extends Controller
         $user = User::where('email', $email)->get();
 
         if(empty($user))
+        {
+            $request->session()->flash('error', 'Invalid email : <b>'.$email.'</b>');
+            return redirect()->route('staff.new');
+        }
+        elseif($user->count() < 1)
         {
             $request->session()->flash('error', 'Invalid email : <b>'.$email.'</b>');
             return redirect()->route('staff.new');

@@ -63,6 +63,10 @@ class OrdersController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -135,6 +139,10 @@ class OrdersController extends Controller
             );
             $staff = Staff::where($db_check)->get();
             if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
             {
                 return  redirect()->route('dashboard');
             }
@@ -265,6 +273,11 @@ class OrdersController extends Controller
         }
         else
         {
+            if($order->count() < 1)
+            {
+                $request->session()->flash('error', 'ERROR: An attempt to delete unavailable resource.');
+            }
+
             if($order->subscription_id > 0)
             {
                 $request->session()->flash('error', 'ERROR: Delivered orders can NOT be deleted or canceled.');
@@ -409,6 +422,10 @@ class OrdersController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['order']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
 
         return view('orders.detail')->with($data);
     }
@@ -448,6 +465,10 @@ class OrdersController extends Controller
         if(empty($order))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($order->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         if($order->status == 'Pending' && $order->payment == 'Post-paid' && $request->input('status') == 'Approved-unpaid')

@@ -100,6 +100,10 @@ class EnrolmentsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -114,17 +118,29 @@ class EnrolmentsController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['term']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
 
         $data['enrolment'] = Enrolment::find($id);
         if(empty($data['enrolment']))
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['enrolment']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
         
         $data['arm'] = Arm::find($data['enrolment']->arm_id);
         if(empty($data['arm']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['arm']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
         session(['arm_id' => $data['arm']->id]);
 

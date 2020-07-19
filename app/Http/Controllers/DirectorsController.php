@@ -205,6 +205,10 @@ class DirectorsController extends Controller
         {
             return  redirect()->route('dashboard');
         }
+        elseif($directors->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
         $data['director'] = $directors[0];
 
         $data['resource_manager'] = false;
@@ -247,6 +251,10 @@ class DirectorsController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['director']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
 
         return view('directors.edit')->with($data);
     }
@@ -273,6 +281,10 @@ class DirectorsController extends Controller
 
         if(empty($director)){
             return redirect()->route('dashboard');
+        }
+        elseif($director->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
         
         $director->phone = $request->input('phone');
@@ -304,6 +316,11 @@ class DirectorsController extends Controller
         }
         else
         {
+            if($director->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+
             if(Auth::user()->id == $director->user_id)
             {
                 $request->session()->flash('error', 'ERROR: An attempt to delete own resource.');
@@ -400,6 +417,10 @@ class DirectorsController extends Controller
         {
             $request->session()->flash('error', 'Invalid email : <b>'.$email.'</b>');
             return redirect()->route('directors.new');
+        }
+        elseif($user->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         if($user[0]['role'] == 'Student')

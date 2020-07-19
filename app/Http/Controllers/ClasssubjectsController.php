@@ -163,6 +163,10 @@ class ClasssubjectsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
 
@@ -248,6 +252,10 @@ class ClasssubjectsController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($classsubject->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
 
         $classsubject->user_id = $request->input('user_id');
         $classsubject->save();
@@ -315,9 +323,14 @@ class ClasssubjectsController extends Controller
                 'user_id'   => $user->id,
                 'school_id' => $school_id
             );
-            if(empty(Director::where($db_check)->get()))
+            $no_directors = Director::where($db_check)->get();
+            if(empty($no_directors))
             {
                 $resource_manager = true;
+            }
+            elseif($no_directors->count() < 1)
+            {
+                return  redirect()->route('dashboard');
             }
         }
         elseif($user->role == 'Staff')

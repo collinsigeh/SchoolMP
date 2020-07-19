@@ -72,6 +72,10 @@ class ItemsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -116,6 +120,11 @@ class ItemsController extends Controller
             $request->session()->flash('error', "Please create at least a school class before attempting to create fees and other items for students." );
             return redirect()->route('classes.create');
         }
+        elseif($data['school']->schoolclasses->count() < 1)
+        {
+            $request->session()->flash('error', "Please create at least a school class before attempting to create fees and other items for students." );
+            return redirect()->route('classes.create');
+        }
 
         if(session('term_id') < 1)
         {
@@ -136,6 +145,10 @@ class ItemsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
 
@@ -146,6 +159,11 @@ class ItemsController extends Controller
         
         $data['setting'] = Setting::first();
         if(empty($data['setting']))
+        {
+            $request->session()->flash('success', 'Error: Settings not found. Configure settings before creating product package.');
+            return redirect()->route('settings.index');
+        }
+        elseif($data['setting']->count() < 1)
         {
             $request->session()->flash('success', 'Error: Settings not found. Configure settings before creating product package.');
             return redirect()->route('settings.index');

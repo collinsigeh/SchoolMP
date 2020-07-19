@@ -175,6 +175,10 @@ class UsersController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['thisuser']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
 
         return view('users.show')->with($data);
     }
@@ -205,6 +209,10 @@ class UsersController extends Controller
         if(empty($data['thisuser']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['thisuser']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         return view('users.edit')->with($data);
@@ -403,6 +411,10 @@ class UsersController extends Controller
                 );
                 $staff = Staff::where($db_check)->get();
                 if(empty($staff))
+                {
+                    return  redirect()->route('dashboard');
+                }
+                elseif($staff->count() < 1)
                 {
                     return  redirect()->route('dashboard');
                 }

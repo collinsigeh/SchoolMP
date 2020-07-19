@@ -61,6 +61,10 @@ class ClassesController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -111,6 +115,10 @@ class ClassesController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
 
@@ -154,6 +162,10 @@ class ClassesController extends Controller
             );
             $staff = Staff::where($db_check)->get();
             if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
             {
                 return  redirect()->route('dashboard');
             }
@@ -243,6 +255,10 @@ class ClassesController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -252,6 +268,10 @@ class ClassesController extends Controller
         );
         $schoolclasses = Schoolclass::where($db_check)->get();
         if(empty($schoolclasses))
+        {
+            return  redirect()->route('dashboard');
+        }
+        elseif($schoolclasses->count() < 1)
         {
             return  redirect()->route('dashboard');
         }
@@ -305,6 +325,10 @@ class ClassesController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -313,6 +337,10 @@ class ClassesController extends Controller
         if(empty($data['schoolclass']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($schoolclass->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         return view('classes.edit')->with($data);
@@ -381,6 +409,10 @@ class ClassesController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($schoolclass->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
 
         $schoolclass->name = $name;
         $schoolclass->description = $request->input('description');
@@ -431,6 +463,11 @@ class ClassesController extends Controller
         }
         else
         {
+            if($schoolclass->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+
             if(!empty($schoolclass->arms))
             {
                 if(count($schoolclass->arms) > 0)
