@@ -29,6 +29,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('total_price', 10, 2);
             $table->decimal('discount', 10, 2);
             $table->decimal('final_price', 10, 2);
+            $table->decimal('school_asking_price', 10, 2);
             $table->string('term_limit', 25);
             $table->string('day_limit', 25);
             $table->string('student_limit', 25);

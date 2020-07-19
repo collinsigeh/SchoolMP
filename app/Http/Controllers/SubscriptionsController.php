@@ -294,6 +294,7 @@ class SubscriptionsController extends Controller
         $setting = Setting::first();
 
         $total_price = 0;
+        $school_asking_price = 0;
         
         if($package->product->payment == 'Trial')
         {
@@ -331,12 +332,18 @@ class SubscriptionsController extends Controller
         {
             if ($package->price_type == 'Per-student') 
             {
+                $this->validate($request, [
+                    'school_asking_price' => ['required', 'numeric', "min:$package->price"]
+                ]);
+
                 $total_price = 0;
             }
             else
             {
                 $total_price = $package->price;
             }
+
+            $school_asking_price = $request->input('school_asking_price');
         }
         elseif($package->product->payment == 'Post-paid')
         {
@@ -375,6 +382,7 @@ class SubscriptionsController extends Controller
         $order->total_price = $total_price;
         $order->discount = 0;
         $order->final_price = $total_price;
+        $order->school_asking_price = $school_asking_price;
         $order->term_limit = $package->term_limit;
         $order->day_limit = $package->day_limit;
         $order->student_limit = $package->product->student_limit;
