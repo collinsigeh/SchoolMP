@@ -71,6 +71,10 @@ class ArmsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -115,8 +119,18 @@ class ArmsController extends Controller
             $request->session()->flash('error', "Please create at least a school class before attempting to create class arms for terms." );
             return redirect()->route('classes.create');
         }
+        elseif($data['school']->schoolclasses->count() < 1)
+        {
+            $request->session()->flash('error', "Please create at least a school class before attempting to create class arms for terms." );
+            return redirect()->route('classes.create');
+        }
 
         if(empty($data['school']->resulttemplates))
+        {
+            $request->session()->flash('error', "Please create at least one (1) result template before attempting to create class arms for terms." );
+            return redirect()->route('classes.create');
+        }
+        elseif($subscriptions->resulttemplates->count() < 1)
         {
             $request->session()->flash('error', "Please create at least one (1) result template before attempting to create class arms for terms." );
             return redirect()->route('classes.create');
@@ -138,6 +152,10 @@ class ArmsController extends Controller
             );
             $staff = Staff::where($db_check)->get();
             if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
             {
                 return  redirect()->route('dashboard');
             }
@@ -204,10 +222,15 @@ class ArmsController extends Controller
             'term_id' => $term_id,
             'schoolclass_id' => $request->input('schoolclass_id')
         );
-        if(empty(Arm::where($db_check)->get()))
+        $no_arms = Arm::where($db_check)->get();
+        if(empty($no_arms))
         {
             $request->session()->flash('error', 'The class arm exits already.' );
             return redirect()->route('arms.create');
+        }
+        elseif($no_arms->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $arm = new Arm;
@@ -267,6 +290,10 @@ class ArmsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -281,6 +308,10 @@ class ArmsController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['term']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
 
         $db_check = array(
             'id' => $id,
@@ -288,6 +319,10 @@ class ArmsController extends Controller
         );
         $arms = Arm::where($db_check)->get();
         if(empty($arms))
+        {
+            return  redirect()->route('dashboard');
+        }
+        elseif($arms->count() < 1)
         {
             return  redirect()->route('dashboard');
         }
@@ -405,6 +440,10 @@ class ArmsController extends Controller
             {
                 return  redirect()->route('dashboard');
             }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
             $data['staff'] = $staff[0];
         }
         
@@ -418,6 +457,10 @@ class ArmsController extends Controller
         if(empty($data['term']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($data['term']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $this->validate($request, [
@@ -435,6 +478,10 @@ class ArmsController extends Controller
         if(empty($classteacher))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($classteacher->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $arm->user_id = $classteacher->id;

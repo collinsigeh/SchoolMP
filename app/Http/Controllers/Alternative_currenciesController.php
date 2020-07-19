@@ -56,6 +56,10 @@ class Alternative_currenciesController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['setting']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
 
         $data['paymentprocessors'] = Paymentprocessors::all();
 
@@ -87,6 +91,10 @@ class Alternative_currenciesController extends Controller
         if(empty($setting))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($setting->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $this->validate($request, [
@@ -155,11 +163,19 @@ class Alternative_currenciesController extends Controller
         {
             return redirect()->route('dashboard');
         }
+        elseif($data['setting']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
 
         $data['currency'] = Alternative_currency::find($id);
         if(empty($data['currency']))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($sdata['currency']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $data['paymentprocessors'] = Paymentprocessors::all();
@@ -235,6 +251,10 @@ class Alternative_currenciesController extends Controller
         if(empty($currency))
         {
             return redirect()->route('dashboard');
+        }
+        elseif($currency->count() < 1)
+        {
+            return  redirect()->route('dashboard');
         }
 
         $currency->delete();
