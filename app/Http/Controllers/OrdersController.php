@@ -150,6 +150,10 @@ class OrdersController extends Controller
         {
             return  redirect()->route('dashboard');
         }
+        elseif($orders->count() < 1)
+        {
+            return redirect()->route('dashboard');
+        }
         $data['order'] = $orders[0];
 
         return view('orders.show')->with($data);
@@ -173,9 +177,50 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id = 0)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate( $request, [
+            'update_type' => ['required']
+        ]);
+
+        $order = Order::find($id);
+
+        if(empty($order))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($order->count() < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        if($request->input('update_type') == 'School_Asking_Price')
+        {
+            $this->validate($request, [
+                'school_asking_price' => ['required', 'numeric', "min:$order->price"]
+            ]);
+
+            $order->school_asking_price = $request->input('school_asking_price');
+
+            $order->save();
+        }
+
+        $request->session()->flash('success', 'Update saved.');
+
+        return redirect()->route('orders.show', $id);
     }
 
     /**

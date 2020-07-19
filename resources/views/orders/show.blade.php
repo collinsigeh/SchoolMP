@@ -460,12 +460,12 @@
                     </div>
     
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Pricing ('.$order->currency_symbol).')' }}</label>
+                        <label for="pricing" class="col-md-4 col-form-label text-md-right">{{ __('Pricing ('.$order->currency_symbol).')' }}</label>
     
                         <div class="col-md-8">
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $order->final_price }}" disabled autocomplete="name" autofocus>
+                            <input id="pricing" type="text" class="form-control @error('pricing') is-invalid @enderror" name="pricing" value="{{ $order->final_price }}" disabled autocomplete="pricing" autofocus>
     
-                            @error('name')
+                            @error('pricing')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -474,12 +474,12 @@
                     </div>
     
                     <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('School asking price ('.$order->currency_symbol).')' }}</label>
+                        <label for="school_asking_price" class="col-md-4 col-form-label text-md-right">{{ __('School asking price ('.$order->currency_symbol).')' }}</label>
     
                         <div class="col-md-8">
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $order->school_asking_price }}" required autocomplete="name" autofocus>
+                            <input id="school_asking_price" type="text" class="form-control @error('school_asking_price') is-invalid @enderror" name="school_asking_price" value="{{ $order->school_asking_price }}" required autocomplete="school_asking_pricing" autofocus>
     
-                            @error('name')
+                            @error('school_asking_price')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

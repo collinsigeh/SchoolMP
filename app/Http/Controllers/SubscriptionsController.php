@@ -332,6 +332,7 @@ class SubscriptionsController extends Controller
         $setting = Setting::first();
 
         $total_price = 0;
+        $discount = 0;
         $school_asking_price = 0;
         
         if($package->product->payment == 'Trial')
@@ -403,6 +404,7 @@ class SubscriptionsController extends Controller
         $setting = Setting::first();
         $time = time();
         $expiry = ($setting->order_expiration * 24 * 60 * 60) + $time;
+        $final_price = $total_price - $discount;
 
         $order = new Order;
 
@@ -418,8 +420,8 @@ class SubscriptionsController extends Controller
         $order->price = $package->price;
         $order->currency_symbol = $setting->base_currency_symbol;
         $order->total_price = $total_price;
-        $order->discount = 0;
-        $order->final_price = $total_price;
+        $order->discount = $discount;
+        $order->final_price = $final_price;
         $order->school_asking_price = $school_asking_price;
         $order->term_limit = $package->term_limit;
         $order->day_limit = $package->day_limit;
