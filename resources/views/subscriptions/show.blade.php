@@ -133,12 +133,13 @@
                               <div class="table-responsive bg-light">
                                 <table class="table table-striped table-hover table-sm">
                                   <tr class="bg-secondary">
-                                      <th style="font-size: 1.2em; color: #ffffff;" colspan="3">Linked orders</th>
+                                      <th style="font-size: 1.2em; color: #ffffff;" colspan="4">Linked orders</th>
                                   </tr>
                                   <tr>
                                       <th>#</th>
                                       <th>Item description</th>
                                       <th>Order status</th>
+                                      <th></th>
                                   </tr>
                                   @php
                                       $sn = 1;
@@ -179,6 +180,7 @@
                                         }
 
                                         echo '</td>
+                                        <td><a href="'.route('orders.show', $order->id).'">View</a></td>
                                         </tr>';
                                         $sn++;
                                     }

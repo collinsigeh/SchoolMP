@@ -143,7 +143,7 @@
                                                 <ul>
                                                     <li style="padding-bottom: 12px;">This is a <b>prepaid</b> plan and can be paid for either by the school or the student.</li>
                                                     <li style="padding-bottom: 12px;">The <b>School asking price is the amount</b> the school wants each student to pay for the subscription.</li>
-                                                    <li style="padding-bottom: 12px;">The <b>School asking price can be changed</b> at anytime. <a href="#">Click to change</a>.</li>
+                                                    <li style="padding-bottom: 12px;">The <b>School asking price can be changed</b> at anytime. <a href="#" data-toggle="modal" data-target="#updateAskingPriceModal">Click to change</a>.</li>
                                                     <li style="padding-bottom: 12px;">If the <b>school makes payment</b>, it will be billed at the price stated above.</li>
                                                     <li style="padding-bottom: 12px;">If the <b>student makes payment</b>, it will be billed at the School asking price specified above.</li>
                                                 </ul>
@@ -187,8 +187,21 @@
                                     </tr>
                                     <tr>
                                         <th>Pricing:</th>
-                                        <td>{!! $order->currency_symbol.' '.$order->price.' (<i>'.$order->price_type.'</i>)' !!}</td>
+                                        <td>{!! $order->currency_symbol.' '.$order->price.' <small>(<i>'.$order->price_type.'</i>)</small>' !!}</td>
                                     </tr>
+                                    @if ($order->payment == 'Prepaid' && $order->price_type == 'Per-student')
+                                    <tr>
+                                        <th>School asking price:</th>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-md-7">
+                                                    {!! $order->currency_symbol.' '.$order->school_asking_price.' <small>(<i>'.$order->price_type.'</i>)</small>' !!}
+                                                </div>
+                                                <div class="col-md-5 text-md-right"><button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#updateAskingPriceModal">Update</button></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endif
                                     <tr>
                                         <th>Request at:</th>
                                         <td>
@@ -412,5 +425,80 @@
         
     </div>
   </div>
+
+
+  
+<div class="modal fade" id="updateAskingPriceModal" tabindex="-1" role="dialog" aria-labelledby="updateAskingPriceLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateAskingPriceLabel">Update School Asking Price</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="create-form">
+                <form method="POST" action="{{ route('orders.update', $order->id) }}">
+                    @csrf
+                    @method('PUT')
+
+                    <input type="hidden" name="update_type" value="School_Asking_Price" required>
+    
+                    <div class="form-group row">
+                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Item') }}</label>
+    
+                        <div class="col-md-8">
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $order->name }}" disabled autocomplete="name" autofocus>
+    
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Pricing ('.$order->currency_symbol).')' }}</label>
+    
+                        <div class="col-md-8">
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $order->final_price }}" disabled autocomplete="name" autofocus>
+    
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('School asking price ('.$order->currency_symbol).')' }}</label>
+    
+                        <div class="col-md-8">
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $order->school_asking_price }}" required autocomplete="name" autofocus>
+    
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+    
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Update') }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
 
 @endsection
