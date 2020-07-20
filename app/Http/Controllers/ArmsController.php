@@ -223,14 +223,13 @@ class ArmsController extends Controller
             'schoolclass_id' => $request->input('schoolclass_id')
         );
         $no_arms = Arm::where($db_check)->get();
-        if(empty($no_arms))
+        if(!empty($no_arms))
         {
-            $request->session()->flash('error', 'The class arm exits already.' );
-            return redirect()->route('arms.create');
-        }
-        elseif($no_arms->count() < 1)
-        {
-            return  redirect()->route('dashboard');
+            if($no_arms->count() > 0)
+            {
+                $request->session()->flash('error', 'The class arm exits already.' );
+                return redirect()->route('arms.create');
+            }
         }
 
         $arm = new Arm;
