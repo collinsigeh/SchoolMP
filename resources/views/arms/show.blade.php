@@ -116,6 +116,13 @@
                                   @endif
                                 </table>
                             </div>
+                            @if ($student_manager == 'Yes')
+                            <div class="text-right">
+                                <a href="{{ route('students.create') }}" class="btn btn-sm btn-primary">
+                                    New Student
+                                </a>
+                            </div>
+                            @endif
                             <div style="padding: 35px;"></div>
                             
                             <div class="table-responsive bg-light">
