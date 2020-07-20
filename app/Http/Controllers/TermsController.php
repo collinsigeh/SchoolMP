@@ -292,7 +292,7 @@ class TermsController extends Controller
 
         $request->session()->flash('success', 'Term created.');
 
-        return redirect()->route('terms.index');
+        return redirect()->route('terms.show', $term->id);
     }
 
     /**
