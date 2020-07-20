@@ -29,6 +29,7 @@ class CreateEnrolmentsTable extends Migration
             $table->enum('access_assignment', ['No', 'Yes']);
             $table->enum('access_result', ['No', 'Yes']);
             $table->integer('access_update_by');
+            $table->enum('fee_status', ['Active', 'Inactive']);
             $table->integer('created_by');
             $table->timestamps();
         });

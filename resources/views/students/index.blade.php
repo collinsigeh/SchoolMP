@@ -64,7 +64,8 @@
                             <th>Name</th>
                             <th>Gender</th>
                             <th>Reg. no.</th>
-                            <th>Fee status</th>
+                            <th>Fees</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -89,6 +90,16 @@
                                       echo 'badge-success';
                                     }
                                 ?>">{{ $enrolment->fee_status }}</span></td>
+                                <td><span class="badge <?php
+                                    if($enrolment->status == 'Active')
+                                    {
+                                      echo 'badge-success';
+                                    }
+                                    else
+                                    {
+                                      echo 'badge-danger';
+                                    }
+                                ?>">{{ $enrolment->status }}</span></td>
                                 <td class="text-right"><a href="{{ route('students.show', $enrolment->student_id) }}" class="btn btn-sm btn-outline-primary">Manage</a></td>
                             </tr>
                         @endforeach
