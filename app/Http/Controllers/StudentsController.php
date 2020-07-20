@@ -479,15 +479,20 @@ class StudentsController extends Controller
             return  redirect()->route('dashboard');
         }
         
-        $data['enrolment'] = Enrolment::find($id);
-        if(empty($data['enrolment']))
+        $db_check = array(
+            'student_id' => $id,
+            'term_id' => $data['term']->id
+        );
+        $enrolment = Enrolment::where($db_check)->get();
+        if(empty($enrolment))
         {
             return redirect()->route('dashboard');
         }
-        elseif($data['enrolment']->count() < 1)
+        elseif($enrolment->count() < 1)
         {
             return  redirect()->route('dashboard');
         }
+        $data['enrolment'] = $enrolment[0];
         
         $data['arm'] = Arm::find($data['enrolment']->arm->id);
         if(empty($data['arm']))
