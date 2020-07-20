@@ -249,6 +249,48 @@ class StudentsController extends Controller
         
         $data['term'] = Term::find($term_id);
 
+        $subscription_enrolments = 0;
+        if(!empty($data['term']->subscription->enrolments))
+        {
+            $subscription_enrolments = count($data['term']->subscription->enrolments);
+        }
+        if(($subscription_enrolments >= $data['term']->subscription->student_limit) && 
+            ($data['term']->subscription->student_limit !== 'n'))
+        {
+            $request->session()->flash('error', '<p>You can NOT enrol new students because you have reached the limit of your subscription for the term.</p>
+            <a class="btn btn-sm btn-primary" href="'.config('app.url').'/subscriptions/'.$data['term']->subscription_id.'">View subscription details</a>');
+            return redirect()->route('students.index');
+        }
+
+        $subscription_payment = 'None';
+        $subscription_price_type = 'None';
+
+        foreach ($data['term']->subscription->orders as $order) {
+            if($order->type == 'Purchase')
+            {
+                $subscription_payment = $order->payment;
+                $subscription_price_type = $order->price_type;
+            }
+        }
+
+        $enrolment_status = 'Active';
+        if($subscription_payment == 'None' OR $subscription_price_type == 'None')
+        {
+            $request->session()->flash('error', 'ERROR: Lost linked order!');
+            return redirect()->route('students.index');
+        }
+        else
+        {
+            if($subscription_payment == 'Prepaid' && $subscription_price_type == 'Per-student')
+            {
+                $enrolment_status = 'Inactive';
+            }
+            if($subscription_payment == 'Trial' && $subscription_price_type == 'Per-student')
+            {
+                $enrolment_status = 'Inactive';
+            }
+        }
+
         $this->validate($request, [
             'pic'                       => ['sometimes', 'image', 'max:1999'],
             'name'                      => ['required', 'string', 'max:191'],
@@ -348,21 +390,30 @@ class StudentsController extends Controller
 
         $enrolment = new Enrolment;
 
+        $enrolment->subscription_id = $data['term']->subscription_id;
         $enrolment->user_id = $user->id;
         $enrolment->student_id = $student->id;
         $enrolment->term_id = $term_id;
         $enrolment->arm_id = $arm->id;
         $enrolment->schoolclass_id = $arm->schoolclass->id;
         $enrolment->school_id = $school_id;
-        $enrolment->fee_update_by = 0;
+        $enrolment->fee_update_by = 0;  
+        $enrolment->status = $enrolment_status;
         $enrolment->access_update_by = 0;
         $enrolment->created_by = $user_id;
 
         $enrolment->save();
-        
-        $request->session()->flash('success', 'Student registered successfully into '.$arm->schoolclass->name.' '.$arm->name);
 
-        return redirect()->route('students.index');
+        if($enrolment_status == 'Inactive')
+        {
+            $request->session()->flash('success', 'Student registered successfully into '.$arm->schoolclass->name.' '.$arm->name);
+            return redirect()->route('students.index');
+        }
+        else
+        {
+            $request->session()->flash('success', 'Student registered successfully into '.$arm->schoolclass->name.' '.$arm->name);
+            return redirect()->route('students.index');
+        }
     }
 
     /**
