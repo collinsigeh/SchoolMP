@@ -53,12 +53,14 @@ class ClasssubjectsController extends Controller
 
         if(session('school_id') < 1)
         {
+            $request->session()->flash('error', 'Error 4' );
             return redirect()->route('dashboard');
         }
         $school_id = session('school_id');
 
         if(!$this->resource_manager($data['user'], $school_id))
         {
+            $request->session()->flash('error', 'Error 3: You do NOT have permission' );
             return redirect()->route('dashboard');
         }
         
@@ -66,6 +68,7 @@ class ClasssubjectsController extends Controller
 
         if(session('term_id') < 1)
         {
+            $request->session()->flash('error', 'Error 2' );
             return redirect()->route('dashboard');
         }
         $term_id = session('term_id');
@@ -74,6 +77,7 @@ class ClasssubjectsController extends Controller
 
         if(session('arm_id') < 1)
         {
+            $request->session()->flash('error', 'Error 1' );
             return redirect()->route('dashboard');
         }
         $arm_id = session('arm_id');
@@ -323,14 +327,13 @@ class ClasssubjectsController extends Controller
                 'user_id'   => $user->id,
                 'school_id' => $school_id
             );
-            $no_directors = Director::where($db_check)->get();
-            if(empty($no_directors))
+            $directors = Director::where($db_check)->get();
+            if(!empty($directors))
             {
-                $resource_manager = true;
-            }
-            elseif($no_directors->count() < 1)
-            {
-                return  redirect()->route('dashboard');
+                if($directors->count() >= 1)
+                {
+                    $resource_manager = true;
+                }
             }
         }
         elseif($user->role == 'Staff')
@@ -340,9 +343,13 @@ class ClasssubjectsController extends Controller
                 'school_id'     => $school_id,
                 'manage_class_arms'  => 'Yes'
             );
-            if(!empty(Staff::where($db_check)->get()))
+            $staff = Staff::where($db_check)->get();
+            if(!empty($staff))
             {
-                $resource_manager = true;
+                if($staff->count() >= 1)
+                {
+                    $resource_manager = true;
+                }
             }
         }
 
