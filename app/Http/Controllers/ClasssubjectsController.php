@@ -282,10 +282,29 @@ class ClasssubjectsController extends Controller
             return view('welcome.inactive');
         }
 
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            $request->session()->flash('error', 'Error 4' );
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if(!$this->resource_manager($data['user'], $school_id))
+        {
+            $request->session()->flash('error', 'Error 3: You do NOT have permission' );
+            return redirect()->route('dashboard');
+        }
+
         if($id < 1)
         {
             return redirect()->route('dashboard');
         }
+        $this->validate($request, [
+            'arm_id' => ['required', 'min:1']
+        ]);
 
         $classsubject = Classsubject::find($id);
         $arm_id = $classsubject->arm_id;
@@ -293,7 +312,7 @@ class ClasssubjectsController extends Controller
         $classsubject->delete();
 
         $request->session()->flash('success', 'Record deleted');
-        return redirect()->route('arms.show', $id);
+        return redirect()->route('arms.show', $request->input('arm_id'));
     }
 
     /**

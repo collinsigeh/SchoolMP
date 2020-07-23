@@ -155,6 +155,7 @@
                                                 <form action="{{ route('classsubjects.destroy', $classsubject->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
+                                                    <input type="hidden" name="arm_id" value="{{ $arm->id }}">
                                                     <input type="submit" class="btn btn-sm btn-danger" value="X" />
                                                 </form>
                                             </td>
