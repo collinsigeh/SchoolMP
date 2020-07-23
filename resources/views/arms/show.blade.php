@@ -101,13 +101,18 @@
                                               <td>{{ $sn }}</td>
                                               <td>{!!  $enrolment->user->name.' - <small>('.$enrolment->student->registration_number.') ' !!}</td>
                                               <td>{{ count($enrolment->results) }} subjects</td>
-                                              <td class="text-right">
-                                                  @if ($arm->user_id > 0)
-                                                      @if ($arm->user->id == $user->id)
-                                                          <a class="btn btn-sm btn-outline-primary" href="{{ route('enrolments.show', $enrolment->id) }}">View</a>
-                                                      @endif
+                                              @if ($arm->user_id > 0)
+                                                  @if ($arm->user->id == $user->id)
+                                                    <td class="text-right">
+                                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('enrolments.show', $enrolment->id) }}">View</a>
+                                                    </td>
                                                   @endif
-                                              </td>
+                                              @endif
+                                              @if ($student_manager == 'Yes')
+                                                    <td class="text-right">
+                                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('students.show', $enrolment->student_id) }}">Manage</a>
+                                                    </td>
+                                              @endif
                                           </tr>
                                           @php
                                               $sn++;
