@@ -70,7 +70,7 @@
                                             @endif
                                         </td>
                                     @else
-                                        <td>{{ $arm->user->name }}</td>
+                                        <td>{!! $arm->user->name.' - <small>'.$arm->user->staff->phone.'</small>' !!}</td>
                                         @if ($classarm_manager == 'Yes')
                                             <td class="text-right">
                                                 <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#newTeacherModal">
@@ -99,7 +99,7 @@
                                       @foreach ($arm->enrolments as $enrolment)
                                           <tr>
                                               <td>{{ $sn }}</td>
-                                              <td>{{ $enrolment->user->name }} ({{ $enrolment->student->registration_number }})</td>
+                                              <td>{!!  $enrolment->user->name.' - <small>('.$enrolment->student->registration_number.') ' !!}</td>
                                               <td>{{ count($enrolment->results) }} subjects</td>
                                               <td class="text-right">
                                                   @if ($arm->user_id > 0)
@@ -146,7 +146,7 @@
                                                 @if ($classsubject->user_id == 0)
                                                     No assigned teacher
                                                 @else
-                                                    {{ $classsubject->user->name }}
+                                                    {!! $classsubject->user->name.' - <small>'.$classsubject->user->staff->phone.'</small>' !!}
                                                 @endif
                                             </td>
                                             @if ($classarm_manager == 'Yes')
