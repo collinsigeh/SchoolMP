@@ -109,3 +109,6 @@
 .feature .buttons a, .feature .buttons button{
     margin-top: 8px;
 }
+.collins-table-pem th.bg-light{
+    width: 200px;
+}
