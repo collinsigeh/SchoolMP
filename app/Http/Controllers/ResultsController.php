@@ -79,7 +79,16 @@ class ResultsController extends Controller
             'from_form' => ['required'],
             'enrolment_id' => ['required', 'min:1']
         ]);
-        if($request->input('from_form') != 'true' OR empty($request->subject) OR $data['arm']->user->id != $user_id)
+
+        if($data['arm']->user->id != $user_id && $data['user']->role != 'Director')
+        {
+            if($data['user']->role == 'Staff')
+            {
+                
+            }
+        }
+
+        if($request->input('from_form') != 'true' OR empty($request->subject))
         {
             $request->session()->flash('error', 'Improper attempt to add subjects for a student.' );
             return redirect()->route('arms.show', $arm_id);
