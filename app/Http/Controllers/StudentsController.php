@@ -513,7 +513,7 @@ class StudentsController extends Controller
         if(Auth::user()->role == 'Consultant' || Auth::user()->role == 'Director')
         {
             $data['student_manager'] = 'Yes';
-            $data['classarm_manager'] = 'yes';
+            $data['classarm_manager'] = 'Yes';
             $data['fees_manager'] = 'Yes';
             $data['calendar_manager'] = 'Yes';
             $data['sessionterm_manager'] = 'Yes';
