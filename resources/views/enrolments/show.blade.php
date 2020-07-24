@@ -57,59 +57,251 @@
                                     <img src="{{ config('app.url') }}/images/profile/{{ $enrolment->user->pic }}" alt="Photo" class="user-pic" >
                                 </div>
                             </div>
-            
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Name:
-                                </div>
-                                <div class="col-md-8">
-                                    <h4>{{ $enrolment->user->name }}</h4>
-                                </div>
+                        
+                            <div class="table-responsive collins-table-pem" style="padding-bottom: 18px;">
+                                <table class="table table-striped table-bordered table-hover table-sm">
+                                    <tr>
+                                        <th colspan="2" class="text-center">STUDENT IDENTIFICATION</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Name:</th>
+                                        <td>
+                                            {{ $enrolment->user->name }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Gender:</th>
+                                        <td>
+                                            {{ $enrolment->user->gender }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Class:</th>
+                                        <td>
+                                            {{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Reg. no.:</th>
+                                        <td>
+                                            {{ $enrolment->student->registration_number }}
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
-            
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Reg. no.:
-                                </div>
-                                <div class="col-md-8">
-                                    {{ $enrolment->student->registration_number }}
-                                </div>
+                            
+                            @if ($student_manager == 'Yes' OR $arm->user_id == $user->id)
+                            <div class="table-responsive collins-table-pem" style="padding-bottom: 18px;">
+                                <table class="table table-striped table-bordered table-hover table-sm">
+                                    <tr>
+                                        <th colspan="2" class="text-center">ENROLMENT & FEES</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Termly subscription:</th>
+                                        <td><span class="badge <?php
+                                            if($enrolment->status == 'Active')
+                                            {
+                                              echo 'badge-sucess';
+                                            }
+                                            else
+                                            {
+                                              echo 'badge-danger';
+                                            }
+                                        ?>">{{ $enrolment->status }}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Fees payment status:</th>
+                                        <td><span class="badge <?php
+                                            if($enrolment->fee_status == 'Unpaid')
+                                            {
+                                              echo 'badge-danger';
+                                            }
+                                            elseif($enrolment->fee_status == 'Partly-paid')
+                                            {
+                                              echo 'badge-warning';
+                                            }
+                                            elseif($enrolment->fee_status == 'Completely-paid')
+                                            {
+                                              echo 'badge-success';
+                                            }
+                                        ?>">{{ $enrolment->fee_status }}</span></td>
+                                    </tr>
+                                </table>
                             </div>
-            
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Gender:
-                                </div>
-                                <div class="col-md-8">
-                                    {{ $enrolment->user->gender }}
-                                </div>
+                            @endif
+
+                            @if ($student_privilege_manager == 'Yes' OR $arm->user_id == $user->id)
+                            <div class="table-responsive collins-table-pem" style="padding-bottom: 18px;">
+                                <table class="table table-striped table-bordered table-hover table-sm">
+                                    <tr>
+                                        <th colspan="2" class="text-center">TERMLY PRIVILEGES</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">To write exams:</th>
+                                        <td> 
+                                            @php
+                                            if($enrolment->access_exam == 'Yes')
+                                            {
+                                                echo '<span class="badge badge-success">Permitted</span>';
+                                            }
+                                            else
+                                            {
+                                                echo '<span class="badge badge-danger">NOT permitted</span>';
+                                            }
+                                        @endphp
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">To partake in CA:</th>
+                                        <td>
+                                            @php
+                                            if($enrolment->access_ca == 'Yes')
+                                            {
+                                                echo '<span class="badge badge-success">Permitted</span>';
+                                            }
+                                            else
+                                            {
+                                                echo '<span class="badge badge-danger">NOT permitted</span>';
+                                            }
+                                        @endphp
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">To partake in assignments:</th>
+                                        <td>
+                                            @php
+                                            if($enrolment->access_assignment == 'Yes')
+                                            {
+                                                echo '<span class="badge badge-success">Permitted</span>';
+                                            }
+                                            else
+                                            {
+                                                echo '<span class="badge badge-danger">NOT permitted</span>';
+                                            }
+                                        @endphp
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">To access termly report:</th>
+                                        <td>
+                                            @php
+                                            if($enrolment->access_result == 'Yes')
+                                            {
+                                                echo '<span class="badge badge-success">Permitted</span>';
+                                            }
+                                            else
+                                            {
+                                                echo '<span class="badge badge-danger">NOT permitted</span>';
+                                            }
+                                        @endphp
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
-            
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Date of birth:
-                                </div>
-                                <div class="col-md-8">
-                                    {{ $enrolment->student->date_of_birth }}
-                                </div>
-                            </div>
-            
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Nationality:
-                                </div>
-                                <div class="col-md-8">
-                                    {{ $enrolment->student->nationality }}
-                                </div>
-                            </div>
-            
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Religion:
-                                </div>
-                                <div class="col-md-8">
-                                    {{ $enrolment->student->religion }}
-                                </div>
+                            @endif
+                            
+                            <div class="table-responsive collins-table-pem" style="padding-bottom: 18px;">
+                                <table class="table table-striped table-bordered table-hover table-sm">
+                                    <tr>
+                                        <th colspan="2" class="text-center">PERSONAL DETAILS</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Last School Attended:</th>
+                                        <td>
+                                            @if (strlen($enrolment->student->last_school_attended) < 2)
+                                                N/A
+                                            @else
+                                                {{ $enrolment->student->last_school_attended }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Last Class Passed:</th>
+                                        <td>
+                                            @if (strlen($enrolment->student->last_class_passed) < 2)
+                                                N/A
+                                            @else
+                                                {{ $enrolment->student->last_class_passed }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Hobbies:</th>
+                                        <td>
+                                            @if (strlen($enrolment->student->hobbies) < 2)
+                                                N/A
+                                            @else
+                                                {{ $enrolment->student->hobbies }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Date of birth:</th>
+                                        <td>
+                                            {{ $enrolment->student->date_of_birth }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Ailment & Allergies:</th>
+                                        <td>
+                                            {{ $enrolment->student->ailment }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Disabilities:</th>
+                                        <td>
+                                            {{ $enrolment->student->disability }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Medication:</th>
+                                        <td>
+                                            {{ $enrolment->student->medication }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Health Details:</th>
+                                        <td>
+                                            @if (strlen($enrolment->student->health_detail) < 2)
+                                                N/A
+                                            @else
+                                                {{ $enrolment->student->health_detail }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Religion:</th>
+                                        <td>
+                                            {{ $enrolment->student->religion }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Nationality:</th>
+                                        <td>
+                                            {{ $enrolment->student->nationality }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">State of Origin:</th>
+                                        <td>
+                                            @if (strlen($enrolment->student->state_of_origin) < 2)
+                                                N/A
+                                            @else
+                                                {{ $enrolment->student->state_of_origin }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">LGA of Origin:</th>
+                                        <td>
+                                            @if (strlen($enrolment->student->lga_of_origin) < 2)
+                                                N/A
+                                            @else
+                                                {{ $enrolment->student->lga_of_origin }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -168,7 +360,7 @@
                                 </div>
                             @endif
                             
-                            @if ($classarm_manager == 'Yes' OR $arm->user_id == $user->id)
+                            @if ($student_manager == 'Yes' OR $arm->user_id == $user->id)
                                 @if (count($arm->classsubjects) > count($enrolment->results))
                                 <div class="text-right">
                                     <div class="buttons">

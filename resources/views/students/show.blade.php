@@ -95,7 +95,8 @@
                                         </tr>
                                     </table>
                                 </div>
-                        
+                            
+                                @if ($student_manager == 'Yes' OR $arm->user_id == $user->id)
                                 <div class="table-responsive collins-table-pem" style="padding-bottom: 18px;">
                                     <table class="table table-striped table-bordered table-hover table-sm">
                                         <tr>
@@ -133,7 +134,9 @@
                                         </tr>
                                     </table>
                                 </div>
-                        
+                                @endif
+    
+                                @if ($student_privilege_manager == 'Yes' OR $arm->user_id == $user->id)
                                 <div class="table-responsive collins-table-pem" style="padding-bottom: 18px;">
                                     <table class="table table-striped table-bordered table-hover table-sm">
                                         <tr>
@@ -201,6 +204,7 @@
                                         </tr>
                                     </table>
                                 </div>
+                                @endif
                         
                                 <div class="table-responsive collins-table-pem" style="padding-bottom: 18px;">
                                     <table class="table table-striped table-bordered table-hover table-sm">
@@ -363,7 +367,7 @@
                                     </div>
                                 @endif
                             
-                                @if ($classarm_manager == 'Yes' OR $arm->user_id == $user->id)
+                                @if ($student_manager == 'Yes' OR $arm->user_id == $user->id)
                                     @if (count($arm->classsubjects) > count($enrolment->results))
                                     <div class="text-right">
                                         <div class="buttons">
@@ -379,29 +383,6 @@
                     </div>
                 </div>
     
-            </div>
-    
-            <div class="more-options">
-                <div class="head">More options</div>
-                <div class="body">
-                    <div class="row">
-                        @if ($classarm_manager == 'Yes' && count($arm->classsubjects) > count($enrolment->results))
-                        <div class="col-md-4">
-                            <div class="option feature">
-                                <h5>Student subjects</h5>
-                                <div class="paragraph">
-                                    Enrol {{ $enrolment->user->name }} for more subjects.
-                                </div>
-                                <div class="buttons">
-                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newSubjectModal">
-                                        Add subject
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-                    </div>
-                </div>
             </div>
             
         </div>

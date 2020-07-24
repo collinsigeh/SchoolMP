@@ -506,6 +506,7 @@ class StudentsController extends Controller
         session(['arm_id' => $data['arm']->id]);
 
         $data['student_manager'] = 'No';
+        $data['student_privilege_manager'] = 'No';
         $data['classarm_manager'] = 'No';
         $data['fees_manager'] = 'No';
         $data['calendar_manager'] = 'No';
@@ -513,6 +514,7 @@ class StudentsController extends Controller
         if(Auth::user()->role == 'Consultant' || Auth::user()->role == 'Director')
         {
             $data['student_manager'] = 'Yes';
+            $data['student_privilege_manager'] = 'Yes';
             $data['classarm_manager'] = 'Yes';
             $data['fees_manager'] = 'Yes';
             $data['calendar_manager'] = 'Yes';
@@ -523,6 +525,10 @@ class StudentsController extends Controller
             if($data['staff']->manage_students_account == 'Yes')
             {
                 $data['student_manager'] = 'Yes';
+            }
+            if($data['staff']->manage_students_privileges == 'Yes')
+            {
+                $data['student_privilege_manager'] = 'Yes';
             }
             if($data['staff']->manage_class_arms == 'Yes')
             {
