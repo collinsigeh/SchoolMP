@@ -323,7 +323,7 @@
                                         <table class="table table-striped table-hover table-sm">
                                             <tbody>
                                                 <tr>
-                                                    <td>Assessment for {!! $term->name.' - <small>'.$term->session.'</small>' !!}</td>
+                                                    <td>Report Sheet <small>for</small> {!! $term->name.' - <small>'.$term->session.'</small>' !!}</td>
                                                     <td class="text-right"><a href="#" class="btn btn-sm btn-primary">View</a> </td>
                                                 </tr>
                                             </tbody>
