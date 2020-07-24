@@ -339,7 +339,7 @@
                             </div>
                             <div class="body">
                                 @if (count($enrolment->results) < 1)
-                                    None
+                                    <div class="alert alert-info">None</div>
                                 @else
                                     <div class="table-responsive">    
                                         <table class="table table-striped table-hover table-sm">
@@ -361,6 +361,18 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                @endif
+                            
+                                @if ($classarm_manager == 'Yes' OR $arm->user_id == $user->id)
+                                    @if (count($arm->classsubjects) > count($enrolment->results))
+                                    <div class="text-right">
+                                        <div class="buttons">
+                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newSubjectModal">
+                                                Add subjects
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @endif
                                 @endif
                             </div>
                         </div>
@@ -394,5 +406,7 @@
             
         </div>
       </div>
+
+      @include('partials._add_subjects_for_student')
 
 @endsection
