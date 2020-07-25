@@ -122,6 +122,8 @@ class ResultsController extends Controller
             $studentsubject->assignment_score_by  = 'No one';
             $studentsubject->subject_exam_score = 0;
             $studentsubject->exam_score_by  = 'No one';
+            $studentsubject->subjectteachercomment_by  = 0;
+            $studentsubject->subjectteacher_comment  = '';
             $studentsubject->classteachercomment_by  = 0;
             $studentsubject->classteacher_comment  = '';
             $studentsubject->principalcomment_by  = 0;
