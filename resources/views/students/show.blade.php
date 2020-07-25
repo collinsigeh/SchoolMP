@@ -353,7 +353,7 @@
                                                         <td>{{ $classsubject->classsubject->subject->name }}</td>
                                                         @if ($arm->user->id == $user->id OR $student_manager == 'Yes')
                                                         <td class="text-right">
-                                                            <form action="#" method="POST">
+                                                            <form action="{{ route('results.destroy', $classsubject->id) }}" method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <input type="submit" class="btn btn-sm btn-danger" value="X" />

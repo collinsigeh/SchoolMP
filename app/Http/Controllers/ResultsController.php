@@ -11,6 +11,7 @@ use App\Staff;
 use App\Term;
 use App\Arm;
 use App\Result;
+use App\Enrolment;
 use Illuminate\Http\Request;
 
 class ResultsController extends Controller
@@ -135,6 +136,12 @@ class ResultsController extends Controller
 
         $request->session()->flash('success', 'Subjects enrolled successfully.');
 
+        if($data['user']->role != 'Staff')
+        {
+            $enrolment = Enrolment::find($request->input('enrolment_id'));
+            return redirect()->route('students.show', $enrolment->student_id);
+        }
+
         return redirect()->route('enrolments.show', $request->input('enrolment_id'));
     }
 
@@ -178,8 +185,106 @@ class ResultsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id = 0)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            $request->session()->flash('error', 'Error 4' );
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $enrolledsubject = Result::find($id);
+        if(empty($enrolledsubject))
+        {
+            $request->session()->flash('error', 'Error 2: Attempt to delete unavailable resource.' );
+            return redirect()->route('dashboard');
+        }
+        
+        $enrolment_id = $enrolledsubject->enrolment_id;
+
+        $enrolledsubject->delete();
+
+        $request->session()->flash('success', 'Record deleted');
+
+        if($data['user']->role != 'Staff')
+        {
+            $enrolment = Enrolment::find($enrolment_id);
+            return redirect()->route('students.show', $enrolment->student_id);
+        }
+        return redirect()->route('enrolments.show', $enrolment_id);
+    }
+
+    /**
+     * Check if the logged-in user can manipulate this resource by special privilege.
+     * All directors are managers already but staff earn it by special privilege
+     *
+     * @return boolean
+     */
+    public function resource_manager($user, $school_id)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+        
+        $resource_manager = false;
+
+        if($user->usertype == 'Client')
+        {
+            foreach($user->schools as $school)
+            {
+                if($school->id == $school_id)
+                {
+                    $resource_manager = true;
+                }
+            }
+        }
+        elseif($user->role == 'Director')
+        {
+            $db_check = array(
+                'user_id'   => $user->id,
+                'school_id' => $school_id
+            );
+            $directors = Director::where($db_check)->get();
+            if(!empty($directors))
+            {
+                if($directors->count() >= 1)
+                {
+                    $resource_manager = true;
+                }
+            }
+        }
+        elseif($user->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'       => $user->id,
+                'school_id'     => $school_id,
+                'manage_students_account'  => 'Yes'
+            );
+            $staff = Staff::where($db_check)->get();
+            if(!empty($staff))
+            {
+                if($staff->count() >= 1)
+                {
+                    $resource_manager = true;
+                }
+            }
+        }
+
+        return $resource_manager;
     }
 }
