@@ -30,6 +30,8 @@ class CreateResultsTable extends Migration
             $table->enum('assignment_score_by', ['No one', 'Teacher', 'System']);
             $table->integer('assignment_exam_score');
             $table->enum('exam_score_by', ['No one', 'Teacher', 'System']);
+            $table->integer('subjectteachercomment_by');
+            $table->string('subjectteacher_comment');
             $table->integer('classteachercomment_by');
             $table->string('classteacher_comment');
             $table->integer('principalcomment_by');
