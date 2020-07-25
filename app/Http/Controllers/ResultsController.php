@@ -84,7 +84,16 @@ class ResultsController extends Controller
         {
             if($data['user']->role == 'Staff')
             {
-                
+                if($data['user']->staff->manage_students_account != 'Yes')
+                {
+                    $request->session()->flash('error', 'You do NOT have permission for this aciton.' );
+                    return redirect()->route('arms.show', $arm_id);
+                }
+            }
+            else
+            {
+                $request->session()->flash('error', 'You do NOT have permission for this aciton.' );
+                return redirect()->route('arms.show', $arm_id);
             }
         }
 
