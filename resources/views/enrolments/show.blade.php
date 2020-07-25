@@ -344,7 +344,7 @@
                                             @foreach ($enrolment->results as $classsubject)
                                                 <tr>
                                                     <td>{{ $classsubject->classsubject->subject->name }}</td>
-                                                    @if ($arm->user->id == $user->id)
+                                                    @if ($arm->user->id == $user->id OR $student_manager == 'Yes')
                                                     <td class="text-right">
                                                         <form action="#" method="POST">
                                                             @csrf
