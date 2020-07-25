@@ -216,9 +216,22 @@ class ResultsController extends Controller
         
         $enrolment_id = $enrolledsubject->enrolment_id;
 
-        $enrolledsubject->delete();
-
-        $request->session()->flash('success', 'Record deleted');
+        if($enrolledsubject->subject_1st_test_score > 0 OR $enrolledsubject->first_score_by != 'No one' OR 
+            $enrolledsubject->subject_2nd_test_score > 0 OR $enrolledsubject->second_score_by != 'No one' OR
+            $enrolledsubject->subject_9rd_test_score > 0 OR $enrolledsubject->third_score_by != 'No one' OR
+            $enrolledsubject->subject_assignment_score > 0 OR $enrolledsubject->assignment_score_by != 'No one' OR
+            $enrolledsubject->subject_exam_score > 0 OR $enrolledsubject->exam_score_by != 'No one' OR
+            $enrolledsubject->subjectteachercomment_by > 0 OR $enrolledsubject->subjectteacher_comment != '' OR
+            $enrolledsubject->classteachercomment_by > 0 OR $enrolledsubject->classteacher_comment != '' OR
+            $enrolledsubject->principalcomment_by > 0 OR $enrolledsubject->principal_comment != '')
+        {
+            $request->session()->flash('error', 'Error 1: Attempt to delete subject(s) with recorded scores' );
+        }
+        else
+        {
+            $enrolledsubject->delete();
+            $request->session()->flash('success', 'Record deleted');
+        }
 
         if($data['user']->role != 'Staff')
         {
