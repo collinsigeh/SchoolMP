@@ -158,6 +158,9 @@
                           <div class="table-responsive">    
                             <table class="table">
                                 <tr>
+                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('classsubjects.index') }}">Teachers & assigned subjects</a></td>
+                                </tr>
+                                <tr>
                                   <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('items.index') }}">School fees and items</a></td>
                                 </tr>
                                 <tr>

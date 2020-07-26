@@ -149,7 +149,7 @@
                                             <td>{{ $classsubject->subject->name }}</td>
                                             <td>
                                                 @if ($classsubject->user_id == 0)
-                                                    No assigned teacher
+                                                    <span class="badge badge-danger">No assigned teacher</span>
                                                 @else
                                                     {!! $classsubject->user->name.' - <small>'.$classsubject->user->staff->phone.'</small>' !!}
                                                 @endif

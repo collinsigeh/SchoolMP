@@ -17,13 +17,84 @@ use Illuminate\Http\Request;
 class ClasssubjectsController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+            if(Auth::user()->status !== 'Active')
+            {
+                return view('welcome.inactive');
+            }
+    
+            $user_id = Auth::user()->id;
+            $data['user'] = User::find($user_id);
+    
+            if(session('school_id') < 1)
+            {
+                return redirect()->route('dashboard');
+            }
+            $school_id = session('school_id');
+            $data['school'] = School::find($school_id);
+    
+            if(!$this->resource_manager($data['user'], $school_id))
+            {
+                return redirect()->route('dashboard');
+            }
+    
+            if(session('term_id') < 1)
+            {
+                return redirect()->route('dashboard');
+            }
+            $term_id = session('term_id');
+            
+            $data['term'] = Term::find($term_id);
+    
+            if($data['user']->role == 'Staff')
+            {
+                $db_check = array(
+                    'user_id'   => $data['user']->id,
+                    'school_id' => $data['school']->id
+                );
+                $staff = Staff::where($db_check)->get();
+                if(empty($staff))
+                {
+                    return  redirect()->route('dashboard');
+                }
+                elseif($staff->count() < 1)
+                {
+                    return  redirect()->route('dashboard');
+                }
+                $data['staff'] = $staff[0];
+            }
+            
+            $db_check = array(
+                'term_id' => $term_id
+            );
+            $data['classsubjects'] = Classsubject::where($db_check)->orderBy('user_id', 'asc')->get();
+            $db_check = array(
+                'term_id' => $term_id,
+                'user_id' => 0
+            );
+            $data['classsubjectswithoutteacher'] = Classsubject::where($db_check)->orderBy('id', 'asc')->get();
+            $db_check = array(
+                'school_id' => $school_id,
+                'status' => 'Active'
+            );
+            $data['allstaff'] = Staff::where($db_check)->get();
+    
+            return view('classsubjects.index')->with($data);
     }
 
     /**
