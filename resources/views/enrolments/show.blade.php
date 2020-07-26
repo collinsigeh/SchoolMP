@@ -329,49 +329,8 @@
                             @endif
                         </div>
                     </div>
-
-                    <div class="resource-details">
-                        <div class="title">
-                            Subjects enrolled
-                        </div>
-                        <div class="body">
-                            @if (count($enrolment->results) < 1)
-                                <div class="alert alert-info">None</div>
-                            @else
-                                <div class="table-responsive">    
-                                    <table class="table table-striped table-hover table-sm">
-                                        <tbody>
-                                            @foreach ($enrolment->results as $classsubject)
-                                                <tr>
-                                                    <td>{{ $classsubject->classsubject->subject->name }}</td>
-                                                    @if ($arm->user->id == $user->id OR $student_manager == 'Yes')
-                                                    <td class="text-right">
-                                                        <form action="{{ route('results.destroy', $classsubject->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <input type="submit" class="btn btn-sm btn-danger" value="X" />
-                                                        </form>
-                                                    </td>
-                                                    @endif
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @endif
-                            
-                            @if ($student_manager == 'Yes' OR $arm->user_id == $user->id)
-                                @if (count($arm->classsubjects) > count($enrolment->results))
-                                <div class="text-right">
-                                    <div class="buttons">
-                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newSubjectModal">
-                                            Add subjects
-                                        </button>
-                                    </div>
-                                </div>
-                                @endif
-                            @endif
-                        </div>
+                    
+                    @include('partials._subjects_enrolled')
                     </div>
                 </div>
             </div>
