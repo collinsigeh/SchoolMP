@@ -11,6 +11,7 @@ use App\Staff;
 use App\Term;
 use App\Arm;
 use App\Classsubject;
+use App\Result;
 use Illuminate\Http\Request;
 
 class ClasssubjectsController extends Controller
@@ -307,11 +308,32 @@ class ClasssubjectsController extends Controller
         ]);
 
         $classsubject = Classsubject::find($id);
+        if(empty($classsubject))
+        {
+            $request->session()->flash('error', 'Error 2: Attempt to delete unavailable resource.' );
+            return redirect()->route('dashboard');
+        }
         $arm_id = $classsubject->arm_id;
+        $to_continue = 'Yes';
 
-        $classsubject->delete();
+        $db_check = array(
+            'classsubject_id' => $id
+        );
+        $subjectenrolled = Result::where($db_check)->get();
+        if(!empty($subjectenrolled))
+        {
+            if($subjectenrolled->count() > 0)
+            {
+                $to_continue = 'No';
+                $request->session()->flash('error', 'Error 1: Subject has enrolled students and can NOT be deleted.');
+            }
+        }
 
-        $request->session()->flash('success', 'Record deleted');
+        if($to_continue == 'Yes')
+        {
+            $classsubject->delete();
+            $request->session()->flash('success', 'Record deleted');
+        }
         return redirect()->route('arms.show', $request->input('arm_id'));
     }
 
