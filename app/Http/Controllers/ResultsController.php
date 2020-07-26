@@ -106,35 +106,52 @@ class ResultsController extends Controller
 
         foreach($request->subject as $classsubject_id)
         {
-            $studentsubject = new Result;
+            $continue = 'Yes';
 
-            $studentsubject->school_id = $school_id;
-            $studentsubject->term_id = $term_id;
-            $studentsubject->enrolment_id = $request->input('enrolment_id');
-            $studentsubject->classsubject_id = $classsubject_id;
-            $studentsubject->resulttemplate_id = $data['arm']->resulttemplate_id;
-            $studentsubject->subject_1st_test_score = 0;
-            $studentsubject->first_score_by  = 'No one';
-            $studentsubject->subject_2nd_test_score = 0;
-            $studentsubject->second_score_by  = 'No one';
-            $studentsubject->subject_3rd_test_score = 0;
-            $studentsubject->third_score_by  = 'No one';
-            $studentsubject->subject_assignment_score = 0;
-            $studentsubject->assignment_score_by  = 'No one';
-            $studentsubject->subject_exam_score = 0;
-            $studentsubject->exam_score_by  = 'No one';
-            $studentsubject->subjectteachercomment_by  = 0;
-            $studentsubject->subjectteacher_comment  = '';
-            $studentsubject->classteachercomment_by  = 0;
-            $studentsubject->classteacher_comment  = '';
-            $studentsubject->principalcomment_by  = 0;
-            $studentsubject->principal_comment  = '';
-            $studentsubject->status = 'Pending';
+            $db_check = array(
+                'enrolment_id' => $request->input('enrolment_id'),
+                'classsubject_id' => $classsubject_id
+            );
+            $duplicateenrolment = Result::where($db_check)->get();
+            if(!empty($duplicateenrolment))
+            {
+                if($duplicateenrolment->count() > 0)
+                {
+                    $continue = 'No';
+                }
+            }
 
-            $studentsubject->save();
+            if($continue == 'Yes')
+            {
+                $studentsubject = new Result;
+    
+                $studentsubject->school_id = $school_id;
+                $studentsubject->term_id = $term_id;
+                $studentsubject->enrolment_id = $request->input('enrolment_id');
+                $studentsubject->classsubject_id = $classsubject_id;
+                $studentsubject->resulttemplate_id = $data['arm']->resulttemplate_id;
+                $studentsubject->subject_1st_test_score = 0;
+                $studentsubject->first_score_by  = 'No one';
+                $studentsubject->subject_2nd_test_score = 0;
+                $studentsubject->second_score_by  = 'No one';
+                $studentsubject->subject_3rd_test_score = 0;
+                $studentsubject->third_score_by  = 'No one';
+                $studentsubject->subject_assignment_score = 0;
+                $studentsubject->assignment_score_by  = 'No one';
+                $studentsubject->subject_exam_score = 0;
+                $studentsubject->exam_score_by  = 'No one';
+                $studentsubject->subjectteachercomment_by  = 0;
+                $studentsubject->subjectteacher_comment  = '';
+                $studentsubject->classteachercomment_by  = 0;
+                $studentsubject->classteacher_comment  = '';
+                $studentsubject->principalcomment_by  = 0;
+                $studentsubject->principal_comment  = '';
+                $studentsubject->status = 'Pending';
+    
+                $studentsubject->save();
+                $request->session()->flash('success', 'Subjects enrolled successfully.');
+            }
         }
-
-        $request->session()->flash('success', 'Subjects enrolled successfully.');
 
         if($data['user']->role != 'Staff')
         {
