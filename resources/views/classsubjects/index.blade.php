@@ -68,6 +68,11 @@
                                         @foreach ($classsubjectswithoutteacher as $item)
                                         <tr>
                                             <td>{{ $item->arm->schoolclass->name.' '.$item->arm->name.' '.$item->subject->name }}</td>
+                                            <td class="text-right">
+                                                <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $item->id }}">
+                                                    Edit
+                                                </button>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </table>
@@ -115,14 +120,20 @@
                                                     {{ $total_assigned }}
                                                 </td>
                                                 <td>
-                                                    @if ($total_assigned > 0)
+                                                    @if ($total_assigned > 0)  
                                                         @foreach ($classsubjects as $assigned_subject)
                                                             @if ($assigned_subject->user_id == $this_staff->user_id)
-                                                                {!! '- '.$assigned_subject->arm->schoolclass->name.' '.$assigned_subject->arm->name.' '.$assigned_subject->subject->name.'<br />' !!}
+                                                                <div class="row">   
+                                                                <div class="col-lg-8">{{ '- '.$assigned_subject->arm->schoolclass->name.' '.$assigned_subject->arm->name.' '.$assigned_subject->subject->name }}</div>
+                                                                <div class="col-lg-4 text-lg-right"><button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $assigned_subject->id }}">
+                                                                    Re-assign
+                                                                </button>
+                                                                </div>
+                                                                </div>
                                                             @endif
                                                         @endforeach
                                                     @else
-                                                        - None
+                                                        None
                                                     @endif
                                                 </td>
                                             </tr>
@@ -141,4 +152,13 @@
     </div>
   </div>
 
+<!-- assignSubjectTeacherModal Series -->
+@foreach ($classsubjects as $classsubject)
+    @php
+        $return_page = 'classsubjects.index';
+        $returnpage_id = '';
+    @endphp
+    @include('partials._subject_teacher')
+@endforeach
+<!-- End assignSubjectTeacherModal Series -->
 @endsection
