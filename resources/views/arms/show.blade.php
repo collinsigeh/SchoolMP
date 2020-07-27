@@ -155,7 +155,11 @@
                                                 @endif
                                             </td>
                                             @if ($classarm_manager == 'Yes')
-                                            <td class="text-right"><a href="{{ route('classsubjects.edit', $classsubject->id) }}" class="btn btn-sm btn-outline-primary">Edit</a> </td>
+                                            <td class="text-right">
+                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $classsubject->id }}">
+                                                    Edit
+                                                </button>
+                                            </td>
                                             <td class="text-right">
                                                 <form action="{{ route('classsubjects.destroy', $classsubject->id) }}" method="POST">
                                                     @csrf
@@ -283,6 +287,12 @@
     </div>
 </div>
 <!-- End newTeacherModal -->
+
+<!-- assignSubjectTeacherModal Series -->
+@foreach ($arm->classsubjects as $classsubject)
+    @include('partials._subject_teacher')
+@endforeach
+<!-- End assignSubjectTeacherModal Series -->
 
 <!-- newAssistantModal -->
 <div class="modal fade" id="newAssistantModal" tabindex="-1" role="dialog" aria-labelledby="newAssistantModalLabel" aria-hidden="true">
