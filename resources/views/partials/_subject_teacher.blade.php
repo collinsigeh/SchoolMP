@@ -13,6 +13,14 @@
                 <form method="POST" action="{{ route('classsubjects.update', $classsubject->id) }}">
                     @csrf
                     @method('PUT')
+
+                    @php
+                        if(isset($returnpage_id) && isset($return_page))
+                        {
+                            echo '<input type="hidden" name="return_page" value="'.$return_page.'" />
+                            <input type="hidden" name="returnpage_id" value="'.$returnpage_id.'" />';
+                        }
+                    @endphp
     
                     <div class="form-group row"> 
                         <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Subject Name') }}</label>

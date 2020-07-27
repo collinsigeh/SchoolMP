@@ -156,7 +156,7 @@
                                             </td>
                                             @if ($classarm_manager == 'Yes')
                                             <td class="text-right">
-                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $classsubject->id }}">
+                                                <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $classsubject->id }}">
                                                     Edit
                                                 </button>
                                             </td>
@@ -290,6 +290,10 @@
 
 <!-- assignSubjectTeacherModal Series -->
 @foreach ($arm->classsubjects as $classsubject)
+    @php
+        $return_page = 'arms.show';
+        $returnpage_id = $arm->id;
+    @endphp
     @include('partials._subject_teacher')
 @endforeach
 <!-- End assignSubjectTeacherModal Series -->

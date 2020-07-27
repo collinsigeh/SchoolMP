@@ -276,7 +276,6 @@ class ClasssubjectsController extends Controller
      */
     public function update(Request $request, $id = 0)
     {
-        
         if(Auth::user()->status !== 'Active')
         {
             return view('welcome.inactive');
@@ -337,6 +336,11 @@ class ClasssubjectsController extends Controller
         $classsubject->save();
 
         $request->session()->flash('success', 'Update saved.');
+
+        if(!empty($request->input('return_page')))
+        {
+            return redirect()->route($request->input('return_page'), $request->input('returnpage_id'));
+        }
 
         return redirect()->route('classsubjects.edit', $id);
     }
