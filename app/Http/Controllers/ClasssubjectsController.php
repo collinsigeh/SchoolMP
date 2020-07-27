@@ -82,12 +82,12 @@ class ClasssubjectsController extends Controller
             $db_check = array(
                 'term_id' => $term_id
             );
-            $data['classsubjects'] = Classsubject::where($db_check)->orderBy('user_id', 'asc')->get();
+            $data['classsubjects'] = Classsubject::where($db_check)->orderBy('arm_id', 'asc')->get();
             $db_check = array(
                 'term_id' => $term_id,
                 'user_id' => 0
             );
-            $data['classsubjectswithoutteacher'] = Classsubject::where($db_check)->orderBy('id', 'asc')->get();
+            $data['classsubjectswithoutteacher'] = Classsubject::where($db_check)->orderBy('arm_id', 'asc')->get();
             $db_check = array(
                 'school_id' => $school_id,
                 'status' => 'Active'

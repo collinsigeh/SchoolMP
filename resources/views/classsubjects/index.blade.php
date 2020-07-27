@@ -82,18 +82,22 @@
                         </div>
                         <div class="body">
                             <div class="table-responsive">    
-                                <table class="table table-striped table-hover table-sm">
+                                <table class="table table-striped table-bordered table-hover table-sm">
                                     <thead>
                                         <tr>
+                                            <th>#</th>
                                             <th>Staff</th>
                                             <th>Total assigned</th>
                                             <th>List of Subjects</th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $sn = 1;
+                                        @endphp
                                         @foreach ($allstaff as $this_staff)
                                             <tr>
+                                                <td>{{ $sn }}</td>
                                                 <td>
                                                     {!! $this_staff->user->name.' - <small>'.$this_staff->user->staff->phone.'</small>' !!}
                                                 </td>
@@ -114,15 +118,17 @@
                                                     @if ($total_assigned > 0)
                                                         @foreach ($classsubjects as $assigned_subject)
                                                             @if ($assigned_subject->user_id == $this_staff->user_id)
-                                                                {!! $assigned_subject->arm->schoolclass->name.' '.$assigned_subject->arm->name.' '.$assigned_subject->subject->name.'<br />' !!}
+                                                                {!! '- '.$assigned_subject->arm->schoolclass->name.' '.$assigned_subject->arm->name.' '.$assigned_subject->subject->name.'<br />' !!}
                                                             @endif
                                                         @endforeach
                                                     @else
-                                                        None
+                                                        - None
                                                     @endif
                                                 </td>
-                                                <td class="text-right"></td>
                                             </tr>
+                                            @php
+                                                $sn++;
+                                            @endphp
                                         @endforeach
                                     </tbody>
                                 </table>
