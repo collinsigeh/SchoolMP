@@ -46,7 +46,7 @@
 
         <div class="welcome">
             @include('partials._student_subscription_notice')
-            
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="resource-details">
@@ -92,7 +92,7 @@
                                 </table>
                             </div>
                             
-                            @if ($student_manager == 'Yes' OR $arm->user_id == $user->id)
+                            @if ($student_manager == 'Yes')
                             <div class="table-responsive collins-table-pem" style="padding-bottom: 18px;">
                                 <table class="table table-striped table-bordered table-hover table-sm">
                                     <tr>
@@ -132,7 +132,7 @@
                             </div>
                             @endif
 
-                            @if ($student_privilege_manager == 'Yes' OR $arm->user_id == $user->id)
+                            @if ($student_privilege_manager == 'Yes')
                             <div class="table-responsive collins-table-pem" style="padding-bottom: 18px;">
                                 <table class="table table-striped table-bordered table-hover table-sm">
                                     <tr>
