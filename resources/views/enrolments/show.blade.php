@@ -45,6 +45,8 @@
         </div>
 
         <div class="welcome">
+            @include('partials._student_subscription_notice')
+            
             <div class="row">
                 <div class="col-md-6">
                     <div class="resource-details">
