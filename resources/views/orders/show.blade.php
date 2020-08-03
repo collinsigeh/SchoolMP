@@ -460,11 +460,11 @@
                     </div>
     
                     <div class="form-group row">
-                        <label for="pricing" class="col-md-4 col-form-label text-md-right">{{ __('Pricing ('.$order->currency_symbol).')' }}</label>
+                        <label for="pricing" class="col-md-4 col-form-label text-md-right">{{ __('Pricing ('.$order->currency_symbol).')' }}{!! '<br /><small>(<i>'.$order->price_type.'</i>)</small>' !!}</label>
     
                         <div class="col-md-8">
-                            <input id="pricing" type="text" class="form-control @error('pricing') is-invalid @enderror" name="pricing" value="{{ $order->final_price }}" disabled autocomplete="pricing" autofocus>
-    
+                            <input id="pricing" type="text" class="form-control @error('pricing') is-invalid @enderror" name="pricing" value="{{ $order->price }}" disabled autocomplete="pricing" autofocus>
+                            <small>Cost price of this subscription</small>
                             @error('pricing')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -478,7 +478,7 @@
     
                         <div class="col-md-8">
                             <input id="school_asking_price" type="text" class="form-control @error('school_asking_price') is-invalid @enderror" name="school_asking_price" value="{{ $order->school_asking_price }}" required autocomplete="school_asking_pricing" autofocus>
-    
+                            <small>How much the school wants to collect {{ $order->price_type }}</small>
                             @error('school_asking_price')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
