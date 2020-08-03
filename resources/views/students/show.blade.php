@@ -348,6 +348,20 @@
         </div>
       </div>
 
+      @php
+          $return_page = 'students.show';
+          $makepayment_order = '';
+          foreach($enrolment->subscription->orders as $makepayment_order)
+          {
+              if($makepayment_order == '')
+              {
+                if($makepayment_order->type == 'Purchase')
+                {
+                    $makepayment_order = $subcription->order;
+                }
+              }
+          }
+      @endphp
       @include('partials._make_payment')
       @include('partials._add_subjects_for_student')
 
