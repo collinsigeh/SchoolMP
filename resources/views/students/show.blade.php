@@ -348,6 +348,7 @@
         </div>
       </div>
 
+      @include('partials._make_payment')
       @include('partials._add_subjects_for_student')
 
 @endsection

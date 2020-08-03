@@ -464,7 +464,7 @@
     
                         <div class="col-md-8">
                             <input id="pricing" type="text" class="form-control @error('pricing') is-invalid @enderror" name="pricing" value="{{ $order->price }}" disabled autocomplete="pricing" autofocus>
-                            <small>Cost price of this subscription</small>
+                            <small>Cost price for this subscription</small>
                             @error('pricing')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
