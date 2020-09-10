@@ -35,7 +35,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('items.index') }}">Fees and other items</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Create</li>
               @else
-                <li class="breadcrumb-item"><a href="{{ config('app.url') }}/schools">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('items.index') }}">Fees and other items</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Create</li>
               @endif
@@ -48,13 +48,36 @@
             <form method="POST" action="{{ route('items.store') }}">
                 @csrf
 
+                <input type="hidden" class="form-control @error('term') is-invalid @enderror" name="term" value="{{ $term->name.' '.$term->session }}" required>
                 <div class="form-group row"> 
-                    <label for="term" class="col-md-4 col-form-label text-md-right">{{ __('Term') }}</label>
+                    <label for="visible-term" class="col-md-4 col-form-label text-md-right">{{ __('Term') }}</label>
 
                     <div class="col-md-6">
-                        <input id="term" type="text" class="form-control @error('term') is-invalid @enderror" name="term" value="{{ $term->name.' '.$term->session }}" required autocomplete="term" autofocus>
+                        <input id="visible-term" type="text" class="form-control @error('visible-term') is-invalid @enderror" name="visible-term" value="{{ $term->name.' '.$term->session }}" required autocomplete="visible-term" autofocus disabled>
 
-                        @error('term')
+                        @error('visible-term')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row"> 
+                    <label for="schoolclass_id" class="col-md-4 col-form-label text-md-right">{{ __('Class(es) concerned') }}</label>
+
+                    <div class="col-md-6">
+                        <select id="schoolclass_id" type="text" class="form-control @error('schoolclass_id') is-invalid @enderror" name="schoolclass_id" required autocomplete="schoolclass_id" autofocus>
+                            <option value="0">All classes</option>
+                            @php
+                                foreach($schoolclasses as $schoolclass)
+                                {
+                                    echo '<option value="'.$schoolclass->id.'">'.$schoolclass->name.'</option>';
+                                }
+                            @endphp
+                        </select>
+
+                        @error('schoolclass_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -118,28 +141,6 @@
                         <small class="text-muted">Amount only.</small>
 
                         @error('amount')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row"> 
-                    <label for="schoolclass_id" class="col-md-4 col-form-label text-md-right">{{ __('Class(es) concerned') }}</label>
-
-                    <div class="col-md-6">
-                        <select id="schoolclass_id" type="text" class="form-control @error('schoolclass_id') is-invalid @enderror" name="schoolclass_id" required autocomplete="schoolclass_id" autofocus>
-                            <option value="0">All classes</option>
-                            @php
-                                foreach($schoolclasses as $schoolclass)
-                                {
-                                    echo '<option value="'.$schoolclass->id.'">'.$schoolclass->name.'</option>';
-                                }
-                            @endphp
-                        </select>
-
-                        @error('schoolclass_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
