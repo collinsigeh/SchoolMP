@@ -7,7 +7,7 @@
         $makepayment_amount = $makepayment_order->pricing;
         if($user->role == 'Student' OR $user->role == 'Guardian')
         {
-            $makepayment_amount = $makepayment_order->school_asking_price
+            $makepayment_amount = $makepayment_order->school_asking_price;
         }
     }
     $makepayment_currency = $makepayment_order->currency_symbol;
