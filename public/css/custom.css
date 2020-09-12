@@ -137,3 +137,15 @@
 .collins-feature a:hover{
     text-decoration: none;
 }
+.collins-bg-white{
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+}
+.collins-table-item-icon{
+    width: 20px;
+}
+.collins-edit-table-item-icon{
+    width: 30px;
+    padding: 5px;
+}
