@@ -115,3 +115,8 @@
 .collins-link-within-table, .collins-link-within-table:hover{
     color: #666666;
 }
+.collins-feature{
+    border: 1px solid #666666;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
