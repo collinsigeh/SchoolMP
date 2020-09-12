@@ -112,3 +112,6 @@
 .collins-table-pem th.bg-light{
     width: 200px;
 }
+.collins-link-within-table, .collins-link-within-table:hover{
+    color: #666666;
+}

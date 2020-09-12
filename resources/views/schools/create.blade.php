@@ -30,6 +30,7 @@
           @include('partials._messages')
         </div>
 
+        <div class="alert alert-info">Complete school registration here</div>
         <div class="create-form">
             <form method="POST" action="{{ route('schools.store') }}" enctype="multipart/form-data">
                 @csrf
@@ -115,6 +116,7 @@
 
                     <div class="col-md-6">
                         <input id="logo" type="file" class="form-control @error('logo') is-invalid @enderror" name="logo" value="{{ old('logo') }}" autocomplete="logo" autofocus>
+                        <small class="text-muted"><strong>Prefered size:</strong> 300 x 300px</small>
 
                         @error('logo')
                             <span class="invalid-feedback" role="alert">

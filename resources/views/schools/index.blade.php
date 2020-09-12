@@ -45,9 +45,9 @@
                     <tbody>
                         @foreach ($schools as $school)
                             <tr>
-                                <td>{{ $school->school }}</td>
-                                <td class="text-right"><a href="{{ route('schools.show', $school->id) }}" class="btn btn-sm btn-primary">Enter</a></td>
-                            <td class="text-right"><a href="{{ route('schools.edit', $school->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                                <td><a class="collins-link-within-table" href="{{ route('schools.show', $school->id) }}">{{ $school->school }}</a></td>
+                                <td class="text-right"><a href="{{ route('schools.show', $school->id) }}" class="btn btn-sm btn-primary">Manage</a></td>
+                            <td class="text-right"><a href="{{ route('schools.edit', $school->id) }}" class="btn btn-sm btn-outline-primary">Edit</a></td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>School MP by Briigo</title>
+        <title>SchoolMP by Briigo</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -81,13 +81,13 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    School MP
+                    SchoolMP
                 </div>
 
                 <div class="links">
                     <p>School MP is the leading school management portal today.</p>
-                    <a href="{{ url('register') }}">Start Today</a>
                     <a href="{{ url('login') }}">Login</a>
+                    <a href="{{ url('register') }}">Start Today</a>
                 </div>
             </div>
         </div>
