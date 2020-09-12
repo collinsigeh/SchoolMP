@@ -116,7 +116,24 @@
     color: #666666;
 }
 .collins-feature{
-    border: 1px solid #666666;
+    margin-bottom: 35px;
+    border: 2px solid #f2f2f2;
     border-radius: 5px;
-    background-color: #ffffff;
+    background-color: #e6f5ff;
+    padding: 0 10px 20px 10px;
+    text-align: center;
+}
+.collins-feature:hover{
+    border: 2px solid #0099cc;
+}
+.collins-feature-icon{
+    width: 100px;
+}
+.collins-feature-title{
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #666666;
+}
+.collins-feature a:hover{
+    text-decoration: none;
 }

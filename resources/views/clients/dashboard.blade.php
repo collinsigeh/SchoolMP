@@ -28,19 +28,27 @@
         </div>
 
         <div class="welcome">
-          <p>
-            Hello,
-          </p>
-          <p>
-            Welcome to your Schoobic dashboard. You can explore the following areas:
-          </p>
-          <ul>
-            <li><a href="{{ route('users.profile') }}">My profile</a></li>
-            <li><a href="{{ route('schools.index') }}">My schools</a></li>
-          </ul>
-          <p>
-            Enjoy!
-          </p>
+          <div class="alert alert-info">
+              Welcome to your dashboard. You can explore the following areas:
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="collins-feature">
+                <a href="{{ route('schools.index') }}">
+                <img src="{{ config('app.url') }}/images/icons/school_icon.png" alt="schools_icon" class="collins-feature-icon">
+                <div class="collins-feature-title">My Schools</div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="collins-feature">
+                <a href="{{ route('users.profile') }}">
+                <img src="{{ config('app.url') }}/images/icons/profile_icon.png" alt="profile_icon" class="collins-feature-icon">
+                <div class="collins-feature-title">My Profile</div>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       
