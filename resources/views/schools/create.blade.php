@@ -30,7 +30,7 @@
           @include('partials._messages')
         </div>
 
-        <div class="alert alert-info">Complete school registration here</div>
+        <div class="alert alert-info">Complete school registration here.</div>
         <div class="create-form">
             <form method="POST" action="{{ route('schools.store') }}" enctype="multipart/form-data">
                 @csrf

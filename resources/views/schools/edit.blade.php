@@ -43,6 +43,9 @@
           @include('partials._messages')
         </div>
 
+        <div class="alert alert-info" sr-only="alert">
+            Here's the school's registered information.
+        </div>
         <div class="create-form">
             <form method="POST" action="{{ route('schools.update', $school->id) }}" enctype="multipart/form-data">
                 @csrf
