@@ -37,19 +37,19 @@
                 Here's a list of your schools. Click on a school to manage it.
             </div>
             <div class="collins-bg-white">
-            <div class="table-responsive">    
-                <table class="table table-striped table-hover table-sm">
-                    <tbody>
-                        @foreach ($schools as $school)
-                            <tr>
-                                <td><a class="collins-link-within-table" href="{{ route('schools.show', $school->id) }}"><img src="{{ config('app.url') }}/images/icons/school_icon.png" alt="schools_icon" class="collins-table-item-icon"> {{ $school->school }}</a></td>
-                            <td class="text-right"><a href="{{ route('schools.edit', $school->id) }}" title="Edit"><img src="{{ config('app.url') }}/images/icons/edit_icon.png" alt="Edit" class="collins-edit-table-item-icon"></a></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            {{ $schools->links() }}
+              <div class="table-responsive">    
+                  <table class="table table-striped table-hover table-sm">
+                      <tbody>
+                          @foreach ($schools as $school)
+                              <tr>
+                                  <td><a class="collins-link-within-table" href="{{ route('schools.show', $school->id) }}"><img src="{{ config('app.url') }}/images/icons/school_icon.png" alt="schools_icon" class="collins-table-item-icon"> {{ $school->school }}</a></td>
+                              <td class="text-right"><a href="{{ route('schools.edit', $school->id) }}" title="Edit"><img src="{{ config('app.url') }}/images/icons/edit_icon.png" alt="Edit" class="collins-edit-table-item-icon"></a></td>
+                              </tr>
+                          @endforeach
+                      </tbody>
+                  </table>
+              </div>
+              {{ $schools->links() }}
             </div>
         @endif
     </div>

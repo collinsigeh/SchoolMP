@@ -50,25 +50,23 @@
                 No director.
             </div>
         @else
+          <div class="alert alert-info" sr-only="alert">
+              Here's a list of directors at {{ $school->school }}.
+          </div>
+          <div class="collins-bg-white">
             <div class="table-responsive">    
             <table class="table table-striped table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th>Diretors of {{ $school->school }}</th>
-                            <th></th>
-                        </tr>
-                    </thead>
                     <tbody>
                         @foreach ($directors as $director)
                             <tr>
-                                <td>{{ $director->user->name }} ( <i>{{ $director->user->email }}</i> )</td>
-                                <td class="text-right"><a href="{{ route('directors.show', $director->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                                <td><a class="collins-link-within-table" href="{{ route('directors.show', $director->id) }}"><img src="{{ config('app.url') }}/images/icons/director_icon.png" alt="director_icon" class="collins-table-item-icon"> {{ $director->user->name }} ( <i>{{ $director->user->email }}</i> )</a></td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             {{ $directors->links() }}
+          </div>
         @endif
     </div>
   </div>
