@@ -48,6 +48,10 @@
           </nav>
           @include('partials._messages')
         </div>
+      
+        <div class="alert alert-info">
+          Here's a list of subscription and the order summary for {{$school->school}}.
+        </div>
 
         <div class="welcome">
           <div class="row">
