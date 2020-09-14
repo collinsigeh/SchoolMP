@@ -44,6 +44,8 @@
           @include('partials._messages')
         </div>
 
+        <div class="alert alert-info">Complete the form to create new staff account.</div>
+
         <div class="create-form">
             <form method="POST" action="{{ route('staff.store') }}" enctype="multipart/form-data">
                 @csrf

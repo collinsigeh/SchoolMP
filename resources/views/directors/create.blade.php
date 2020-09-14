@@ -44,7 +44,7 @@
           @include('partials._messages')
         </div>
 
-        <div class="alert alert-info">Add new directors here.</div>
+        <div class="alert alert-info">Create new director account here.</div>
 
         <div class="create-form">
             <form method="POST" action="{{ route('directors.store') }}" enctype="multipart/form-data">

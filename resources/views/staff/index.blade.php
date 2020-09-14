@@ -48,25 +48,23 @@
                 No staff.
             </div>
         @else
+          <div class="alert alert-info" sr-only="alert">
+              Here's a list of staff members at {{ $school->school }}.
+          </div>
+          <div class="collins-bg-white">
             <div class="table-responsive">    
             <table class="table table-striped table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th>Staff list</th>
-                            <th></th>
-                        </tr>
-                    </thead>
                     <tbody>
                         @foreach ($allstaff as $employee)
                             <tr>
-                                <td>{{ $employee->user->name }} ( <i>{{ $employee->designation }}</i> )</td>
-                                <td class="text-right"><a href="{{ route('staff.show', $employee->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                                <td><a class="collins-link-within-table" href="{{ route('staff.show', $employee->id) }}"><img src="{{ config('app.url') }}/images/icons/user_icon.png" alt="staff_icon" class="collins-table-item-icon"> {{ $employee->user->name }} ( <i>{{ $employee->designation }}</i> )</a></td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             {{ $allstaff->links() }}
+          </div>
         @endif
     </div>
   </div>

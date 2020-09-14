@@ -44,6 +44,10 @@
           @include('partials._messages')
         </div>
 
+        <div class="alert alert-info">
+            Here's the registered information for <strong>{{ $this_staff->user->name }} ({{ $this_staff->designation }})</strong>.
+        </div>
+
         <div class="row">
             <div class="col-md-8">
                 <div class="resource-details">

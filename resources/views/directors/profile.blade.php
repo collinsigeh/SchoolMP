@@ -27,6 +27,9 @@
           </nav>
           @include('partials._messages')
         </div>
+        <div class="alert alert-info">
+            Here's your personal information.
+        </div>
         <div class="row">
             <div class="col-md-8">
                 <div class="resource-details">
