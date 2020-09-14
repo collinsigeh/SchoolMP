@@ -135,7 +135,7 @@
             <div class="col-md-3">
               <div class="collins-feature">
                 <a href="{{ route('schools.edit', $school->id) }}">
-                <img src="{{ config('app.url') }}/images/icons/school_info_icon.png" alt="schools_info" class="collins-feature-icon">
+                <img src="{{ config('app.url') }}/images/icons/school_icon.png" alt="schools_info" class="collins-feature-icon">
                 <div class="collins-feature-title">School Info</div>
                 </a>
               </div>
