@@ -73,7 +73,7 @@ class StaffController extends Controller
         $db_check = array(
             'school_id' => $school_id
         );
-        $data['allstaff'] = Staff::where($db_check)->simplePaginate(25);
+        $data['allstaff'] = Staff::where($db_check)->orderBy('designation', 'asc')->simplePaginate(25);
 
         return view('staff.index')->with($data);
     }
