@@ -31,6 +31,106 @@
         <div class="welcome">
           <div class="row">
             <div class="col-md-12">
+              <div class="alert alert-info">
+                <div>
+                  <img src="{{ config('app.url') }}/images/icons/current_term_icon.png" alt="current_term_icon" class="collins-current-term-icon">
+                </div>
+                
+                
+                @if (!$currentterm)
+                    <span style="font-size: 2em;">Not Available!</span><br />
+                    @if (count($previousterms) >= 1)
+                            <a href="{{ route('terms.index') }}" class="btn btn-sm btn-primary" style="margin-top:- 15px;">View session terms</a>
+                    @else
+                            @if ($staff->manage_session_terms == 'Yes')
+                                <a href="{{ route('terms.create') }}" class="btn btn-sm btn-primary" style="margin-top:- 15px;">New term</a>
+                            @else
+                                There's <b>no active session term</b> at present. Please contact the school admin.
+                            @endif
+                    @endif
+                @else
+
+                <span style="font-size: 2em;">{!! $currentterm->name.' (<small>'.$currentterm->session.'</small>)' !!}</span><br />
+                <a href="{{ route('terms.show', $currentterm->id) }}" class="btn btn-sm btn-primary" style="margin-top:- 15px;">Enter</a>
+                
+                @endif
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+              <div class="collins-feature">
+                <a href="{{ route('terms.index') }}">
+                <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="session_term" class="collins-feature-icon">
+                <div class="collins-feature-title">Session Terms</div>
+                </a>
+              </div>
+            </div>
+            @if ($staff->manage_class_arms == 'Yes')
+            <div class="col-md-3">
+              <div class="collins-feature">
+                <a href="{{ route('classes.index') }}">
+                <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="collins-feature-icon">
+                <div class="collins-feature-title">Classes</div>
+                </a>
+              </div>
+            </div>
+            @endif
+            <div class="col-md-3">
+              <div class="collins-feature">
+                <a href="{{ route('subjects.index') }}">
+                <img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subjects_info" class="collins-feature-icon">
+                <div class="collins-feature-title">Subjects</div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="collins-feature">
+                <a href="{{ route('resulttemplates.index') }}">
+                <img src="{{ config('app.url') }}/images/icons/result_template_icon.png" alt="result_template" class="collins-feature-icon">
+                <div class="collins-feature-title">Result Templates</div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="collins-feature">
+                <a href="{{ route('directors.index') }}">
+                <img src="{{ config('app.url') }}/images/icons/director_icon.png" alt="director_icon" class="collins-feature-icon">
+                <div class="collins-feature-title">Directors</div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="collins-feature">
+                <a href="{{ route('staff.index') }}">
+                <img src="{{ config('app.url') }}/images/icons/staff_icon.png" alt="staff_icon" class="collins-feature-icon">
+                <div class="collins-feature-title">Staff</div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="collins-feature">
+                <a href="{{ route('schools.edit', $school->id) }}">
+                <img src="{{ config('app.url') }}/images/icons/school_icon.png" alt="schools_info" class="collins-feature-icon">
+                <div class="collins-feature-title">School Info</div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="collins-feature">
+                <a href="{{ route('subscriptions.index') }}">
+                <img src="{{ config('app.url') }}/images/icons/subscription_icon.png" alt="subscription_icon" class="collins-feature-icon">
+                <div class="collins-feature-title">Subscriptions</div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-md-12">
                 <div class="resource-details">
                     <div class="title">
                         Current Term
