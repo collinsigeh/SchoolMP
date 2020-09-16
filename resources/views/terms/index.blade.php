@@ -51,7 +51,7 @@
 
         @if(count($terms) < 1)
             <div class="alert alert-info" sr-only="alert">
-                None available.
+              <p>None available.</p>Click on the <b>new term</b> button at the top-right corner to start creating session terms to manage.
             </div>
         @else
             <div class="table-responsive">    

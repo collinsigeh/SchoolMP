@@ -54,25 +54,23 @@
                 <p>None available.</p>Click on the <b>new template</b> button at the top-right corner to start creating result templates.
             </div>
         @else
+          <div class="alert alert-info" sr-only="alert">
+              Here's a list of result templates at {{ $school->school }}.
+          </div>
+          <div class="collins-bg-white">
             <div class="table-responsive">    
             <table class="table table-striped table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th>Result templates</th>
-                            <th></th>
-                        </tr>
-                    </thead>
                     <tbody>
                         @foreach ($templates as $template)
                             <tr>
-                                <td>{{ $template->name }}</td>
-                                <td class="text-right"><a href="{{ route('resulttemplates.show', $template->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                                <td><a class="collins-link-within-table" href="{{ route('resulttemplates.show', $template->id) }}"><img src="{{ config('app.url') }}/images/icons/result_template_icon.png" alt="template_icon" class="collins-table-item-icon"> {{ $template->name }}</a></td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             {{ $templates->links() }}
+          </div>
         @endif
     </div>
   </div>

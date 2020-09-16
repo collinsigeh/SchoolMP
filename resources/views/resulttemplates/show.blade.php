@@ -44,6 +44,10 @@
           @include('partials._messages')
         </div>
 
+        <div class="alert alert-info">
+            Here's the detailed information for <strong>{{ $resulttemplate->name }}</strong> in {{ $school->school }}.
+        </div>
+
         <div class="row">
             <div class="col-md-8">
                 <div class="resource-details">
