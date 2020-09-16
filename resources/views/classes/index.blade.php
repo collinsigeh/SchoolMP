@@ -51,7 +51,7 @@
 
         @if(count($classes) < 1)
             <div class="alert alert-info" sr-only="alert">
-                None available.
+              <p>None available.</p>Click on the <b>new class</b> button at the top-right corner to start adding the school's classes.
             </div>
         @else
           <div class="alert alert-info" sr-only="alert">

@@ -45,7 +45,7 @@
         
         @if(count($allstaff) < 1)
             <div class="alert alert-info" sr-only="alert">
-                No staff.
+              <p>None available.</p>Click on the <b>new staff</b> button at the top-right corner to start creating staff accounts.
             </div>
         @else
           <div class="alert alert-info" sr-only="alert">

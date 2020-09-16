@@ -51,7 +51,7 @@
 
         @if(count($templates) < 1)
             <div class="alert alert-info" sr-only="alert">
-                None available.
+                <p>None available.</p>Click on the <b>new template</b> button at the top-right corner to start creating result templates.
             </div>
         @else
             <div class="table-responsive">    

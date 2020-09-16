@@ -47,7 +47,7 @@
 
         @if(count($directors) < 1)
             <div class="alert alert-info" sr-only="alert">
-                No director.
+              <p>None available.</p>Click on the <b>new director</b> button at the top-right corner to start creating director accounts.
             </div>
         @else
           <div class="alert alert-info" sr-only="alert">

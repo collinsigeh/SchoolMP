@@ -30,7 +30,7 @@
 
         @if(count($user->schools) < 1)
             <div class="alert alert-info" sr-only="alert">
-                No school.
+              <p>None available.</p>Click on the <b>new school</b> button at the top-right corner to start adding schools to manage.
             </div>
         @else
             <div class="alert alert-info" sr-only="alert">
