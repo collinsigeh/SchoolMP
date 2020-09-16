@@ -526,6 +526,16 @@ class UsersController extends Controller
                 }
             }
             
+            $staff_to_delete = Staff::where('user_id',$staff_user->id)->get();
+            
+            if(!empty($staff_to_delete))
+            {
+                if($staff_to_delete->count() > 0)
+                {
+                    $staff_to_delete = $staff_to_delete[0];
+                    $staff_to_delete->delete();
+                }
+            }
             $staff_user->delete();
             $request->session()->flash('success', 'Record deleted');
         }
