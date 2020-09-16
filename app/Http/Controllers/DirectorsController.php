@@ -532,7 +532,7 @@ class DirectorsController extends Controller
                 }
             }
 
-
+            $director->delete();
             $director_user->delete();
             $request->session()->flash('success', 'Record deleted');
         }
