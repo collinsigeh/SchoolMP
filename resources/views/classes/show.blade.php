@@ -44,6 +44,10 @@
           @include('partials._messages')
         </div>
 
+        <div class="alert alert-info">
+            Here's the descriptive information for <strong>{{ $schoolclass->name }}</strong>. To interact or manage this class, <a href="{{ route('terms.index') }}" class="btn btn-sm btn-primary">select a session term</a>.
+        </div>
+
         <div class="row">
             <div class="col-md-8">
                 <div class="resource-details">
