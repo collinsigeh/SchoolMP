@@ -614,8 +614,11 @@ class StaffController extends Controller
             $has_resulttemplate = Resulttemplate::where('user_id', $staff_user->id)->get();
             if(!empty($has_resulttemplate->count() > 0))
             {
-                $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 7.');
-                return redirect()->route('staff.show', $id);
+                if($has_resulttemplate->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 7.');
+                    return redirect()->route('staff.show', $id);
+                }
             }
             
             $has_subjectteachercomment = Result::where('subjectteachercomment_by', $staff_user->id)->get();

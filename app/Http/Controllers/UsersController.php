@@ -328,12 +328,210 @@ class UsersController extends Controller
 
         if($user->role == 'Director')
         {
-            $db_check = array(
-                'user_id' => $user->id
-            );
-            $director = Director::where($db_check)->get();
-            $director[0]->status = 'Inactive';
-            $director[0]->save();
+            $director_user = $user;
+
+            $has_term = Term::where('created_by', $director_user->id)->get();
+            if(!empty($has_term))
+            {
+                if($has_term->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 1.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_subject = Subject::where('user_id', $director_user->id)->get();
+            if(!empty($has_subject))
+            {
+                if($has_subject->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 2.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_student = Student::where('created_by', $director_user->id)->get();
+            if(!empty($has_student))
+            {
+                if($has_student->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 3.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_staff = Staff::where('created_by', $director_user->id)->get();
+            if(!empty($has_staff))
+            {
+                if($has_staff->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 4.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_school = School::where('created_by', $director_user->id)->get();
+            if(!empty($has_school))
+            {
+                if($has_school->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 5.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_schoolclass = Schoolclass::where('user_id', $director_user->id)->get();
+            if(!empty($has_schoolclass))
+            {
+                if($has_schoolclass->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 6.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_resulttemplate = Resulttemplate::where('user_id', $director_user->id)->get();
+            if(!empty($has_resulttemplate->count() > 0))
+            {
+                if($has_resulttemplate->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 7.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_subjectteachercomment = Result::where('subjectteachercomment_by', $director_user->id)->get();
+            if(!empty($has_subjectteachercomment))
+            {
+                if($has_subjectteachercomment->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 8.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_classteachercomment = Result::where('classteachercomment_by', $director_user->id)->get();
+            if(!empty($has_classteachercomment))
+            {
+                if($has_classteachercomment->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 9.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_principalcomment = Result::where('principalcomment_by', $director_user->id)->get();
+            if(!empty($has_principalcomment))
+            {
+                if($has_principalcomment->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 10.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_payment = Payment::where('user_id', $director_user->id)->get();
+            if(!empty($has_payment))
+            {
+                if($has_payment->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 11.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_order = Order::where('user_id', $director_user->id)->get();
+            if(!empty($has_order))
+            {
+                if($has_order->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 12.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_item = Item::where('user_id', $director_user->id)->get();
+            if(!empty($has_item))
+            {
+                if($has_item->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 13.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_enrolment1 = Enrolment::where('user_id', $director_user->id)->get();
+            if(!empty($has_enrolment1))
+            {
+                if($has_enrolment1->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 14.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_enrolment2 = Enrolment::where('created_by', $director_user->id)->get();
+            if(!empty($has_enrolment2))
+            {
+                if($has_enrolment2->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 15.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_classteacher = Classteacher::where('user_id', $director_user->id)->get();
+            if(!empty($has_classteacher))
+            {
+                if($has_classteacher->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 16.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_classsubject = Classsubject::where('user_id', $director_user->id)->get();
+            if(!empty($has_classsubject))
+            {
+                if($has_classsubject->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 17.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_arm1 = Arm::where('user_id', $director_user->id)->get();
+            if(!empty($has_arm1))
+            {
+                if($has_arm1->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 18.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $has_arm2 = Arm::where('created_by', $director_user->id)->get();
+            if(!empty($has_arm2))
+            {
+                if($has_arm2->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 19.');
+                    return redirect()->route('users.show', $id);
+                }
+            }
+            
+            $director_to_delete = Director::where('user_id',$director_user->id)->get();
+            
+            if(!empty($director_to_delete))
+            {
+                if($director_to_delete->count() > 0)
+                {
+                    $director_to_delete = $director_to_delete[0];
+                    $director_to_delete->delete();
+                }
+            }
+            $director_user->delete();
+            $request->session()->flash('success', 'Record deleted');
         }
         elseif($user->role == 'Staff')
         {
@@ -345,7 +543,7 @@ class UsersController extends Controller
                 if($has_term->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 1.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -355,7 +553,7 @@ class UsersController extends Controller
                 if($has_subject->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 2.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -365,7 +563,7 @@ class UsersController extends Controller
                 if($has_student->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 3.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -375,7 +573,7 @@ class UsersController extends Controller
                 if($has_staff->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 4.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -385,7 +583,7 @@ class UsersController extends Controller
                 if($has_school->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 5.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -395,15 +593,18 @@ class UsersController extends Controller
                 if($has_schoolclass->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 6.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
             $has_resulttemplate = Resulttemplate::where('user_id', $staff_user->id)->get();
             if(!empty($has_resulttemplate->count() > 0))
             {
-                $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 7.');
-                return redirect()->route('staff.show', $id);
+                if($has_resulttemplate->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 7.');
+                    return redirect()->route('users.show', $id);
+                }
             }
             
             $has_subjectteachercomment = Result::where('subjectteachercomment_by', $staff_user->id)->get();
@@ -412,7 +613,7 @@ class UsersController extends Controller
                 if($has_subjectteachercomment->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 8.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -422,7 +623,7 @@ class UsersController extends Controller
                 if($has_classteachercomment->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 9.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -432,7 +633,7 @@ class UsersController extends Controller
                 if($has_principalcomment->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 10.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -442,7 +643,7 @@ class UsersController extends Controller
                 if($has_payment->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 11.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -452,7 +653,7 @@ class UsersController extends Controller
                 if($has_order->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 12.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -462,7 +663,7 @@ class UsersController extends Controller
                 if($has_item->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 13.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -472,7 +673,7 @@ class UsersController extends Controller
                 if($has_enrolment1->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 14.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -482,7 +683,7 @@ class UsersController extends Controller
                 if($has_enrolment2->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 15.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -492,7 +693,7 @@ class UsersController extends Controller
                 if($has_classteacher->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 16.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -502,7 +703,7 @@ class UsersController extends Controller
                 if($has_classsubject->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 17.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -512,7 +713,7 @@ class UsersController extends Controller
                 if($has_arm1->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 18.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             
@@ -522,7 +723,7 @@ class UsersController extends Controller
                 if($has_arm2->count() > 0)
                 {
                     $request->session()->flash('error', 'ERROR: Attempt to delete a staff account having related useful resources 19.');
-                    return redirect()->route('staff.show', $id);
+                    return redirect()->route('users.show', $id);
                 }
             }
             

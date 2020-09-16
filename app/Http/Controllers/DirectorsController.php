@@ -408,8 +408,11 @@ class DirectorsController extends Controller
             $has_resulttemplate = Resulttemplate::where('user_id', $director_user->id)->get();
             if(!empty($has_resulttemplate->count() > 0))
             {
-                $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 7.');
-                return redirect()->route('directors.show', $id);
+                if($has_resulttemplate->count() > 0)
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to delete a director account having related useful resources 7.');
+                    return redirect()->route('directors.show', $id);
+                }
             }
             
             $has_subjectteachercomment = Result::where('subjectteachercomment_by', $director_user->id)->get();
