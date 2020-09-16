@@ -54,25 +54,23 @@
                 None available.
             </div>
         @else
+          <div class="alert alert-info" sr-only="alert">
+              Here's a list of subjects offered in {{ $school->school }}.
+          </div>
+          <div class="collins-bg-white">
             <div class="table-responsive">    
             <table class="table table-striped table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th>Subjects</th>
-                            <th></th>
-                        </tr>
-                    </thead>
                     <tbody>
                         @foreach ($subjects as $subject)
                             <tr>
-                                <td>{{ $subject->name }}</td>
-                                <td class="text-right"><a href="{{ route('subjects.show', $subject->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                                <td><a class="collins-link-within-table" href="{{ route('subjects.show', $subject->id) }}"><img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="class_icon" class="collins-table-item-icon"> {{ $subject->name }}</a></td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             {{ $subjects->links() }}
+          </div>
         @endif
     </div>
   </div>
