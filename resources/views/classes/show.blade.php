@@ -45,7 +45,7 @@
         </div>
 
         <div class="alert alert-info">
-            Here's the descriptive information for <strong>{{ $schoolclass->name }}</strong>. To interact or manage this class, <a href="{{ route('terms.index') }}" class="btn btn-sm btn-primary">select a session term</a>.
+            Here's the descriptive information for <strong>{{ $schoolclass->name }}</strong>. To assign or manage this class, <a href="{{ route('terms.index') }}" class="btn btn-sm btn-primary">select a session term</a>.
         </div>
 
         <div class="row">
