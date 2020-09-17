@@ -44,6 +44,7 @@
           @include('partials._messages')
         </div>
 
+        <div class="alert alert-info">Complete the form below to create a new result template.</div>
         <div class="create-form">
             <form method="POST" action="{{ route('resulttemplates.store') }}">
                 @csrf

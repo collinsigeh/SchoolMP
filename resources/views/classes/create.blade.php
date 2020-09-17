@@ -44,6 +44,7 @@
           @include('partials._messages')
         </div>
 
+        <div class="alert alert-info">Complete the form below to add a new class.</div>
         <div class="create-form">
             <form method="POST" action="{{ route('classes.store') }}">
                 @csrf
