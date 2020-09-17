@@ -59,7 +59,7 @@
                     <tbody>
                         @foreach ($directors as $director)
                             <tr>
-                                <td><a class="collins-link-within-table" href="{{ route('directors.show', $director->id) }}"><img src="{{ config('app.url') }}/images/icons/director_icon.png" alt="director_icon" class="collins-table-item-icon"> {{ $director->user->name }} ( <i>{{ $director->user->email }}</i> )</a></td>
+                                <td><a class="collins-link-within-table" href="{{ route('directors.show', $director->id) }}"><img src="{{ config('app.url') }}/images/profile/{{ $director->user->pic }}" alt="director_icon" class="collins-table-item-icon"> {{ $director->user->name }} ( <i>{{ $director->user->email }}</i> )</a></td>
                             </tr>
                         @endforeach
                     </tbody>

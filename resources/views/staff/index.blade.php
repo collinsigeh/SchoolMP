@@ -57,7 +57,7 @@
                     <tbody>
                         @foreach ($allstaff as $employee)
                             <tr>
-                                <td><a class="collins-link-within-table" href="{{ route('staff.show', $employee->id) }}"><img src="{{ config('app.url') }}/images/icons/user_icon.png" alt="staff_icon" class="collins-table-item-icon"> {{ $employee->user->name }} ( <i>{{ $employee->designation }}</i> )</a></td>
+                                <td><a class="collins-link-within-table" href="{{ route('staff.show', $employee->id) }}"><img src="{{ config('app.url') }}/images/profile/{{ $employee->user->pic }}" alt="staff_icon" class="collins-table-item-icon"> {{ $employee->user->name }} ( <i>{{ $employee->designation }}</i> )</a></td>
                             </tr>
                         @endforeach
                     </tbody>

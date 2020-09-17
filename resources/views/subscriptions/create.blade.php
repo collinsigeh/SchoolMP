@@ -44,6 +44,8 @@
           @include('partials._messages')
         </div>
 
+        <div class="alert alert-info">Here's a list of subscription packages to pick from.</div>
+
         <div class="welcome">
           <div class="row">
               @foreach ($products as $product)

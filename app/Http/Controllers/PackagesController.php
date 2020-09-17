@@ -143,6 +143,13 @@ class PackagesController extends Controller
             'status'        => ['required']
         ]);
 
+        if($data['product']->payment !== 'Trial')
+        {
+            $this->validate($request, [
+                'price'         => ['required', 'numeric', 'gt: 0']
+            ]);
+        }
+
         $name = ucwords(strtolower($request->input('name')));
         
         $db_check = array(

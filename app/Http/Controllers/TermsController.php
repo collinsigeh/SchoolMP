@@ -135,8 +135,8 @@ class TermsController extends Controller
         if($no_subscriptions < 1)
         {
             $request->session()->flash('error', "<p>You don't have a valid subscription.</p>
-                <a href='".config('app.url')."/subscriptions/create' class='btn btn-sm btn-danger'>New subscription</a> &nbsp;&nbsp;&nbsp;
-                <a href='".config('app.url')."/subscriptions/index' class='btn btn-sm btn-outline-danger'>View previous subscriptons</a>" );
+                <a href='".config('app.url')."/subscriptions/create' class='btn btn-sm btn-danger'>Get a new subscription</a> &nbsp;&nbsp;&nbsp;
+                <a href='".config('app.url')."/subscriptions' class='btn btn-sm btn-outline-danger'>View previous subscriptons</a>" );
             return redirect()->route('terms.index');
         }
 

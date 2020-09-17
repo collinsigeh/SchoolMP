@@ -382,7 +382,10 @@ class SubscriptionsController extends Controller
                 $total_price = $package->price;
             }
 
-            $school_asking_price = $request->input('school_asking_price');
+            if(null !== $request->input('school_asking_price'))
+            {
+                $school_asking_price = $request->input('school_asking_price');
+            }
         }
         elseif($package->product->payment == 'Post-paid')
         {
@@ -417,7 +420,7 @@ class SubscriptionsController extends Controller
         $order->type = 'Purchase';
         $order->payment = $package->product->payment;
         $order->price_type = $package->price_type;
-        $order->price = $package->price;
+        $order->price = $package->price;    
         $order->currency_symbol = $setting->base_currency_symbol;
         $order->total_price = $total_price;
         $order->discount = $discount;
