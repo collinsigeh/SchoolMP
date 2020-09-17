@@ -61,7 +61,7 @@ class SubscriptionsController extends Controller
                 'manage_subscriptions' => 'Yes'
             );
             $staff = Staff::where($db_check)->get();
-            if(!empty($staff))
+            if(empty($staff))
             {
                 return  redirect()->route('dashboard');
             }
