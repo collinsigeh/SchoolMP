@@ -159,3 +159,11 @@
     width: 110px;
     padding-bottom: 15px;
 }
+.collins-this-term-icon{
+    width: 50px;
+    padding-right: 5px;
+}
+.collins-this-term{
+    font-size: 1.2em;
+    font-weight: 700;
+}
