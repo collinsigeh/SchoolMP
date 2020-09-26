@@ -69,7 +69,6 @@
                     <span style="font-size: 2em;">Not Available!</span><br />
                     @if (count($previousterms) >= 1)
                       <a href="{{ route('terms.index') }}" class="btn btn-sm btn-primary" style="margin-top:- 15px; margin-right: 50px;">View session terms</a>
-                      <a href="{{ route('terms.create') }}" class="btn btn-sm btn-outline-primary" style="margin-top:- 15px;">New term</a> 
                     @else
                       <a href="{{ route('terms.create') }}" class="btn btn-sm btn-primary" style="margin-top:- 15px;">New term</a>
                     @endif
