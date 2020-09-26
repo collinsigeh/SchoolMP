@@ -54,29 +54,23 @@
               <p>None available.</p>Click on the <b>new term</b> button at the top-right corner to start creating session terms to manage.
             </div>
         @else
+          <div class="alert alert-info" sr-only="alert">
+              Available session terms for {{ $school->school }}.
+          </div>
+          <div class="collins-bg-white">
             <div class="table-responsive">    
             <table class="table table-striped table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th>Session terms</th>
-                            <th>No. of classarms</th>
-                            <th>No. of students</th>
-                            <th></th>
-                        </tr>
-                    </thead>
                     <tbody>
                         @foreach ($terms as $term)
                             <tr>
-                                <td>{!! '<b>'.$term->name.'</b> - <small><i>'.$term->session.'<i></small>' !!}</td>
-                                <td>{{ count($term->arms) }}</td>
-                                <td>{{ count($term->enrolments) }}</td>
-                                <td class="text-right"><a href="{{ route('terms.show', $term->id) }}" class="btn btn-sm btn-outline-primary">Enter</a></td>
+                                <td><a class="collins-link-within-table" href="{{ route('terms.show', $term->id) }}"><img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="collins-table-item-icon"> {!! '<b>'.$term->name.'</b> - <small><i>'.$term->session.'<i></small>' !!}</a></td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             {{ $terms->links() }}
+          </div>
         @endif
     </div>
   </div>
