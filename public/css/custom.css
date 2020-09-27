@@ -70,21 +70,28 @@
 }
 .resource-details{
     background-color: #ffffff;
-    border: 1px solid #d5d5d5;
+    border: 1px solid #D6E9F9;
     border-radius: 4px;
     margin-bottom: 20px;
+    -webkit-box-shadow: 2px 2px 3px 2px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    -moz-box-shadow:    2px 2px 3px 2px #ccc;  /* Firefox 3.5 - 3.6 */
+    box-shadow:         2px 2px 3px 2px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
 }
 .resource-details .row{
     padding-bottom: 20px;
 }
 .resource-details .title{
-    background-color: #f3f3f3;
+    background-color: #E2F0FB;
+    color: #385D7A;
     font-size: 1.1em;
+    font-weight: 700;
     padding: 8px 20px;
     border-radius: 4px 4px 0 0;
 }
 .resource-details .title2{
-    background-color: #f3f3f3;
+    background-color: #E2F0FB;
+    color: #385D7A;
+    font-weight: 700;
     padding: 8px 10px 15px 10px;
     text-align: center;
 }
