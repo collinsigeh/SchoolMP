@@ -43,209 +43,116 @@
           </nav>
           @include('partials._messages')
         </div>
-          
-        <div class="row">
-          <div class="col-md-12">
-            <div class="alert alert-info">
-              <div style="margin-bottom: 30px;">
-                <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</span>
-              </div>
-              
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover table-sm">
-                        <tr>
-                          <td><b>Resumption date:</b> {{ $term->resumption_date }}</td>
-                        </tr>
-                    </table>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover table-sm">
-                        <tr>
-                          <td><b>Closing date:</b> {{ $term->closing_date }}</td>
-                        </tr>
-                    </table>
-                  </div>
-                </div> 
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-3">
-            <div class="collins-feature">
-              <a href="{{ route('terms.index') }}">
-              <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="session_term" class="collins-feature-icon">
-              <div class="collins-feature-title">Session Terms</div>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="collins-feature">
-              <a href="{{ route('classes.index') }}">
-              <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="collins-feature-icon">
-              <div class="collins-feature-title">Classes</div>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="collins-feature">
-              <a href="{{ route('subjects.index') }}">
-              <img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subjects_info" class="collins-feature-icon">
-              <div class="collins-feature-title">Subjects</div>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="collins-feature">
-              <a href="{{ route('resulttemplates.index') }}">
-              <img src="{{ config('app.url') }}/images/icons/result_template_icon.png" alt="result_template" class="collins-feature-icon">
-              <div class="collins-feature-title">Result Templates</div>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="collins-feature">
-              <a href="{{ route('directors.index') }}">
-              <img src="{{ config('app.url') }}/images/icons/director_icon.png" alt="director_icon" class="collins-feature-icon">
-              <div class="collins-feature-title">Directors</div>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="collins-feature">
-              <a href="{{ route('staff.index') }}">
-              <img src="{{ config('app.url') }}/images/icons/staff_icon.png" alt="staff_icon" class="collins-feature-icon">
-              <div class="collins-feature-title">Staff</div>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="collins-feature">
-              <a href="{{ route('schools.edit', $school->id) }}">
-              <img src="{{ config('app.url') }}/images/icons/school_icon.png" alt="schools_info" class="collins-feature-icon">
-              <div class="collins-feature-title">School Info</div>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="collins-feature">
-              <a href="{{ route('subscriptions.index') }}">
-              <img src="{{ config('app.url') }}/images/icons/subscription_icon.png" alt="subscription_icon" class="collins-feature-icon">
-              <div class="collins-feature-title">Subscriptions</div>
-              </a>
-            </div>
-          </div>
-        </div>
 
         @if ($user->role == 'Director')
         <div class="welcome">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="resource-details">
-                        <div class="title">
-                            <b>{!! $term->name.' - <small><i>'.$term->session.'</i></small>' !!}</b>
-                        </div>
-                        <div class="body">
-                          <div class="row">
-                            <div class="col-md-6">
-                              <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover table-sm">
-                                    <tr>
-                                      <th>Resumption date:</th>
-                                      <td>{{ $term->resumption_date }}</td>
-                                    </tr>
-                                </table>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover table-sm">
-                                    <tr>
-                                      <th>Closing date:</th>
-                                      <td>{{ $term->closing_date }}</td>
-                                    </tr>
-                                </table>
-                              </div>
-                            </div> 
-                          </div>
-                          <div style="padding: 25px;"></div>
 
-                          <div class="row">
-                            <div class="col-md-12">
-                                <div class="table-responsive bg-light">
-                                  <table class="table table-striped table-hover table-sm">
-                                    <tr class="bg-secondary">
-                                        <th style="font-size: 1.2em; color: #ffffff;" colspan="3">Available classes:</th>
-                                    </tr>
-                                      <tr>
-                                        <th>No. of class arms:</th>
-                                        <th>{{ count($term->arms) }}</th>
-                                        <td class="text-right">
-                                            <a href="{{ route('arms.create') }}" class="btn btn-sm btn-outline-primary">New class</a> <a href="{{ route('arms.index') }}" class="btn btn-sm btn-primary">View classes</a>
-                                        </td>
-                                      </tr>
-                                  </table>
-                                </div>
-                            </div>
-                          </div>
-                          <div style="padding: 25px;"></div>
-                          
-                          <div class="table-responsive bg-light">
-                            <table class="table table-striped table-hover table-sm">
-                                <tr class="bg-secondary">
-                                    <th style="font-size: 1.2em; color: #ffffff;" colspan="3">Students</th>
-                                </tr>
+            <div class="row">
+
+                <div class="col-md-8">
+          
+                    <div class="alert alert-info">
+                      <div style="margin-bottom: 30px;">
+                        <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</span>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover table-sm">
                                 <tr>
-                                    <td>Male students:</td>
-                                    <td class="text-right">
-                                        @php
-                                            $male = 0;
-                                            foreach($term->enrolments as $student)
-                                            {
-                                                if($student->user->gender == 'Male')
-                                                {
-                                                    $male++;
-                                                }
-                                            }
-                                            echo $male;
-                                        @endphp
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Female students:</td>
-                                    <td class="text-right">
-                                        @php
-                                            $female = 0;
-                                            foreach($term->enrolments as $student)
-                                            {
-                                                if($student->user->gender == 'Female')
-                                                {
-                                                    $female++;
-                                                }
-                                            }
-                                            echo $female;
-                                        @endphp
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>Total students:</th>
-                                    <th class="text-right">{{ count($term->enrolments) }}</th>
-                                    <td class="text-right">
-                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('students.create') }}">New student</a> &nbsp;&nbsp;<a class="btn btn-sm btn-primary" href="{{ route('students.index') }}">View students</a>
-                                    </td>
+                                  <td><b>Resumption date:</b> {{ $term->resumption_date }}</td>
                                 </tr>
                             </table>
                           </div>
                         </div>
+                        <div class="col-md-6">
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover table-sm">
+                                <tr>
+                                  <td><b>Closing date:</b> {{ $term->closing_date }}</td>
+                                </tr>
+                            </table>
+                          </div>
+                        </div> 
+                      </div>
                     </div>
+                    <div style="padding-bottom: 15px;"></div>
+
+                    <div class="resource-details">
+                        <div class="title">
+                            <b>Available classes</b>
+                        </div>
+                        <div class="body">
+
+                          <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                  <table class="table table-striped table-bordered table-hover table-sm">
+                                      <tr>
+                                        <td><b>No. of class arms:</b> {{ count($term->arms) }}</td>
+                                      </tr>
+                                  </table>
+                                  <div class="text-right">
+                                    <a href="{{ route('arms.create') }}" class="btn btn-sm btn-outline-primary">New class</a> <a href="{{ route('arms.index') }}" class="btn btn-sm btn-primary">View classes</a></div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div style="padding-bottom: 15px;"></div>
+                    
+                    <div class="resource-details">
+                      <div class="title">
+                          <b>Students</b>
+                      </div>
+                      <div class="body">
+                        
+                        <div class="table-responsive">
+                          <table class="table table-striped table-bordered table-hover table-sm">
+                              <tr>
+                                  <td>
+                                    No. of male students:
+                                    @php
+                                        $male = 0;
+                                        foreach($term->enrolments as $student)
+                                        {
+                                            if($student->user->gender == 'Male')
+                                            {
+                                                $male++;
+                                            }
+                                        }
+                                        echo $male;
+                                    @endphp
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>
+                                    No. of female students:
+                                    @php
+                                        $female = 0;
+                                        foreach($term->enrolments as $student)
+                                        {
+                                            if($student->user->gender == 'Female')
+                                            {
+                                                $female++;
+                                            }
+                                        }
+                                        echo $female;
+                                    @endphp
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td><b>Total number of students: </b>{{ count($term->enrolments) }}</td>
+                              </tr>
+                          </table>
+                        </div>
+                        <div class="text-right">
+                          <a class="btn btn-sm btn-outline-primary" href="{{ route('students.create') }}">New student</a> &nbsp;&nbsp;<a class="btn btn-sm btn-primary" href="{{ route('students.index') }}">View students</a>
+                        </div>
+                      </div>
+                  </div>
+                  <div style="padding-bottom: 15px;"></div>
                 </div>
 
                 <div class="col-md-4">
@@ -257,25 +164,52 @@
                           <div class="table-responsive">    
                             <table class="table">
                                 <tr>
-                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('classsubjects.index') }}">Teachers & assigned subjects</a></td>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('classsubjects.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/teachers_assigned_subjects_icon.png" alt="teachers_and_assigned_subjects" class="options-icon">  Teachers & assigned subjects
+                                    </a>
+                                  </td>
                                 </tr>
                                 <tr>
-                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('items.index') }}">School fees and items</a></td>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('items.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/fees_icon.png" alt="fees_icon" class="options-icon">  School fees and items
+                                    </a>
+                                  </td>
                                 </tr>
                                 <tr>
-                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('students.index') }}">Students</a></td>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('students.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/students_icon.png" alt="students_icon" class="options-icon"> Students
+                                    </a>
+                                  </td>
                                 </tr>
                                 <tr>
-                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('arms.index') }}">Class arms</a></td>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('arms.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="options-icon"> Class arms
+                                    </a>
+                                  </td>
                                 </tr>
                                 <tr>
-                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('terms.edit', $term->id) }}">Term information</a></td>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('terms.edit', $term->id) }}">
+                                      <img src="{{ config('app.url') }}/images/icons/term_info_icon.png" alt="term_info_icon" class="options-icon"> Term information
+                                    </a>
+                                  </td>
                                 </tr>
                                 <tr>
-                                  <td><button class="btn btn-sm btn-block btn-outline-primary" data-toggle="modal" data-target="#calendarModal">Calendar of activities</button></td>
+                                  <td>
+                                    <button class="btn btn-sm btn-block btn-outline-primary text-left" data-toggle="modal" data-target="#calendarModal">
+                                      <img src="{{ config('app.url') }}/images/icons/calendar_icon.png" alt="calendar_icon" class="options-icon"> Calendar of activities</button>
+                                    </td>
                                 </tr>
                                 <tr>
-                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('subscriptions.show', $term->subscription_id) }}">Linked subscription details</a></td>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('subscriptions.show', $term->subscription_id) }}">
+                                      <img src="{{ config('app.url') }}/images/icons/subscription_icon.png" alt="subscription_icon" class="options-icon"> Linked subscription details
+                                    </a>
+                                  </td>
                                 </tr>
                             </table>
                           </div>
