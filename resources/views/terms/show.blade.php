@@ -316,29 +316,54 @@
                             <table class="table">
                                 @if ($fees_manager == 'Yes')
                                 <tr>
-                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('items.index') }}">School fees and items</a></td>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('items.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/fees_icon.png" alt="fees_icon" class="options-icon">  School fees and items
+                                    </a>
+                                  </td>
                                 </tr>
                                 @endif
                                 @if ($student_manager == 'Yes')
                                 <tr>
-                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('students.index') }}">Students</a></td>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('students.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/students_icon.png" alt="students_icon" class="options-icon"> Students
+                                    </a>
+                                  </td>
                                 </tr>
                                 @endif
                                 @if ($classarm_manager == 'Yes')
                                 <tr>
-                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('arms.index') }}">Class arms</a></td>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('arms.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="options-icon"> Class arms
+                                    </a>
+                                  </td>
                                 </tr>
                                 @endif
                                 @if ($sessionterm_manager == 'Yes')
                                 <tr>
-                                  <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('terms.edit', $term->id) }}">Term information</a></td>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('terms.edit', $term->id) }}">
+                                      <img src="{{ config('app.url') }}/images/icons/term_info_icon.png" alt="term_info_icon" class="options-icon"> Term information
+                                    </a>
+                                  </td>
                                 </tr>
                                 @endif
                                 <tr>
-                                  <td><button class="btn btn-sm btn-block btn-outline-primary" data-toggle="modal" data-target="#calendarModal">Calendar of activities</button></td>
+                                  <td>
+                                    <button class="btn btn-sm btn-block btn-outline-primary text-left" data-toggle="modal" data-target="#calendarModal">
+                                      <img src="{{ config('app.url') }}/images/icons/calendar_icon.png" alt="calendar_icon" class="options-icon"> Calendar of activities</button>
+                                    </td>
                                 </tr>
                                 @if ($subscription_manager == 'Yes')
-                                <td><a class="btn btn-sm btn-block btn-outline-primary" href="{{ route('subscriptions.show', $term->subscription_id) }}">Linked subscription details</a></td>
+                                <tr>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('subscriptions.show', $term->subscription_id) }}">
+                                      <img src="{{ config('app.url') }}/images/icons/subscription_icon.png" alt="subscription_icon" class="options-icon"> Linked subscription details
+                                    </a>
+                                  </td>
+                                </tr>
                                 @endif
                             </table>
                           </div>
