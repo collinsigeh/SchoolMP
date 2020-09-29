@@ -364,6 +364,8 @@ class TermsController extends Controller
         $data['calendar_manager'] = 'No';
         $data['sessionterm_manager'] = 'No';
         $data['subscription_manager'] = 'No';
+        $data['staff_manager'] = 'No';
+        $data['subject_manager'] = 'No';
         if(Auth::user()->role == 'Consultant' OR Auth::user()->role == 'Director')
         {
             $data['student_manager'] = 'Yes';
@@ -372,6 +374,8 @@ class TermsController extends Controller
             $data['calendar_manager'] = 'Yes';
             $data['sessionterm_manager'] = 'Yes';
             $data['subscription_manager'] = 'Yes';
+            $data['staff_manager'] = 'Yes';
+            $data['subject_manager'] = 'Yes';
         }
         elseif(Auth::user()->role == 'Staff')
         {
@@ -398,6 +402,14 @@ class TermsController extends Controller
             if($data['staff']->manage_subscriptions == 'Yes')
             {
                 $data['subscription_manager'] = 'Yes';
+            }
+            if($data['staff']->manage_staff_account == 'Yes')
+            {
+                $data['staff_manager'] = 'Yes';
+            }
+            if($data['staff']->manage_subjects == 'Yes')
+            {
+                $data['subject_manager'] = 'Yes';
             }
         }
         
