@@ -65,13 +65,13 @@ class SchoolsettingsController extends Controller
 
         $data['classarm_manager'] = 'No';
         $data['calendar_manager'] = 'No';
-        $data['subscription_manager'] = 'No';
+        $data['manage_all_results'] = 'No';
         $data['subject_manager'] = 'No';
         if(Auth::user()->role == 'Consultant' OR Auth::user()->role == 'Director')
         {
             $data['classarm_manager'] = 'Yes';
             $data['calendar_manager'] = 'Yes';
-            $data['subscription_manager'] = 'Yes';
+            $data['manage_all_results'] = 'Yes';
             $data['subject_manager'] = 'Yes';
         }
         elseif(Auth::user()->role == 'Staff')
@@ -84,9 +84,9 @@ class SchoolsettingsController extends Controller
             {
                 $data['calendar_manager'] = 'Yes';
             }
-            if($data['staff']->manage_subscriptions == 'Yes')
+            if($data['staff']->manage_all_results == 'Yes')
             {
-                $data['subscription_manager'] = 'Yes';
+                $data['manage_all_results'] = 'Yes';
             }
             if($data['staff']->manage_subjects == 'Yes')
             {

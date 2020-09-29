@@ -44,6 +44,7 @@
 
         <div class="welcome">
             <div class="row">
+              @if ($classarm_manager == 'Yes')
               <div class="col-md-3">
                 <div class="collins-feature">
                   <a href="{{ route('classes.index') }}">
@@ -52,6 +53,8 @@
                   </a>
                 </div>
               </div>
+              @endif
+              @if ($subject_manager == 'Yes')
               <div class="col-md-3">
                 <div class="collins-feature">
                   <a href="{{ route('subjects.index') }}">
@@ -60,6 +63,8 @@
                   </a>
                 </div>
               </div>
+              @endif
+              @if ($manage_all_results == 'Yes')
               <div class="col-md-3">
                 <div class="collins-feature">
                   <a href="{{ route('resulttemplates.index') }}">
@@ -68,6 +73,8 @@
                   </a>
                 </div>
               </div>
+              @endif
+              @if ($calendar_manager == 'Yes')
               <div class="col-md-3">
                 <div class="collins-feature">
                   <a href="{{ route('schools.edit', $school->id) }}">
@@ -76,6 +83,7 @@
                   </a>
                 </div>
               </div>
+              @endif
             </div>
         </div>
         
