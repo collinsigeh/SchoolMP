@@ -224,67 +224,68 @@
         <div class="welcome">
             <div class="row">
                 <div class="col-md-8">
+          
+                    <div class="alert alert-info">
+                      <div style="margin-bottom: 30px;">
+                        <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</span>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover table-sm">
+                                <tr>
+                                  <td><b>Resumption date:</b> {{ $term->resumption_date }}</td>
+                                </tr>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover table-sm">
+                                <tr>
+                                  <td><b>Closing date:</b> {{ $term->closing_date }}</td>
+                                </tr>
+                            </table>
+                          </div>
+                        </div> 
+                      </div>
+                    </div>
+                    <div style="padding-bottom: 15px;"></div>
+
                     <div class="resource-details">
                         <div class="title">
-                            <b>{!! $term->name.' - <small><i>'.$term->session.'</i></small>' !!}</b>
+                            My Classes
                         </div>
                         <div class="body">
-                          <div class="row">
-                            <div class="col-md-6">
-                              <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover table-sm">
-                                    <tr>
-                                      <th>Resumption date:</th>
-                                      <td>{{ $term->resumption_date }}</td>
-                                    </tr>
-                                </table>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover table-sm">
-                                    <tr>
-                                      <th>Closing date:</th>
-                                      <td>{{ $term->closing_date }}</td>
-                                    </tr>
-                                </table>
-                              </div>
-                            </div> 
+                          <div class="table-responsive">
+                            <table class="table table-striped table-hover table-sm">
+                              @if (count($assigned_classes) < 1)
+                                  <tr>
+                                      <td>None</td>
+                                  </tr>
+                              @else
+                                  @foreach ($assigned_classes as $classarm)
+                                      <tr>
+                                          <td>
+                                              <a class="collins-link-within-table" href="{{ route('arms.show', $classarm->id) }}"><img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="class_icon" class="collins-table-item-icon"> {{ $classarm->schoolclass->name.' '.$classarm->name }}</a>
+                                          </td>
+                                      </tr>
+                                  @endforeach
+                              @endif
+                            </table>
                           </div>
-                          <div style="padding: 25px;"></div>
+                        </div>
+                    </div>
+                    <div style="padding-bottom: 15px;"></div>
 
-                          <div class="row">
-                            <div class="col-md-12">
-                                <div class="table-responsive bg-light">
-                                  <table class="table table-striped table-hover table-sm">
-                                    <tr class="bg-secondary">
-                                        <th style="font-size: 1.2em; color: #ffffff;" colspan="2">My Classes</th>
-                                    </tr>
-                                    @if (count($assigned_classes) < 1)
-                                        <tr>
-                                            <td>None<td>
-                                        </tr>
-                                    @else
-                                        @foreach ($assigned_classes as $classarm)
-                                            <tr>
-                                                <td>{{ $classarm->schoolclass->name.' '.$classarm->name }}</td>
-                                                <td class="text-right">
-                                                    <a class="btn btn-sm btn-outline-primary" href="{{ route('arms.show', $classarm->id) }}">Manage</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                  </table>
-                                </div>
-                            </div>
-                          </div>
-                          <div style="padding: 25px;"></div>
-                          
+                    <div class="resource-details">
+                        <div class="title">
+                            My Subjects
+                        </div>
+                        <div class="body">                          
                           <div class="table-responsive bg-light">
                             <table class="table table-striped table-hover table-sm">
-                                <tr class="bg-secondary">
-                                    <th style="font-size: 1.2em; color: #ffffff;" colspan="2">My Subjects</th>
-                                </tr>
                                 @if (count($assigned_subjects) < 1)
                                     <tr>
                                         <td>None</td>
@@ -292,9 +293,8 @@
                                 @else
                                     @foreach ($assigned_subjects as $classsubject)
                                         <tr>
-                                            <td>{{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name.' '.$classsubject->subject->name }}</td>
                                             <td class="text-right">
-                                                <a class="btn btn-sm btn-outline-primary" href="#">Manage</a>
+                                                <a class="collins-link-within-table" href="#"><img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subject_icon" class="collins-table-item-icon">  {{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name.' '.$classsubject->subject->name }}</a>
                                             </td>
                                         </tr>
                                     @endforeach
