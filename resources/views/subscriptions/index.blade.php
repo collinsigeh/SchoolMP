@@ -50,7 +50,7 @@
         </div>
       
         <div class="alert alert-info">
-          <p>Here's a list of subscription and the order summary for {{$school->school}}.</p>Also, click on the <b>new subscription</b> button at the top-right corner to get a new subscription.
+          <p>Here's a list of subscriptions and the order summary for {{$school->school}}.</p>Also, click on the <b>new subscription</b> button at the top-right corner to get a new subscription.
         </div>
 
         <div class="welcome">
