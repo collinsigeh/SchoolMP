@@ -31,11 +31,11 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               @if ($user->usertype == 'Client')
-                <li class="breadcrumb-item"><a href="{{ route('schools.show', $school->id) }}">{{ $school->school }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('school_settings.index') }}">School settings</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('subjects.index') }}">Subjects</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Add new</li>
               @else
-                <li class="breadcrumb-item"><a href="{{ config('app.url') }}/schools">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('school_settings.index') }}">School settings</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('subjects.index') }}">Subjects</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Add new</li>
               @endif
