@@ -60,6 +60,8 @@ Route::resource('/results', 'ResultsController');
 
 Route::resource('/resulttemplates', 'ResulttemplatesController');
 
+Route::resource('/school_settings', 'SchoolsettingsController');
+
 Route::get('/schools/all', 'SchoolsController@all')->name('schools.all');
 Route::resource('/schools', 'SchoolsController');
 

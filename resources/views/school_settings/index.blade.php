@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>{!! $term->name.' - <small>'.$term->session.'</small>' !!}</h3>
+          <h3>School settings</h3>
           </div>
           <div class="col-4 text-right">
             
@@ -32,10 +32,10 @@
             <ol class="breadcrumb">
               @if ($user->usertype == 'Client')
                 <li class="breadcrumb-item"><a href="{{ route('schools.show', $school->id) }}">{{ $school->school }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">School personnel</li>
+                <li class="breadcrumb-item active" aria-current="page">School settings</li>
               @else
                 <li class="breadcrumb-item"><a href="{{ config('app.url') }}/schools">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">School personnel</li>
+                <li class="breadcrumb-item active" aria-current="page">School settings</li>
               @endif
             </ol>
           </nav>
@@ -46,17 +46,33 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="collins-feature">
-                  <a href="{{ route('terms.index') }}">
-                  <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="session_term" class="collins-feature-icon">
-                  <div class="collins-feature-title">Session Terms</div>
+                  <a href="{{ route('classes.index') }}">
+                  <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="collins-feature-icon">
+                  <div class="collins-feature-title">Classes</div>
                   </a>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="collins-feature">
-                  <a href="{{ route('classes.index') }}">
-                  <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="collins-feature-icon">
-                  <div class="collins-feature-title">Classes</div>
+                  <a href="{{ route('subjects.index') }}">
+                  <img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subjects_info" class="collins-feature-icon">
+                  <div class="collins-feature-title">Subjects</div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="collins-feature">
+                  <a href="{{ route('resulttemplates.index') }}">
+                  <img src="{{ config('app.url') }}/images/icons/result_template_icon.png" alt="result_template" class="collins-feature-icon">
+                  <div class="collins-feature-title">Result Templates</div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="collins-feature">
+                  <a href="{{ route('schools.edit', $school->id) }}">
+                  <img src="{{ config('app.url') }}/images/icons/school_icon.png" alt="schools_info" class="collins-feature-icon">
+                  <div class="collins-feature-title">School Info</div>
                   </a>
                 </div>
               </div>
