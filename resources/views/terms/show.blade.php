@@ -400,6 +400,9 @@
         </button>
       </div>
       <div class="modal-body">
+          @if ($calendar_manager == 'Yes')
+            <div class="alert alert-info"><a href="{{ route('calendars.index') }}">Click here to modify</a> calendar information.</div>
+          @endif
           @foreach ($calendar as $item)
               <div style="padding-bottom: 15px;">
                 <h6>Week {{ $item->week }}</h6>

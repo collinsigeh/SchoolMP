@@ -285,7 +285,7 @@ class TermsController extends Controller
 
             $calendar->term_id = $term->id;
             $calendar->week = $i;
-            $calendar->activity = 'Noting yet!';
+            $calendar->activity = '';
 
             $calendar->save();
         }
