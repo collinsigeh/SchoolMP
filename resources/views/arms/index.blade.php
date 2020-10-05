@@ -55,6 +55,7 @@
                 None available.
             </div>
         @else
+          <div class="collins-bg-white">
             <div class="table-responsive">    
             <table class="table table-striped table-hover table-sm">
                     <thead>
@@ -62,18 +63,17 @@
                             <th>Class arms</th>
                             <th>Class teacher</th>
                             <th>No. of students</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($arms as $arm)
                             <tr>
-                                <td>{{ $arm->schoolclass->name.' '.$arm->name }}</td>
+                                <td><a href="{{ route('arms.show', $arm->id) }}" class="collins-link-within-table">{{ $arm->schoolclass->name.' '.$arm->name }}</a></td>
                                 <td>
                                   @php
                                       if($arm->user_id > 0)
                                       {
-                                        echo $arm->user->name;
+                                        echo '<a href="'.route('staff.show', $arm->user->staff->id).'" class="collins-link-within-table">'.$arm->user->name.'</a>';
                                       }
                                       else
                                       {
@@ -82,13 +82,13 @@
                                   @endphp
                                 </td>
                                 <td>{{ count($arm->enrolments) }}</td>
-                                <td class="text-right"><a href="{{ route('arms.show', $arm->id) }}" class="btn btn-sm btn-outline-primary">Enter</a></td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
             {{ $arms->links() }}
+          </div>
         @endif
     </div>
   </div>

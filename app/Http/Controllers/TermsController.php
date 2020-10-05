@@ -134,7 +134,7 @@ class TermsController extends Controller
         }
         if($no_subscriptions < 1)
         {
-            $request->session()->flash('error', "<p>You don't have a valid subscription.</p>
+            $request->session()->flash('error', "<p>You don't have a valid subscription for creating a new term.</p>
                 <a href='".config('app.url')."/subscriptions/create' class='btn btn-sm btn-danger'>Get a new subscription</a> &nbsp;&nbsp;&nbsp;
                 <a href='".config('app.url')."/subscriptions' class='btn btn-sm btn-outline-danger'>View previous subscriptons</a>" );
             return redirect()->route('terms.index');
@@ -158,7 +158,7 @@ class TermsController extends Controller
         }
         if($subscription_id < 1)
         {
-            $request->session()->flash('error', "<p>You don't have a valid subscription.</p>
+            $request->session()->flash('error', "<p>You don't have a valid subscription for creating a new term.</p>
                 <a href='".config('app.url')."/subscriptions/create' class='btn btn-sm btn-danger'>New subscription</a> &nbsp;&nbsp;&nbsp;
                 <a href='".config('app.url')."/subscriptions' class='btn btn-sm btn-outline-danger'>View previous subscriptons</a>" );
             return redirect()->route('terms.index');
