@@ -220,7 +220,7 @@
                                 <tr>
                                   <td>
                                     <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('terms.show', $term->id) }}">
-                                      <img src="{{ config('app.url') }}/images/icons/calendar_icon.png" alt="calendar_icon" class="options-icon"> {!! $term->name.' - <small>'.$term->session.'</small>' !!}</button>
+                                      <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="options-icon"> {!! $term->name.' - <small>'.$term->session.'</small>' !!}</button>
                                     </td>
                                 </tr>
                             </table>
