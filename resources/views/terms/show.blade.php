@@ -87,14 +87,26 @@
 
                           <div class="row">
                             <div class="col-md-12">
+                                @if (count($term->arms) > 0)
+                                  <div class="row">
+                                    @foreach ($term->arms as $class_arm)
+                                      <div class="col-md-4">
+                                        <a class="btn btn-sm btn-block btn-outline-primary text-left class-arm-display" href="{{ route('classsubjects.index') }}">
+                                          <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="class" class="options-icon"> {{ $class_arm->schoolclass->name.' '.$class_arm->name }}
+                                        </a>
+                                      </div>
+                                    @endforeach
+                                  </div>
+                                @endif
                                 <div class="table-responsive">
-                                  <table class="table table-striped table-bordered table-hover table-sm">
+                                  <table class="table table-bordered table-hover table-sm">
                                       <tr>
                                         <td><b>No. of class arms:</b> {{ count($term->arms) }}</td>
                                       </tr>
-                                  </table>
+                                  </table> 
                                   <div class="text-right">
-                                    <a href="{{ route('arms.create') }}" class="btn btn-sm btn-outline-primary">New class</a> <a href="{{ route('arms.index') }}" class="btn btn-sm btn-primary">View classes</a></div>
+                                    <a href="{{ route('arms.create') }}" class="btn btn-sm btn-outline-primary">New class</a> <a href="{{ route('arms.index') }}" class="btn btn-sm btn-primary">View classes</a>
+                                  </div>
                                 </div>
                             </div>
                           </div>
