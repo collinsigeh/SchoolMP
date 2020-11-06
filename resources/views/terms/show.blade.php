@@ -91,7 +91,7 @@
                                   <div class="row">
                                     @foreach ($term->arms as $class_arm)
                                       <div class="col-md-4">
-                                        <a class="btn btn-sm btn-block btn-outline-primary text-left class-arm-display" href="{{ route('classsubjects.index') }}">
+                                        <a class="btn btn-sm btn-block btn-outline-primary text-left class-arm-display" href="{{ route('arms.show', $class_arm->id) }}">
                                           <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="class" class="options-icon"> {{ $class_arm->schoolclass->name.' '.$class_arm->name }}
                                         </a>
                                       </div>
@@ -99,7 +99,7 @@
                                   </div>
                                 @endif
                                 <div class="table-responsive">
-                                  <table class="table table-bordered table-hover table-sm">
+                                  <table class="table table-striped table-bordered table-hover table-sm">
                                       <tr>
                                         <td><b>No. of class arms:</b> {{ count($term->arms) }}</td>
                                       </tr>
@@ -121,7 +121,7 @@
                       <div class="body">
                         
                         <div class="table-responsive">
-                          <table class="table table-striped table-bordered table-hover table-sm">
+                          <table class="table table-bordered table-hover table-sm">
                               <tr>
                                   <td>
                                     No. of male students:
