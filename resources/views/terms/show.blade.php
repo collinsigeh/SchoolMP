@@ -294,7 +294,7 @@
                                 @else
                                     @foreach ($assigned_subjects as $classsubject)
                                         <tr>
-                                            <td class="text-right">
+                                            <td>
                                                 <a class="collins-link-within-table" href="#"><img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subject_icon" class="collins-table-item-icon">  {{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name.' '.$classsubject->subject->name }}</a>
                                             </td>
                                         </tr>
