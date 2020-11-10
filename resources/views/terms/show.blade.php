@@ -166,15 +166,8 @@
                             <table class="table">
                                 <tr>
                                   <td>
-                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('classsubjects.index') }}">
-                                      <img src="{{ config('app.url') }}/images/icons/teachers_assigned_subjects_icon.png" alt="teachers_and_assigned_subjects" class="options-icon">  Teachers & assigned subjects
-                                    </a>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('items.index') }}">
-                                      <img src="{{ config('app.url') }}/images/icons/fees_icon.png" alt="fees_icon" class="options-icon">  School fees and items
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('arms.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="options-icon"> Class arms
                                     </a>
                                   </td>
                                 </tr>
@@ -187,8 +180,15 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('arms.index') }}">
-                                      <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="options-icon"> Class arms
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('classsubjects.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/teachers_assigned_subjects_icon.png" alt="teachers_and_assigned_subjects" class="options-icon">  Teachers & assigned subjects
+                                    </a>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('items.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/fees_icon.png" alt="fees_icon" class="options-icon">  School fees and items
                                     </a>
                                   </td>
                                 </tr>
@@ -315,20 +315,11 @@
                         <div class="body">
                           <div class="table-responsive">    
                             <table class="table">
-                              @if ($staff_manager == 'Yes' && $student_manager == 'Yes')
-                              <tr>
-                                <td>
-                                  <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('classsubjects.index') }}">
-                                    <img src="{{ config('app.url') }}/images/icons/teachers_assigned_subjects_icon.png" alt="teachers_and_assigned_subjects" class="options-icon">  Teachers & assigned subjects
-                                  </a>
-                                </td>
-                              </tr>
-                              @endif
-                                @if ($fees_manager == 'Yes')
+                                @if ($classarm_manager == 'Yes')
                                 <tr>
                                   <td>
-                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('items.index') }}">
-                                      <img src="{{ config('app.url') }}/images/icons/fees_icon.png" alt="fees_icon" class="options-icon">  School fees and items
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('arms.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="options-icon"> Class arms
                                     </a>
                                   </td>
                                 </tr>
@@ -342,15 +333,24 @@
                                   </td>
                                 </tr>
                                 @endif
-                                @if ($classarm_manager == 'Yes')
+                                @if ($staff_manager == 'Yes' && $student_manager == 'Yes')
                                 <tr>
                                   <td>
-                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('arms.index') }}">
-                                      <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="options-icon"> Class arms
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('classsubjects.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/teachers_assigned_subjects_icon.png" alt="teachers_and_assigned_subjects" class="options-icon">  Teachers & assigned subjects
                                     </a>
                                   </td>
                                 </tr>
                                 @endif
+                                  @if ($fees_manager == 'Yes')
+                                  <tr>
+                                    <td>
+                                      <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('items.index') }}">
+                                        <img src="{{ config('app.url') }}/images/icons/fees_icon.png" alt="fees_icon" class="options-icon">  School fees and items
+                                      </a>
+                                    </td>
+                                  </tr>
+                                  @endif
                                 @if ($sessionterm_manager == 'Yes')
                                 <tr>
                                   <td>
