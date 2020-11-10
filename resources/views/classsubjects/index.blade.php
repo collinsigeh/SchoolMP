@@ -70,7 +70,7 @@
                                             <td>{{ $item->arm->schoolclass->name.' '.$item->arm->name.' '.$item->subject->name }}</td>
                                             <td class="text-right">
                                                 <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $item->id }}">
-                                                    Edit
+                                                    Assign teacher
                                                 </button>
                                             </td>
                                         </tr>
@@ -93,7 +93,7 @@
                                             <th>#</th>
                                             <th>Staff</th>
                                             <th>Total assigned</th>
-                                            <th>List of Subjects</th>
+                                            <th>Assigned Subjects</th>
                                         </tr>
                                     </thead>
                                     <tbody>
