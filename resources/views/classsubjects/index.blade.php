@@ -45,7 +45,7 @@
         </div>
         
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 @if(count($classsubjects) < 1 OR count($allstaff) < 1)
                     <div class="alert alert-info" sr-only="alert">
                         Required details are missing. Click on the appropriate buttons to add details.
@@ -92,7 +92,6 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Staff</th>
-                                            <th>Total assigned</th>
                                             <th>Assigned Subjects</th>
                                         </tr>
                                     </thead>
@@ -104,9 +103,7 @@
                                             <tr>
                                                 <td>{{ $sn }}</td>
                                                 <td>
-                                                    {!! $this_staff->user->name.' - <small>'.$this_staff->user->staff->phone.'</small>' !!}
-                                                </td>
-                                                <td>
+                                                    <b>{{ $this_staff->user->name }}</b> <br><small> {{ $this_staff->designation }}</small>
                                                     @php
                                                         $total_assigned = 0;
                                                         foreach($classsubjects as $assigned_subject)
@@ -117,7 +114,6 @@
                                                             }
                                                         }
                                                     @endphp
-                                                    {{ $total_assigned }}
                                                 </td>
                                                 <td>
                                                     @if ($total_assigned > 0)  
