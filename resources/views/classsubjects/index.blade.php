@@ -45,7 +45,7 @@
         </div>
         
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 @if(count($classsubjects) < 1 OR count($allstaff) < 1)
                     <div class="alert alert-info" sr-only="alert">
                         Required details are missing. Click on the appropriate buttons to add details.
@@ -87,7 +87,7 @@
                         </div>
                         <div class="body">
                             <div class="table-responsive">    
-                                <table class="table table-striped table-bordered table-hover table-sm">
+                                <table class="table table-striped table-hover table-sm">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -129,7 +129,7 @@
                                                             @endif
                                                         @endforeach
                                                     @else
-                                                        None
+                                                        <span class="badge badge-secondary">No subject</span>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -143,6 +143,26 @@
                         </div>
                     </div>
                 @endif
+            </div>
+
+            <div class="col-md-4">
+                <div class="resource-details">
+                    <div class="title">
+                        More options
+                    </div>
+                    <div class="body">
+                      <div class="table-responsive">    
+                        <table class="table">
+                            <tr>
+                              <td>
+                                <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('terms.show', $term->id) }}">
+                                  <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="options-icon"> {!! $term->name.' - <small>'.$term->session.'</small>' !!}</button>
+                                </td>
+                            </tr>
+                        </table>
+                      </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
