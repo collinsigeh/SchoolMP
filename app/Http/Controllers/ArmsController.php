@@ -128,12 +128,12 @@ class ArmsController extends Controller
         if(empty($data['school']->resulttemplates))
         {
             $request->session()->flash('error', "Please create at least one (1) result template before attempting to create class arms for terms." );
-            return redirect()->route('classes.create');
+            return redirect()->route('resulttemplates.create');
         }
         elseif($data['school']->resulttemplates->count() < 1)
         {
             $request->session()->flash('error', "Please create at least one (1) result template before attempting to create class arms for terms." );
-            return redirect()->route('classes.create');
+            return redirect()->route('resulttemplates.create');
         }
 
         if(session('term_id') < 1)
