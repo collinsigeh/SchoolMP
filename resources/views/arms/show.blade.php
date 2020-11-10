@@ -165,8 +165,14 @@
                                                     {!! $classsubject->user->name.' - <small>'.$classsubject->user->staff->phone.'</small>' !!}
                                                 @endif
                                             </td>
-                                            @if ($classarm_manager == 'Yes')
+                                            @if ($classsubject->user_id == $user->id)
                                             <td class="text-right">
+                                                <a href="{{ route('classsubjects.show', $classsubject->id) }}" class="btn btn-sm btn-outline-primary">Manage</a>
+                                            </td>
+                                            <td></td>
+                                            @elseif ($classarm_manager == 'Yes')
+                                            <td class="text-right">
+                                                <a href="{{ route('classsubjects.show', $classsubject->id) }}" class="btn btn-sm btn-outline-primary">View</a>
                                                 <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $classsubject->id }}">
                                                     Edit
                                                 </button>
@@ -179,6 +185,9 @@
                                                     <input type="submit" class="btn btn-sm btn-danger" value="X" />
                                                 </form>
                                             </td>
+                                          @else
+                                          <td></td>
+                                          <td></td>
                                           @endif
                                         </tr>
                                         @php

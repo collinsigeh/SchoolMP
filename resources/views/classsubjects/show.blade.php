@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>{{ $arm->schoolclass->name.' '.$arm->name }}</h3>
+          <h3>{{ $classsubject->arm->schoolclass->name.' '.$classsubject->subject->name }}</h3>
           </div>
           <div class="col-4 text-right">
             
@@ -34,14 +34,14 @@
                 <li class="breadcrumb-item"><a href="{{ route('schools.show', $school->id) }}">{{ $school->school }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('arms.index') }}">Class arms</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $arm->schoolclass->name.' '.$arm->name }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->subject->name }}</li>
               @else
                 <li class="breadcrumb-item"><a href="{{ config('app.url') }}/schools">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
-                @if ($sessionterm_manager == 'Yes')
+                @if ($classarm_manager == 'Yes')
                     <li class="breadcrumb-item"><a href="{{ route('arms.index') }}">Class arms</a></li>
                 @endif
-                <li class="breadcrumb-item active" aria-current="page">{{ $arm->schoolclass->name.' '.$arm->name }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->subject->name }}</li>
               @endif
             </ol>
           </nav>
@@ -53,16 +53,16 @@
                 <div class="col-md-6">
                     <div class="resource-details">
                         <div class="title">
-                            Class Teacher
+                            Subject Teacher
                         </div>
                         <div class="body">
-                            @if ($arm->user_id < 1)
+                            @if ($classsubject->user_id < 1)
                                 {{ 'No assigned teacher.' }}
                             @else
                             <div class="table-responsive">    
                                 <table class="table table-striped table-hover table-sm">
                                     <tbody>
-                                        <tr><td>{{ $arm->user->name }}</td>
+                                        <tr><td>{{ $classsubject->user->name }}</td>
                                             @if ($classarm_manager == 'Yes')
                                                 <td class="text-right">
                                                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newTeacherModal">
@@ -83,10 +83,10 @@
                             Students
                         </div>
                         <div class="body">
-                            @if (count($arm->enrolments) < 1)
+                            @if (count($classsubject->results) < 1)
                                 {{ 'None.' }}
                             @else
-                            <h5>Total: {{ count($arm->enrolments) }}</h5>
+                            <h5>Total: {{ count($classsubject->results) }}</h5>
                             <div class="table-responsive">    
                                 <table class="table table-striped table-hover table-sm">
                                     <thead>

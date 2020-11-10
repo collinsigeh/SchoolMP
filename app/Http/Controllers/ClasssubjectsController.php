@@ -189,9 +189,81 @@ class ClasssubjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id = 0)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        
+        $data['school'] = School::find($school_id);
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+        
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+        if(empty($data['term']))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($data['term']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        $data['classsubject'] = Classsubject::find($id);
+
+        // I AM HERE //
+        print_r($data['classsubject']);
+        die();
+
+        $data['classarm_manager'] = 'Yes';
+        if(!$this->resource_manager($data['user'], $school_id))
+        {
+            $data['classarm_manager'] = '';
+            if($data['user']->id != $data['classsubject']->user_id)
+            {
+                return redirect()->route('dashboard');
+            }
+            
+        }
+
+        return view('classsubjects.show')->with($data);
     }
 
     /**
