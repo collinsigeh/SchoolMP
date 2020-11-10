@@ -51,7 +51,7 @@
                         Required details are missing. Click on the appropriate buttons to add details.
                     </div>
                     @if (count($allstaff) < 1)
-                        <a href="{{ route('staffs.create') }}" class="btn btn-lg btn-outline-primary">Add teacher</a>
+                        <a href="{{ route('staff.create') }}" class="btn btn-lg btn-outline-primary">Add teacher</a>
                     @endif
                     @if (count($classsubjects) < 1)
                         <a href="{{ route('arms.index') }}" class="btn btn-lg btn-outline-primary">View classes</a>
