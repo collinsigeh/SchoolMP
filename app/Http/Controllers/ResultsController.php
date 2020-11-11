@@ -203,7 +203,80 @@ class ResultsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if(!$this->resource_manager($data['user'], $school_id))
+        {
+            return redirect()->route('dashboard');
+        }
+        
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if(session('arm_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $arm_id = session('arm_id');
+        
+        $data['arm'] = Arm::find($arm_id);
+
+        $result_slip = Result::find($id);
+        if(empty($result_slip))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($result_slip->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            '1st_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_1st_test_max_score],
+            '2nd_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_2nd_test_max_score],
+            '3rd_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_3rd_test_max_score],
+            'assignment_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_assignment_score],
+            'exam_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->exam_score]
+        ]);
+
+        echo 'I got here';
+        die();
+
+        $classsubject->user_id = $request->input('user_id');
+        $classsubject->save();
+
+        $request->session()->flash('success', 'Update saved.');
+
+        if(!empty($request->input('return_page')))
+        {
+            return redirect()->route($request->input('return_page'), $request->input('returnpage_id'));
+        }
+
+        return redirect()->route('classsubjects.show', $id);
     }
 
     /**

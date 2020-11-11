@@ -10,7 +10,7 @@
         </div>
         <div class="modal-body">
             <div class="create-form">
-                <form method="POST" action="{{ route('results.update', $resultslip->id) }}">
+                <form method="POST" action="{{ route('results.update', $result_slip->id) }}">
                     @csrf
                     @method('PUT')
 
