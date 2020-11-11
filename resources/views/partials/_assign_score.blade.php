@@ -10,7 +10,7 @@
         </div>
         <div class="modal-body">
             <div class="create-form">
-                <form method="POST" action="{{ route('classsubjects.assign_score', $classsubject->id) }}">
+                <form method="POST" action="{{ route('results.update', $resultslip->id) }}">
                     @csrf
                     @method('PUT')
 
