@@ -50,111 +50,127 @@
 
         <div class="welcome">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="resource-details">
-                        <div class="title">
-                            Subject Teacher
-                        </div>
-                        <div class="body">
-                            @if ($classsubject->user_id < 1)
-                                {{ 'No assigned teacher.' }}
-                            @else
-                            <div class="table-responsive">    
-                                <table class="table table-striped table-hover table-sm">
-                                    <tbody>
-                                        <tr><td>{{ $classsubject->user->name }}</td>
-                                            @if ($classarm_manager == 'Yes')
-                                                <td class="text-right">
-                                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newTeacherModal">
-                                                        Edit
-                                                    </button>
-                                                    </td>
-                                            @endif
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            @endif
-                        </div>
+                <div class="col-md-8">
+          
+                    <div class="alert alert-info">
+                      <div style="margin-bottom: 30px;">
+                        <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="class_icon" class="collins-this-term-icon"> <span class="collins-this-term">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->subject->name }} ({!! $term->name.' - <small>'.$term->session.'</small>' !!})</span>
+                      </div>
+
+                      <div class="table-responsive">
+                        <table class="table table-striped table-hover table-sm">
+                            <tr>
+                              <th>Subject teacher:</th>                           
+                              @if ($classsubject->arm->user_id < 1)
+                                  <td>
+                                      {!! '<span class="badge badge-danger">No assigned teacher</span>' !!}
+                                      @if ($classarm_manager == 'Yes')
+                                          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newTeacherModal">
+                                              Assign class teacher
+                                          </button>
+                                      @endif
+                                  </td>
+                              @else
+                                  <td>{!! $classsubject->arm->user->name.' - <small>'.$classsubject->arm->user->staff->phone.'</small>' !!}</td>
+                                  @if ($classarm_manager == 'Yes')
+                                      <td class="text-right">
+                                          <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#newTeacherModal">
+                                              Edit
+                                          </button>
+                                      </td>
+                                  @endif
+                              @endif
+                            </tr>
+                        </table>
+                      </div>
                     </div>
-                    
+                    <div style="padding-bottom: 15px;"></div>
+
                     <div class="resource-details">
                         <div class="title">
                             Students
                         </div>
                         <div class="body">
-                            @if (count($classsubject->results) < 1)
-                                {{ 'None.' }}
-                            @else
-                            <h5>Total: {{ count($classsubject->results) }}</h5>
-                            <div class="table-responsive">    
+                            
+                            <div class="table-responsive">
                                 <table class="table table-striped table-hover table-sm">
-                                    <thead>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Reg. no.</th>
-                                        <th></th>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $sn = 1;
-                                        @endphp
-                                        @foreach ($arm->enrolments as $enrolment)
-                                            <tr>
-                                                <td>{{ $sn }}</td>
-                                                <td>{{ $enrolment->user->name }}</td>
-                                                <td>{{ $enrolment->student->registration_number}}</td>
-                                                <td class="text-right">
-                                                    @if ($arm->user->id == $user->id)
-                                                        <a class="btn btn-sm btn-primary" href="{{ route('enrolments.show', $enrolment->id) }}">View</a>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @php
-                                                $sn++;
-                                            @endphp
-                                        @endforeach
-                                    </tbody>
+                                  @if (count($classsubject->results) < 1)
+                                      <tr>
+                                          <td>None<td>
+                                      </tr>
+                                  @else
+                                      <thead>
+                                          <tr>
+                                              <th>#</th>
+                                              <th>Student</th>
+                                              <th>1st test</th>
+                                              <th></th>
+                                          </tr>
+                                      </thead>
+                                      @php
+                                          $sn = 1;
+                                      @endphp
+                                      @foreach ($classsubject->results as $result_slip)
+                                          <tr>
+                                              <td>{{ $sn }}</td>
+                                              <td>{!!  '<b>'.$result_slip->enrolment->user->name.'</b><br /><small>('.$result_slip->enrolment->student->registration_number.') ' !!}</td>
+                                              <td>{{ $result_slip->subject_1st_test }}</td>
+                                              @if ($classarm_manager == 'Yes')
+                                                    <td class="text-right">
+                                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignScoreModal{{ $result_slip->id }}">
+                                                            Manage scores
+                                                        </button>
+                                                    </td>
+                                              @endif
+                                              @if ($classsubject->user_id > 0)
+                                                  @if ($classsubject->user_id == $user->id)
+                                                    <td class="text-right">
+                                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignScoreModal{{ $result_slip->id }}">
+                                                            Manage scores
+                                                        </button>
+                                                    </td>
+                                                  @endif
+                                              @endif
+                                          </tr>
+                                          @php
+                                              $sn++;
+                                          @endphp
+                                      @endforeach
+                                  @endif
                                 </table>
                             </div>
-                            @endif
                         </div>
                     </div>
-                </div>
+                    <div style="padding-bottom: 15px;"></div>
                 
-                <div class="col-md-6">
+                </div>
+
+
+                <div class="col-md-4">
                     <div class="resource-details">
                         <div class="title">
-                            Class subjects and assigned teachers
+                            More options
                         </div>
                         <div class="body">
-                            @if (count($arm->classsubjects) < 1)
-                                None
-                            @else
-                                <div class="table-responsive">    
-                                    <table class="table table-striped table-hover table-sm">
-                                        <tbody>
-                                            @foreach ($arm->classsubjects as $classsubject)
-                                                <tr><td>{{ $classsubject->subject->name }} (<i>@if ($classsubject->user_id == 0)
-                                                    No assigned teacher
-                                                @else
-                                                    {{ $classsubject->user->name }}
-                                                @endif</i>)</td>
-                                                @if ($classarm_manager == 'Yes')
-                                                <td class="text-right"><a href="{{ route('classsubjects.edit', $classsubject->id) }}" class="btn btn-sm btn-primary">Edit</a> </td>
-                                                    <td class="text-right">
-                                                        <form action="{{ route('classsubjects.destroy', $classsubject->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <input type="submit" class="btn btn-sm btn-danger" value="X" />
-                                                        </form>
-                                                    </td>
-                                                @endif</tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @endif
+                          <div class="table-responsive">    
+                            <table class="table">
+                                @if ($classarm_manager == 'Yes')
+                                <tr>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('arms.index') }}">
+                                      <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="options-icon"> Class arms
+                                    </a>
+                                  </td>
+                                </tr>
+                                @endif
+                                <tr>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('terms.show', $term->id) }}">
+                                      <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="options-icon"> {!! $term->name.' - <small>'.$term->session.'</small>' !!}</button>
+                                    </td>
+                                </tr>
+                            </table>
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -162,292 +178,14 @@
 
         </div>
 
-        <div class="more-options">
-            <div class="head">More options</div>
-            <div class="body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="option feature">
-                            <h5>Class assignments</h5>
-                            <div class="paragraph">
-                                You can add and manage class assignments for this class.
-                            </div>
-                            <div class="buttons">
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssignmentModal">
-                                    New assignment
-                                </button>
-                                <a href="#" class="btn btn-sm btn-primary">View all</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    @if ($classarm_manager == 'Yes')
-                    @if ($arm->user_id < 1)
-                    <div class="col-md-4">
-                        <div class="option feature">
-                            <h5>Class teacher</h5>
-                            <div class="paragraph">
-                                You can assign a staff to administer this class arm.
-                            </div>
-                            <div class="buttons">
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newTeacherModal">
-                                    Assign class teacher
-                                </button><!--
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssistantModal">
-                                    Add assistant class teacher
-                                </button> -->
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                    <div class="col-md-4">
-                        <div class="option feature">
-                            <h5>Class subjects</h5>
-                            <div class="paragraph">
-                                You can add class subjects for this class arm.
-                            </div>
-                            <div class="buttons">
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newSubjectModal">
-                                    Add new
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-        
-    </div>
-  </div>
-
-
-   <!-- newAssignmentModal -->
-   <div class="modal fade" id="newAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="newAssignmentModalLabel">New Class Assignment</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="create-form">
-                <form method="POST" action="#">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="form-group row">
-                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('New assignment') }}</label>
-        
-                        <div class="col-md-6">
-                            <input id="password" type="text" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-        
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Send') }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-      </div>
-    </div>
-</div>
-<!-- End newAssignmentModal -->
-
-<!-- newTeacherModal -->
-<div class="modal fade" id="newTeacherModal" tabindex="-1" role="dialog" aria-labelledby="newTeacherModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="newTeacherModalLabel">Assign class teacher</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="create-form">
-                <form method="POST" action="{{ route('arms.addclassteacher') }}">
-                    @csrf
-                    
-                    <input type="hidden" name="id" value="{{ $arm->id }}" />
-
-                    <div class="form-group row"> 
-                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Class') }}</label>
-    
-                        <div class="col-md-6">
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $arm->schoolclass->name.' '.$arm->name}}" disabled autocomplete="name" autofocus>
-    
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row"> 
-                        <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Class teacher') }}</label>
-    
-                        <div class="col-md-6">
-                            <select id="user_id" type="text" class="form-control @error('user_id') is-invalid @enderror" name="user_id" required autocomplete="user_id" autofocus>
-                                @php
-                                    if($arm->user_id < 1)
-                                    {
-                                        echo '<option value="0">Select a staff</option>';
-                                    }
-                                    else
-                                    {
-                                        echo '<option value="'.$arm->user_id.'">'.$arm->user->name.'</option>';
-                                    }
-                                    foreach($school->staff as $employee)
-                                    {
-                                        echo '<option value="'.$employee->user->id.'">'.$employee->user->name.' ( <i>'.$employee->designation.'</i> )</option>';
-                                    }
-                                @endphp
-                            </select>
-    
-                            @error('user_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Save') }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-      </div>
-    </div>
-</div>
-<!-- End newTeacherModal -->
-
-<!-- newAssistantModal -->
-<div class="modal fade" id="newAssistantModal" tabindex="-1" role="dialog" aria-labelledby="newAssistantModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="newAssistantModalLabel">New Assistant Class Teacher</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="create-form">
-                <form method="POST" action="#">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="form-group row">
-                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('New teacher') }}</label>
-        
-                        <div class="col-md-6">
-                            <input id="password" type="text" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-        
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Save') }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-      </div>
-    </div>
-</div>
-<!-- End newAssistantModal -->
-
-<!-- newSubjectModal -->
-<div class="modal fade" id="newSubjectModal" tabindex="-1" role="dialog" aria-labelledby="newSubjectModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="newSubjectLabel">Add Subjects for {{ $arm->schoolclass->name.' '.$arm->name }}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="create-form">
-                <form method="POST" action="{{ route('classsubjects.store') }}">
-                    @csrf
-
-                    <input type="hidden" name="from_form" value="true">
-
-                    <div class="form-group row">
-                        <label for="password" class="col-md-12 col-form-label">{{ __('Tick the subjects to add and click on save') }}</label>
-        
-                        @foreach ($school->subjects as $subject)
-                            @php
-                                $isassigned = 0;
-                            @endphp
-
-                            @foreach ($arm->classsubjects as $classsubject)
-                                @php
-                                    if($classsubject->subject_id == $subject->id)
-                                    {
-                                        $isassigned++;
-                                    }
-                                @endphp
-                            @endforeach
-
-                            @if ($isassigned == 0)
-                            <div class="col-md-12">
-                                <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="subject['{{ $subject->id }}']" id="subject{{ $subject->id }}" {{ old('remember') ? 'checked' : '' }} value="{{ $subject->id }}">
-
-                                    <label class="form-check-label" for="subject{{ $subject->id }}">
-                                        {{ $subject->name }}
-                                    </label>
-                                </div>
-                            </div>
-                            @endif
-                        @endforeach
-                    </div>
-
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Save') }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-      </div>
-    </div>
-</div>
-<!-- End newSubjectModal -->
+<!-- assignScoreModal Series -->
+@foreach ($classsubject->results as $result_slip)
+    @php
+        $return_page = 'classsubjects.show';
+        $returnpage_id = $classsubject->id;
+    @endphp
+    @include('partials._assign_score')
+@endforeach
+<!-- End assignScoreModal Series -->
 
 @endsection

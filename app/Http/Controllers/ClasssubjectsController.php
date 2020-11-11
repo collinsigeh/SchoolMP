@@ -248,11 +248,8 @@ class ClasssubjectsController extends Controller
 
         $data['classsubject'] = Classsubject::find($id);
 
-        // I AM HERE //
-        print_r($data['classsubject']);
-        die();
-
         $data['classarm_manager'] = 'Yes';
+
         if(!$this->resource_manager($data['user'], $school_id))
         {
             $data['classarm_manager'] = '';
