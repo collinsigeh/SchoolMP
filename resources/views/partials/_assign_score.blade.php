@@ -36,7 +36,7 @@
                         <label for="1st_test_score" class="col-md-4 col-form-label text-md-right">{{ __('1st test score') }}</label>
     
                         <div class="col-md-8">
-                            <input id="1st_test_score" type="text" class="form-control @error('1st_test_score') is-invalid @enderror" name="1st_test_score" value="" autocomplete="1st_test_score" autofocus>
+                            <input id="1st_test_score" type="text" class="form-control @error('1st_test_score') is-invalid @enderror" name="1st_test_score" value="{{ $result_slip->subject_1st_test_score }}" autocomplete="1st_test_score" autofocus>
     
                             @error('1st_test_score')
                                 <span class="invalid-feedback" role="alert">
@@ -50,7 +50,7 @@
                         <label for="2nd_test_score" class="col-md-4 col-form-label text-md-right">{{ __('2nd test score') }}</label>
     
                         <div class="col-md-8">
-                            <input id="2nd_test_score" type="text" class="form-control @error('2nd_test_score') is-invalid @enderror" name="2nd_test_score" value="" autocomplete="2nd_test_score" autofocus>
+                            <input id="2nd_test_score" type="text" class="form-control @error('2nd_test_score') is-invalid @enderror" name="2nd_test_score" value="{{ $result_slip->subject_2nd_test_score }}" autocomplete="2nd_test_score" autofocus>
     
                             @error('2nd_test_score')
                                 <span class="invalid-feedback" role="alert">
@@ -64,7 +64,7 @@
                         <label for="3rd_test_score" class="col-md-4 col-form-label text-md-right">{{ __('3rd test score') }}</label>
     
                         <div class="col-md-8">
-                            <input id="3rd_test_score" type="text" class="form-control @error('3rd_test_score') is-invalid @enderror" name="3rd_test_score" value="" autocomplete="3rd_test_score" autofocus>
+                            <input id="3rd_test_score" type="text" class="form-control @error('3rd_test_score') is-invalid @enderror" name="3rd_test_score" value="{{ $result_slip->subject_3rd_test_score }}" autocomplete="3rd_test_score" autofocus>
     
                             @error('3rd_test_score')
                                 <span class="invalid-feedback" role="alert">
@@ -78,7 +78,7 @@
                         <label for="assignment_score" class="col-md-4 col-form-label text-md-right">{{ __('Assignment score') }}</label>
     
                         <div class="col-md-8">
-                            <input id="assignment_score" type="text" class="form-control @error('assignment_score') is-invalid @enderror" name="assignment_score" value="" autocomplete="assignment_score" autofocus>
+                            <input id="assignment_score" type="text" class="form-control @error('assignment_score') is-invalid @enderror" name="assignment_score" value="{{ $result_slip->subject_assignment_score }}" autocomplete="assignment_score" autofocus>
     
                             @error('assignment_score')
                                 <span class="invalid-feedback" role="alert">
@@ -92,7 +92,7 @@
                         <label for="exam_score" class="col-md-4 col-form-label text-md-right">{{ __('Exam score') }}</label>
     
                         <div class="col-md-8">
-                            <input id="exam_score" type="text" class="form-control @error('exam_score') is-invalid @enderror" name="exam_score" value="" autocomplete="exam_score" autofocus>
+                            <input id="exam_score" type="text" class="form-control @error('exam_score') is-invalid @enderror" name="exam_score" value="{{ $result_slip->subject_exam_score }}" autocomplete="exam_score" autofocus>
     
                             @error('exam_score')
                                 <span class="invalid-feedback" role="alert">
