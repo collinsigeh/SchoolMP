@@ -260,7 +260,7 @@ class ResultsController extends Controller
             '2nd_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_2nd_test_max_score],
             '3rd_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_3rd_test_max_score],
             'assignment_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_assignment_score],
-            'exam_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->exam_score]
+            'exam_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_exam_score]
         ]);
 
         echo 'I got here';

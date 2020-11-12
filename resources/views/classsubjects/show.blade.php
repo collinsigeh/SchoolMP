@@ -31,17 +31,22 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               @if ($user->usertype == 'Client')
-                <li class="breadcrumb-item"><a href="{{ route('schools.show', $school->id) }}">{{ $school->school }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('arms.index') }}">Class arms</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->subject->name }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('arms.show', $classsubject->arm_id) }}">{{ $classsubject->arm->schoolclass->name }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $classsubject->subject->name }}</li>
               @else
-                <li class="breadcrumb-item"><a href="{{ config('app.url') }}/schools">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 @if ($classarm_manager == 'Yes')
                     <li class="breadcrumb-item"><a href="{{ route('arms.index') }}">Class arms</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('arms.show', $classsubject->arm_id) }}">{{ $classsubject->arm->schoolclass->name }}</a></li>
                 @endif
-                <li class="breadcrumb-item active" aria-current="page">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->subject->name }}</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    @if ($classarm_manager != 'Yes')
+                        {{ $classsubject->arm->schoolclass->name }}
+                    @endif
+                    {{ $classsubject->subject->name }}
+                </li>
               @endif
             </ol>
           </nav>
@@ -103,7 +108,14 @@
                                           <tr>
                                               <th>#</th>
                                               <th>Student</th>
-                                              <th>1st test</th>
+                                              @if ($classsubject->arm->resulttemplate->subject_1st_test_max_score > 0)
+                                                  
+                                              @endif
+                                              <th class="text-right">1st test<br /><span class="badge badge-secondary">{{ $classsubject->arm->resulttemplate->subject_1st_test_max_score }} %</span></th>
+                                              <th class="text-right">2nd test<br /><span class="badge badge-secondary">{{ $classsubject->arm->resulttemplate->subject_2nd_test_max_score }} %</span></th>
+                                              <th class="text-right">3rd test<br /><span class="badge badge-secondary">{{ $classsubject->arm->resulttemplate->subject_3rd_test_max_score }} %</span></th>
+                                              <th class="text-right">Assignment<br /><span class="badge badge-secondary">{{ $classsubject->arm->resulttemplate->subject_assignment_score }} %</span></th>
+                                              <th class="text-right">Exam<br /><span class="badge badge-secondary">{{ $classsubject->arm->resulttemplate->subject_exam_score }} %</span></th>
                                               <th></th>
                                           </tr>
                                       </thead>
@@ -114,7 +126,11 @@
                                           <tr>
                                               <td>{{ $sn }}</td>
                                               <td>{!!  '<b>'.$result_slip->enrolment->user->name.'</b><br /><small>('.$result_slip->enrolment->student->registration_number.') ' !!}</td>
-                                              <td>{{ $result_slip->subject_1st_test }}</td>
+                                              <td class="text-right">{{ $result_slip->subject_1st_test_score }}</td>
+                                              <td class="text-right">{{ $result_slip->subject_2nd_test_score }}</td>
+                                              <td class="text-right">{{ $result_slip->subject_3rd_test_score }}</td>
+                                              <td class="text-right">{{ $result_slip->subject_assignment_score }}</td>
+                                              <td class="text-right">{{ $result_slip->subject_exam_score }}</td>
                                               @if ($classarm_manager == 'Yes')
                                                     <td class="text-right">
                                                         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignScoreModal{{ $result_slip->id }}">
