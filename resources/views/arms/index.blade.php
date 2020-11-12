@@ -60,7 +60,7 @@
             <table class="table table-striped table-hover table-sm">
                     <thead>
                         <tr>
-                            <th>Class arms</th>
+                            <th>Specific classes</th>
                             <th>Class teacher</th>
                             <th>No. of students</th>
                         </tr>
@@ -68,12 +68,12 @@
                     <tbody>
                         @foreach ($arms as $arm)
                             <tr>
-                                <td><a href="{{ route('arms.show', $arm->id) }}" class="collins-link-within-table">{{ $arm->schoolclass->name.' '.$arm->name }}</a></td>
-                                <td>
+                                <td><a href="{{ route('arms.show', $arm->id) }}" class="collins-link-within-table"><img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="class_icon" class="collins-table-item-icon"> {{ $arm->schoolclass->name.' '.$arm->name }}</a></td>
+                                <td style="padding-top: 13px;">
                                   @php
                                       if($arm->user_id > 0)
                                       {
-                                        echo '<a href="'.route('staff.show', $arm->user->staff->id).'" class="collins-link-within-table">'.$arm->user->name.'</a>';
+                                        echo '<a href="'.route('staff.show', $arm->user->staff->id).'" class="collins-link-within-table"><span class="badge badge-secondary">'.$arm->user->name.'</span></a>';
                                       }
                                       else
                                       {
@@ -81,7 +81,7 @@
                                       }
                                   @endphp
                                 </td>
-                                <td>{{ count($arm->enrolments) }}</td>
+                                <td style="padding-top: 13px;"><span class="badge badge-secondary">{{ count($arm->enrolments) }}</span></td>
                             </tr>
                         @endforeach
                     </tbody>

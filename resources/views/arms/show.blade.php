@@ -105,8 +105,8 @@
                                       @foreach ($arm->enrolments as $enrolment)
                                           <tr>
                                               <td>{{ $sn }}</td>
-                                              <td>{!!  $enrolment->user->name.' - <small>('.$enrolment->student->registration_number.') ' !!}</td>
-                                              <td>{{ count($enrolment->results) }} subjects</td>
+                                              <td>{!!  '<b>'.$enrolment->user->name.'</b><br /><small>('.$enrolment->student->registration_number.') ' !!}</td>
+                                              <td style="padding-top: 5px;"><span class="badge badge-secondary">{{ count($enrolment->results) }} subjects</span></td>
                                               @if ($arm->user_id > 0)
                                                   @if ($arm->user->id == $user->id)
                                                     <td class="text-right">
@@ -157,12 +157,12 @@
                                       @foreach ($arm->classsubjects as $classsubject)
                                         <tr>
                                             <td>{{ $sn }}</td>
-                                            <td>{{ $classsubject->subject->name }}</td>
+                                            <td><b>{{ $classsubject->subject->name }}</b></td>
                                             <td>
                                                 @if ($classsubject->user_id == 0)
                                                     <span class="badge badge-danger">No assigned teacher</span>
                                                 @else
-                                                    {!! $classsubject->user->name.' - <small>'.$classsubject->user->staff->phone.'</small>' !!}
+                                                    <span class="badge badge-secondary">{!! $classsubject->user->name.' - <small>'.$classsubject->user->staff->phone.'</small>' !!}</span>
                                                 @endif
                                             </td>
                                             @if ($classsubject->user_id == $user->id)

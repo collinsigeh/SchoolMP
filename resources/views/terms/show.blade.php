@@ -90,7 +90,7 @@
                                 <div class="table-responsive">
                                   <table class="table table-bordered table-hover table-sm">
                                       <tr>
-                                        <td><b>No. of class arms:</b> {{ count($term->arms) }}</td>
+                                        <td><b>No. of class arms:</b> <span class="badge badge-secondary">{{ count($term->arms) }}</span></td>
                                       </tr>
                                   </table> 
                                   <div class="text-right">
@@ -123,7 +123,7 @@
                                                 $male++;
                                             }
                                         }
-                                        echo $male;
+                                        echo  '<span class="badge badge-secondary">'.$male.'</span>';
                                     @endphp
                                   </td>
                               </tr>
@@ -139,12 +139,12 @@
                                                 $female++;
                                             }
                                         }
-                                        echo $female;
+                                        echo  '<span class="badge badge-secondary">'.$female.'</span>';
                                     @endphp
                                   </td>
                               </tr>
                               <tr>
-                                  <td><b>Total number of students: </b>{{ count($term->enrolments) }}</td>
+                                  <td><b>Total number of students: </b><span class="badge badge-secondary">{{ count($term->enrolments) }}</span></td>
                               </tr>
                           </table>
                         </div>
