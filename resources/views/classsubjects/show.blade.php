@@ -62,31 +62,45 @@
                         <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="class_icon" class="collins-this-term-icon"> <span class="collins-this-term">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->subject->name }} ({!! $term->name.' - <small>'.$term->session.'</small>' !!})</span>
                       </div>
 
-                      <div class="table-responsive">
-                        <table class="table table-striped table-hover table-sm">
-                            <tr>
-                              <th>Subject teacher:</th>                           
-                              @if ($classsubject->arm->user_id < 1)
-                                  <td>
-                                      {!! '<span class="badge badge-danger">No assigned teacher</span>' !!}
-                                      @if ($classarm_manager == 'Yes')
-                                          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newTeacherModal">
-                                              Assign class teacher
-                                          </button>
-                                      @endif
-                                  </td>
-                              @else
-                                  <td>{!! $classsubject->arm->user->name.' - <small>'.$classsubject->arm->user->staff->phone.'</small>' !!}</td>
-                                  @if ($classarm_manager == 'Yes')
-                                      <td class="text-right">
-                                          <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#newTeacherModal">
-                                              Edit
-                                          </button>
-                                      </td>
-                                  @endif
-                              @endif
-                            </tr>
-                        </table>
+                      <div class="row">
+                        <div class="col-md-6">
+                            <div class="table-responsive">
+                              <table class="table table-striped table-hover table-sm">
+                                  <tr>
+                                    <td><b>Class:</b> {{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }} </td>
+                                  </tr>
+                              </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="table-responsive">
+                              <table class="table table-striped table-hover table-sm">
+                                  <tr>
+                                    <th>Subject teacher:</th>                           
+                                    @if ($classsubject->arm->user_id < 1)
+                                        <td>
+                                            {!! '<span class="badge badge-danger">No assigned teacher</span>' !!}
+                                            @if ($classarm_manager == 'Yes')
+                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newTeacherModal">
+                                                    Assign class teacher
+                                                </button>
+                                            @endif
+                                        </td>
+                                    @else
+                                        <td>{!! $classsubject->arm->user->name.' - <small>'.$classsubject->arm->user->staff->phone.'</small>' !!}</td>
+                                        @if ($classarm_manager == 'Yes')
+                                            <td class="text-right">
+                                                <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#newTeacherModal">
+                                                    Edit
+                                                </button>
+                                            </td>
+                                        @endif
+                                    @endif
+                                  </tr>
+                              </table>
+                            </div>
+                        </div>
                       </div>
                     </div>
                     <div style="padding-bottom: 15px;"></div>
