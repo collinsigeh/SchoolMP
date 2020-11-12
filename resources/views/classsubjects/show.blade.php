@@ -107,7 +107,7 @@
 
                     <div class="resource-details">
                         <div class="title">
-                            Students
+                            Students and scores attained
                         </div>
                         <div class="body">
                             
@@ -123,13 +123,20 @@
                                               <th>#</th>
                                               <th>Student</th>
                                               @if ($classsubject->arm->resulttemplate->subject_1st_test_max_score > 0)
-                                                  
+                                                <th class="text-right">1st test<br /><span class="badge badge-secondary">{{ $classsubject->arm->resulttemplate->subject_1st_test_max_score }} %</span></th>
                                               @endif
-                                              <th class="text-right">1st test<br /><span class="badge badge-secondary">{{ $classsubject->arm->resulttemplate->subject_1st_test_max_score }} %</span></th>
-                                              <th class="text-right">2nd test<br /><span class="badge badge-secondary">{{ $classsubject->arm->resulttemplate->subject_2nd_test_max_score }} %</span></th>
+                                              @if ($classsubject->arm->resulttemplate->subject_2nd_test_max_score > 0)
+                                                <th class="text-right">2nd test<br /><span class="badge badge-secondary">{{ $classsubject->arm->resulttemplate->subject_2nd_test_max_score }} %</span></th>
+                                              @endif
+                                              @if ($classsubject->arm->resulttemplate->subject_3rd_test_max_score > 0)
                                               <th class="text-right">3rd test<br /><span class="badge badge-secondary">{{ $classsubject->arm->resulttemplate->subject_3rd_test_max_score }} %</span></th>
+                                              @endif
+                                              @if ($classsubject->arm->resulttemplate->subject_assignment_score > 0)
                                               <th class="text-right">Assignment<br /><span class="badge badge-secondary">{{ $classsubject->arm->resulttemplate->subject_assignment_score }} %</span></th>
+                                              @endif
+                                              @if ($classsubject->arm->resulttemplate->subject_exam_score > 0)
                                               <th class="text-right">Exam<br /><span class="badge badge-secondary">{{ $classsubject->arm->resulttemplate->subject_exam_score }} %</span></th>
+                                              @endif
                                               <th></th>
                                           </tr>
                                       </thead>
@@ -140,11 +147,21 @@
                                           <tr>
                                               <td>{{ $sn }}</td>
                                               <td>{!!  '<b>'.$result_slip->enrolment->user->name.'</b><br /><small>('.$result_slip->enrolment->student->registration_number.') ' !!}</td>
-                                              <td class="text-right">{{ $result_slip->subject_1st_test_score }}</td>
-                                              <td class="text-right">{{ $result_slip->subject_2nd_test_score }}</td>
-                                              <td class="text-right">{{ $result_slip->subject_3rd_test_score }}</td>
-                                              <td class="text-right">{{ $result_slip->subject_assignment_score }}</td>
-                                              <td class="text-right">{{ $result_slip->subject_exam_score }}</td>
+                                              @if ($classsubject->arm->resulttemplate->subject_1st_test_max_score > 0)
+                                                <td class="text-right">{{ $result_slip->subject_1st_test_score }}</td>
+                                              @endif
+                                              @if ($classsubject->arm->resulttemplate->subject_2nd_test_max_score > 0)
+                                                <td class="text-right">{{ $result_slip->subject_2nd_test_score }}</td>
+                                              @endif
+                                              @if ($classsubject->arm->resulttemplate->subject_3rd_test_max_score > 0)
+                                                <td class="text-right">{{ $result_slip->subject_3rd_test_score }}</td>
+                                              @endif
+                                              @if ($classsubject->arm->resulttemplate->subject_assignment_score > 0)
+                                                <td class="text-right">{{ $result_slip->subject_assignment_score }}</td>
+                                              @endif
+                                              @if ($classsubject->arm->resulttemplate->subject_exam_score > 0)
+                                                <td class="text-right">{{ $result_slip->subject_exam_score }}</td>
+                                              @endif
                                               @if ($classarm_manager == 'Yes')
                                                     <td class="text-right">
                                                         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignScoreModal{{ $result_slip->id }}">
