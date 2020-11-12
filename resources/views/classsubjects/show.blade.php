@@ -164,9 +164,17 @@
                                               @endif
                                               @if ($classarm_manager == 'Yes')
                                                     <td class="text-right">
-                                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignScoreModal{{ $result_slip->id }}">
-                                                            Manage scores
-                                                        </button>
+                                                        @if ($result_slip->status == 'Pending' OR $result_slip->status == 'NOT Approved')
+                                                            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignScoreModal{{ $result_slip->id }}">
+                                                                Manage scores
+                                                            </button>
+                                                        @else
+                                                            @if ($result_slip->status == 'Pending Approval')
+                                                                <span class="badge badge-secondary">Pending Approval</span>
+                                                            @elseif ($result_slip->status == 'Approved')
+                                                                <span class="badge badge-success">Approved</span>
+                                                            @endif
+                                                        @endif
                                                     </td>
                                               @endif
                                               @if ($classsubject->user_id > 0)

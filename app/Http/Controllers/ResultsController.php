@@ -255,13 +255,48 @@ class ResultsController extends Controller
             return  redirect()->route('dashboard');
         }
 
-        $this->validate($request, [
-            '1st_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_1st_test_max_score],
-            '2nd_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_2nd_test_max_score],
-            '3rd_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_3rd_test_max_score],
-            'assignment_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_assignment_score],
-            'exam_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_exam_score]
-        ]);
+        if($result_slip->status == 'Pending Approval')
+        {
+            $request->session()->flash('error', 'Error 1: Attempt to modify scores that has been sent for approval.' );
+            return redirect()->route('classsubjects.show', $result_slip->classsubject_id);
+        }
+        if($result_slip->status == 'Approved')
+        {
+            $request->session()->flash('error', 'Error 1: Attempt to modify scores that has been approved.' );
+            return redirect()->route('classsubjects.show', $result_slip->classsubject_id);
+        }
+
+        if($result_slip->resulttemplate->subject_1st_test_max_score > 0)
+        {
+            $this->validate($request, [
+                '1st_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_1st_test_max_score]
+            ]);
+        }
+        if($result_slip->resulttemplate->subject_2nd_test_max_score > 0)
+        {
+            $this->validate($request, [
+                '2nd_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_2nd_test_max_score]
+            ]);
+        }
+        if($result_slip->resulttemplate->subject_3rd_test_max_score > 0)
+        {
+            $this->validate($request, [
+                '3rd_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_3rd_test_max_score]
+            ]);
+        }
+        if($result_slip->resulttemplate->subject_assignment_score > 0)
+        {
+            $this->validate($request, [
+                'assignment_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_assignment_score]
+            ]);
+        }
+        if($result_slip->resulttemplate->subject_exam_score > 0)
+        {
+            $this->validate($request, [
+                'exam_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_exam_score]
+            ]);
+        }
+
 
         echo 'I got here';
         die();
