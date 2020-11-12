@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="assignSubjectTeacherModal{{ $classsubject->id }}Label">Assign subject teacher</h5>
+          <h5 class="modal-title" id="assignSubjectTeacherModal{{ $classsubject->id }}Label">Subject and assigned teacher</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

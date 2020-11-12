@@ -88,10 +88,10 @@
                                             @endif
                                         </td>
                                     @else
-                                        <td>{!! $classsubject->arm->user->name.' - <small>'.$classsubject->arm->user->staff->phone.'</small>' !!}</td>
+                                        <td>{!! $classsubject->user->name.' - <small>'.$classsubject->user->staff->phone.'</small>' !!}</td>
                                         @if ($classarm_manager == 'Yes')
                                             <td class="text-right">
-                                                <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#newTeacherModal">
+                                                <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $classsubject->id }}">
                                                     Edit
                                                 </button>
                                             </td>
