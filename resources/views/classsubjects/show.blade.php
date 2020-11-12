@@ -78,11 +78,11 @@
                               <table class="table table-striped table-hover table-sm">
                                   <tr>
                                     <th>Subject teacher:</th>                           
-                                    @if ($classsubject->arm->user_id < 1)
+                                    @if ($classsubject->user_id < 1)
                                         <td>
                                             {!! '<span class="badge badge-danger">No assigned teacher</span>' !!}
                                             @if ($classarm_manager == 'Yes')
-                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newTeacherModal">
+                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $classsubject->id }}">
                                                     Assign class teacher
                                                 </button>
                                             @endif
@@ -207,6 +207,15 @@
             </div>
 
         </div>
+
+
+<!-- assignSubjectTeacherModal for this classsubject -->
+@php
+    $return_page = 'classsubject.show';
+    $returnpage_id = $classsubject->id;
+@endphp
+@include('partials._subject_teacher')
+<!-- End assignSubjectTeacherModal for this classsubject -->
 
 <!-- assignScoreModal Series -->
 @foreach ($classsubject->results as $result_slip)
