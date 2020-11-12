@@ -33,17 +33,17 @@
               @if ($user->usertype == 'Client')
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('arms.index') }}">Class arms</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('arms.show', $classsubject->arm_id) }}">{{ $classsubject->arm->schoolclass->name }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('arms.show', $classsubject->arm_id) }}">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $classsubject->subject->name }}</li>
               @else
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 @if ($classarm_manager == 'Yes')
                     <li class="breadcrumb-item"><a href="{{ route('arms.index') }}">Class arms</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('arms.show', $classsubject->arm_id) }}">{{ $classsubject->arm->schoolclass->name }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('arms.show', $classsubject->arm_id) }}">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</a></li>
                 @endif
                 <li class="breadcrumb-item active" aria-current="page">
                     @if ($classarm_manager != 'Yes')
-                        {{ $classsubject->arm->schoolclass->name }}
+                        {{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}
                     @endif
                     {{ $classsubject->subject->name }}
                 </li>

@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="assignScoreModal{{ $result_slip->id }}Label">{!!  '<b>'.$result_slip->enrolment->user->name.'</b><br /><small>('.$result_slip->enrolment->student->registration_number.') ' !!}</small></h5>
+          <h5 class="modal-title" id="assignScoreModal{{ $result_slip->id }}Label">{!!  '<b>'.$result_slip->enrolment->user->name.'</b><br /><small>('.$result_slip->enrolment->student->registration_number.')<br>'.$classsubject->arm->schoolclass->name.' '.$classsubject->arm->name !!}</small></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -27,7 +27,7 @@
     
                         <div class="col-md-8">
                             <div class="alert alert-info">
-                                <b>{{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</b><br />({!! $term->name.' - <small>'.$term->session.'</small>' !!})
+                                <b>{{ $classsubject->arm->schoolclass->name.' '.$classsubject->subject->name }}</b><br />({!! $term->name.' - <small>'.$term->session.'</small>' !!})
                             </div>
                         </div>
                     </div>
