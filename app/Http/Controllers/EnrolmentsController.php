@@ -36,7 +36,64 @@ class EnrolmentsController extends Controller
      */
     public function index()
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        $data['school'] = School::find($school_id);
+
+        if(!$this->resource_manager($data['user'], $school_id))
+        {
+            return redirect()->route('dashboard');
+        }
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+        
+        $no_students = 0;
+        $db_check = array(
+            'term_id' => $term_id
+        );
+        $total_students = Enrolment::where($db_check)->get();
+        if(!empty($total_students)){
+            $no_students = count($total_students);
+        }
+        $data['total_students'] = $no_students;
+        $data['enrolments'] = Enrolment::where($db_check)->orderBy('schoolclass_id', 'asc')->paginate(50);
+
+        return view('enrolments.index')->with($data);
     }
 
     /**
@@ -222,5 +279,57 @@ class EnrolmentsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Check if the logged-in user can manipulate this resource by special privilege.
+     * All directors are managers already but staff earn it by special privilege
+     *
+     * @return boolean
+     */
+    public function resource_manager($user, $school_id)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+        
+        $resource_manager = false;
+
+        if($user->usertype == 'Client')
+        {
+            foreach($user->schools as $school)
+            {
+                if($school->id == $school_id)
+                {
+                    $resource_manager = true;
+                }
+            }
+        }
+        elseif($user->role == 'Director')
+        {
+            $db_check = array(
+                'user_id'   => $user->id,
+                'school_id' => $school_id
+            );
+            if(!empty(Director::where($db_check)->get()))
+            {
+                $resource_manager = true;
+            }
+        }
+        elseif($user->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'       => $user->id,
+                'school_id'     => $school_id,
+                'manage_students_account'  => 'Yes'
+            );
+            if(!empty(Staff::where($db_check)->get()))
+            {
+                $resource_manager = true;
+            }
+        }
+
+        return $resource_manager;
     }
 }

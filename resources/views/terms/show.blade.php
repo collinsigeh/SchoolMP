@@ -149,7 +149,7 @@
                           </table>
                         </div>
                         <div class="text-right">
-                          <a class="btn btn-sm btn-outline-primary" href="{{ route('students.create') }}">New student</a> &nbsp;&nbsp;<a class="btn btn-sm btn-primary" href="{{ route('students.index') }}">View students</a>
+                          <a class="btn btn-sm btn-outline-primary" href="{{ route('students.create') }}">New student</a> &nbsp;&nbsp;<a class="btn btn-sm btn-primary" href="{{ route('enrolments.index') }}">View students</a>
                         </div>
                       </div>
                   </div>
@@ -173,7 +173,7 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('students.index') }}">
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('enrolments.index') }}">
                                       <img src="{{ config('app.url') }}/images/icons/students_icon.png" alt="students_icon" class="options-icon"> Students
                                     </a>
                                   </td>
@@ -327,7 +327,7 @@
                                 @if ($student_manager == 'Yes')
                                 <tr>
                                   <td>
-                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('students.index') }}">
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('enrolments.index') }}">
                                       <img src="{{ config('app.url') }}/images/icons/students_icon.png" alt="students_icon" class="options-icon"> Students
                                     </a>
                                   </td>
