@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-            <h3>Class arms</h3>
+            <h3>{{ $term->name }} Classes {!! ' - <small>'.$term->session.'</small>' !!}</h3>
           </div>
           <div class="col-4 text-right">
               @if ($user->role == 'Staff')

@@ -30,17 +30,19 @@
         <div class="pagenav">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              @if ($user->usertype == 'Client')
-                <li class="breadcrumb-item"><a href="{{ route('schools.show', $school->id) }}">{{ $school->school }}</a></li>
+                @if ($user->usertype == 'Client')
+                    <li class="breadcrumb-item"><a href="{{ route('schools.show', $school->id) }}">{{ $school->school }}</a></li>
+                @else
+                    <li class="breadcrumb-item"><a href="{{ config('app.url') }}/schools">Dashboard</a></li>
+                @endif
+                @if (isset($term))
+                    <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
+                @endif
                 <li class="breadcrumb-item"><a href="{{ route('staff.index') }}">Staff</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Add new</li>
-              @else
-                <li class="breadcrumb-item"><a href="{{ config('app.url') }}/schools">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('staff.index') }}">Staff</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Add new</li>
-              @endif
             </ol>
           </nav>
+          
           @include('partials._messages')
         </div>
 

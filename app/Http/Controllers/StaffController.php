@@ -137,6 +137,12 @@ class StaffController extends Controller
             }
             $data['staff'] = $staff[0];
         }
+    
+        if(session('term_id') > 0)
+        {
+            $term_id = session('term_id');
+            $data['term'] = Term::find($term_id);
+        }
 
         return view('staff.create')->with($data);
     }

@@ -20,10 +20,10 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-            <h3>Teachers and assigned subjects</h3>
+            <h3>{{ $term->name }} Teachers and Assigned Subjects {!! ' - <small>'.$term->session.'</small>' !!}</h3>
           </div>
           <div class="col-4 text-right">
-              
+            <a href="{{ route('staff.create') }}" class="btn btn-primary">New staff</a>
           </div>
         </div>
         <hr />
@@ -103,7 +103,7 @@
                                             <tr>
                                                 <td>{{ $sn }}</td>
                                                 <td>
-                                                    <b>{{ $this_staff->user->name }}</b> <br><small> {{ $this_staff->designation }}</small>
+                                                    <b>{{ $this_staff->user->name }}</b>
                                                     @php
                                                         $total_assigned = 0;
                                                         foreach($classsubjects as $assigned_subject)
@@ -114,6 +114,8 @@
                                                             }
                                                         }
                                                     @endphp
+                                                    <br><small> {{ $this_staff->designation }}</small><br />
+                                                    <span class="badge badge-secondary">{{ $total_assigned }} subjects</span>
                                                 </td>
                                                 <td>
                                                     @if ($total_assigned > 0)  
@@ -129,7 +131,7 @@
                                                             @endif
                                                         @endforeach
                                                     @else
-                                                        <span class="badge badge-secondary">No subject</span>
+                                                        <span class="badge badge-secondary">None</span>
                                                     @endif
                                                 </td>
                                             </tr>

@@ -407,12 +407,12 @@ class StudentsController extends Controller
         if($enrolment_status == 'Inactive')
         {
             $request->session()->flash('success', 'Student registered successfully into '.$arm->schoolclass->name.' '.$arm->name);
-            return redirect()->route('students.index');
+            return redirect()->route('enrolments.index');
         }
         else
         {
             $request->session()->flash('success', 'Student registered successfully into '.$arm->schoolclass->name.' '.$arm->name);
-            return redirect()->route('students.index');
+            return redirect()->route('enrolments.index');
         }
     }
 
