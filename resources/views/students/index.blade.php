@@ -63,7 +63,6 @@
                             <th>Class</th>
                             <th>Name</th>
                             <th>Gender</th>
-                            <th>Reg. no.</th>
                             <th>Fees</th>
                             <th>Status</th>
                             <th></th>
@@ -72,10 +71,9 @@
                     <tbody>
                         @foreach ($enrolments as $enrolment)
                             <tr>
-                                <td>{{ $enrolment->schoolclass->name }}</td>
-                                <td>{{ $enrolment->user->name }}</td>
-                                <td>{{ $enrolment->user->gender }}</td>
-                                <td>{{ $enrolment->student->registration_number }}</td>
+                                <td><span class="badge badge-secondary">{{ $enrolment->schoolclass->name }}</span></td>
+                                <td><b>{{ $enrolment->user->name }}</b><br /><small>({{ $enrolment->student->registration_number }})</small></td>
+                                <td><span class="badge badge-secondary">{{ $enrolment->user->gender }}</span></td>
                                 <td><span class="badge <?php
                                     if($enrolment->fee_status == 'Unpaid')
                                     {
