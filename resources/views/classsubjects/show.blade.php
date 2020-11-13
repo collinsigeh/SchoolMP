@@ -162,30 +162,31 @@
                                               @if ($classsubject->arm->resulttemplate->subject_exam_score > 0)
                                                 <td class="text-right">{{ $result_slip->subject_exam_score }}</td>
                                               @endif
-                                              @if ($classarm_manager == 'Yes')
-                                                    <td class="text-right">
-                                                        @if ($result_slip->status == 'Pending' OR $result_slip->status == 'NOT Approved')
-                                                            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignScoreModal{{ $result_slip->id }}">
-                                                                Manage scores
-                                                            </button>
-                                                        @else
-                                                            @if ($result_slip->status == 'Pending Approval')
-                                                                <span class="badge badge-secondary">Pending Approval</span>
-                                                            @elseif ($result_slip->status == 'Approved')
-                                                                <span class="badge badge-success">Approved</span>
-                                                            @endif
-                                                        @endif
-                                                    </td>
-                                              @endif
-                                              @if ($classsubject->user_id > 0)
-                                                  @if ($classsubject->user_id == $user->id)
-                                                    <td class="text-right">
+                                              <td class="text-right">
+                                                @if ($classsubject->user_id == $user->id)
+                                                    @if ($result_slip->status == 'Pending' OR $result_slip->status == 'NOT Approved')
                                                         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignScoreModal{{ $result_slip->id }}">
                                                             Manage scores
                                                         </button>
-                                                    </td>
-                                                  @endif
-                                              @endif
+                                                    @else
+                                                        @if ($result_slip->status == 'Pending Approval')
+                                                            <span class="badge badge-secondary">Pending Approval</span>
+                                                        @elseif ($result_slip->status == 'Approved')
+                                                            <span class="badge badge-success">Approved</span>
+                                                        @endif
+                                                    @endif
+                                                @else
+                                                    @if ($result_slip->status == 'Pending' OR $result_slip->status == 'Pending Approval')
+                                                        <span class="badge badge-secondary">{{ $result_slip->status }}</span>
+                                                    @else
+                                                        @if ($result_slip->status == 'NOT Approved')
+                                                            <span class="badge badge-danger">NOT Approved</span>
+                                                        @elseif ($result_slip->status == 'Approved')
+                                                            <span class="badge badge-success">Approved</span>
+                                                        @endif
+                                                    @endif
+                                                @endif
+                                              </td>
                                           </tr>
                                           @php
                                               $sn++;

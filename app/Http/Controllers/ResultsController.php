@@ -271,6 +271,9 @@ class ResultsController extends Controller
             $this->validate($request, [
                 '1st_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_1st_test_max_score]
             ]);
+            
+            $result_slip->resulttemplate->subject_1st_test_max_score = $this->input->post('1st_test_score');
+            $result_slip->first_score_by = 'Teacher';
         }
         if($result_slip->resulttemplate->subject_2nd_test_max_score > 0)
         {
@@ -297,12 +300,12 @@ class ResultsController extends Controller
             ]);
         }
 
-
-        echo 'I got here';
+        // I AM HERE
+        echo 'I am here!';
         die();
-
-        $classsubject->user_id = $request->input('user_id');
-        $classsubject->save();
+        // END OF I AM HERE
+        
+        $result_slip->save();
 
         $request->session()->flash('success', 'Update saved.');
 
@@ -311,7 +314,7 @@ class ResultsController extends Controller
             return redirect()->route($request->input('return_page'), $request->input('returnpage_id'));
         }
 
-        return redirect()->route('classsubjects.show', $id);
+        return redirect()->route('classsubjects.show', $result_slip->classsubject_id);
     }
 
     /**
