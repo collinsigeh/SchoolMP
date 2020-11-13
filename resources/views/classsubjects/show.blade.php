@@ -163,28 +163,32 @@
                                                 <td class="text-right">{{ $result_slip->subject_exam_score }}</td>
                                               @endif
                                               <td class="text-right">
-                                                @if ($classsubject->user_id == $user->id)
-                                                    @if ($result_slip->status == 'Pending' OR $result_slip->status == 'NOT Approved')
-                                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignScoreModal{{ $result_slip->id }}">
-                                                            Manage scores
-                                                        </button>
-                                                    @else
-                                                        @if ($result_slip->status == 'Pending Approval')
-                                                            <span class="badge badge-secondary">Pending Approval</span>
-                                                        @elseif ($result_slip->status == 'Approved')
-                                                            <span class="badge badge-success">Approved</span>
-                                                        @endif
-                                                    @endif
+                                                @if ($result_slip->enrolment->status == 'Inactive')
+                                                    <span class="badge badge-danger">Inactive</span>
                                                 @else
-                                                    @if ($result_slip->status == 'Pending' OR $result_slip->status == 'Pending Approval')
-                                                        <span class="badge badge-secondary">{{ $result_slip->status }}</span>
-                                                    @else
-                                                        @if ($result_slip->status == 'NOT Approved')
-                                                            <span class="badge badge-danger">NOT Approved</span>
-                                                        @elseif ($result_slip->status == 'Approved')
-                                                            <span class="badge badge-success">Approved</span>
-                                                        @endif
-                                                    @endif
+                                                  @if ($classsubject->user_id == $user->id)
+                                                      @if ($result_slip->status == 'Pending' OR $result_slip->status == 'NOT Approved')
+                                                          <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignScoreModal{{ $result_slip->id }}">
+                                                              Manage scores
+                                                          </button>
+                                                      @else
+                                                          @if ($result_slip->status == 'Pending Approval')
+                                                              <span class="badge badge-secondary">Pending Approval</span>
+                                                          @elseif ($result_slip->status == 'Approved')
+                                                              <span class="badge badge-success">Approved</span>
+                                                          @endif
+                                                      @endif
+                                                  @else
+                                                      @if ($result_slip->status == 'Pending' OR $result_slip->status == 'Pending Approval')
+                                                          <span class="badge badge-secondary">{{ $result_slip->status }}</span>
+                                                      @else
+                                                          @if ($result_slip->status == 'NOT Approved')
+                                                              <span class="badge badge-danger">NOT Approved</span>
+                                                          @elseif ($result_slip->status == 'Approved')
+                                                              <span class="badge badge-success">Approved</span>
+                                                          @endif
+                                                      @endif
+                                                  @endif
                                                 @endif
                                               </td>
                                           </tr>

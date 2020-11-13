@@ -255,14 +255,20 @@ class ResultsController extends Controller
             return  redirect()->route('dashboard');
         }
 
+        if($result_slip->enrolment_status == 'Inactive')
+        {
+            $request->session()->flash('error', 'Error 1: Attempt to modify details of an inactive student account.' );
+            return redirect()->route('classsubjects.show', $result_slip->classsubject_id);
+        }
+
         if($result_slip->status == 'Pending Approval')
         {
-            $request->session()->flash('error', 'Error 1: Attempt to modify scores that has been sent for approval.' );
+            $request->session()->flash('error', 'Error 2: Attempt to modify scores that has been sent for approval.' );
             return redirect()->route('classsubjects.show', $result_slip->classsubject_id);
         }
         if($result_slip->status == 'Approved')
         {
-            $request->session()->flash('error', 'Error 1: Attempt to modify scores that has been approved.' );
+            $request->session()->flash('error', 'Error 3: Attempt to modify scores that has been approved.' );
             return redirect()->route('classsubjects.show', $result_slip->classsubject_id);
         }
 
