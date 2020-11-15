@@ -109,7 +109,7 @@
                                               <td style="padding-top: 5px;"><span class="badge badge-secondary">{{ count($enrolment->results) }} subjects</span></td>
                                               @if ($student_manager == 'Yes')
                                                     <td class="text-right">
-                                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('enrolments.show', $enrolment->student_id) }}">Manage</a>
+                                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('enrolments.show', $enrolment->id) }}">Manage</a>
                                                     </td>
                                               @elseif ($arm->user_id > 0)
                                                   @if ($arm->user->id == $user->id)
