@@ -244,7 +244,7 @@
 
 <!-- assignSubjectTeacherModal for this classsubject -->
 @php
-    $return_page = 'classsubject.show';
+    $return_page = 'classsubjects.show';
     $returnpage_id = $classsubject->id;
 @endphp
 @include('partials._subject_teacher')
