@@ -98,7 +98,7 @@
                                       echo 'badge-danger';
                                     }
                                 ?>">{{ $enrolment->status }}</span></td>
-                                <td class="text-right"><a href="{{ route('enrolments.show', $enrolment->student_id) }}" class="btn btn-sm btn-outline-primary">Manage</a></td>
+                                <td class="text-right"><a href="{{ route('enrolments.show', $enrolment->id) }}" class="btn btn-sm btn-outline-primary">Manage</a></td>
                             </tr>
                         @endforeach
                     </tbody>
