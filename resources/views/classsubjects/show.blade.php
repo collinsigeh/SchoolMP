@@ -165,6 +165,7 @@
                                               <td class="text-right">
                                                 @if ($result_slip->enrolment->status == 'Inactive')
                                                     <span class="badge badge-danger">Inactive</span>
+                                                    <a class="btn btn-sm btn-outline-primary" href="{{ route('enrolments.show', $result_slip->enrolment_id) }}">Manage</a>
                                                 @else
                                                   @if ($classsubject->user_id == $user->id)
                                                       @if ($result_slip->status == 'Pending' OR $result_slip->status == 'NOT Approved')
