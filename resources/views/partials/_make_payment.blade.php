@@ -54,6 +54,7 @@
                             <input type="hidden" name="payment_email" value="{{ $user->email }}">
                             <input type="hidden" name="payment_firstname" value="{{ $user->name }}">
                             <input type="hidden" name="payment_user_id" value="{{ $user->id }}">
+                            <input type="hidden" name="return_page" value="{{ $return_page }}">
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">

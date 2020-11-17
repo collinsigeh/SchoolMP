@@ -10,6 +10,7 @@ use App\Staff;
 use App\Term;
 use App\Order;
 use App\Payment;
+use App\Paymentprocessors;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
@@ -64,6 +65,9 @@ class PaymentsController extends Controller
 
         if($data['user']->usertype == 'Admin')
         {
+            /*
+            * STILL NEEDS TO WORK ON THIS!!!
+            */
             $this->validate($request, [
                 'id' => ['required', 'numeric'],
                 'amount' => ['required', 'numeric', 'min:0'],
@@ -185,19 +189,37 @@ class PaymentsController extends Controller
             'payment_currency'      => ['required'],
             'payment_email'         => ['required', 'email'],
             'payment_firstname'     => ['required'],
-            'payment_user_id'       => ['required']
+            'payment_user_id'       => ['required'],
+            'return_page'           => ['required']
         ]);
+        
+        $return_page = $request->input('return_page');
+
+        //get secret key
+        $db_check = array(
+            'name' => 'Paystack'
+        );
+        $payment_processor = Paymentprocessors::where($db_check)-> get();
+        if(empty($payment_processor))
+        {
+            $request->session()->flash('error', 'Fatal Error: secret key missing.');
+            return redirect($return_page);
+        }
+        $secret_key = $payment_processor[0]->secret_key;
 
         $curl = curl_init();
 
 		$email = $request->input('payment_email');
-		$amount = $request->input('payment_amount') * 100;  //the amount in kobo. This value is actually NGN 300
+        $amount = $request->input('payment_amount') * 100;  //the amount in kobo. This value is actually NGN 300
+        $currency = $request->input('payment_currency');
 		$reference = $request->input('payment_pre_reference').time();
 		$metadata = array(
 			'custom_fields' => array(
-				'order_id' => $request->input('payment_order_id')
+                'order_id'  => $request->input('payment_order_id'),
+                'user_id'   => $request->input('payment_user_id'),
+                'first_name'   => $request->input('payment_firstname'),
 			)
-		);
+        );
 		
 
 		// url to go to after payment
@@ -208,14 +230,15 @@ class PaymentsController extends Controller
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_CUSTOMREQUEST => "POST",
 		CURLOPT_POSTFIELDS => json_encode([
-			'amount'=>$amount,
+            'amount'=>$amount,
+            'currency' => $currency,
 			'email'=>$email,
 			'reference'=> $reference,
 			'callback_url' => $callback_url,
 			'metadata' => $metadata
 		]),
 		CURLOPT_HTTPHEADER => [
-			"authorization: Bearer ".$payment_processor->secret_key, //replace this with your own test key
+			"authorization: Bearer ".$secret_key, //replace this with your own test key
 			"content-type: application/json",
 			"cache-control: no-cache"
 		],
@@ -226,7 +249,7 @@ class PaymentsController extends Controller
 
 		if($err){
 		// there was an error contacting the Paystack API
-			die('Curl returned error: ' . $err.'<div style="margin: 80px auto;"><a href="'.base_url().'dashboard/orders/"><< Back to Order history</a></div>');
+			die('Curl returned error: ' . $err.'<div style="margin: 80px auto;"><a href="'.$return_page.'"><< Go back</a></div>');
 		}
 
 		$tranx = json_decode($response, true);
@@ -234,7 +257,7 @@ class PaymentsController extends Controller
 		if(!$tranx['status']){
 		// there was an error from the API
 			print_r('API returned error: ' . $tranx['message']);
-			die('<div style="margin: 80px auto;"><a href="'.base_url().'dashboard/orders/"><< Back to Order history</a></div>');
+			die('<div style="margin: 80px auto;"><a href="'.$return_page.'"><< Go back</a></div>');
 		}
 
 		// comment out this line if you want to redirect the user to the payment page

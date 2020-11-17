@@ -343,7 +343,7 @@
   </div>
 
   @php
-    $return_page = 'enrolments.show';
+    $return_page = route('enrolments.show', $enrolment->id);
     $makepayment_order = '';
     foreach($enrolment->subscription->orders as $subscription_order)
     {
