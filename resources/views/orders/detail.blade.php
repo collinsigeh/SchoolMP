@@ -266,7 +266,7 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">  
-                            @if ($order->subscription > 0 && !empty($order->subscription))
+                            @if ($order->subscription_id > 0 && !empty($order->subscription))
                             <table class="table table-striped table-hover table-sm">
                                 <tbody>
                                     <tr>

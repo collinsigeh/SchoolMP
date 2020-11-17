@@ -188,8 +188,6 @@ class PaymentsController extends Controller
             'payment_user_id'       => ['required']
         ]);
 
-        echo route('payments.verifypaystack_transaction');die();
-
         $curl = curl_init();
 
 		$email = $request->input('payment_email');
