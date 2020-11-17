@@ -22,10 +22,13 @@
           </button>
         </div>
         <div class="modal-body">
-            <h5>Item Summary</h5>
+            <div class="row">
+                <div class="col-md-4 text-md-right">Description:</div>
+                <div class="col-md-8">{{ $makepayment_item }}</div>
+            </div>
             <hr />
 
-            <h5>Online Payment</h5>
+            <h5>Payment Method 2: Online</h5>
             <div class="alert alert-info">
                 Online payments are <b>instant</b>.<br />
                 <small>This means automatic activation on successful payments.</small>
@@ -60,7 +63,7 @@
             </div>
             <hr />
 
-            <h5>Bank Deposit Payment</h5>
+            <h5>Payment Method 3: Bank Deposit</h5>
             <div class="alert alert-info">
                 Bank deposit payments <b>require verification</b> before activation.<br />
                 <small>This could take up to 3 working days.</small>

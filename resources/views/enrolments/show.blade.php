@@ -345,18 +345,21 @@
   @php
     $return_page = 'enrolments.show';
     $makepayment_order = '';
-    foreach($enrolment->subscription->orders as $makepayment_order)
+    foreach($enrolment->subscription->orders as $subscription_order)
     {
         if($makepayment_order == '')
         {
-            if($makepayment_order->type == 'Purchase')
+            if($subscription_order->type == 'Purchase')
             {
-                $makepayment_order = $subcription->order;
+                $makepayment_order = $subscription_order;
             }
         }
     }
   @endphp
+  @if ($makepayment_order != '')
   @include('partials._make_payment')
+  @endif
+ 
   @include('partials._add_subjects_for_student')
 
 @endsection
