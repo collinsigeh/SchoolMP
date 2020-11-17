@@ -108,11 +108,11 @@
                                 @if ($order->expiry >= time())
                                     @if (($order->status == 'Pending' && $order->payment == 'Prepaid' && $order->price_type == 'Per-package') OR 
                                             ($order->status == 'Pending' && $order->payment == 'Trial' && $order->amount > 0))
-                                        <a href="#" class="btn btn-primary">Pay for order</a>
+                                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#makePaymentModal">Pay for order</a>
                                     @endif
                                 @endif
                                 @if ($order->status == 'Approved-unpaid' && $order->subscription_due_date <= time())
-                                    <a href="#" class="btn btn-primary">Pay for order</a>
+                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#makePaymentModal">Pay for order</a>
                                 @endif
                             </div>
                         </div>
@@ -335,7 +335,7 @@
                                                 <b>Pay for order:</b>
                                             </div>
                                             <div class="col-6">
-                                                <a href="#" class="btn btn-primary">Pay for order</a>
+                                                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#makePaymentModal">Pay for order</a>
                                             </div>
                                         </div>
                                     </td>
@@ -350,7 +350,7 @@
                                             <b>Pay for order:</b>
                                         </div>
                                         <div class="col-6">
-                                            <a href="#" class="btn btn-primary">Pay for order</a>
+                                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#makePaymentModal">Pay for order</a>
                                         </div>
                                     </div>
                                 </td>
@@ -500,5 +500,11 @@
       </div>
     </div>
 </div>
+
+@php
+$return_page = route('orders.show', $order->id);
+$makepayment_order = $order;
+@endphp
+@include('partials._make_payment')
 
 @endsection

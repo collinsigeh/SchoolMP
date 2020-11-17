@@ -10,6 +10,7 @@ use App\Staff;
 use App\Order;
 use App\Setting;
 use App\Subscription;
+use App\Paymentprocessors;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -163,6 +164,11 @@ class OrdersController extends Controller
             return redirect()->route('dashboard');
         }
         $data['order'] = $orders[0];
+        $data['setting'] = Setting::first();
+        if($data['setting']->paymentprocessor_id >= 1)
+        {
+            $data['payment_processor'] = Paymentprocessors::find($data['setting']->paymentprocessor_id);
+        }
 
         return view('orders.show')->with($data);
     }
