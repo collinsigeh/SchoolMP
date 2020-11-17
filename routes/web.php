@@ -50,6 +50,7 @@ Route::resource('/orders', 'OrdersController');
 
 Route::resource('/packages', 'PackagesController');
 
+Route::put('payments/paystack}', 'PaymentsController@paystack')->name('payments.paystack');
 Route::resource('/payments', 'PaymentsController');
 
 Route::resource('/payment_processors', 'PaymentprocessorsController');

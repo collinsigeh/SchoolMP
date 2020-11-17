@@ -1,9 +1,12 @@
 <!-- Payment Modal When Paying for Subscription -->
 @php
     $makepayment_item = $makepayment_order->name.' required '.$makepayment_order->price_type;
+    $makepayment_pre_reference = 'ON-'.$makepayment_order->id.'-';
     $makepayment_amount = $makepayment_order->final_price; //also works for prepaid since prices are updated with every enrolment
     if($makepayment_order->payment == 'Prepaid' && $makepayment_order->price_type == 'Per-student')
     {
+        $makepayment_pre_reference = 'EN-'.$enrolment->id.'-';
+
         $makepayment_amount = $makepayment_order->price;
         if($user->role == 'Student' OR $user->role == 'Guardian')
         {
@@ -40,10 +43,15 @@
                     <div class="create-form">
                         <!-- for Paystack Payments -->
                         @if ($payment_processor->name == 'Paystack')
-                        <form method="POST" action="{{ route('payments.store') }}">
+                        <form method="POST" action="{{ route('payments.paystack') }}">
                             @csrf
                             @method('PUT')
-            
+                            <input type="hidden" name="payment_pre_reference" value="{{ $makepayment_pre_reference }}">
+                            <input type="hidden" name="payment_amount" value="{{ $makepayment_amount }}">
+                            <input type="hidden" name="payment_currency" value="{{ $makepayment_currency }}">
+                            <input type="hidden" name="payment_email" value="{{ $user->email }}">
+                            <input type="hidden" name="payment_firstname" value="{{ $user->name }}">
+                            <input type="hidden" name="payment_user_id" value="{{ $user->id }}">
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
