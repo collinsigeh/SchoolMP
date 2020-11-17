@@ -173,7 +173,7 @@ class Alternative_currenciesController extends Controller
         {
             return redirect()->route('dashboard');
         }
-        elseif($sdata['currency']->count() < 1)
+        elseif($data['currency']->count() < 1)
         {
             return  redirect()->route('dashboard');
         }
