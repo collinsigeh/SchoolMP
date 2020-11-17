@@ -1,6 +1,7 @@
 <!-- Payment Modal When Paying for Subscription -->
 @php
     $makepayment_item = $makepayment_order->name.' required '.$makepayment_order->price_type;
+    $makepayment_order_id = $makepayment_order->id.'-';
     $makepayment_pre_reference = 'ON-'.$makepayment_order->id.'-';
     $makepayment_amount = $makepayment_order->final_price; //also works for prepaid since prices are updated with every enrolment
     if($makepayment_order->payment == 'Prepaid' && $makepayment_order->price_type == 'Per-student')
@@ -43,9 +44,10 @@
                     <div class="create-form">
                         <!-- for Paystack Payments -->
                         @if ($payment_processor->name == 'Paystack')
-                        <form method="POST" action="{{ route('payments.paystack') }}">
+                        <form method="POST" action="{{ route('payments.pay_with_paystack') }}">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="payment_order_id" value="{{ $makepayment_order_id }}">
                             <input type="hidden" name="payment_pre_reference" value="{{ $makepayment_pre_reference }}">
                             <input type="hidden" name="payment_amount" value="{{ $makepayment_amount }}">
                             <input type="hidden" name="payment_currency" value="{{ $makepayment_currency }}">

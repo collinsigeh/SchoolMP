@@ -171,6 +171,17 @@ class PaymentsController extends Controller
     }
 
     /**
+     * Initializes paystack payment
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function pay_with_paystack(Request $request)
+    {
+        echo $request->input('payment_pre_reference');
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
