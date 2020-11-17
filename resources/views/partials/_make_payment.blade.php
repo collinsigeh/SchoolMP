@@ -1,10 +1,10 @@
 <!-- Payment Modal When Paying for Subscription -->
 @php
-    $makepayment_item = $makepayment_order->name;
+    $makepayment_item = $makepayment_order->name.' required '.$makepayment_order->price_type;
     $makepayment_amount = $makepayment_order->final_price; //also works for prepaid since prices are updated with every enrolment
     if($makepayment_order->payment == 'Prepaid' && $makepayment_order->price_type == 'Per-student')
     {
-        $makepayment_amount = $makepayment_order->pricing;
+        $makepayment_amount = $makepayment_order->price;
         if($user->role == 'Student' OR $user->role == 'Guardian')
         {
             $makepayment_amount = $makepayment_order->school_asking_price;
@@ -22,48 +22,44 @@
           </button>
         </div>
         <div class="modal-body">
-            <div class="row">
-                <div class="col-md-4 text-md-right">Description:</div>
-                <div class="col-md-8">{{ $makepayment_item }}</div>
+            <div style="padding: 30px 0;">
+                <table class="table table-bordered table-sm">
+                    <tr>
+                        <th>Item</th><td>{{ $makepayment_item }}</td>
+                    </tr>
+                    <tr>
+                        <th>Amount</th><th>{{ $makepayment_currency.' '.$makepayment_amount }}</th>
+                    </tr>
+                </table>
             </div>
             <hr />
-
-            <h5>Payment Method 2: Online</h5>
-            <div class="alert alert-info">
-                Online payments are <b>instant</b>.<br />
-                <small>This means automatic activation on successful payments.</small>
-            </div>
-            <div class="create-form">
-                <form method="POST" action="{{ route('payments.store') }}">
-                    @csrf
-                    @method('PUT')
-    
-                    <div class="form-group row">
-                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Item') }}</label>
-    
-                        <div class="col-md-8">
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="Default" disabled autocomplete="name" autofocus>
-    
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
+            
+            @if ($setting->paymentprocessor_id >= 1 && isset($payment_processor))
+                <h5>Method 2: Online payment</h5>
+                <div style="padding: 30px 0;">
+                    <div class="create-form">
+                        <!-- for Paystack Payments -->
+                        @if ($payment_processor->name == 'Paystack')
+                        <form method="POST" action="{{ route('payments.store') }}">
+                            @csrf
+                            @method('PUT')
+            
+                            <div class="form-group row mb-0">
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Pay now online') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        @endif
+                        <!-- End of Paystack Payments -->
                     </div>
-    
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Pay now online') }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <hr />
+                </div>
+                <hr />
+            @endif
 
-            <h5>Payment Method 3: Bank Deposit</h5>
+            <h5>Method 3: Bank Deposit</h5>
             <div class="alert alert-info">
                 Bank deposit payments <b>require verification</b> before activation.<br />
                 <small>This could take up to 3 working days.</small>

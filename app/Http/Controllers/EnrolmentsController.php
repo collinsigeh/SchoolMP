@@ -12,6 +12,8 @@ use App\Term;
 use App\Arm;
 use App\Student;
 use App\Enrolment;
+use App\Setting;
+use App\Paymentprocessors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Image;
@@ -242,6 +244,11 @@ class EnrolmentsController extends Controller
             {
                 $data['sessionterm_manager'] = 'Yes';
             }
+        }
+        $data['setting'] = Setting::first();
+        if($data['setting']->paymentprocessor_id >= 1)
+        {
+            $data['payment_processor'] = Paymentprocessors::find($data['setting']->paymentprocessor_id);
         }
 
         return view('enrolments.show')->with($data);

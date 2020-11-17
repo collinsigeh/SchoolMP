@@ -181,7 +181,6 @@ class PaymentprocessorsController extends Controller
         }
 
         $this->validate($request, [
-            'name'          => ['required', 'string', 'max:191', "unique:paymentprocessors,name,$id"],
             'merchant_id'   => ['nullable', 'string', 'max:191'],
             'secret_word'   => ['nullable', 'string', 'max:191'],
             'public_key'    => ['nullable', 'string', 'max:191'],
@@ -189,8 +188,7 @@ class PaymentprocessorsController extends Controller
         ]);
 
         $paymentprocessor = Paymentprocessors::find($id);
-
-        $paymentprocessor->name         = ucwords(strtolower($request->input('name')));
+        
         $paymentprocessor->merchant_id  = $request->input('merchant_id');
         $paymentprocessor->secret_word  = $request->input('secret_word');
         $paymentprocessor->public_key   = $request->input('public_key');
