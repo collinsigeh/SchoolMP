@@ -178,7 +178,72 @@ class PaymentsController extends Controller
      */
     public function pay_with_paystack(Request $request)
     {
-        echo $request->input('payment_pre_reference');
+        $this->validate($request, [
+            'payment_order_id'      => ['required'],
+            'payment_pre_reference' => ['required'],
+            'payment_amount'        => ['required'],
+            'payment_currency'      => ['required'],
+            'payment_email'         => ['required', 'email'],
+            'payment_firstname'     => ['required'],
+            'payment_user_id'       => ['required']
+        ]);
+
+        echo route('payments.verifypaystack_transaction');die();
+
+        $curl = curl_init();
+
+		$email = $request->input('payment_email');
+		$amount = $request->input('payment_amount') * 100;  //the amount in kobo. This value is actually NGN 300
+		$reference = $request->input('payment_pre_reference').time();
+		$metadata = array(
+			'custom_fields' => array(
+				'order_id' => $request->input('payment_order_id')
+			)
+		);
+		
+
+		// url to go to after payment
+		$callback_url = route('payments.verifypaystack_transaction');
+
+		curl_setopt_array($curl, array(
+		CURLOPT_URL => "https://api.paystack.co/transaction/initialize",
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_CUSTOMREQUEST => "POST",
+		CURLOPT_POSTFIELDS => json_encode([
+			'amount'=>$amount,
+			'email'=>$email,
+			'reference'=> $reference,
+			'callback_url' => $callback_url,
+			'metadata' => $metadata
+		]),
+		CURLOPT_HTTPHEADER => [
+			"authorization: Bearer ".$payment_processor->secret_key, //replace this with your own test key
+			"content-type: application/json",
+			"cache-control: no-cache"
+		],
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		if($err){
+		// there was an error contacting the Paystack API
+			die('Curl returned error: ' . $err.'<div style="margin: 80px auto;"><a href="'.base_url().'dashboard/orders/"><< Back to Order history</a></div>');
+		}
+
+		$tranx = json_decode($response, true);
+
+		if(!$tranx['status']){
+		// there was an error from the API
+			print_r('API returned error: ' . $tranx['message']);
+			die('<div style="margin: 80px auto;"><a href="'.base_url().'dashboard/orders/"><< Back to Order history</a></div>');
+		}
+
+		// comment out this line if you want to redirect the user to the payment page
+		// print_r($tranx);
+		// redirect to page so User can pay
+		// uncomment this line to allow the user redirect to the payment page
+		header('Location: ' . $tranx['data']['authorization_url']);
     }
 
     /**

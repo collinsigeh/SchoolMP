@@ -50,6 +50,7 @@ Route::resource('/orders', 'OrdersController');
 
 Route::resource('/packages', 'PackagesController');
 
+Route::get('payments/verifypaystack_transaction', 'PaymentsController@verifypaystack_transaction')->name('payments.verifypaystack_transaction');
 Route::put('payments/pay_with_paystack', 'PaymentsController@pay_with_paystack')->name('payments.pay_with_paystack');
 Route::resource('/payments', 'PaymentsController');
 
