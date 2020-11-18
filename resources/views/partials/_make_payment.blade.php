@@ -15,12 +15,14 @@
         }
     }
     $makepayment_currency = $makepayment_order->currency_symbol;
+
+    $method_no = 1;
 @endphp
 <div class="modal fade" id="makePaymentModal" tabindex="-1" role="dialog" aria-labelledby="makePaymentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="makePaymentModalLabel">Make Payment</h5>
+          <h4 class="modal-title" id="makePaymentModalLabel">Make Payment</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -39,7 +41,10 @@
             <hr />
             
             @if ($setting->paymentprocessor_id >= 1 && isset($payment_processor))
-                <h5>Method 2: Online payment</h5>
+                <h5>Method {{ $method_no }}: Online payment</h5>
+                @php
+                    $method_no++;
+                @endphp
                 <div style="padding: 30px 0;">
                     <div class="create-form">
                         <!-- for Paystack Payments -->
@@ -70,7 +75,7 @@
                 <hr />
             @endif
 
-            <h5>Method 3: Bank Deposit</h5>
+            <h5>Method {{ $method_no }}: Bank Deposit</h5>
             <div class="alert alert-info">
                 Bank deposit payments <b>require verification</b> before activation.<br />
                 <small>This could take up to 3 working days.</small>
