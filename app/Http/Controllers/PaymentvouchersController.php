@@ -2,10 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\User;
+use App\Paymentvoucher;
 use Illuminate\Http\Request;
 
 class PaymentvouchersController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +26,20 @@ class PaymentvouchersController extends Controller
      */
     public function index()
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $data['paymentvouchers'] = Paymentvoucher::all();
     }
 
     /**

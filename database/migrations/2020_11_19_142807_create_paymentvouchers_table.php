@@ -16,6 +16,7 @@ class CreatePaymentvouchersTable extends Migration
         Schema::create('paymentvouchers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('pin');
+            $table->integer('expiration_at')->nullable();
             $table->integer('package_id');
             $table->enum('status', ['Available', 'Assigned', 'Used']);
             $table->enum('assigned_to', ['All', 'School', 'Student']);
