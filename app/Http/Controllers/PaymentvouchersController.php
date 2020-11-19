@@ -41,7 +41,7 @@ class PaymentvouchersController extends Controller
 
         $data['paymentvouchers'] = Paymentvoucher::all();
 
-        return view('paymentvouchers.index');
+        return view('paymentvouchers.index')->with($data);
     }
 
     /**

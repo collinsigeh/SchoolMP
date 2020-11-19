@@ -10,4 +10,3 @@ This is a LAMP Stack project built with the Laravel 5 Framework hence you'll nee
 
 ## Front-end Framework
 The front-end framework is Bootstrap.
-

@@ -41,7 +41,7 @@
             <li><a href="{{ route('products.index') }}">Products & packages</a></li>
             <li><a href="{{ route('orders.all') }}">Orders</a></li>
             <li><a href="{{ route('payments.index') }}">Payments</a></li>
-            <li><a href="{{ route('paymentvoucher.index') }}">Payment voucher</a></li>
+            <li><a href="{{ route('paymentvouchers.index') }}">Payment vouchers</a></li>
             <li><a href="#">Report</a></li>
             <li><a href="{{ route('settings.index') }}">Settings</a></li>
           </ul>

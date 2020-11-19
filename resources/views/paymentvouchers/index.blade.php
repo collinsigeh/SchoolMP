@@ -18,7 +18,7 @@
             <h3>Payment vouchers</h3>
           </div>
           <div class="col-4 text-right">
-            <a href="{{ route('products.create') }}" class="btn btn-primary">New voucher</a>
+            <a href="{{ route('paymentvouchers.create') }}" class="btn btn-primary">New voucher</a>
           </div>
         </div>
         <hr />

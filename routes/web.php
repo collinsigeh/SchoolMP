@@ -56,6 +56,8 @@ Route::resource('/payments', 'PaymentsController');
 
 Route::resource('/payment_processors', 'PaymentprocessorsController');
 
+Route::resource('/paymentvouchers', 'PaymentvouchersController');
+
 Route::resource('/products', 'ProductsController');
 
 Route::resource('/results', 'ResultsController');
