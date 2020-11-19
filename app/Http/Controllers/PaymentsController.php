@@ -11,6 +11,7 @@ use App\Term;
 use App\Order;
 use App\Payment;
 use App\Paymentprocessors;
+use App\Enrolment;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
@@ -212,12 +213,13 @@ class PaymentsController extends Controller
 		$email = $request->input('payment_email');
         $amount = $request->input('payment_amount') * 100;  //the amount in kobo. This value is actually NGN 300
         $currency = $request->input('payment_currency');
-		$reference = $request->input('payment_pre_reference').time();
+        $reference = $request->input('payment_pre_reference').time();
 		$metadata = array(
-			'custom_fields' => array(
-                'order_id'  => $request->input('payment_order_id'),
-                'user_id'   => $request->input('payment_user_id'),
-                'first_name'   => $request->input('payment_firstname'),
+			'custom_fields'   => array(
+                'order_id'    => $request->input('payment_order_id'),
+                'user_id'     => $request->input('payment_user_id'),
+                'first_name'  => $request->input('payment_firstname'),
+                'return_page' => $return_page
 			)
         );
 		
@@ -265,6 +267,110 @@ class PaymentsController extends Controller
 		// redirect to page so User can pay
 		// uncomment this line to allow the user redirect to the payment page
         return redirect($tranx['data']['authorization_url']);
+    }
+
+    /**
+     * Verify the paystack transaction
+     */
+    public function verifypaystack_transaction($reference = '')
+    {
+        
+        $curl = curl_init();
+        if($reference == ''){
+            $request->session()->flash('error', 'No reference supplied');
+            return redirect()->route('dashboard');
+        }
+
+        $db_check = array(
+            'name' => 'Paystack'
+        );
+        $payment_processor = Paymentprocessors::where($db_check)-> get();
+        if(empty($payment_processor))
+        {
+            $request->session()->flash('error', 'Fatal Error: secret key missing.');
+            return redirect()->route('dashboard');
+        }
+        $secret_key = $payment_processor[0]->secret_key;
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.paystack.co/transaction/verify/" . rawurlencode($reference),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER => [
+            "accept: application/json",
+            "authorization: Bearer ".$secret_key,
+            "cache-control: no-cache"
+        ],
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        if($err){
+            // there was an error contacting the Paystack API
+            die('Curl returned error: ' . $err.'<div style="margin: 80px auto;"><a href="'.route('dashboard').'"><< Go to dashboard</a></div>');
+        }
+
+        $tranx = json_decode($response);
+
+        if(!$tranx->status){
+            // there was an error from the API
+            die('API returned error: ' . $tranx->message.'<div style="margin: 80px auto;"><a href="'.route('dashboard').'"><< Go to dashboard</a></div>');
+        }
+
+        if('success' == $tranx->data->status){
+            // transaction was successful...
+            // please check other things like whether you already gave value for this ref
+            // if the email matches the customer who owns the product etc
+            // Give value
+            $paystack_ref = $tranx->data->reference;
+            if($paystack_ref != $reference)
+            {
+                $request->session()->flash('error', 'Reference does NOT match.');
+                return redirect()->route('dashboard');
+            }
+            $paystack_order_id      = $tranx->data->metadata->custom_fields->order_id;
+            $paystack_user_id       = $tranx->data->metadata->custom_fields->user_id;
+            $paystack_return_page   = $tranx->data->metadata->custom_fields->return_page;
+            $paystack_amount        = $tranx->data->amount / 100;
+            $paystack_currency      = $tranx->data->currency;
+
+            $reference_array = explode('-', $reference,);
+            if($reference_array[0] == 'EN')
+            { // When payment is being made per enrolment.
+                
+                $enrolment_id = $reference_array[1];
+                $enrolment = Enrolment::find($enrolment_id);
+                if($enrolment->status == 'Inactive')
+                {
+                    $enrolment->status = 'Active';
+                    $enrolment->save();
+                }
+            }
+
+            $order = Order::find($paystack_order_id);
+            if($order->status == 'Pending' OR $order->status == 'Approved-unpaid')
+            {
+                $order->status = 'Paid';
+                $order->save();
+            }
+
+            $payment = new Payment;
+
+            $payment->reference         = $reference;
+            $payment->order_id          = $order->id;
+            $payment->currency_symbol   = $paystack_currency;
+            $payment->amount            = $paystack_amount;
+            $payment->method            = 'Online';
+            $payment->status            = 'Confirmed';
+            $payment->status            = $paystack_user_id;
+
+            $payment->save();
+
+            $request->session()->flash('success', 'Payment saved!');
+            return redirect($paystack_return_page);
+        }
+
+        return redirect()->route('dashboard');
     }
 
     /**
