@@ -15,6 +15,7 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('currency_symbol', 75)->nullable();
             $table->integer('order_id')->nullable();//which order is connected to the payment, zero (0) for payments without order ties
             $table->string('currency_symbol', 25);
             $table->decimal('amount', 10, 2);
