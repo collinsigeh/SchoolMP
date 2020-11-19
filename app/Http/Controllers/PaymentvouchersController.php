@@ -40,6 +40,8 @@ class PaymentvouchersController extends Controller
         }
 
         $data['paymentvouchers'] = Paymentvoucher::all();
+
+        return view('paymentvouchers.index');
     }
 
     /**
