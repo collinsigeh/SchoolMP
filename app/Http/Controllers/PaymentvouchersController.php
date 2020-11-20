@@ -118,7 +118,22 @@ class PaymentvouchersController extends Controller
                 return redirect()->route('paymentvouchers.create');
             }
         }
-        die();
+        elseif($request->input('assign_voucher_to') == 'Student')
+        {
+            $student_user = User::find($request->input('id_assigned_to'));
+            if(empty($student_user))
+            {
+                $request->session()->flash('error', 'The student ID entered is not recognized.');
+                return redirect()->route('paymentvouchers.create');
+            }
+        }
+
+        $timestamp = strtotime($request->input('expiration_date'));
+        echo 'Chosen:<br>'.$timestamp.'<Br>';
+        echo date('D d/m/Y - h:i a', $timestamp).'<br>';
+        $now = time();
+        echo 'Now<Br>'.$now;
+        echo date('D d/m/Y - h:i a', $now).'<br>'; die();
 
         $product = new Product;
 

@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Africa/Lagos', // default value is UTC I replaced it with Africa/Lagos
 
     /*
     |--------------------------------------------------------------------------
