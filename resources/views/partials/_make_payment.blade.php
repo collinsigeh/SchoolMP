@@ -3,10 +3,12 @@
     $makepayment_item = $makepayment_order->name.' required '.$makepayment_order->price_type;
     $makepayment_order_id = $makepayment_order->id.'-';
     $makepayment_pre_reference = 'ON-'.$makepayment_order->id.'-';
+    $makepayment_user_id = $user->id;
     $makepayment_amount = $makepayment_order->final_price; //also works for prepaid since prices are updated with every enrolment
     if($makepayment_order->payment == 'Prepaid' && $makepayment_order->price_type == 'Per-student')
     {
         $makepayment_pre_reference = 'EN-'.$enrolment->id.'-';
+        $makepayment_user_id = $enrolment->user_id;
 
         $makepayment_amount = $makepayment_order->price;
         if($user->role == 'Student' OR $user->role == 'Guardian')
@@ -58,7 +60,7 @@
                             <input type="hidden" name="payment_currency" value="{{ $makepayment_currency }}">
                             <input type="hidden" name="payment_email" value="{{ $user->email }}">
                             <input type="hidden" name="payment_firstname" value="{{ $user->name }}">
-                            <input type="hidden" name="payment_user_id" value="{{ $user->id }}">
+                            <input type="hidden" name="payment_user_id" value="{{ $makepayment_user_id }}">
                             <input type="hidden" name="return_page" value="{{ $return_page }}">
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
