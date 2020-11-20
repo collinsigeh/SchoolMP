@@ -42,15 +42,36 @@
                 <table class="table table-striped table-hover table-sm">
                         <thead>
                             <tr>
-                                <th>Serial number</th>
+                                <th colspan="2">Serial number</th>
                                 <th>Voucher Pin</th>
+                                <th>Item</th>
+                                <th>Payment type</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($paymentvouchers as $paymentvoucher)
                                 <tr>
-                                    <td><a class="collins-link-within-table" href="{{ route('paymentvouchers.show', $paymentvoucher->id) }}"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="voucher_icon" class="collins-table-item-icon"> <span class="badge badge-secondary">{{ $paymentvoucher->id }}</span></a></td>
+                                    <td style="width: 50px;"><a class="collins-link-within-table" href="{{ route('paymentvouchers.show', $paymentvoucher->id) }}"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="voucher_icon" class="collins-table-item-icon"></a></td>
+                                    <td style="vertical-align: middle"><a class="collins-link-within-table" href="{{ route('paymentvouchers.show', $paymentvoucher->id) }}"><span class="badge badge-secondary">{{ $paymentvoucher->id }}</span></a></td>
                                     <td style="vertical-align: middle"><a class="collins-link-within-table" href="{{ route('paymentvouchers.show', $paymentvoucher->id) }}"><b>{{ $paymentvoucher->pin }}</b></a></td>
+                                    <td style="vertical-align: middle"><a class="collins-link-within-table" href="{{ route('paymentvouchers.show', $paymentvoucher->id) }}">{{ $paymentvoucher->package->product->name.' '.$paymentvoucher->package->product->payment.' '.$paymentvoucher->package->name }}</a></td>
+                                    <td style="vertical-align: middle"><span class="badge badge-secondary">{{ $paymentvoucher->package->price_type }}</span></td>
+                                    <td style="vertical-align: middle">
+                                      @if ($paymentvoucher->status == 'Used')
+                                          <span class="badge badge-light">Used</span>
+                                      @else
+                                          @if ($paymentvoucher->expiration_at <= time())
+                                              <span class="badge badge-danger">Expired</span>
+                                          @else
+                                              @if ($paymentvoucher->status == 'Assigned')
+                                                  <span class="badge badge-primary">Assigned</span>
+                                              @else
+                                                  <span class="badge badge-success">Available</span>
+                                              @endif
+                                          @endif
+                                      @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

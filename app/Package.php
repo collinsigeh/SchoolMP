@@ -24,4 +24,13 @@ class Package extends Model
         return $this->hasMany('App\Order');
     }
 
+    /**
+     * Get the payment vouchers for this package.
+     *
+     */
+    public function paymentvouchers()
+    {
+        return $this->hasMany('App\Paymentvoucher');
+    }
+
 }
