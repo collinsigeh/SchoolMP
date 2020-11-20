@@ -42,21 +42,21 @@
                 <table class="table table-striped table-hover table-sm">
                         <thead>
                             <tr>
-                                <th>Payment voucher</th>
-                                <th>Pin</th>
+                                <th>Serial number</th>
+                                <th>Voucher Pin</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($paymentvouchers as $paymentvoucher)
                                 <tr>
-                                    <td><a class="collins-link-within-table" href="{{ route('paymentvoucher.show', $paymentvoucher->id) }}"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="voucher_icon" class="collins-table-item-icon"> <span class="badge badge-secondary">{{ $voucher->id }}</span></a></td>
-                                    <td><a class="collins-link-within-table" href="{{ route('paymentvoucher.show', $paymentvoucher->id) }}"><b>{{ $voucher->pin }}</b></a></td>
+                                    <td><a class="collins-link-within-table" href="{{ route('paymentvouchers.show', $paymentvoucher->id) }}"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="voucher_icon" class="collins-table-item-icon"> <span class="badge badge-secondary">{{ $paymentvoucher->id }}</span></a></td>
+                                    <td style="vertical-align: middle"><a class="collins-link-within-table" href="{{ route('paymentvouchers.show', $paymentvoucher->id) }}"><b>{{ $paymentvoucher->pin }}</b></a></td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-                {{ $products->links() }}
+                {{ $paymentvouchers->links() }}
             </div>
         @endif
     </div>

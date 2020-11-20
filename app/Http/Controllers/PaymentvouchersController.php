@@ -41,7 +41,7 @@ class PaymentvouchersController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $data['paymentvouchers'] = Paymentvoucher::all();
+        $data['paymentvouchers'] = Paymentvoucher::paginate(50);
 
         return view('paymentvouchers.index')->with($data);
     }
@@ -128,35 +128,41 @@ class PaymentvouchersController extends Controller
             }
         }
 
-        $timestamp = strtotime($request->input('expiration_date'));
-        echo 'Chosen:<br>'.$timestamp.'<Br>';
-        echo date('D d/m/Y - h:i a', $timestamp).'<br>';
-        $now = time();
-        echo 'Now<Br>'.$now;
-        echo date('D d/m/Y - h:i a', $now).'<br>'; die();
+        $quantity = $request->input('quantity');
+        while ($quantity > 0) {
+            $sn = 0;
+            $pin = '';
+            while($sn <= 8)
+            {
+                $pin .= rand(1,9);
+                $sn++;
+            }
 
-        $product = new Product;
+            $paymentvoucher = new Paymentvoucher;
+    
+            $paymentvoucher->pin = $pin;
+            $paymentvoucher->expiration_at = strtotime($request->input('expiration_date'));
+            $paymentvoucher->package_id = $request->input('product_package');
+            $paymentvoucher->status = 'Available';
+            $paymentvoucher->assigned_to = $request->input('assign_voucher_to');
+            $paymentvoucher->id_assigned_to = $request->input('id_assigned_to');
+    
+            $paymentvoucher->save();
 
-        if($request->input('student_limit') < 1 OR !is_numeric($request->input('student_limit')))
-        {
-            $student_limit = 'n';
+            $quantity--;
         }
-        else{
-            $student_limit = $request->input('student_limit');
-        }
-
-        $product->name = ucwords(strtolower($request->input('name')));
-        $product->type = $request->input('type');
-        $product->payment = $request->input('payment');
-        $product->features = $request->input('features');
-        $product->student_limit = $student_limit;
-        $product->created_by = $user_id;
-
-        $product->save();
         
-        $request->session()->flash('success', 'Product created.');
+        if($request->input('quantity') > 1)
+        {
+            $request->session()->flash('success', 'Vouchers created.');
+        }
+        else
+        {
+            $request->session()->flash('success', 'Voucher created.');
+        }
+        
 
-        return redirect()->route('products.index');
+        return redirect()->route('paymentvouchers.index');
     }
 
     /**
