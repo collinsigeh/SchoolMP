@@ -44,7 +44,8 @@
                       <tbody>
                           @foreach ($bankdetails as $bankdetail)
                               <tr>
-                                  <td><a class="collins-link-within-table" href="{{ route('bankdetails.edit', $bankdetail->id) }}"><img src="{{ config('app.url') }}/images/icons/wallet_icon.png" alt="wallet_icon" class="collins-table-item-icon"> {{ $bankdetail->bankname }}</a></td>
+                                  <td><a class="collins-link-within-table" href="{{ route('bankdetails.edit', $bankdetail->id) }}"><img src="{{ config('app.url') }}/images/icons/wallet_icon.png" alt="wallet_icon" class="collins-table-item-icon"> {!! $bankdetail->account_name.' - <b>'.$bankdetail->account_number.'</b>' !!}</a></td>
+                                  <td style="vertical-align: middle"><span class="badge badge-secondary">{{ $bankdetail->bank_name }}</span></td>
                               </tr>
                           @endforeach
                       </tbody>

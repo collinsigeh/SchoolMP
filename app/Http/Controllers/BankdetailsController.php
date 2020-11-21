@@ -41,7 +41,20 @@ class BankdetailsController extends Controller
      */
     public function create()
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        return view('bankdetails.create')->with($data);
     }
 
     /**
@@ -52,7 +65,36 @@ class BankdetailsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            'bank_name'         => ['required', 'string', 'max:191'],
+            'account_name'      => ['required'],
+            'account_number'    => ['required']
+        ]);
+
+        $bankdetail = new Bankdetail;
+
+        $bankdetail->bank_name      = strtoupper($request->input('bank_name'));
+        $bankdetail->account_name   = strtoupper($request->input('account_name'));
+        $bankdetail->account_number = $request->input('account_number');
+
+        $bankdetail->save();
+        
+        $request->session()->flash('success', 'Saved!');
+
+        return redirect()->route('bankdetails.index');
     }
 
     /**
@@ -74,7 +116,31 @@ class BankdetailsController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $data['bankdetail'] = Bankdetail::find($id);
+
+        if(empty($data['bankdetail']))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($data['bankdetail']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        return view('bankdetails.edit')->with($data);
     }
 
     /**
@@ -86,7 +152,36 @@ class BankdetailsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            'bank_name'         => ['required', 'string', 'max:191'],
+            'account_name'      => ['required'],
+            'account_number'    => ['required']
+        ]);
+
+        $bankdetail = Bankdetail::find($id);
+
+        $bankdetail->bank_name      = strtoupper($request->input('bank_name'));
+        $bankdetail->account_name   = strtoupper($request->input('account_name'));
+        $bankdetail->account_number = $request->input('account_number');
+
+        $bankdetail->save();
+        
+        $request->session()->flash('success', 'Update saved.');
+
+        return redirect()->route('bankdetails.edit', $id);
     }
 
     /**
