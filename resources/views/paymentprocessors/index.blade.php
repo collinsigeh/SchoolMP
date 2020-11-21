@@ -38,25 +38,20 @@
                 No payment processor yet.
             </div>
         @else
-            <div class="table-responsive">    
-            <table class="table table-striped table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th>Payment Processors</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($paymentprocessors as $payment_processor)
-                            <tr>
-                                <td>{{ $payment_processor->name }}</td>
-                                <td class="text-right"><a href="{{ route('payment_processors.edit', $payment_processor->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <div class="collins-bg-white">
+              <div class="table-responsive">    
+                  <table class="table table-striped table-hover table-sm">
+                      <tbody>
+                          @foreach ($paymentprocessors as $payment_processor)
+                              <tr>
+                                  <td><a class="collins-link-within-table" href="{{ route('payment_processors.edit', $payment_processor->id) }}"><img src="{{ config('app.url') }}/images/icons/paymentprocessor_icon.png" alt="paymentprocessor_icon" class="collins-table-item-icon"> {{ $payment_processor->name }}</a></td>
+                              </tr>
+                          @endforeach
+                      </tbody>
+                  </table>
+              </div>
+              {{ $paymentprocessors->links() }}
             </div>
-            {{ $paymentprocessors->links() }}
         @endif
     </div>
   </div>
