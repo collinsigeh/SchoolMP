@@ -174,6 +174,9 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <tr>
+                                    <td><a href="{{ route('bankdetails.index') }}" class="btn btn-sm btn-block btn-outline-primary">Bank details</a></td>
+                                </tr>
+                                <tr>
                                     <td><a href="{{ route('payment_processors.index') }}" class="btn btn-sm btn-block btn-outline-primary">Payment processors</a></td>
                                 </tr>
                                 @if (!empty($setting))

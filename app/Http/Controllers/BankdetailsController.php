@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\User;
+use App\Bankdetail;
 use Illuminate\Http\Request;
 
 class BankdetailsController extends Controller
@@ -13,7 +16,22 @@ class BankdetailsController extends Controller
      */
     public function index()
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if($data['user']->usertype != 'Admin')
+        {
+            return redirect()->route('dashboard');
+        }
+        
+        $data['bankdetails'] = Bankdetail::orderBy('bank_name', 'asc')->simplePaginate(20);
+
+        return view('bankdetails.index')->with($data);
     }
 
     /**
