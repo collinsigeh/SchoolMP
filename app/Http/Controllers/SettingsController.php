@@ -116,6 +116,7 @@ class SettingsController extends Controller
         }
 
         $this->validate($request, [
+            'contact_email'         => ['required', 'email', 'max:191'],
             'base_currency'         => ['required', 'string', 'max:75'],
             'base_currency_symbol'  => ['required', 'string', 'max:25'],
             'try_limit'             => ['required', 'numeric', 'min:0'],
@@ -125,6 +126,7 @@ class SettingsController extends Controller
 
         $setting = new Setting;
 
+        $setting->contact_email         = $request->input('contact_email');
         $setting->base_currency         = $request->input('base_currency');
         $setting->base_currency_symbol  = $request->input('base_currency_symbol');
         $setting->try_limit             = $request->input('try_limit');
@@ -210,6 +212,7 @@ class SettingsController extends Controller
         }
 
         $this->validate($request, [
+            'contact_email'         => ['required', 'email', 'max:191'],
             'base_currency'         => ['required', 'string', 'max:75'],
             'base_currency_symbol'  => ['required', 'string', 'max:25'],
             'try_limit'             => ['required', 'numeric', 'min:0'],
@@ -227,6 +230,7 @@ class SettingsController extends Controller
             return  redirect()->route('dashboard');
         }
 
+        $setting->contact_email         = $request->input('contact_email');
         $setting->base_currency         = $request->input('base_currency');
         $setting->base_currency_symbol  = $request->input('base_currency_symbol');
         $setting->try_limit             = $request->input('try_limit');

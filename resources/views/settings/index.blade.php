@@ -91,6 +91,14 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
+                                    Contact email:
+                                </div>
+                                <div class="col-md-9">
+                                    {{ $setting->contact_email }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
                                     Create at:
                                 </div>
                                 <div class="col-md-9">

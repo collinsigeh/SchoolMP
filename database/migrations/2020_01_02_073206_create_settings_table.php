@@ -15,6 +15,7 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('contact_email', 191);
             $table->string('base_currency', 75);
             $table->string('base_currency_symbol', 25);
             $table->integer('try_limit');
