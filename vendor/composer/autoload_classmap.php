@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Alternative_currency' => $baseDir . '/app/Alternative_currency.php',
     'App\\Arm' => $baseDir . '/app/Arm.php',
+    'App\\Bankdetail' => $baseDir . '/app/Bankdetail.php',
     'App\\Calendar' => $baseDir . '/app/Calendar.php',
     'App\\Classsubject' => $baseDir . '/app/Classsubject.php',
     'App\\Classteacher' => $baseDir . '/app/Classteacher.php',
@@ -22,6 +23,7 @@ return array(
     'App\\Http\\Controllers\\Auth\\RegisterController' => $baseDir . '/app/Http/Controllers/Auth/RegisterController.php',
     'App\\Http\\Controllers\\Auth\\ResetPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ResetPasswordController.php',
     'App\\Http\\Controllers\\Auth\\VerificationController' => $baseDir . '/app/Http/Controllers/Auth/VerificationController.php',
+    'App\\Http\\Controllers\\BankdetailsController' => $baseDir . '/app/Http/Controllers/BankdetailsController.php',
     'App\\Http\\Controllers\\CalendarsController' => $baseDir . '/app/Http/Controllers/CalendarsController.php',
     'App\\Http\\Controllers\\ClassesController' => $baseDir . '/app/Http/Controllers/ClassesController.php',
     'App\\Http\\Controllers\\ClasssubjectsController' => $baseDir . '/app/Http/Controllers/ClasssubjectsController.php',

@@ -24,6 +24,8 @@ Route::resource('/alternative_currencies', 'Alternative_currenciesController');
 Route::post('/arms/addclassteacher', 'ArmsController@addclassteacher')->name('arms.addclassteacher');
 Route::resource('/arms', 'ArmsController');
 
+Route::resource('/bankdetails', 'BankdetailsController');
+
 Route::resource('/calendars', 'CalendarsController');
 
 Route::resource('/classes', 'ClassesController');
