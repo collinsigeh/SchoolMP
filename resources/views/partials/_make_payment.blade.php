@@ -126,9 +126,22 @@
                 </div>
                 <hr />
             @endif
-
-            <h5>Method {{ $method_no }}: Bank Deposit</h5>
-            <small><div class="alert alert-info">*** For bank deposit payments, make payments to the account details below and contact <b>{{ $setting->contact_email }}</b> with the details of your payment. ***</div></small>
+            
+            @if (count($bankdetails) > 0)
+                <h5>Method {{ $method_no }}: Bank Deposit</h5>
+                <small><div class="alert alert-info">*** For bank deposit payments, make payments to the account details below and contact <b>{{ $setting->contact_email }}</b> with the details of your payment. ***</div></small>
+                <div class="row">
+                    <div class="col-md-8 offset-md-4">
+                        @foreach ($bankdetails as $bankdetail)
+                            <p>
+                                <span class="badge badge-secondary">{{ $bankdetail->bank_name }}</span><br />
+                                {{ $bankdetail->account_name }}<br />
+                                <b>{{ $bankdetail->account_number }}</b>
+                            </p>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
       </div>
     </div>

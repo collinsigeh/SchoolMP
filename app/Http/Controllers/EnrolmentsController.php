@@ -14,6 +14,7 @@ use App\Student;
 use App\Enrolment;
 use App\Setting;
 use App\Paymentprocessors;
+use App\Bankdetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Image;
@@ -250,6 +251,7 @@ class EnrolmentsController extends Controller
         {
             $data['payment_processor'] = Paymentprocessors::find($data['setting']->paymentprocessor_id);
         }
+        $data['bankdetails'] = Bankdetail::all();
 
         return view('enrolments.show')->with($data);
     }
