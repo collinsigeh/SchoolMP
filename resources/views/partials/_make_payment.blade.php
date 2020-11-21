@@ -17,8 +17,6 @@
         }
     }
     $makepayment_currency = $makepayment_order->currency_symbol;
-
-    $method_no = 1;
 @endphp
 <div class="modal fade" id="makePaymentModal" tabindex="-1" role="dialog" aria-labelledby="makePaymentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -30,7 +28,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <div style="padding: 30px 0;">
+            <div style="padding: 30px 0 10px 0;">
                 <table class="table table-bordered table-sm">
                     <tr>
                         <th>Item</th><td>{{ $makepayment_item }}</td>
@@ -41,9 +39,61 @@
                 </table>
             </div>
             <hr />
+
+            @php
+                $method_no = 1;
+            @endphp
+            <h5>Method {{ $method_no }}: Voucher / scratch card payment</h5>
+            <small><div class="alert alert-info">*** Use this method if you have a valid payment voucher or scratch card. ***</div></small>
+            <div class="create-form" style="padding-top: 15px; padding-bottom: 30px;">
+                <form method="POST" action="{{ route('payments.pay_with_voucher') }}">
+                    @csrf
+
+                    <div class="form-group row">
+                        <label for="serial_number" class="col-md-4 col-form-label text-md-right">Serial number</label>
+
+                        <div class="col-md-6">
+                            <input id="serial_number" type="number" class="form-control @error('serial_number') is-invalid @enderror" name="serial_number" value="{{ old('serial_number') }}" required autocomplete="serial_number" autofocus>
+                            
+                            @error('serial_number')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="pin" class="col-md-4 col-form-label text-md-right">Pin</label>
+
+                        <div class="col-md-6">
+                            <input id="pin" type="number" class="form-control @error('pin') is-invalid @enderror" name="pin" value="{{ old('pin') }}" required autocomplete="pin" autofocus>
+                            
+                            @error('pin')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Submit') }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <hr />
+            @php
+                $method_no++;
+            @endphp
             
             @if ($setting->paymentprocessor_id >= 1 && isset($payment_processor))
                 <h5>Method {{ $method_no }}: Online payment</h5>
+                <small><div class="alert alert-info">*** Use this method if you want to pay online with your credit/debit card, bank account, USSD etc. ***</div></small>
                 @php
                     $method_no++;
                 @endphp
@@ -78,10 +128,7 @@
             @endif
 
             <h5>Method {{ $method_no }}: Bank Deposit</h5>
-            <div class="alert alert-info">
-                Bank deposit payments <b>require verification</b> before activation.<br />
-                <small>This could take up to 3 working days.</small>
-            </div>
+            <small><div class="alert alert-info">*** For bank deposit payments, make payments to the account details below and contact <b>{{ $setting->contact_email }}</b> with the details of your payment. ***</div></small>
         </div>
       </div>
     </div>

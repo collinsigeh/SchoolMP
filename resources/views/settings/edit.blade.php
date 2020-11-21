@@ -43,6 +43,20 @@
                 @method('PUT')
 
                 <div class="form-group row"> 
+                    <label for="contact_email" class="col-md-4 col-form-label text-md-right">{{ __('Contact Email') }}</label>
+                    
+                    <div class="col-md-6">
+                        <input id="contact_email" type="email" class="form-control @error('contact_email') is-invalid @enderror" name="contact_email" value="{{ $setting->contact_email }}" required autocomplete="contact_email" autofocus>
+
+                        @error('contact_email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row"> 
                     <label for="base_currency" class="col-md-4 col-form-label text-md-right">{{ __('Base Currency') }}</label>
                     
                     <div class="col-md-6">

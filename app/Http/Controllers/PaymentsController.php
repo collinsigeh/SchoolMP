@@ -176,6 +176,16 @@ class PaymentsController extends Controller
     }
 
     /**
+     * Impliments voucher payments
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function pay_with_voucher(Request $request)
+    {
+    }
+
+    /**
      * Initializes paystack payment
      *
      * @param  \Illuminate\Http\Request  $request

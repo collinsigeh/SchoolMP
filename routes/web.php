@@ -52,6 +52,7 @@ Route::resource('/packages', 'PackagesController');
 
 Route::get('payments/verifypaystack_transaction', 'PaymentsController@verifypaystack_transaction')->name('payments.verifypaystack_transaction');
 Route::put('payments/pay_with_paystack', 'PaymentsController@pay_with_paystack')->name('payments.pay_with_paystack');
+Route::post('payments/pay_with_voucher', 'PaymentsController@pay_with_voucher')->name('payments.pay_with_voucher');
 Route::resource('/payments', 'PaymentsController');
 
 Route::resource('/payment_processors', 'PaymentprocessorsController');
