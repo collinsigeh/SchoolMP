@@ -11,6 +11,7 @@ use App\Order;
 use App\Setting;
 use App\Subscription;
 use App\Paymentprocessors;
+use App\Bankdetail;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -169,6 +170,7 @@ class OrdersController extends Controller
         {
             $data['payment_processor'] = Paymentprocessors::find($data['setting']->paymentprocessor_id);
         }
+        $data['bankdetails'] = Bankdetail::all();
 
         return view('orders.show')->with($data);
     }

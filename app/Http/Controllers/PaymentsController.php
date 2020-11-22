@@ -96,9 +96,9 @@ class PaymentsController extends Controller
             $payment->currency_symbol = $order->currency_symbol;
             $payment->amount = $request->input('amount');
             $payment->method = $request->input('method');
-            if(strlen($request->input('status')) > 1)
+            if(strlen($request->input('special_note')) > 1)
             {
-                $special_message = $request->input('status');
+                $special_message = $request->input('special_note');
             }
             $payment->status = $request->input('status');
             $payment->user_id = $user_id;
@@ -109,70 +109,6 @@ class PaymentsController extends Controller
 
             return redirect()->route('orders.detail', $id);
         }
-
-        if(session('school_id') < 1)
-        {
-            return redirect()->route('dashboard');
-        }
-        $school_id = session('school_id');
-
-        if(!$this->resource_manager($data['user'], $school_id))
-        {
-            return redirect()->route('dashboard');
-        }
-        
-        $data['school'] = School::find($school_id);
-
-        if($data['user']->role == 'Staff')
-        {
-            $db_check = array(
-                'user_id'   => $data['user']->id,
-                'school_id' => $data['school']->id
-            );
-            $staff = Staff::where($db_check)->get();
-            if(empty($staff))
-            {
-                return  redirect()->route('dashboard');
-            }
-            elseif($staff->count() < 1)
-            {
-                return  redirect()->route('dashboard');
-            }
-            $data['staff'] = $staff[0];
-        }
-
-        $this->validate($request, [
-            'name' => ['required'],
-            'description' => ['sometimes', 'max:191']
-        ]);
-        
-        $name = ucwords(strtolower(trim($request->input('name'))));
-
-        $db_check = array(
-            'school_id' => $school_id,
-            'name' => $name
-        );
-        $duplicates = Subject::where($db_check)->get();
-
-        if(!empty($duplicates))
-        {
-            $request->session()->flash('error', 'The subject '.$name.' exists already.');
-            return redirect()->route('subjects.create');
-        }
-
-        $subject = new Subject;
-
-        $subject->school_id = $school_id;
-        $subject->name = $name;
-        $subject->description = $request->input('description');
-        $subject->user_id = $user_id;
-
-        $subject->save();
-
-        $request->session()->flash('success', 'Subject created.');
-
-        return redirect()->route('subjects.index');
-
     }
 
     /**
