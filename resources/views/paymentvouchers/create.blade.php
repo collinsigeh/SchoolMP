@@ -47,7 +47,7 @@
                     <div class="col-md-6">
                         <select id="product_package" class="form-control @error('product_package') is-invalid @enderror" name="product_package" required>
                             @foreach ($product_packages as $package)
-                                <option value="{{ $package->id }}">Package {{ $package->id.' ('.$package->product->name.' '.$package->product->payment.' '.$package->price_type.')' }}</option>
+                                <option value="{{ $package->id }}">{{ $package->product->name.' ('.$package->product->payment.' '.$package->name.') - '.$package->price_type }}</option>
                             @endforeach
                         </select>
                         <small class="text-muted">*** The product package for which you are creating this payment voucher ***.</small>
@@ -97,7 +97,7 @@
                         <select id="assign_voucher_to" class="form-control @error('assign_voucher_to') is-invalid @enderror" name="assign_voucher_to" required>
                             <option value="All">All users</option>
                             <option value="Order">Specific order</option>
-                            <option value="student">Specific student</option>
+                            <option value="Student">Specific student</option>
                         </select>
     
                         @error('assign_voucher_to')
@@ -113,7 +113,7 @@
                     
                     <div class="col-md-6">
                         <input id="id_assigned_to" type="number" class="form-control @error('id_assigned_to') is-invalid @enderror" name="id_assigned_to" value="{{ old('id_assigned_to') }}" placeholder="E.g. 12" autocomplete="id_assigned_to" autofocus>
-                        <small class="text-muted">*** The <b>school ID</b> or <b>enrolment ID</b> to assign this voucher to. ***</small>
+                        <small class="text-muted">*** The <b>order ID</b> or <b>enrolment ID</b> to assign this voucher to. ***</small>
                         
                         @error('id_assigned_to')
                             <span class="invalid-feedback" role="alert">

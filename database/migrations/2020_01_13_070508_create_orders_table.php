@@ -33,10 +33,10 @@ class CreateOrdersTable extends Migration
             $table->string('term_limit', 25);
             $table->string('day_limit', 25);
             $table->string('student_limit', 25);
-            $table->integer('expiry');
+            $table->string('expiry',15);
             $table->enum('status', ['Pending', 'Paid', 'Completed']);
             $table->integer('subscription_id');
-            $table->integer('subscription_due_date')->nullable();
+            $table->string('subscription_due_date', 15)->nullable();
             $table->timestamps();
         });
     }

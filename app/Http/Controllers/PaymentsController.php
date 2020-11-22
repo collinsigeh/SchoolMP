@@ -12,6 +12,7 @@ use App\Order;
 use App\Payment;
 use App\Paymentprocessors;
 use App\Enrolment;
+use App\Paymentvoucher;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
@@ -119,6 +120,138 @@ class PaymentsController extends Controller
      */
     public function pay_with_voucher(Request $request)
     {
+        $this->validate($request, [
+            'serial_number'         => ['required'],
+            'pin'                   => ['required'],
+            'return_page'           => ['required'],
+            'id_to_pay_for'         => ['required'],
+            'voucher_payment_for'   => ['required']
+        ]);
+        
+        $return_page = $request->input('return_page');
+        
+        $db_check = array(
+            'id'    => $request->input('serial_number'),
+            'pin'   => $request->input('pin')
+        );
+        $voucher = Paymentvoucher::where($db_check)->get();
+
+        if(empty($voucher))
+        {
+            $request->session()->flash('error', 'Wrong pin or serial number.');
+            return redirect($return_page);
+        }
+        if($voucher->count() < 1)
+        {
+            $request->session()->flash('error', 'Wrong pin or serial number.');
+            return redirect($return_page);
+        }
+        if($voucher->assigned_to != 'All')
+        {
+            if($request->input('id_to_pay_for') != $voucher->id_assigned_to)
+            {
+                $request->session()->flash('error', 'Voucher details belong to other resource.');
+                return redirect($return_page);
+            }
+            if($voucher->assigned_to == 'Order')
+            {
+                $order = Order::find($request->input('id_to_pay_for'));
+                if(empty($order))
+                {
+                    $request->session()->flash('error', 'Attempt to pay for a missing resource 1.');
+                    return redirect($return_page);
+                }
+                if($order->count() < 1)
+                {
+                    $request->session()->flash('error', 'Attempt to pay for a missing resource 2.');
+                    return redirect($return_page);
+                }
+                if($order->status == 'Paid' OR $order->status == 'Completed')
+                {
+                    $request->session()->flash('error', 'Payment is NOT required.');
+                    return redirect($return_page);
+                }
+
+                $order->status = 'Paid';
+
+                $order->save();
+            }
+            elseif($voucher->assigned_to == 'Student')
+            {
+                $enrolment = Enrolemnt::find($request->input('id_to_pay_for'));
+                if(empty($enrolment))
+                {
+                    $request->session()->flash('error', 'Attempt to pay for a missing resource 3.');
+                    return redirect($return_page);
+                }
+                if($enrolment->count() < 1)
+                {
+                    $request->session()->flash('error', 'Attempt to pay for a missing resource 4.');
+                    return redirect($return_page);
+                }
+                if($enrolment->status == 'Active')
+                {
+                    $request->session()->flash('error', 'Payment is NOT required.');
+                    return redirect($return_page);
+                }
+
+                $enrolment->status = 'Active';
+                
+                $enrolment->save();
+            }
+        }
+        else
+        {
+            if($request->input('voucher_payment_for') == 'Order')
+            {
+                $order = Order::find($request->input('id_to_pay_for'));
+                if(empty($order))
+                {
+                    $request->session()->flash('error', 'Attempt to pay for a missing resource 1.1');
+                    return redirect($return_page);
+                }
+                if($order->count() < 1)
+                {
+                    $request->session()->flash('error', 'Attempt to pay for a missing resource 2.1');
+                    return redirect($return_page);
+                }
+                if($order->status == 'Paid' OR $order->status == 'Completed')
+                {
+                    $request->session()->flash('error', 'Payment is NOT required.');
+                    return redirect($return_page);
+                }
+
+                $order->status = 'Paid';
+
+                $order->save();
+            }
+            elseif($request->input('voucher_payment_for') == 'Student')
+            {
+                $enrolment = Enrolemnt::find($request->input('id_to_pay_for'));
+                if(empty($enrolment))
+                {
+                    $request->session()->flash('error', 'Attempt to pay for a missing resource 3.1');
+                    return redirect($return_page);
+                }
+                if($enrolment->count() < 1)
+                {
+                    $request->session()->flash('error', 'Attempt to pay for a missing resource 4.1');
+                    return redirect($return_page);
+                }
+                if($enrolment->status == 'Active')
+                {
+                    $request->session()->flash('error', 'Payment is NOT required.');
+                    return redirect($return_page);
+                }
+
+                $enrolment->status = 'Active';
+                
+                $enrolment->save();
+            }
+        }
+
+        $request->session()->flash('success', 'Payment successful!');
+        return redirect($return_page);
     }
 
     /**

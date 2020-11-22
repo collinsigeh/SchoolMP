@@ -12,6 +12,7 @@ use App\Subscription;
 use App\Classsubject;
 use App\Arm;
 use App\Calendar;
+use App\Order;
 use Illuminate\Http\Request;
 
 class TermsController extends Controller
@@ -289,6 +290,20 @@ class TermsController extends Controller
 
             $calendar->save();
         }
+
+        // update the subscription_due_date for terms created using Post-paid subscription orders
+        foreach($term->subscription->orders as $order)
+        {
+            $new_date = strtotime($term->closing_date);
+            $this_order = Order::find($order->id);
+            if($this_order > $new_date )
+            {
+                $this_order->subscription_due_date = $new_date;
+                $this_order->save();
+            }
+        }
+        // End - update the subscription_due_date for terms created using Post-paid subscription orders
+
 
         $request->session()->flash('success', 'Term created.');
 
@@ -603,6 +618,19 @@ class TermsController extends Controller
                 $calendar->save();
             }
         }
+
+        // update the subscription_due_date for terms created using Post-paid subscription orders
+        foreach($term->subscription->orders as $order)
+        {
+            $new_date = strtotime($term->closing_date);
+            $this_order = Order::find($order->id);
+            if($this_order > $new_date )
+            {
+                $this_order->subscription_due_date = $new_date;
+                $this_order->save();
+            }
+        }
+        // End - update the subscription_due_date for terms created using Post-paid subscription orders
 
         $request->session()->flash('success', 'Update saved.');
 

@@ -1,14 +1,17 @@
 <!-- Payment Modal When Paying for Subscription -->
 @php
     $makepayment_item = $makepayment_order->name.' required '.$makepayment_order->price_type;
-    $makepayment_order_id = $makepayment_order->id.'-';
+    $makepayment_order_id = $id_to_pay_for = $makepayment_order->id;
     $makepayment_pre_reference = 'ON-'.$makepayment_order->id.'-';
     $makepayment_user_id = $user->id;
     $makepayment_amount = $makepayment_order->final_price; //also works for prepaid since prices are updated with every enrolment
+    $voucher_payment_for = 'Order';
     if(isset($enrolment) && $makepayment_order->payment == 'Prepaid' && $makepayment_order->price_type == 'Per-student')
     {
         $makepayment_pre_reference = 'EN-'.$enrolment->id.'-';
         $makepayment_user_id = $enrolment->user_id;
+        $id_to_pay_for = $enrolment->id;
+        $voucher_payment_for = 'Student';
 
         $makepayment_amount = $makepayment_order->price;
         if($user->role == 'Student' OR $user->role == 'Guardian')
@@ -76,6 +79,11 @@
                             @enderror
                         </div>
                     </div>
+                    
+                    <input type="hidden" name="return_page" value="{{ $return_page }}">
+                    <input type="hidden" name="id_to_pay_for" value="{{ $id_to_pay_for }}">
+                    <input type="hidden" name="voucher_payment_for" value="{{ $voucher_payment_for }}">
+
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">

@@ -17,9 +17,9 @@ class CreateSubscriptionsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('school_id');
             $table->string('name');
-            $table->integer('start_at');
-            $table->integer('end_at');
-            $table->integer('term_limit', 25);
+            $table->string('start_at', 15);
+            $table->string('end_at', 15);
+            $table->string('term_limit', 25);
             $table->string('student_limit', 25);
             $table->timestamps();
         });
