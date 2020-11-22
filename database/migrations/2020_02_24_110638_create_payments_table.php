@@ -15,11 +15,11 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('currency_symbol', 75)->nullable();
+            $table->string('reference', 75)->nullable();
             $table->integer('order_id')->nullable();//which order is connected to the payment, zero (0) for payments without order ties
             $table->string('currency_symbol', 25);
             $table->decimal('amount', 10, 2);
-            $table->enum('method', ['Offline', 'Online']);
+            $table->enum('method', ['Offline', 'Online', 'Voucher']);
             $table->string('special_note')->nullable();
             $table->enum('status', ['Pending', 'Denied', 'Confirmed']);
             $table->integer('user_id'); //confirmed by zero (0) is for system
