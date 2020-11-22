@@ -33,11 +33,11 @@
               @if ($user->usertype == 'Client')
                 <li class="breadcrumb-item"><a href="{{ route('schools.show', $school->id) }}">{{ $school->school }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('orders.index') }}">Orders</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Order no.: {{ $order->number }}</li>
+                <li class="breadcrumb-item active" aria-current="page">Order ID: {{ $order->id }}</li>
               @else
                 <li class="breadcrumb-item"><a href="{{ config('app.url') }}/schools">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('orders.index') }}">Orders</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Order no.: {{ $order->number }}</li>
+                <li class="breadcrumb-item active" aria-current="page">Order ID: {{ $order->id }}</li>
               @endif
             </ol>
           </nav>
@@ -62,10 +62,10 @@
         
                         <div class="row">
                             <div class="col-md-3">
-                                Order number:
+                                Order ID:
                             </div>
                             <div class="col-md-9">
-                                {{ $order->number }}
+                                {{ $order->id }}
                             </div>
                         </div>
                         

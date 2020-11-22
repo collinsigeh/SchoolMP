@@ -5,7 +5,7 @@
     $makepayment_pre_reference = 'ON-'.$makepayment_order->id.'-';
     $makepayment_user_id = $user->id;
     $makepayment_amount = $makepayment_order->final_price; //also works for prepaid since prices are updated with every enrolment
-    if($makepayment_order->payment == 'Prepaid' && $makepayment_order->price_type == 'Per-student')
+    if(isset($enrolment) && $makepayment_order->payment == 'Prepaid' && $makepayment_order->price_type == 'Per-student')
     {
         $makepayment_pre_reference = 'EN-'.$enrolment->id.'-';
         $makepayment_user_id = $enrolment->user_id;

@@ -27,7 +27,7 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{ config('app.url') }}/dashboard">Dashboard</a></li>
               <li class="breadcrumb-item"><a href="{{ route('orders.all') }}">Orders</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Order no.: {{ $order->number }}</li>
+              <li class="breadcrumb-item active" aria-current="page">Order ID: {{ $order->id }}</li>
             </ol>
           </nav>
           @include('partials._messages')
@@ -51,10 +51,10 @@
         
                         <div class="row">
                             <div class="col-md-3">
-                                Order number:
+                                Order ID:
                             </div>
                             <div class="col-md-9">
-                                {{ $order->number }}
+                                {{ $order->id }}
                             </div>
                         </div>
                         
@@ -84,20 +84,20 @@
                                         }
                                         elseif($order->status == 'Approved-unpaid')
                                         {
-                                            echo '<span class="badge badge-primary">APPROVED - Unpaid</span>';
+                                            echo '<span class="badge badge-primary">APPROVED - Unpaid</span>
+                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addPaymentModal">Add payment details</button>';
                                         }
                                         else
                                         {
-                                            echo '<span class="badge badge-danger">UNPAID</span>';
+                                            echo '<span class="badge badge-danger">UNPAID</span>
+                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addPaymentModal">Add payment details</button>';
                                         }
                                     }
                                 @endphp
                             </div>
                             <div class="col-md-5">
-                                @if (($order->status == 'Pending' && $order->payment == 'Post-paid') OR 
-                                      ($order->status == 'Pending' && $order->payment == 'Trial' && $order->final_price == 0) OR 
-                                      ($order->status == 'Paid'))
-                                  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#changeDetailModal">Change / edit</button>
+                                @if ($order->status != 'Completed')
+                                  <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#changeDetailModal">Change status</button>
                                 @endif
                             </div>
                         </div>
@@ -419,15 +419,15 @@
         
                         <div class="col-md-6">
                             <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
-                                <option value="{{ $order->status }}">{{ $order->status }}</option>
+                                <option value="">-- Select an option --</option>
                                 @if ($order->status == 'Pending' && $order->payment == 'Post-paid')
                                     <option value="Approved-unpaid">Approve post-paid order</option>
-                                @endif
-                                @if ($order->status == 'Pending' && $order->payment == 'Trial' && $order->final_price == 0)
+                                @elseif ($order->status == 'Pending' && $order->payment == 'Trial' && $order->final_price == 0)
                                     <option value="Completed">Completed</option>
-                                @endif
-                                @if ($order->status == 'Paid')
+                                @elseif ($order->status == 'Paid')
                                     <option value="Completed">Completed</option>
+                                @else
+                                    <option value="Paid">Paid</option>
                                 @endif
                             </select>
         

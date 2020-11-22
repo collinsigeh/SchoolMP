@@ -484,7 +484,7 @@ class OrdersController extends Controller
             $time = time();
             $end_at = ($order->day_limit * 24 * 60 * 60) + $time;
 
-            if($order->subscription_id == 0)
+            if($order->subscription_id < 1)
             {
                 $subscription = new Subscription;
 
@@ -513,10 +513,9 @@ class OrdersController extends Controller
 
             $request->session()->flash('success', 'Post-paid subscription approved.');
         }
-        elseif(($order->status == 'Pending' && $order->payment == 'Trial' && $order->final_price == 0 && $request->input('status') == 'Completed') OR 
-                ($order->status == 'Paid' && $request->input('status') == 'Completed'))
+        else
         {
-            if($order->subscription_id == 0)
+            if($order->subscription_id < 1)
             {
                 $time = time();
                 $end_at = ($order->day_limit * 24 * 60 * 60) + $time;

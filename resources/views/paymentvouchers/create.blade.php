@@ -96,7 +96,7 @@
                     <div class="col-md-6">
                         <select id="assign_voucher_to" class="form-control @error('assign_voucher_to') is-invalid @enderror" name="assign_voucher_to" required>
                             <option value="All">All users</option>
-                            <option value="School">Specific school</option>
+                            <option value="Order">Specific order</option>
                             <option value="student">Specific student</option>
                         </select>
     
