@@ -19,7 +19,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-            <h3>New payment voucher</h3>
+            <h3>New payment voucher <?php echo date('Y-m-d', 1607727600); ?></h3>
           </div>
           <div class="col-4 text-right">
             

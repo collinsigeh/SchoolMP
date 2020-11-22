@@ -249,6 +249,20 @@ class StudentsController extends Controller
         
         $data['term'] = Term::find($term_id);
 
+        // ensuring post-paid orders are not missed used
+        foreach($data['term']->subscription->orders as $this_order)
+        {
+            if($this_order->payment == 'Post-paid')
+            {
+                if(strtotime($data['term']->closing_date) <= time())
+                {
+                    $request->session()->flash('error', 'ERROR: Attempt to enrol student in a closed/past term');
+                    return redirect()->route('students.index');
+                }
+            }
+        }
+        // End - ensuring post-paid orders are not missed used
+
         $subscription_enrolments = 0;
         if(!empty($data['term']->subscription->enrolments))
         {
