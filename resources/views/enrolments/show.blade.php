@@ -84,6 +84,12 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th class="bg-light">Enrolment ID:</th>
+                                        <td>
+                                            {{ $enrolment->id }}
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th class="bg-light">Reg. no.:</th>
                                         <td>
                                             {{ $enrolment->student->registration_number }}

@@ -6,7 +6,8 @@ use Auth;
 use App\User;
 use App\Paymentvoucher;
 use App\Package;
-use App\School;
+use App\Order;
+use App\Enrolment;
 use Illuminate\Http\Request;
 
 class PaymentvouchersController extends Controller
@@ -109,21 +110,21 @@ class PaymentvouchersController extends Controller
             ]);
         }
 
-        if($request->input('assign_voucher_to') == 'School')
+        if($request->input('assign_voucher_to') == 'Order')
         {
-            $school = School::find($request->input('id_assigned_to'));
-            if(empty($school))
+            $order = Order::find($request->input('id_assigned_to'));
+            if(empty($order))
             {
-                $request->session()->flash('error', 'The school ID entered is not recognized.');
+                $request->session()->flash('error', 'The order ID entered is not recognized.');
                 return redirect()->route('paymentvouchers.create');
             }
         }
         elseif($request->input('assign_voucher_to') == 'Student')
         {
-            $student_user = User::find($request->input('id_assigned_to'));
-            if(empty($student_user))
+            $enrolment = Enrolment::find($request->input('id_assigned_to'));
+            if(empty($enrolment))
             {
-                $request->session()->flash('error', 'The student ID entered is not recognized.');
+                $request->session()->flash('error', 'The enrolment ID entered is not recognized.');
                 return redirect()->route('paymentvouchers.create');
             }
         }

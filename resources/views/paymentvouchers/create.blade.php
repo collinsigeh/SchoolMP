@@ -113,7 +113,7 @@
                     
                     <div class="col-md-6">
                         <input id="id_assigned_to" type="number" class="form-control @error('id_assigned_to') is-invalid @enderror" name="id_assigned_to" value="{{ old('id_assigned_to') }}" placeholder="E.g. 12" autocomplete="id_assigned_to" autofocus>
-                        <small class="text-muted">*** The ID of the school or student user  to assign this voucher to. ***</small>
+                        <small class="text-muted">*** The <b>school ID</b> or <b>enrolment ID</b> to assign this voucher to. ***</small>
                         
                         @error('id_assigned_to')
                             <span class="invalid-feedback" role="alert">
