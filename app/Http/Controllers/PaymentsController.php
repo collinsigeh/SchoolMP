@@ -134,18 +134,19 @@ class PaymentsController extends Controller
             'id'    => $request->input('serial_number'),
             'pin'   => $request->input('pin')
         );
-        $voucher = Paymentvoucher::where($db_check)->get();
+        $vouchers = Paymentvoucher::where($db_check)->get();
 
-        if(empty($voucher))
+        if(empty($vouchers))
         {
             $request->session()->flash('error', 'Wrong pin or serial number.');
             return redirect($return_page);
         }
-        if($voucher->count() < 1)
+        if($vouchers->count() < 1)
         {
             $request->session()->flash('error', 'Wrong pin or serial number.');
             return redirect($return_page);
         }
+        $voucher = $vouchers[0];
         if($voucher->assigned_to != 'All')
         {
             if($request->input('id_to_pay_for') != $voucher->id_assigned_to)
@@ -178,7 +179,7 @@ class PaymentsController extends Controller
             }
             elseif($voucher->assigned_to == 'Student')
             {
-                $enrolment = Enrolemnt::find($request->input('id_to_pay_for'));
+                $enrolment = Enrolment::find($request->input('id_to_pay_for'));
                 if(empty($enrolment))
                 {
                     $request->session()->flash('error', 'Attempt to pay for a missing resource 3.');
@@ -227,7 +228,7 @@ class PaymentsController extends Controller
             }
             elseif($request->input('voucher_payment_for') == 'Student')
             {
-                $enrolment = Enrolemnt::find($request->input('id_to_pay_for'));
+                $enrolment = Enrolment::find($request->input('id_to_pay_for'));
                 if(empty($enrolment))
                 {
                     $request->session()->flash('error', 'Attempt to pay for a missing resource 3.1');

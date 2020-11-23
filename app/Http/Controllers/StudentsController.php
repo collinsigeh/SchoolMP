@@ -171,10 +171,18 @@ class StudentsController extends Controller
         // ensuring post-paid orders are not missed used
         foreach($data['term']->subscription->orders as $this_order)
         {
-            if($this_order->payment == 'Post-paid' && $this_order->type == 'Purchase' && strtotime($this_order->subscription_due_date) <= time())
+            if($this_order->payment == 'Post-paid' && $this_order->type == 'Purchase')
             {
-                $request->session()->flash('error', 'Your Post-paid subscription is due for payment. Kindly make payment here!');
-                return redirect()->route('orders.show', $this_order->id);
+                if(strtotime($this_order->subscription_due_date) <= time() && $this_order->status == 'Approved-unpaid')
+                {
+                    $request->session()->flash('error', 'Your Post-paid subscription is due for payment. Kindly make payment here!');
+                    return redirect()->route('orders.show', $this_order->id);
+                }
+                if($this_order->status == 'Paid' OR $this_order->status == 'Completed')
+                {
+                    $request->session()->flash('error', 'You can NOT enrol more students for this term. The linked post-paid subscription is paid for and closed.');
+                    return redirect()->route('students.index');
+                }
             }
         }
         // End - ensuring post-paid orders are not missed used
@@ -275,10 +283,18 @@ class StudentsController extends Controller
         // ensuring post-paid orders are not missed used
         foreach($data['term']->subscription->orders as $this_order)
         {
-            if($this_order->payment == 'Post-paid' && $this_order->type == 'Purchase' && strtotime($this_order->subscription_due_date) <= time())
+            if($this_order->payment == 'Post-paid' && $this_order->type == 'Purchase')
             {
-                $request->session()->flash('error', 'Your Post-paid subscription is due for payment. Kindly make payment here!');
-                return redirect()->route('orders.show', $this_order->id);
+                if(strtotime($this_order->subscription_due_date) <= time() && $this_order->status == 'Approved-unpaid')
+                {
+                    $request->session()->flash('error', 'Your Post-paid subscription is due for payment. Kindly make payment here!');
+                    return redirect()->route('orders.show', $this_order->id);
+                }
+                if($this_order->status == 'Paid' OR $this_order->status == 'Completed')
+                {
+                    $request->session()->flash('error', 'You can NOT enrol more students for this term. The linked post-paid subscription is paid for and closed.');
+                    return redirect()->route('students.index');
+                }
             }
         }
         // End - ensuring post-paid orders are not missed used
