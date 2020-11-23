@@ -162,14 +162,31 @@ class StudentsController extends Controller
         
         $data['term'] = Term::find($term_id);
 
+        if(strtotime($data['term']->closing_date) <= time())
+        {
+            $request->session()->flash('error', 'ERROR: Attempt to enrol student in a closed/past term');
+            return redirect()->route('students.index');
+        }
+        
+        // ensuring post-paid orders are not missed used
+        foreach($data['term']->subscription->orders as $this_order)
+        {
+            if($this_order->payment == 'Post-paid' && $this_order->type == 'Purchase' && strtotime($this_order->subscription_due_date) <= time())
+            {
+                $request->session()->flash('error', 'Your Post-paid subscription is due for payment. Kindly make payment here!');
+                return redirect()->route('orders.show', $this_order->id);
+            }
+        }
+        // End - ensuring post-paid orders are not missed used
+
         if(empty($data['term']->subscription))
         {
-            $request->session()->flash('error', "<p>Subscription recognition error.</p>" );
+            $request->session()->flash('error', "<p>Subscription recognition error 1.</p>" );
             return redirect()->route('students.index');
         }
         elseif($data['term']->subscription->count() < 1)
         {
-            $request->session()->flash('error', "<p>Subscription recognition error.</p>" );
+            $request->session()->flash('error', "<p>Subscription recognition error 2.</p>" );
             return redirect()->route('students.index');
         }
 
@@ -249,16 +266,19 @@ class StudentsController extends Controller
         
         $data['term'] = Term::find($term_id);
 
+        if(strtotime($data['term']->closing_date) <= time())
+        {
+            $request->session()->flash('error', 'ERROR: Attempt to enrol student in a closed/past term');
+            return redirect()->route('students.index');
+        }
+        
         // ensuring post-paid orders are not missed used
         foreach($data['term']->subscription->orders as $this_order)
         {
-            if($this_order->payment == 'Post-paid')
+            if($this_order->payment == 'Post-paid' && $this_order->type == 'Purchase' && strtotime($this_order->subscription_due_date) <= time())
             {
-                if(strtotime($data['term']->closing_date) <= time())
-                {
-                    $request->session()->flash('error', 'ERROR: Attempt to enrol student in a closed/past term');
-                    return redirect()->route('students.index');
-                }
+                $request->session()->flash('error', 'Your Post-paid subscription is due for payment. Kindly make payment here!');
+                return redirect()->route('orders.show', $this_order->id);
             }
         }
         // End - ensuring post-paid orders are not missed used
