@@ -296,8 +296,11 @@ class TermsController extends Controller
         {
             $new_date = strtotime($term->closing_date);
             $this_order = Order::find($order->id);
-            $this_order->subscription_due_date = $new_date;
-            $this_order->save();
+            if($this_order->subscription_due_date > $new_date)
+            {
+                $this_order->subscription_due_date = $new_date;
+                $this_order->save();
+            }
         }
         // End - update the subscription_due_date for terms created using Post-paid subscription orders
 
@@ -621,8 +624,11 @@ class TermsController extends Controller
         {
             $new_date = strtotime($term->closing_date);
             $this_order = Order::find($order->id);
-            $this_order->subscription_due_date = $new_date;
-            $this_order->save();
+            if($this_order->subscription_due_date > $new_date)
+            {
+                $this_order->subscription_due_date = $new_date;
+                $this_order->save();
+            }
         }
         // End - update the subscription_due_date for terms created using Post-paid subscription orders
 

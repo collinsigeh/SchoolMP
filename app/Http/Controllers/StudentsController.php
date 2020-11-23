@@ -173,11 +173,6 @@ class StudentsController extends Controller
         {
             if($this_order->payment == 'Post-paid' && $this_order->type == 'Purchase')
             {
-                if(strtotime($this_order->subscription_due_date) <= time() && $this_order->status == 'Approved-unpaid')
-                {
-                    $request->session()->flash('error', 'Your Post-paid subscription is due for payment. Kindly make payment here!');
-                    return redirect()->route('orders.show', $this_order->id);
-                }
                 if($this_order->status == 'Paid' OR $this_order->status == 'Completed')
                 {
                     $request->session()->flash('error', 'You can NOT enrol more students for this term. The linked post-paid subscription is paid for and closed.');
@@ -285,11 +280,6 @@ class StudentsController extends Controller
         {
             if($this_order->payment == 'Post-paid' && $this_order->type == 'Purchase')
             {
-                if(strtotime($this_order->subscription_due_date) <= time() && $this_order->status == 'Approved-unpaid')
-                {
-                    $request->session()->flash('error', 'Your Post-paid subscription is due for payment. Kindly make payment here!');
-                    return redirect()->route('orders.show', $this_order->id);
-                }
                 if($this_order->status == 'Paid' OR $this_order->status == 'Completed')
                 {
                     $request->session()->flash('error', 'You can NOT enrol more students for this term. The linked post-paid subscription is paid for and closed.');
