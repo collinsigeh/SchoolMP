@@ -42,21 +42,22 @@
                 <table class="table table-striped table-hover table-sm">
                         <thead>
                             <tr>
-                                <th colspan="2">Serial number</th>
-                                <th>Voucher Pin</th>
-                                <th>Item</th>
-                                <th>Payment type</th>
-                                <th>Status</th>
+                                <th colspan="2"  style="vertical-align: middle;">Serial number</th>
+                                <th  style="vertical-align: middle;">Voucher Pin</th>
+                                <th  style="vertical-align: middle;">Item</th>
+                                <th  style="vertical-align: middle;">Status</th>
+                                <th class="text-right"  style="vertical-align: middle;">Voucher detail</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($paymentvouchers as $paymentvoucher)
+                                <?php $deletable = 'No'; ?>
                                 <tr>
-                                    <td style="width: 50px;"><a class="collins-link-within-table" href="{{ route('paymentvouchers.show', $paymentvoucher->id) }}"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="voucher_icon" class="collins-table-item-icon"></a></td>
-                                    <td style="vertical-align: middle"><a class="collins-link-within-table" href="{{ route('paymentvouchers.show', $paymentvoucher->id) }}"><span class="badge badge-secondary">{{ $paymentvoucher->id }}</span></a></td>
-                                    <td style="vertical-align: middle"><a class="collins-link-within-table" href="{{ route('paymentvouchers.show', $paymentvoucher->id) }}"><b>{{ $paymentvoucher->pin }}</b></a></td>
-                                    <td style="vertical-align: middle"><a class="collins-link-within-table" href="{{ route('paymentvouchers.show', $paymentvoucher->id) }}">{{ $paymentvoucher->package->product->name.' '.$paymentvoucher->package->product->payment.' '.$paymentvoucher->package->name }}</a></td>
-                                    <td style="vertical-align: middle"><span class="badge badge-secondary">{{ $paymentvoucher->package->price_type }}</span></td>
+                                    <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="voucher_icon" class="collins-table-item-icon"></td>
+                                    <td style="vertical-align: middle"><span class="badge badge-secondary">{{ $paymentvoucher->id }}</span></td>
+                                    <td style="vertical-align: middle"><b>{{ $paymentvoucher->pin }}</b></td>
+                                    <td style="vertical-align: middle">{{ $paymentvoucher->package->product->name.' '.$paymentvoucher->package->product->payment.' '.$paymentvoucher->package->name }}</td>
                                     <td style="vertical-align: middle">
                                       @if ($paymentvoucher->status == 'Used')
                                           <span class="badge badge-light">Used</span>
@@ -68,9 +69,24 @@
                                                   <span class="badge badge-primary">Assigned</span>
                                               @else
                                                   <span class="badge badge-success">Available</span>
+                                                  <?php $deletable = 'Yes'; ?>
                                               @endif
                                           @endif
                                       @endif
+                                    </td>
+                                    <td style="vertical-align: middle; text-align: right">
+                                        <span class="badge badge-secondary">{{ $paymentvoucher->assigned_to }} payment</span><br />
+                                        @if ($paymentvoucher->id_assigned_to > 0)
+                                        {{ $paymentvoucher->assigned_to }} ID: {{ $paymentvoucher->id_assigned_to }}                                            
+                                        @endif
+                                    </td>
+                                    <td style="vertical-align: middle; text-align: right">
+                                        <?php
+                                            if($deletable == 'Yes')
+                                            {
+                                                echo '<a href="#" class="btn btn-sm btn-danger">X</a>';
+                                            }
+                                        ?>
                                     </td>
                                 </tr>
                             @endforeach
