@@ -73,7 +73,11 @@
                                     <td style="vertical-align: middle; text-align: right">
                                         <span class="badge badge-secondary">{{ $paymentvoucher->assigned_to }} payment</span><br />
                                         @if ($paymentvoucher->id_assigned_to > 0)
-                                        {{ $paymentvoucher->assigned_to }} ID: {{ $paymentvoucher->id_assigned_to }}                                            
+                                            @if ($paymentvoucher->assigned_to == 'Student')
+                                                <small>Enrolment ID:</small> {{ $paymentvoucher->id_assigned_to }}
+                                            @elseif ($paymentvoucher->assigned_to == 'Order')
+                                                <small>Order ID:</small> {{ $paymentvoucher->id_assigned_to }}  
+                                            @endif                               
                                         @endif
                                     </td>
                                     <td style="vertical-align: middle; text-align: right">

@@ -147,6 +147,15 @@ class PaymentsController extends Controller
             return redirect($return_page);
         }
         $voucher = $vouchers[0];
+        if($voucher->status == 'Used')
+        {
+            $request->session()->flash('error', 'Voucher details have been used.');
+            return redirect($return_page);
+        }
+        $id_of_voucher_used = 0; // simply for checks
+        $id_order_paid_for = 0;
+        $id_voucher_user = 0;
+
         if($voucher->assigned_to != 'All')
         {
             if($request->input('id_to_pay_for') != $voucher->id_assigned_to)
@@ -174,8 +183,10 @@ class PaymentsController extends Controller
                 }
 
                 $order->status = 'Paid';
-
                 $order->save();
+                $id_of_voucher_used = $voucher->id;
+                $id_order_paid_for = $order->id;
+                $id_voucher_user = $order->user_id;
             }
             elseif($voucher->assigned_to == 'Student')
             {
@@ -197,8 +208,10 @@ class PaymentsController extends Controller
                 }
 
                 $enrolment->status = 'Active';
-                
                 $enrolment->save();
+                $id_of_voucher_used = $voucher->id;
+                $id_order_paid_for = $enrolment->subscription->orders[0]->id;
+                $id_voucher_user = $enrolment->user_id;
             }
         }
         else
@@ -223,8 +236,10 @@ class PaymentsController extends Controller
                 }
 
                 $order->status = 'Paid';
-
                 $order->save();
+                $id_of_voucher_used = $voucher->id;
+                $id_order_paid_for = $order->id;
+                $id_voucher_user = $order->user_id;
             }
             elseif($request->input('voucher_payment_for') == 'Student')
             {
@@ -246,9 +261,21 @@ class PaymentsController extends Controller
                 }
 
                 $enrolment->status = 'Active';
-                
                 $enrolment->save();
+                $id_of_voucher_used = $voucher->id;
+                $id_order_paid_for = $enrolment->subscription->orders[0]->id;
+                $id_voucher_user = $enrolment->user_id;
             }
+        }
+        if($id_of_voucher_used > 0)
+        {
+            $paymentvoucher = Paymentvoucher::find($id_of_voucher_used);
+
+            $paymentvoucher->status     = 'Used';
+            $paymentvoucher->order_id   = $id_order_paid_for;
+            $paymentvoucher->user_id     = $id_voucher_user;
+
+            $paymentvoucher->save();
         }
 
         $request->session()->flash('success', 'Payment successful!');
