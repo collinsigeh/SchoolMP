@@ -426,12 +426,18 @@ class PaymentsController extends Controller
                     $enrolment->save();
                 }
             }
+            elseif($reference_array[0] == 'ON')
+            { // When payment is being made per order.
 
-            $order = Order::find($paystack_order_id);
-            if($order->status == 'Pending' OR $order->status == 'Approved-unpaid')
-            {
-                $order->status = 'Paid';
-                $order->save();
+                $order = Order::find($paystack_order_id);
+                if($order->status == 'Pending' OR $order->status == 'Approved-unpaid')
+                {
+                    if($paystack_amount >= $order->final_price && $paystack_currency == $order->currency)
+                    {
+                        $order->status = 'Paid';
+                        $order->save();
+                    }
+                }
             }
 
             $payment = new Payment;

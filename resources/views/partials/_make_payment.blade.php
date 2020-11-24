@@ -4,7 +4,7 @@
     $makepayment_order_id = $id_to_pay_for = $makepayment_order->id;
     $makepayment_pre_reference = 'ON-'.$makepayment_order->id.'-';
     $makepayment_user_id = $user->id;
-    $makepayment_amount = $makepayment_order->final_price; //also works for prepaid since prices are updated with every enrolment
+    $makepayment_amount = $makepayment_order->final_price; //also works for post-paid since prices are updated with every enrolment
     $voucher_payment_for = 'Order';
     if(isset($enrolment) && $makepayment_order->payment == 'Prepaid' && $makepayment_order->price_type == 'Per-student')
     {

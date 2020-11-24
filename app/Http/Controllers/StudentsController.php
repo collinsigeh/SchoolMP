@@ -12,6 +12,7 @@ use App\Term;
 use App\Arm;
 use App\Student;
 use App\Enrolment;
+use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Image;
@@ -302,12 +303,16 @@ class StudentsController extends Controller
             return redirect()->route('students.index');
         }
 
+        $subscription_order_id = 0; //useful only for post-paid orders
+        $subscription_unit_price = 0; //useful only for post-paid orders
         $subscription_payment = 'None';
         $subscription_price_type = 'None';
 
         foreach ($data['term']->subscription->orders as $order) {
             if($order->type == 'Purchase')
             {
+                $subscription_order_id = $order->id; //useful only for post-paid orders
+                $subscription_unit_price = $order->price; //useful only for post-paid orders
                 $subscription_payment = $order->payment;
                 $subscription_price_type = $order->price_type;
             }
@@ -443,6 +448,18 @@ class StudentsController extends Controller
         $enrolment->created_by = $user_id;
 
         $enrolment->save();
+
+        // ensure the accuracy of the final price for post-paid orders
+        if($subscription_payment == 'Post-paid' && $subscription_price_type == 'Per-student')
+        {
+            $db_check = array(
+                'subscription_id' => $data['term']->subscription_id
+            );
+            $order = Order::find($subscription_order_id);
+            $order->final_price = $subscription_unit_price * count(Enrolment::where($db_check)->get()); 
+            $order->save();
+        }
+        // End - ensure the accuracy of the final price for post-paid orders
 
         if($enrolment_status == 'Inactive')
         {
