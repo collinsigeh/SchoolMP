@@ -135,6 +135,13 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="table-responsive">    
+                                        <table class="table table-bordered table-hover table-sm">
+                                            <tr>
+                                                <td>Amount due: <span style="font-size: 1.1em; font-weight: 700; padding-left: 25px;">{{ $order->currency_symbol.' '.$order->final_price }}</span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 @elseif($order->product->payment == 'Prepaid' && $order->price_type == 'Per-student')
                                     <div class="row">
                                         <div class="col-md-12">
