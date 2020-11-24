@@ -37,25 +37,28 @@
                 No product.
             </div>
         @else
-            <div class="table-responsive">    
-            <table class="table table-striped table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th>Products ( Total: {{ count($products) }} )</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($products as $product)
+            <div class="collins-bg-white">
+                <div class="table-responsive">    
+                <table class="table table-striped table-hover table-sm">
+                        <thead>
                             <tr>
-                            <td>{{ $product->name }} ( <i>{{ $product->payment }}</i> ) with {{ count($product->packages) }} packages</td>
-                                <td class="text-right"><a href="{{ route('products.show', $product->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                                <th colspan="2">Products ( Total: {{ count($products) }} )</th>
+                                <th></th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($products as $product)
+                                <tr>
+                                    <td style="width: 50px;"><a class="collins-link-within-table" href="{{ route('products.show', $product->id) }}"><img src="{{ config('app.url') }}/images/icons/product_icon.png" alt="product_icon" class="collins-table-item-icon"></a></td>
+                                    <td style="vertical-align: middle; padding: 10px 0"><a class="collins-link-within-table" href="{{ route('products.show', $product->id) }}">{{ $product->name }}<br /><span class="badge badge-secondary">{{ $product->payment }}</span></a></td>
+                                    <td style="vertical-align: middle"><a class="collins-link-within-table" href="{{ route('products.show', $product->id) }}">{{ count($product->packages) }} packages</a></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                {{ $products->links() }}
             </div>
-            {{ $products->links() }}
         @endif
     </div>
   </div>
