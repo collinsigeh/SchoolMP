@@ -448,7 +448,7 @@ class PaymentsController extends Controller
             $payment->amount            = $paystack_amount;
             $payment->method            = 'Online';
             $payment->status            = 'Confirmed';
-            $payment->status            = $paystack_user_id;
+            $payment->user_id            = $paystack_user_id;
 
             $payment->save();
 
