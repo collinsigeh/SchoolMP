@@ -64,13 +64,9 @@
                                       @else
                                           @if ($paymentvoucher->expiration_at <= time())
                                               <span class="badge badge-danger">Expired</span>
+                                              <?php $deletable = 'Yes'; ?>
                                           @else
-                                              @if ($paymentvoucher->status == 'Assigned')
-                                                  <span class="badge badge-primary">Assigned</span>
-                                              @else
-                                                  <span class="badge badge-success">Available</span>
-                                                  <?php $deletable = 'Yes'; ?>
-                                              @endif
+                                              <span class="badge badge-success">Available</span>
                                           @endif
                                       @endif
                                     </td>

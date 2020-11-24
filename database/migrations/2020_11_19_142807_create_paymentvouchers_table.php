@@ -18,7 +18,7 @@ class CreatePaymentvouchersTable extends Migration
             $table->integer('pin');
             $table->integer('expiration_at')->nullable();
             $table->integer('package_id');
-            $table->enum('status', ['Available', 'Assigned', 'Used']);
+            $table->enum('status', ['Available', 'Used']);
             $table->enum('assigned_to', ['All', 'Order', 'Student']);
             $table->integer('id_assigned_to')->nullable();
             $table->integer('order_id')->nullable();
