@@ -163,6 +163,7 @@ class PaymentsController extends Controller
                 $request->session()->flash('error', 'Voucher details belong to other resource.');
                 return redirect($return_page);
             }
+            
             if($voucher->assigned_to == 'Order')
             {
                 $order = Order::find($request->input('id_to_pay_for'));

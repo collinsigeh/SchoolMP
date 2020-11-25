@@ -46,7 +46,7 @@
                                 <th  style="vertical-align: middle;">Voucher Pin</th>
                                 <th  style="vertical-align: middle;">Item</th>
                                 <th  style="vertical-align: middle;">Status</th>
-                                <th class="text-right"  style="vertical-align: middle;">Voucher detail</th>
+                                <th class="text-right"  style="vertical-align: middle;">Use case</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -71,13 +71,16 @@
                                       @endif
                                     </td>
                                     <td style="vertical-align: middle; text-align: right">
-                                        <span class="badge badge-secondary">{{ $paymentvoucher->assigned_to }} payment</span><br />
                                         @if ($paymentvoucher->id_assigned_to > 0)
                                             @if ($paymentvoucher->assigned_to == 'Student')
+                                                <span class="badge badge-secondary">For specific student</span><br />
                                                 <small>Enrolment ID:</small> {{ $paymentvoucher->id_assigned_to }}
                                             @elseif ($paymentvoucher->assigned_to == 'Order')
+                                                <span class="badge badge-secondary">For specific order<br />
                                                 <small>Order ID:</small> {{ $paymentvoucher->id_assigned_to }}  
                                             @endif                               
+                                        @else
+                                            <span class="badge badge-secondary">For all users</span>
                                         @endif
                                     </td>
                                     <td style="vertical-align: middle; text-align: right">
