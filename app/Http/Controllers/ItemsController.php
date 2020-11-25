@@ -180,6 +180,12 @@ class ItemsController extends Controller
      */
     public function store(Request $request)
     {
+        $arm_count = $request->input('arm_count');
+        for ($i=0; $i < $arm_count; $i++) { 
+            echo $request->input($i).'<br />';
+        }
+        die('I got here');
+
         if(Auth::user()->status !== 'Active')
         {
             return view('welcome.inactive');

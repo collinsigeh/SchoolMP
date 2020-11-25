@@ -78,63 +78,6 @@
                 </div>
 
                 <div class="form-group row"> 
-                    <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Item type') }}</label>
-
-                    <div class="col-md-6">
-                        <select id="type" type="text" class="form-control @error('type') is-invalid @enderror" name="type" required autocomplete="type" autofocus>
-                            <option value="School fee">School fee</option>
-                            <option value="Other items">Other items</option>
-                        </select>
-
-                        @error('type')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row"> 
-                    <label for="nature" class="col-md-4 col-form-label text-md-right">{{ __('Nature of item') }}</label>
-
-                    <div class="col-md-6">
-                        <!-- include a checkbox for the factors this is required for -->
-                        <select id="nature" type="text" class="form-control @error('nature') is-invalid @enderror" name="nature" required autocomplete="nature" autofocus>
-                            <option value="Compulsory">Compulsory</option>
-                            <option value="Optional">Optional</option>
-                        </select>
-
-                        @error('nature')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row"> 
-                    <label for="schoolclass_id" class="col-md-4 col-form-label text-md-right">{{ __('Class(es) concerned') }}</label>
-
-                    <div class="col-md-6">
-                        <select id="schoolclass_id" type="text" class="form-control @error('schoolclass_id') is-invalid @enderror" name="schoolclass_id" required autocomplete="schoolclass_id" autofocus>
-                            <option value="0">All classes</option>
-                            @php
-                                foreach($schoolclasses as $schoolclass)
-                                {
-                                    echo '<option value="'.$schoolclass->id.'">'.$schoolclass->name.'</option>';
-                                }
-                            @endphp
-                        </select>
-
-                        @error('schoolclass_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row"> 
                     <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Amount ('.$setting->base_currency_symbol.')') }}</label>
 
                     <div class="col-md-6">
@@ -146,6 +89,34 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row"> 
+                    <label for="schoolclass_id" class="col-md-4 col-form-label text-md-right">{{ __('Classes affected') }}</label>
+
+                    <div class="col-md-6">
+                        <div class="alert alert-info">Tick the class arms that this item applies to.</div>
+                        <div class="row">
+                            <?php $arm_count = 0; ?>
+                            @foreach ($schoolclasses as $schoolclass)
+                                <div class="col-md-6">
+                                    <div style="border: solid 1px #e2e2e2; background-color: #fff; margin: 3px 0; padding: 7px 10px;">
+                                        <span class="badge badge-info">{{ $schoolclass->name }} classes</span>
+                                        <?php $class_displayed = 0; ?>
+                                        @foreach ($schoolclass->arms as $arm)
+                                            <div style="vertical-align: middle; padding: 5px 0 5px 10px;">
+                                                <input type="checkbox" name="{{ $arm_count }}" id="{{ $arm_count }}" value="{{ $arm->id }}"> &nbsp;&nbsp;<label for="{{ $arm_count }}">{{ $schoolclass->name.' '.$arm->name }}</label>
+                                            </div>
+                                            <?php $class_displayed++; $arm_count++; ?>
+                                        @endforeach
+                                        <?php if($class_displayed == 0){ echo '<div style="vertical-align: middle; padding: 5px 0 5px 10px;"><b>None!</b></div>'; } ?>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <input type="hidden" name="arm_count" value="{{ $arm_count }}" required />
+                        <div style="padding: 15px;"></div>
                     </div>
                 </div>
 
