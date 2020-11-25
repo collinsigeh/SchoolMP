@@ -17,11 +17,9 @@ class CreateItemsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('school_id');
             $table->integer('term_id');
-            $table->enum('type', ['School fee', 'Other items']);
             $table->string('name');
-            $table->enum('nature', ['Compulsory', 'Optional']);
+            $table->string('currency_symbol', 25);
             $table->decimal('amount', 10, 2);
-            $table->integer('schoolclass_id');
             $table->integer('user_id');
             $table->timestamps();
         });

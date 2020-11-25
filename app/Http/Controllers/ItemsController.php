@@ -180,12 +180,6 @@ class ItemsController extends Controller
      */
     public function store(Request $request)
     {
-        $arm_count = $request->input('arm_count');
-        for ($i=0; $i < $arm_count; $i++) { 
-            echo $request->input($i).'<br />';
-        }
-        die('I got here');
-
         if(Auth::user()->status !== 'Active')
         {
             return view('welcome.inactive');
@@ -216,39 +210,33 @@ class ItemsController extends Controller
         $data['term'] = Term::find($term_id);
 
         $this->validate($request, [
-            'type' => ['required'],
             'name' => ['required'],
-            'nature' => ['required'],
+            'currency_symbol' => ['required'],
             'amount' => ['required', 'numeric'],
-            'schoolclass_id' => ['required', 'numeric'],
+            'arm_count' => ['required', 'numeric']
         ]);
 
         $name = ucwords(strtolower(trim($request->input('name'))));
-
-        $db_check = array(
-            'name' => $name,
-            'term_id' => $term_id,
-            'school_id' => $school_id,
-            'schoolclass_id' => $request->input('schoolclass_id')
-        );
-        if(!empty(Item::where($db_check)->get()))
-        {
-            $request->session()->flash('error', 'The Item exits already.' );
-            return redirect()->route('items.create');
-        }
+        $arm_count = $request->input('arm_count');
 
         $item = new Item;
 
         $item->school_id = $school_id;
         $item->term_id = $term_id;
-        $item->type = $request->input('type');
         $item->name = $name;
-        $item->nature = $request->input('nature');
+        $item->currency_symbol = $request->input('currency_symbol');
         $item->amount = $request->input('amount');
-        $item->schoolclass_id = $request->input('schoolclass_id');
         $item->user_id = $user_id;
 
-        $item->save();
+        //$item->save();
+
+        for ($i=0; $i < $arm_count; $i++) {
+            if($request->input($i) > 0)
+            {
+                echo 'Sure greater and is '.$request->input($i).'<br />';
+            }
+        }
+        die('I got here');
 
         $request->session()->flash('success', 'Item created.');
 

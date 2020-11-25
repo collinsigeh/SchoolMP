@@ -67,7 +67,7 @@
                     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Item name') }}</label>
 
                     <div class="col-md-6">
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="E.g. Schoolfees for primary1" required autocomplete="name" autofocus>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="E.g. School fees" required autocomplete="name" autofocus>
 
                         @error('name')
                             <span class="invalid-feedback" role="alert">
@@ -77,6 +77,7 @@
                     </div>
                 </div>
 
+                <input type="hidden" name="currency_symbol" value="{{ $setting->base_currency_symbol }}" required />
                 <div class="form-group row"> 
                     <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Amount ('.$setting->base_currency_symbol.')') }}</label>
 
