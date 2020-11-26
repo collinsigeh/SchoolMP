@@ -14,6 +14,8 @@ use App\Item;
 use App\Setting;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+
 class ItemsController extends Controller
 {
     /**
@@ -228,15 +230,14 @@ class ItemsController extends Controller
         $item->amount = $request->input('amount');
         $item->user_id = $user_id;
 
-        //$item->save();
+        $item->save();
 
         for ($i=0; $i < $arm_count; $i++) {
             if($request->input($i) > 0)
             {
-                echo 'Sure greater and is '.$request->input($i).'<br />';
+                DB::insert('insert into arm_item (arm_id, item_id) values (?, ?)', [$request->input($i), $item->id]);
             }
         }
-        die('I got here');
 
         $request->session()->flash('success', 'Item created.');
 

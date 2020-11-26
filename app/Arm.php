@@ -59,4 +59,13 @@ class Arm extends Model
     {
         return $this->belongsTo('App\Resulttemplate');
     }
+    
+    /**
+     * The items that belongs to this class arm.
+     *
+     */
+    public function items()
+    {
+        return $this->belongsToMany('App\Item');
+    }
 }
