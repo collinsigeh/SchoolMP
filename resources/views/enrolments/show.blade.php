@@ -51,7 +51,7 @@
                 <div class="col-md-6">
                     <div class="resource-details">
                         <div class="title">
-                            Student personal details
+                            Student enrolment details
                         </div>
                         <div class="body">
                             <div class="row">
@@ -109,7 +109,7 @@
                                         <td><span class="badge <?php
                                             if($enrolment->status == 'Active')
                                             {
-                                              echo 'badge-sucess';
+                                              echo 'badge-success';
                                             }
                                             else
                                             {

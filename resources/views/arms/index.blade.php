@@ -81,7 +81,7 @@
                                       }
                                   @endphp
                                 </td>
-                                <td style="padding-top: 13px;"><span class="badge badge-secondary">{{ count($arm->enrolments) }}</span></td>
+                                <td style="padding-top: 13px;"><span class="badge badge-secondary">{{ count($arm->enrolments) }} students</span></td>
                             </tr>
                         @endforeach
                     </tbody>
