@@ -59,32 +59,27 @@
             <table class="table table-striped table-hover table-sm">
                     <thead>
                         <tr>
-                            <th>Class</th>
-                            <th>Item</th>
-                            <th>Amount</th>
-                            <th>Nature</th>
+                            <th colspan="2"  style="vertical-align: middle;">Item</th>
+                            <th>Price</th>
+                            <th>Classes affected</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($items as $item)
                             <tr>
-                                <td>
-                                  @php
-                                      if($item->schoolclass_id > 0)
-                                      {
-                                        echo 'All classes';
-                                      }
-                                      else
-                                      {
-                                        echo $item->schoolclass->name;
-                                      }
-                                  @endphp
+                                <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="item_icon" class="collins-table-item-icon"></td>
+                                <td style="vertical-align: middle;"><a class="collins-link-within-table" href="{{ route('items.edit', $item->id) }}">{{ $item->name }}</a></td>
+                                <td style="vertical-align: middle;">{{ $item->currency_symbol.' '.$item->amount }}</td>
+                                <td style="vertical-align: middle;">
+                                  <?php $arm_count = 0; ?>
+                                    @foreach ($item->arms as $arm)
+                                      <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
+                                      <?php $arm_count++; ?>
+                                    @endforeach
+                                    <?php if($arm_count == 0){ echo '<b>None!</b>'; } ?>
                                 </td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->amount }}</td>
-                                <td>{{ $item->nature }}</td>
-                                <td class="text-right"></td>
+                                <td class="text-right" style="vertical-align: middle;"></td>
                             </tr>
                         @endforeach
                     </tbody>

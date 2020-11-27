@@ -84,7 +84,7 @@ class ItemsController extends Controller
         $db_check = array(
             'term_id' => $term_id
         );
-        $data['items'] = Item::where($db_check)->orderBy('schoolclass_id', 'asc')->simplePaginate(20);
+        $data['items'] = Item::where($db_check)->orderBy('name', 'asc')->simplePaginate(20);
 
         return view('items.index')->with($data);
     }
