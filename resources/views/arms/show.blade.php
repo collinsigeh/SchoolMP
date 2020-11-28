@@ -354,7 +354,7 @@
                         <tr>
                             <td>{{ $sn.'.' }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->currency_symbol.' '.$item->amount }}</td>
+                            <td class="text-right">{{ $item->currency_symbol.' '.$item->amount }}</td>
                         </tr>
                         <?php $sn++; ?>
                     @endforeach
