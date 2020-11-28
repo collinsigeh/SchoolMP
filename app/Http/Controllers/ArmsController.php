@@ -364,6 +364,7 @@ class ArmsController extends Controller
                 $data['sessionterm_manager'] = 'Yes';
             }
         }
+        session(['enrolment_return_page' => 'arms_show']);
 
         return view('arms.show')->with($data);
     }

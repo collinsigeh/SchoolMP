@@ -32,11 +32,23 @@
             <ol class="breadcrumb">
               @if ($user->usertype == 'Client')
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('arms.show', $arm->id) }}">{{ $arm->schoolclass->name.' '.$arm->name }}</a></li>
+                @if (session('enrolment_return_page') == 'enrolments_index')
+                    <li class="breadcrumb-item"><a href="{{ route('enrolments.index') }}">Students</a></li>
+                @elseif(session('enrolment_return_page') == 'arms_show')
+                    <li class="breadcrumb-item"><a href="{{ route('arms.show', $arm->id) }}">{{ $arm->schoolclass->name.' '.$arm->name }}</a></li>
+                @else
+                    <li class="breadcrumb-item"><a href="{{ route('classsubjects.show', session('enrolment_return_page')->id) }}">{{ session('enrolment_return_page')->subject->name.' - '.session('enrolment_return_page')->arm->schoolclass->name.' '.session('enrolment_return_page')->arm->name }}</a></li>
+                @endif
                 <li class="breadcrumb-item active" aria-current="page">{!! $enrolment->user->name.' ( <i>'.$enrolment->student->registration_number.' </i>)' !!}</li>
               @else
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('arms.show', $arm->id) }}">{{ $arm->schoolclass->name.' '.$arm->name }}</a></li>
+                @if (session('enrolment_return_page') == 'enrolments_index')
+                    <li class="breadcrumb-item"><a href="{{ route('enrolments.index') }}">Students</a></li>
+                @elseif(session('enrolment_return_page') == 'arms_show')
+                    <li class="breadcrumb-item"><a href="{{ route('arms.show', $arm->id) }}">{{ $arm->schoolclass->name.' '.$arm->name }}</a></li>
+                @else
+                    <li class="breadcrumb-item"><a href="{{ route('classsubjects.show', session('enrolment_return_page')->id) }}">{{ session('enrolment_return_page')->subject->name.' - '.session('enrolment_return_page')->arm->schoolclass->name.' '.session('enrolment_return_page')->arm->name }}</a></li>
+                @endif
                 <li class="breadcrumb-item active" aria-current="page">{!! $enrolment->user->name.' ( <i>'.$enrolment->student->registration_number.' </i>)' !!}</li>
               @endif
             </ol>

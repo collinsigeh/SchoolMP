@@ -95,6 +95,7 @@ class EnrolmentsController extends Controller
         }
         $data['total_students'] = $no_students;
         $data['enrolments'] = Enrolment::where($db_check)->orderBy('schoolclass_id', 'asc')->paginate(50);
+        session(['enrolment_return_page' => 'enrolments_index']);
 
         return view('enrolments.index')->with($data);
     }

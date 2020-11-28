@@ -259,6 +259,7 @@ class ClasssubjectsController extends Controller
             }
             
         }
+        session(['enrolment_return_page' => $data['classsubject']]);
 
         return view('classsubjects.show')->with($data);
     }
