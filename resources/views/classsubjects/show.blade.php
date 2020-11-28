@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>{{ $classsubject->arm->schoolclass->name.' '.$classsubject->subject->name }}</h3>
+          <h3>{{ $classsubject->subject->name.' - '.$classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</h3>
           </div>
           <div class="col-4 text-right">
             
@@ -59,7 +59,7 @@
           
                     <div class="alert alert-info">
                       <div style="margin-bottom: 30px;">
-                        <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="class_icon" class="collins-this-term-icon"> <span class="collins-this-term">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->subject->name }} ({!! $term->name.' - <small>'.$term->session.'</small>' !!})</span>
+                        <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="class_icon" class="collins-this-term-icon"> <span class="collins-this-term">{{ $classsubject->subject->name }} ({!! $term->name.' - <small>'.$term->session.'</small>' !!})</span>
                       </div>
 
                       <div class="row">

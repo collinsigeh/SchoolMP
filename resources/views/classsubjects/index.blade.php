@@ -65,16 +65,30 @@
                             <div class="body">
                                 <div class="table-responsive">    
                                     <table class="table table-striped table-hover table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Subject</th>
+                                                <th>Class</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php $sn = 1; ?>
                                         @foreach ($classsubjectswithoutteacher as $item)
                                         <tr>
-                                            <td>{{ $item->arm->schoolclass->name.' '.$item->arm->name.' '.$item->subject->name }}</td>
+                                            <td>{{ $sn }}</td>
+                                            <td>{{ $item->subject->name }}</td>
+                                            <td><span class="badge badge-secondary">{{ $item->arm->schoolclass->name.' '.$item->arm->name }}</span></td>
                                             <td class="text-right">
                                                 <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $item->id }}">
                                                     Assign teacher
                                                 </button>
                                             </td>
                                         </tr>
+                                        <?php $sn++; ?>
                                         @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -118,21 +132,31 @@
                                                     <span class="badge badge-secondary">{{ $total_assigned }} subjects</span>
                                                 </td>
                                                 <td>
-                                                    @if ($total_assigned > 0)  
-                                                        @foreach ($classsubjects as $assigned_subject)
-                                                            @if ($assigned_subject->user_id == $this_staff->user_id)
-                                                                <div class="row">   
-                                                                <div class="col-lg-8">{{ '- '.$assigned_subject->arm->schoolclass->name.' '.$assigned_subject->arm->name.' '.$assigned_subject->subject->name }}</div>
-                                                                <div class="col-lg-4 text-lg-right"><button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $assigned_subject->id }}">
-                                                                    Re-assign
-                                                                </button>
-                                                                </div>
-                                                                </div>
+                                                    <div class="table-responsive">    
+                                                        <table class="table table-striped table-hover table-sm">
+                                                            @if ($total_assigned > 0)  
+                                                                @foreach ($classsubjects as $assigned_subject)
+                                                                    @if ($assigned_subject->user_id == $this_staff->user_id)
+                                                                        <tr>
+                                                                            <td style="width: 40%;">
+                                                                                {{ $assigned_subject->subject->name }}
+                                                                            </td>
+                                                                            <td>
+                                                                                <span class="badge badge-secondary">{{ $assigned_subject->arm->schoolclass->name.' '.$assigned_subject->arm->name }}</span>
+                                                                            </td>
+                                                                            <td class="text-right">
+                                                                                <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $assigned_subject->id }}">
+                                                                                    Re-assign
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            @else
+                                                                <span class="badge badge-secondary">None</span>
                                                             @endif
-                                                        @endforeach
-                                                    @else
-                                                        <span class="badge badge-secondary">None</span>
-                                                    @endif
+                                                        </table>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             @php

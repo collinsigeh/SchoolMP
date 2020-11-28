@@ -295,7 +295,7 @@
                                     @foreach ($assigned_subjects as $classsubject)
                                         <tr>
                                             <td>
-                                                <a class="collins-link-within-table" href="{{ route('classsubjects.show', $classsubject->id) }}"><img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subject_icon" class="collins-table-item-icon">  {{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name.' '.$classsubject->subject->name }}</a>
+                                                <a class="collins-link-within-table" href="{{ route('classsubjects.show', $classsubject->id) }}"><img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subject_icon" class="collins-table-item-icon">  {{ $classsubject->subject->name.' - '.$classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</a>
                                             </td>
                                         </tr>
                                     @endforeach
