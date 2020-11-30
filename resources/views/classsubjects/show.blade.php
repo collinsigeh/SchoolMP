@@ -42,10 +42,10 @@
                     <li class="breadcrumb-item"><a href="{{ route('arms.show', $classsubject->arm_id) }}">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</a></li>
                 @endif
                 <li class="breadcrumb-item active" aria-current="page">
-                    @if ($classarm_manager != 'Yes')
-                        {{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}
-                    @endif
                     {{ $classsubject->subject->name }}
+                    @if ($classarm_manager != 'Yes')
+                        {{ ' - '.$classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}
+                    @endif
                 </li>
               @endif
             </ol>
