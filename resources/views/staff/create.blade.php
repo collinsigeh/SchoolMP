@@ -218,7 +218,7 @@
                     </div>
                     <div class="body">
                         <div class="form-group row"> 
-                            <label for="manage_staff_account" class="col-md-4 col-form-label text-md-right">{{ __('Manage Staff Account (& privileges)') }}</label>
+                            <label for="manage_staff_account" class="col-md-4 col-form-label text-md-right">{{ __('Manage Staff Account & Privileges') }}</label>
 
                             <div class="col-md-6">
                                 <select id="manage_staff_account" class="form-control @error('manage_staff_account') is-invalid @enderror" name="manage_staff_account" required autocomplete="manage_staff_account" autofocus>
@@ -235,7 +235,7 @@
                         </div>
                         
                         <div class="form-group row"> 
-                            <label for="manage_all_results" class="col-md-4 col-form-label text-md-right">{{ __('Manage all results (Principal privileges)') }}</label>
+                            <label for="manage_all_results" class="col-md-4 col-form-label text-md-right">{{ __('Manage all results (e.g. Principal)') }}</label>
 
                             <div class="col-md-6">
                                 <select id="manage_all_results" class="form-control @error('manage_all_results') is-invalid @enderror" name="manage_all_results" required autocomplete="manage_all_results" autofocus>
@@ -286,7 +286,7 @@
                         </div>
                         
                         <div class="form-group row"> 
-                            <label for="manage_students_privileges" class="col-md-4 col-form-label text-md-right">{{ __('Manage Students Privileges') }}</label>
+                            <label for="manage_students_privileges" class="col-md-4 col-form-label text-md-right">{{ __('Manage Students Privileges & Payments') }}</label>
 
                             <div class="col-md-6">
                                 <select id="manage_students_privileges" class="form-control @error('manage_students_privileges') is-invalid @enderror" name="manage_students_privileges" required autocomplete="manage_students_privileges" autofocus>
