@@ -291,7 +291,14 @@
                                     </tr>
                                     <tr>
                                         <td><b>Amount Paid:</b></td>
-                                        <td class="text-right"><?php echo '<b>'.$item->currency_symbol.' '.number_format($total_amount, 2).'</b>' ?></td>
+                                        @php
+                                            $amount_paid = 0;
+                                            foreach($enrolment->itempayments as $itempayment)
+                                            {
+                                                $amount_paid+= $itempayment->amount;
+                                            }
+                                        @endphp
+                                        <td class="text-right"><?php echo '<b>'.$item->currency_symbol.' '.number_format($amount_paid, 2).'</b>' ?></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="text-right bg-white" style="padding-top: 15px;">
