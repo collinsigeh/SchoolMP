@@ -142,7 +142,7 @@
                             <table class="table table-striped table-hover table-sm">
                                 <tbody>
                                     <tr>
-                                        <td>Can manage staff account:</td>
+                                        <td>Can manage staff account & privileges:</td>
                                         <td>
                                             <p>
                                                 @if ($this_staff->manage_staff_account == 'Yes')
@@ -154,7 +154,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Can manage all results:</td>
+                                        <td>Can manage all results (e.g. Principal):</td>
                                         <td>
                                             <p>
                                                 @if ($this_staff->manage_all_results == 'Yes')
@@ -202,10 +202,70 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Can manage parent / guardians:</td>
+                                        <td>Can manage received payments:</td>
                                         <td>
                                             <p>
-                                                @if ($this_staff->manage_guardians == 'Yes')
+                                                @if ($this_staff->manage_received_payments == 'Yes')
+                                                    <span class="badge badge-success">Yes</span>
+                                                @else
+                                                    <span class="badge badge-danger">No</span>
+                                                @endif
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Can manage fees & products:</td>
+                                        <td>
+                                            <p>
+                                                @if ($this_staff->manage_fees_products == 'Yes')
+                                                    <span class="badge badge-success">Yes</span>
+                                                @else
+                                                    <span class="badge badge-danger">No</span>
+                                                @endif
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Can manage finance report:</td>
+                                        <td>
+                                            <p>
+                                                @if ($this_staff->manage_finance_report == 'Yes')
+                                                    <span class="badge badge-success">Yes</span>
+                                                @else
+                                                    <span class="badge badge-danger">No</span>
+                                                @endif
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Can manage other reports:</td>
+                                        <td>
+                                            <p>
+                                                @if ($this_staff->manage_other_reports == 'Yes')
+                                                    <span class="badge badge-success">Yes</span>
+                                                @else
+                                                    <span class="badge badge-danger">No</span>
+                                                @endif
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Can manage subscriptions:</td>
+                                        <td>
+                                            <p>
+                                                @if ($this_staff->manage_subscriptions == 'Yes')
+                                                    <span class="badge badge-success">Yes</span>
+                                                @else
+                                                    <span class="badge badge-danger">No</span>
+                                                @endif
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Can manage calendars & Information:</td>
+                                        <td>
+                                            <p>
+                                                @if ($this_staff->manage_calendars == 'Yes')
                                                     <span class="badge badge-success">Yes</span>
                                                 @else
                                                     <span class="badge badge-danger">No</span>
@@ -262,70 +322,10 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Can manage finance report:</td>
+                                        <td>Can manage parent / guardians:</td>
                                         <td>
                                             <p>
-                                                @if ($this_staff->manage_finance_report == 'Yes')
-                                                    <span class="badge badge-success">Yes</span>
-                                                @else
-                                                    <span class="badge badge-danger">No</span>
-                                                @endif
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Can manage other reports:</td>
-                                        <td>
-                                            <p>
-                                                @if ($this_staff->manage_other_reports == 'Yes')
-                                                    <span class="badge badge-success">Yes</span>
-                                                @else
-                                                    <span class="badge badge-danger">No</span>
-                                                @endif
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Can manage subscriptions:</td>
-                                        <td>
-                                            <p>
-                                                @if ($this_staff->manage_subscriptions == 'Yes')
-                                                    <span class="badge badge-success">Yes</span>
-                                                @else
-                                                    <span class="badge badge-danger">No</span>
-                                                @endif
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Can manage fees & products:</td>
-                                        <td>
-                                            <p>
-                                                @if ($this_staff->manage_fees_products == 'Yes')
-                                                    <span class="badge badge-success">Yes</span>
-                                                @else
-                                                    <span class="badge badge-danger">No</span>
-                                                @endif
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Can manage received payments:</td>
-                                        <td>
-                                            <p>
-                                                @if ($this_staff->manage_received_payments == 'Yes')
-                                                    <span class="badge badge-success">Yes</span>
-                                                @else
-                                                    <span class="badge badge-danger">No</span>
-                                                @endif
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Can manage calendars & Information:</td>
-                                        <td>
-                                            <p>
-                                                @if ($this_staff->manage_calendars == 'Yes')
+                                                @if ($this_staff->manage_guardians == 'Yes')
                                                     <span class="badge badge-success">Yes</span>
                                                 @else
                                                     <span class="badge badge-danger">No</span>

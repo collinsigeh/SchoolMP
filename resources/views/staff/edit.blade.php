@@ -218,7 +218,7 @@
                     </div>
                     <div class="body">
                         <div class="form-group row"> 
-                            <label for="manage_staff_account" class="col-md-4 col-form-label text-md-right">{{ __('Manage Staff Account') }}</label>
+                            <label for="manage_staff_account" class="col-md-4 col-form-label text-md-right">{{ __('Manage Staff Account & Privileges') }}</label>
 
                             <div class="col-md-6">
                                 <select id="manage_staff_account" class="form-control @error('manage_staff_account') is-invalid @enderror" name="manage_staff_account" required autocomplete="manage_staff_account" autofocus>
@@ -239,7 +239,7 @@
                         </div>
                         
                         <div class="form-group row"> 
-                            <label for="manage_all_results" class="col-md-4 col-form-label text-md-right">{{ __('Manage all results (Principal privileges)') }}</label>
+                            <label for="manage_all_results" class="col-md-4 col-form-label text-md-right">{{ __('Manage all results (e.g. Principal)') }}</label>
 
                             <div class="col-md-6">
                                 <select id="manage_all_results" class="form-control @error('manage_all_results') is-invalid @enderror" name="manage_all_results" required autocomplete="manage_all_results" autofocus>
@@ -323,19 +323,124 @@
                         </div>
                         
                         <div class="form-group row"> 
-                            <label for="manage_guardians" class="col-md-4 col-form-label text-md-right">{{ __('Manage Parents / Guardians') }}</label>
+                            <label for="manage_received_payments" class="col-md-4 col-form-label text-md-right">{{ __('Manage Received Payments') }}</label>
 
                             <div class="col-md-6">
-                                <select id="manage_guardians" class="form-control @error('manage_guardians') is-invalid @enderror" name="manage_guardians" required autocomplete="manage_guardians" autofocus>
-                                    <option value="No" @if ($this_staff->manage_guardians == 'No')
+                                <select id="manage_received_payments" class="form-control @error('manage_received_payments') is-invalid @enderror" name="manage_received_payments" required autocomplete="manage_received_payments" autofocus>
+                                    <option value="No" @if ($this_staff->manage_received_payments == 'No')
                                         {{ 'selected' }}
                                     @endif>No</option>
-                                    <option value="Yes" @if ($this_staff->manage_guardians == 'Yes')
+                                    <option value="Yes" @if ($this_staff->manage_received_payments == 'Yes')
                                         {{ 'selected' }}
                                     @endif>Yes</option>
                                 </select>
 
-                                @error('manage_guardians')
+                                @error('manage_received_payments')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row"> 
+                            <label for="manage_fees_products" class="col-md-4 col-form-label text-md-right">{{ __('Manage Fees & Products') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="manage_fees_products" class="form-control @error('manage_fees_products') is-invalid @enderror" name="manage_fees_products" required autocomplete="manage_fees_products" autofocus>
+                                    <option value="No" @if ($this_staff->manage_fees_products == 'No')
+                                        {{ 'selected' }}
+                                    @endif>No</option>
+                                    <option value="Yes" @if ($this_staff->manage_fees_products == 'Yes')
+                                        {{ 'selected' }}
+                                    @endif>Yes</option>
+                                </select>
+
+                                @error('manage_fees_products')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row"> 
+                            <label for="manage_finance_report" class="col-md-4 col-form-label text-md-right">{{ __('Manage Finance Report') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="manage_finance_report" class="form-control @error('manage_finance_report') is-invalid @enderror" name="manage_finance_report" required autocomplete="manage_finance_report" autofocus>
+                                    <option value="No" @if ($this_staff->manage_finance_report == 'No')
+                                        {{ 'selected' }}
+                                    @endif>No</option>
+                                    <option value="Yes" @if ($this_staff->manage_finance_report == 'Yes')
+                                        {{ 'selected' }}
+                                    @endif>Yes</option>
+                                </select>
+
+                                @error('manage_finance_report')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row"> 
+                            <label for="manage_other_reports" class="col-md-4 col-form-label text-md-right">{{ __('Manage Other Reports') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="manage_other_reports" class="form-control @error('manage_other_reports') is-invalid @enderror" name="manage_other_reports" required autocomplete="manage_other_reports" autofocus>
+                                    <option value="No" @if ($this_staff->manage_other_reports == 'No')
+                                        {{ 'selected' }}
+                                    @endif>No</option>
+                                    <option value="Yes" @if ($this_staff->manage_other_reports == 'Yes')
+                                        {{ 'selected' }}
+                                    @endif>Yes</option>
+                                </select>
+
+                                @error('manage_other_reports')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row"> 
+                            <label for="manage_subscriptions" class="col-md-4 col-form-label text-md-right">{{ __('Manage Subscriptions') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="manage_subscriptions" class="form-control @error('manage_subscriptions') is-invalid @enderror" name="manage_subscriptions" required autocomplete="manage_subscriptions" autofocus>
+                                    <option value="No" @if ($this_staff->manage_subscriptions == 'No')
+                                        {{ 'selected' }}
+                                    @endif>No</option>
+                                    <option value="Yes" @if ($this_staff->manage_subscriptions == 'Yes')
+                                        {{ 'selected' }}
+                                    @endif>Yes</option>
+                                </select>
+
+                                @error('manage_subscriptions')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row"> 
+                            <label for="manage_calendars" class="col-md-4 col-form-label text-md-right">{{ __('Manage School Calendars & Information') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="manage_calendars" class="form-control @error('manage_calendars') is-invalid @enderror" name="manage_calendars" required autocomplete="manage_calendars" autofocus>
+                                    <option value="No" @if ($this_staff->manage_calendars == 'No')
+                                        {{ 'selected' }}
+                                    @endif>No</option>
+                                    <option value="Yes" @if ($this_staff->manage_calendars == 'Yes')
+                                        {{ 'selected' }}
+                                    @endif>Yes</option>
+                                </select>
+
+                                @error('manage_calendars')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -428,124 +533,19 @@
                         </div>
                         
                         <div class="form-group row"> 
-                            <label for="manage_finance_report" class="col-md-4 col-form-label text-md-right">{{ __('Manage Finance Report') }}</label>
+                            <label for="manage_guardians" class="col-md-4 col-form-label text-md-right">{{ __('Manage Parents / Guardians') }}</label>
 
                             <div class="col-md-6">
-                                <select id="manage_finance_report" class="form-control @error('manage_finance_report') is-invalid @enderror" name="manage_finance_report" required autocomplete="manage_finance_report" autofocus>
-                                    <option value="No" @if ($this_staff->manage_finance_report == 'No')
+                                <select id="manage_guardians" class="form-control @error('manage_guardians') is-invalid @enderror" name="manage_guardians" required autocomplete="manage_guardians" autofocus>
+                                    <option value="No" @if ($this_staff->manage_guardians == 'No')
                                         {{ 'selected' }}
                                     @endif>No</option>
-                                    <option value="Yes" @if ($this_staff->manage_finance_report == 'Yes')
+                                    <option value="Yes" @if ($this_staff->manage_guardians == 'Yes')
                                         {{ 'selected' }}
                                     @endif>Yes</option>
                                 </select>
 
-                                @error('manage_finance_report')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="form-group row"> 
-                            <label for="manage_other_reports" class="col-md-4 col-form-label text-md-right">{{ __('Manage Other Reports') }}</label>
-
-                            <div class="col-md-6">
-                                <select id="manage_other_reports" class="form-control @error('manage_other_reports') is-invalid @enderror" name="manage_other_reports" required autocomplete="manage_other_reports" autofocus>
-                                    <option value="No" @if ($this_staff->manage_other_reports == 'No')
-                                        {{ 'selected' }}
-                                    @endif>No</option>
-                                    <option value="Yes" @if ($this_staff->manage_other_reports == 'Yes')
-                                        {{ 'selected' }}
-                                    @endif>Yes</option>
-                                </select>
-
-                                @error('manage_other_reports')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="form-group row"> 
-                            <label for="manage_subscriptions" class="col-md-4 col-form-label text-md-right">{{ __('Manage Subscriptions') }}</label>
-
-                            <div class="col-md-6">
-                                <select id="manage_subscriptions" class="form-control @error('manage_subscriptions') is-invalid @enderror" name="manage_subscriptions" required autocomplete="manage_subscriptions" autofocus>
-                                    <option value="No" @if ($this_staff->manage_subscriptions == 'No')
-                                        {{ 'selected' }}
-                                    @endif>No</option>
-                                    <option value="Yes" @if ($this_staff->manage_subscriptions == 'Yes')
-                                        {{ 'selected' }}
-                                    @endif>Yes</option>
-                                </select>
-
-                                @error('manage_subscriptions')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="form-group row"> 
-                            <label for="manage_fees_products" class="col-md-4 col-form-label text-md-right">{{ __('Manage Fees & Products') }}</label>
-
-                            <div class="col-md-6">
-                                <select id="manage_fees_products" class="form-control @error('manage_fees_products') is-invalid @enderror" name="manage_fees_products" required autocomplete="manage_fees_products" autofocus>
-                                    <option value="No" @if ($this_staff->manage_fees_products == 'No')
-                                        {{ 'selected' }}
-                                    @endif>No</option>
-                                    <option value="Yes" @if ($this_staff->manage_fees_products == 'Yes')
-                                        {{ 'selected' }}
-                                    @endif>Yes</option>
-                                </select>
-
-                                @error('manage_fees_products')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="form-group row"> 
-                            <label for="manage_received_payments" class="col-md-4 col-form-label text-md-right">{{ __('Manage Received Payments') }}</label>
-
-                            <div class="col-md-6">
-                                <select id="manage_received_payments" class="form-control @error('manage_received_payments') is-invalid @enderror" name="manage_received_payments" required autocomplete="manage_received_payments" autofocus>
-                                    <option value="No" @if ($this_staff->manage_received_payments == 'No')
-                                        {{ 'selected' }}
-                                    @endif>No</option>
-                                    <option value="Yes" @if ($this_staff->manage_received_payments == 'Yes')
-                                        {{ 'selected' }}
-                                    @endif>Yes</option>
-                                </select>
-
-                                @error('manage_received_payments')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="form-group row"> 
-                            <label for="manage_calendars" class="col-md-4 col-form-label text-md-right">{{ __('Manage School Calendars & Information') }}</label>
-
-                            <div class="col-md-6">
-                                <select id="manage_calendars" class="form-control @error('manage_calendars') is-invalid @enderror" name="manage_calendars" required autocomplete="manage_calendars" autofocus>
-                                    <option value="No" @if ($this_staff->manage_calendars == 'No')
-                                        {{ 'selected' }}
-                                    @endif>No</option>
-                                    <option value="Yes" @if ($this_staff->manage_calendars == 'Yes')
-                                        {{ 'selected' }}
-                                    @endif>Yes</option>
-                                </select>
-
-                                @error('manage_calendars')
+                                @error('manage_guardians')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
