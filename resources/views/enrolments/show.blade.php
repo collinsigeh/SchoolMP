@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>{!! $enrolment->user->name.' ( <i>'.$enrolment->student->registration_number.' </i>)' !!}</h3>
+          <h3>{!! $enrolment->user->name.' - (<i>'.$term->name.' - <small>'.$term->session.'</small>'.'</i>)' !!}</h3>
           </div>
           <div class="col-4 text-right">
             
@@ -39,7 +39,7 @@
                 @else
                     <li class="breadcrumb-item"><a href="{{ route('classsubjects.show', session('enrolment_return_page')->id) }}">{{ session('enrolment_return_page')->subject->name.' - '.session('enrolment_return_page')->arm->schoolclass->name.' '.session('enrolment_return_page')->arm->name }}</a></li>
                 @endif
-                <li class="breadcrumb-item active" aria-current="page">{!! $enrolment->user->name.' ( <i>'.$enrolment->student->registration_number.' </i>)' !!}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $enrolment->user->name }}</li>
               @else
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 @if (session('enrolment_return_page') == 'enrolments_index')
@@ -49,7 +49,7 @@
                 @else
                     <li class="breadcrumb-item"><a href="{{ route('classsubjects.show', session('enrolment_return_page')->id) }}">{{ session('enrolment_return_page')->subject->name.' - '.session('enrolment_return_page')->arm->schoolclass->name.' '.session('enrolment_return_page')->arm->name }}</a></li>
                 @endif
-                <li class="breadcrumb-item active" aria-current="page">{!! $enrolment->user->name.' ( <i>'.$enrolment->student->registration_number.' </i>)' !!}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $enrolment->user->name }}</li>
               @endif
             </ol>
           </nav>
@@ -63,7 +63,7 @@
                 <div class="col-md-6">
                     <div class="resource-details">
                         <div class="title">
-                            Student enrolment details
+                            Student details
                         </div>
                         <div class="body">
                             <div class="row">
@@ -110,115 +110,6 @@
                                 </table>
                             </div>
                             
-                            @if ($student_manager == 'Yes')
-                            <div class="table-responsive collins-table-pem" style="padding-bottom: 18px;">
-                                <table class="table table-striped table-bordered table-hover table-sm">
-                                    <tr>
-                                        <th colspan="2" class="text-center">ENROLMENT & FEES</th>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-light">Termly subscription:</th>
-                                        <td><span class="badge <?php
-                                            if($enrolment->status == 'Active')
-                                            {
-                                              echo 'badge-success';
-                                            }
-                                            else
-                                            {
-                                              echo 'badge-danger';
-                                            }
-                                        ?>">{{ $enrolment->status }}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-light">Fees payment status:</th>
-                                        <td><span class="badge <?php
-                                            if($enrolment->fee_status == 'Unpaid')
-                                            {
-                                              echo 'badge-danger';
-                                            }
-                                            elseif($enrolment->fee_status == 'Partly-paid')
-                                            {
-                                              echo 'badge-warning';
-                                            }
-                                            elseif($enrolment->fee_status == 'Completely-paid')
-                                            {
-                                              echo 'badge-success';
-                                            }
-                                        ?>">{{ $enrolment->fee_status }}</span></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            @endif
-
-                            @if ($student_privilege_manager == 'Yes')
-                            <div class="table-responsive collins-table-pem" style="padding-bottom: 18px;">
-                                <table class="table table-striped table-bordered table-hover table-sm">
-                                    <tr>
-                                        <th colspan="2" class="text-center">TERMLY PRIVILEGES</th>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-light">To write exams:</th>
-                                        <td> 
-                                            @php
-                                            if($enrolment->access_exam == 'Yes')
-                                            {
-                                                echo '<span class="badge badge-success">Permitted</span>';
-                                            }
-                                            else
-                                            {
-                                                echo '<span class="badge badge-danger">NOT permitted</span>';
-                                            }
-                                        @endphp
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-light">To partake in CA:</th>
-                                        <td>
-                                            @php
-                                            if($enrolment->access_ca == 'Yes')
-                                            {
-                                                echo '<span class="badge badge-success">Permitted</span>';
-                                            }
-                                            else
-                                            {
-                                                echo '<span class="badge badge-danger">NOT permitted</span>';
-                                            }
-                                        @endphp
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-light">To partake in assignments:</th>
-                                        <td>
-                                            @php
-                                            if($enrolment->access_assignment == 'Yes')
-                                            {
-                                                echo '<span class="badge badge-success">Permitted</span>';
-                                            }
-                                            else
-                                            {
-                                                echo '<span class="badge badge-danger">NOT permitted</span>';
-                                            }
-                                        @endphp
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-light">To access termly report:</th>
-                                        <td>
-                                            @php
-                                            if($enrolment->access_result == 'Yes')
-                                            {
-                                                echo '<span class="badge badge-success">Permitted</span>';
-                                            }
-                                            else
-                                            {
-                                                echo '<span class="badge badge-danger">NOT permitted</span>';
-                                            }
-                                        @endphp
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            @endif
                             
                             <div class="table-responsive collins-table-pem" style="padding-bottom: 18px;">
                                 <table class="table table-striped table-bordered table-hover table-sm">
@@ -328,6 +219,164 @@
                 </div>
                 
                 <div class="col-md-6">
+                    <div class="resource-details">
+                        <div class="title">
+                            Fees & Privileges
+                        </div>
+                        <div class="body">
+                            @if ($student_manager == 'Yes')
+                            <div class="table-responsive collins-table-pem">
+                                <table class="table table-striped table-bordered table-hover table-sm">
+                                    <tr>
+                                        <th colspan="2" class="text-center">ENROLMENT & FEES</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light" style="font-weight: 400;">Termly subscription:</th>
+                                        <td><span class="badge <?php
+                                            if($enrolment->status == 'Active')
+                                            {
+                                              echo 'badge-success';
+                                            }
+                                            else
+                                            {
+                                              echo 'badge-danger';
+                                            }
+                                        ?>">{{ $enrolment->status }}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light" style="font-weight: 400;">Fees payment status:</th>
+                                        <td><span class="badge <?php
+                                            if($enrolment->fee_status == 'Unpaid')
+                                            {
+                                              echo 'badge-danger';
+                                            }
+                                            elseif($enrolment->fee_status == 'Partly-paid')
+                                            {
+                                              echo 'badge-warning';
+                                            }
+                                            elseif($enrolment->fee_status == 'Completely-paid')
+                                            {
+                                              echo 'badge-success';
+                                            }
+                                        ?>">{{ $enrolment->fee_status }}</span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="padding-bottom: 40px;" class="text-right">
+                                <button class="btn btn-sm btn-primary">Update fees payment status</button>
+                            </div>
+                            @endif
+
+                            <div class="table-responsive collins-table-pem">
+                                <table class="table table-striped table-bordered table-hover table-sm">
+                                    <tr>
+                                        <th colspan="2" class="text-center">FEES BREAKDOWN</th>
+                                    </tr>
+                                    <?php $total_amount = 0; ?>
+                                    @foreach ($enrolment->arm->items as $item)
+                                    <tr>
+                                        <td>{{ $item->name }}</td>
+                                        <td class="text-right">{{ $item->currency_symbol.' '.$item->amount }}</td>
+                                    </tr>
+                                    <?php $total_amount+= $item->amount; ?>
+                                    @endforeach
+                                </table>
+                            </div>
+
+                            <div class="table-responsive collins-table-pem" style="padding-bottom: 23px;">
+                                <table class="table table-striped table-hover table-sm">
+                                    <tr>
+                                        <td>Total Fees:</td>
+                                        <td class="text-right"><?php echo $item->currency_symbol.' '.number_format($total_amount, 2) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Amount Paid:</b></td>
+                                        <td class="text-right"><?php echo '<b>'.$item->currency_symbol.' '.number_format($total_amount, 2).'</b>' ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-right bg-white" style="padding-top: 15px;">
+                                            <button class="btn btn-sm btn-outline-primary">View all payments</button>
+                                            <button class="btn btn-sm btn-primary" style="margin-left: 20px;">Add new payment</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            @if ($student_privilege_manager == 'Yes')
+                            <div class="table-responsive collins-table-pem">
+                                <table class="table table-striped table-bordered table-hover table-sm">
+                                    <tr>
+                                        <th colspan="2" class="text-center">TERMLY PRIVILEGES</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light" style="font-weight: 400;">To write exams:</th>
+                                        <td> 
+                                            @php
+                                            if($enrolment->access_exam == 'Yes')
+                                            {
+                                                echo '<span class="badge badge-success">Permitted</span>';
+                                            }
+                                            else
+                                            {
+                                                echo '<span class="badge badge-danger">NOT permitted</span>';
+                                            }
+                                        @endphp
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light" style="font-weight: 400;">To partake in CA:</th>
+                                        <td>
+                                            @php
+                                            if($enrolment->access_ca == 'Yes')
+                                            {
+                                                echo '<span class="badge badge-success">Permitted</span>';
+                                            }
+                                            else
+                                            {
+                                                echo '<span class="badge badge-danger">NOT permitted</span>';
+                                            }
+                                        @endphp
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light" style="font-weight: 400;">To partake in assignments:</th>
+                                        <td>
+                                            @php
+                                            if($enrolment->access_assignment == 'Yes')
+                                            {
+                                                echo '<span class="badge badge-success">Permitted</span>';
+                                            }
+                                            else
+                                            {
+                                                echo '<span class="badge badge-danger">NOT permitted</span>';
+                                            }
+                                        @endphp
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light" style="font-weight: 400;">To access termly report:</th>
+                                        <td>
+                                            @php
+                                            if($enrolment->access_result == 'Yes')
+                                            {
+                                                echo '<span class="badge badge-success">Permitted</span>';
+                                            }
+                                            else
+                                            {
+                                                echo '<span class="badge badge-danger">NOT permitted</span>';
+                                            }
+                                        @endphp
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="padding-bottom: 18px;" class="text-right">
+                                <button class="btn btn-sm btn-primary">Update privileges</button>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+
                     <div class="resource-details">
                         <div class="title">
                             Report
