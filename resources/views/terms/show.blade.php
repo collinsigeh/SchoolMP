@@ -194,6 +194,20 @@
                                 </tr>
                                 <tr>
                                   <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="#">
+                                      <img src="{{ config('app.url') }}/images/icons/wallet_icon.png" alt="paymets_icon" class="options-icon">  Payments received
+                                    </a>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="#">
+                                      <img src="{{ config('app.url') }}/images/icons/report_icon.png" alt="report_icon" class="options-icon">  Financial Summary
+                                    </a>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
                                     <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('terms.edit', $term->id) }}">
                                       <img src="{{ config('app.url') }}/images/icons/term_info_icon.png" alt="term_info_icon" class="options-icon"> Term information
                                     </a>

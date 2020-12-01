@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentsTable extends Migration
+class CreateItempaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('itempayments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('reference', 75)->nullable();
-            $table->integer('order_id')->nullable();//which order is connected to the payment, zero (0) for payments without order ties
+            $table->integer('enrolment_id')->nullable();// which enrolment (student) is connected to the payment, zero (0) for payments without enrolment ties
+            $table->integer('item_id')->nullable();// which item/fee is connected to the payment, zero (0) for payments without item/fee ties
+            $table->integer('term_id');
+            $table->integer('school_id');
             $table->string('currency_symbol', 25);
             $table->decimal('amount', 10, 2);
             $table->enum('method', ['Offline', 'Online', 'Voucher']);
@@ -34,6 +36,6 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('itempayments');
     }
 }
