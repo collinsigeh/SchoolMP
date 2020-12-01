@@ -85,4 +85,12 @@ class Enrolment extends Model
     {
         return $this->hasmany('App\Result');
     }
+    
+    /**
+     * Get the itempayments for the enrolment.
+     */
+    public function itempayments()
+    {
+        return $this->hasmany('App\Itempayment');
+    }
 }

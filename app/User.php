@@ -144,4 +144,12 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Order');
     }
+    
+    /**
+     * Get the itempayments for the User.
+     */
+    public function itempayments()
+    {
+        return $this->hasmany('App\Itempayment');
+    }
 }

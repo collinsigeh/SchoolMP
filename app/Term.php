@@ -57,4 +57,12 @@ class Term extends Model
     {
         return $this->hasmany('App\Calendar');
     }
+    
+    /**
+     * Get the itempayments for the Term.
+     */
+    public function itempayments()
+    {
+        return $this->hasmany('App\Itempayment');
+    }
 }

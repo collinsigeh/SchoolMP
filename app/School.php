@@ -103,4 +103,12 @@ class School extends Model
     {
         return $this->hasmany('App\Result');
     }
+    
+    /**
+     * Get the itempayments for the School.
+     */
+    public function itempayments()
+    {
+        return $this->hasmany('App\Itempayment');
+    }
 }

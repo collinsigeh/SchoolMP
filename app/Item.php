@@ -14,4 +14,12 @@ class Item extends Model
     {
         return $this->belongsToMany('App\Arm');
     }
+    
+    /**
+     * Get the itempayments for the Item.
+     */
+    public function itempayments()
+    {
+        return $this->hasmany('App\Itempayment');
+    }
 }
