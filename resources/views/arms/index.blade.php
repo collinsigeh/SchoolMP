@@ -60,16 +60,17 @@
             <table class="table table-striped table-hover table-sm">
                     <thead>
                         <tr>
-                            <th>Specific classes</th>
+                            <th colspan="2">Specific classes</th>
                             <th>Class teacher</th>
-                            <th>No. of students</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($arms as $arm)
                             <tr>
-                                <td><a href="{{ route('arms.show', $arm->id) }}" class="collins-link-within-table"><img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="class_icon" class="collins-table-item-icon"> {{ $arm->schoolclass->name.' '.$arm->name }}</a></td>
-                                <td style="padding-top: 13px;">
+                                <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="class_icon" class="collins-table-item-icon"></td>
+                                <td style="vertical-align: middle;"><a href="{{ route('arms.show', $arm->id) }}" class="collins-link-within-table"><b>{{ $arm->schoolclass->name.' '.$arm->name }}</b><br /><span class="badge badge-secondary">{{ count($arm->enrolments) }} students</span></a></td>
+                                <td style="vertical-align: middle;">
                                   @php
                                       if($arm->user_id > 0)
                                       {
@@ -81,7 +82,7 @@
                                       }
                                   @endphp
                                 </td>
-                                <td style="padding-top: 13px;"><span class="badge badge-secondary">{{ count($arm->enrolments) }} students</span></td>
+                                <td class="text-right" style="vertical-align: middle;"><a href="{{ route('arms.show', $arm->id) }}" class="btn btn-sm btn-outline-primary">Manage</a></td>
                             </tr>
                         @endforeach
                     </tbody>
