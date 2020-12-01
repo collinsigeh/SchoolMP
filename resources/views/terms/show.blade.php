@@ -194,15 +194,8 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="#">
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('itempayments.index') }}">
                                       <img src="{{ config('app.url') }}/images/icons/wallet_icon.png" alt="paymets_icon" class="options-icon">  Payments received
-                                    </a>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <a class="btn btn-sm btn-block btn-outline-primary text-left" href="#">
-                                      <img src="{{ config('app.url') }}/images/icons/report_icon.png" alt="report_icon" class="options-icon">  Financial Summary
                                     </a>
                                   </td>
                                 </tr>
@@ -356,7 +349,7 @@
                                   </td>
                                 </tr>
                                 @endif
-                                  @if ($fees_manager == 'Yes')
+                                @if ($fees_manager == 'Yes')
                                   <tr>
                                     <td>
                                       <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('items.index') }}">
@@ -364,7 +357,16 @@
                                       </a>
                                     </td>
                                   </tr>
-                                  @endif
+                                @endif
+                                @if ($itempayment_manager == 'Yes')
+                                  <tr>
+                                    <td>
+                                      <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('itempayments.index') }}">
+                                        <img src="{{ config('app.url') }}/images/icons/wallet_icon.png" alt="paymets_icon" class="options-icon">  Payments received
+                                      </a>
+                                    </td>
+                                  </tr>
+                                @endif
                                 @if ($sessionterm_manager == 'Yes')
                                 <tr>
                                   <td>

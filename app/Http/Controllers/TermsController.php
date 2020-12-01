@@ -373,24 +373,26 @@ class TermsController extends Controller
         );
         $data['calendar'] = Calendar::where($db_check)->orderBy('week', 'asc')->get();
 
-        $data['student_manager'] = 'No';
-        $data['classarm_manager'] = 'No';
-        $data['fees_manager'] = 'No';
-        $data['calendar_manager'] = 'No';
-        $data['sessionterm_manager'] = 'No';
-        $data['subscription_manager'] = 'No';
-        $data['staff_manager'] = 'No';
-        $data['subject_manager'] = 'No';
+        $data['student_manager']        = 'No';
+        $data['classarm_manager']       = 'No';
+        $data['fees_manager']           = 'No';
+        $data['itempayment_manager']    = 'No';
+        $data['calendar_manager']       = 'No';
+        $data['sessionterm_manager']    = 'No';
+        $data['subscription_manager']   = 'No';
+        $data['staff_manager']          = 'No';
+        $data['subject_manager']        = 'No';
         if(Auth::user()->role == 'Consultant' OR Auth::user()->role == 'Director')
         {
-            $data['student_manager'] = 'Yes';
-            $data['classarm_manager'] = 'Yes';
-            $data['fees_manager'] = 'Yes';
-            $data['calendar_manager'] = 'Yes';
-            $data['sessionterm_manager'] = 'Yes';
-            $data['subscription_manager'] = 'Yes';
-            $data['staff_manager'] = 'Yes';
-            $data['subject_manager'] = 'Yes';
+            $data['student_manager']        = 'Yes';
+            $data['classarm_manager']       = 'Yes';
+            $data['fees_manager']           = 'Yes';
+            $data['itempayment_manager']    = 'Yes';
+            $data['calendar_manager']       = 'Yes';
+            $data['sessionterm_manager']    = 'Yes';
+            $data['subscription_manager']   = 'Yes';
+            $data['staff_manager']          = 'Yes';
+            $data['subject_manager']        = 'Yes';
         }
         elseif(Auth::user()->role == 'Staff')
         {
@@ -405,6 +407,10 @@ class TermsController extends Controller
             if($data['staff']->manage_fees_products == 'Yes')
             {
                 $data['fees_manager'] = 'Yes';
+            }
+            if($data['staff']->manage_received_payments == 'Yes')
+            {
+                $data['itempayment_manager'] = 'Yes';
             }
             if($data['staff']->manage_calendars == 'Yes')
             {

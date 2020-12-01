@@ -43,6 +43,8 @@ Route::resource('/enrolments', 'EnrolmentsController');
 
 Route::resource('/guardians', 'GuardiansController');
 
+Route::resource('/itempayments', 'ItempaymentsController');
+
 Route::resource('/items', 'ItemsController');
 
 Route::get('/orders/all', 'OrdersController@all')->name('orders.all');
