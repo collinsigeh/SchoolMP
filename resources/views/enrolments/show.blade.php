@@ -305,7 +305,7 @@
                                     <tr>
                                         <td colspan="2" class="text-right bg-white" style="padding-top: 15px;">
                                             @if ($itempayment_manager == 'Yes' OR $finance_manager == 'Yes')
-                                                <button class="btn btn-sm btn-outline-primary">View all payments</button>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#allPaymentModal">View all payments</button>
                                             @endif
                                             @if ($itempayment_manager == 'Yes')
                                                 <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addStudentPaymentModal" style="margin-left: 20px;">Add new payment</button>
@@ -563,5 +563,67 @@
     </div>
 </div>
 <!-- End addStudentPaymentModal -->
+
+
+<!-- allPaymentModal -->
+<div class="modal fade" id="allPaymentModal" tabindex="-1" role="dialog" aria-labelledby="allPaymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="allPaymentLabel">Payments for {{ $enrolment->user->name }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            @if (count($enrolment->itempayments) < 1)
+                <div class="alert alert-info">No payment yet.</div>
+            @else
+            <div class="table-responsive">
+                <table class="table table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Payment</th>
+                            <th class="text-right">status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $sn = 1; ?>
+                        @foreach ($enrolment->itempayments as $itempayment)
+                            <tr>
+                                <td>{{ $sn }}</td>
+                                <td>
+                                    {{ $itempayment->currency_symbol.' '.$itempayment->amount.' for '.$itempayment->item->name }}<br />
+                                    <small><i>Recorded on <?php echo date('D, d-M-Y', strtotime($itempayment->created_at)) ?></i></small>
+                                </td>
+                                <td class="text-right">
+                                    @php
+                                        if($itempayment->status == 'Confirmed')
+                                        {
+                                            echo '<span class="badge badge-success">Confirmed</span>';
+                                        }
+                                        elseif($itempayment->status == 'Declined')
+                                        {
+                                            echo '<span class="badge badge-danger">Declined</span>';
+                                        }
+                                        else
+                                        {
+                                            echo '<span class="badge badge-info">Pending</span>';
+                                        }
+                                        $sn++;
+                                    @endphp
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            @endif
+        </div>
+      </div>
+    </div>
+</div>
+<!-- End allPaymentModal -->
 
 @endsection
