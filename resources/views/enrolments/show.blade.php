@@ -263,7 +263,9 @@
                                 </table>
                             </div>
                             <div style="padding-bottom: 40px;" class="text-right">
-                                <button class="btn btn-sm btn-primary">Update fees payment status</button>
+                                @if ($itempayment_manager == 'Yes' OR $finance_manager == 'Yes')
+                                    <button class="btn btn-sm btn-primary">Update fees payment status</button>
+                                @endif
                             </div>
                             @endif
 
@@ -302,8 +304,14 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="text-right bg-white" style="padding-top: 15px;">
-                                            <button class="btn btn-sm btn-outline-primary">View all payments</button>
-                                            <button class="btn btn-sm btn-primary" style="margin-left: 20px;">Add new payment</button>
+                                            @if ($itempayment_manager == 'Yes' OR $finance_manager == 'Yes')
+                                                <button class="btn btn-sm btn-outline-primary">View all payments</button>
+                                            @endif
+                                            @if ($itempayment_manager == 'Yes')
+                                                <button class="btn btn-sm btn-primary" style="margin-left: 20px;">Add new payment</button>
+                                            @endif
+                                            
+                                            
                                         </td>
                                     </tr>
                                 </table>
@@ -378,7 +386,9 @@
                                 </table>
                             </div>
                             <div style="padding-bottom: 18px;" class="text-right">
-                                <button class="btn btn-sm btn-primary">Update privileges</button>
+                                @if ($itempayment_manager == 'Yes' OR $finance_manager == 'Yes')
+                                    <button class="btn btn-sm btn-primary">Update privileges</button>
+                                @endif
                             </div>
                             @endif
                         </div>

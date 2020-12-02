@@ -205,20 +205,24 @@ class EnrolmentsController extends Controller
         }
         session(['arm_id' => $data['arm']->id]);
 
-        $data['student_manager'] = 'No';
+        $data['student_manager']        = 'No';
         $data['student_privilege_manager'] = 'No';
-        $data['classarm_manager'] = 'No';
-        $data['fees_manager'] = 'No';
-        $data['calendar_manager'] = 'No';
-        $data['sessionterm_manager'] = 'No';
+        $data['classarm_manager']       = 'No';
+        $data['fees_manager']           = 'No';
+        $data['itempayment_manager']    = 'No';
+        $data['finance_manager']        = 'No';
+        $data['calendar_manager']       = 'No';
+        $data['sessionterm_manager']    = 'No';
         if(Auth::user()->role == 'Consultant' || Auth::user()->role == 'Director')
         {
-            $data['student_manager'] = 'Yes';
+            $data['student_manager']        = 'Yes';
             $data['student_privilege_manager'] = 'Yes';
-            $data['classarm_manager'] = 'yes';
-            $data['fees_manager'] = 'Yes';
-            $data['calendar_manager'] = 'Yes';
-            $data['sessionterm_manager'] = 'Yes';
+            $data['classarm_manager']       = 'yes';
+            $data['fees_manager']           = 'Yes';
+            $data['itempayment_manager']    = 'Yes';
+            $data['finance_manager']        = 'Yes';
+            $data['calendar_manager']       = 'Yes';
+            $data['sessionterm_manager']    = 'Yes';
         }
         elseif(Auth::user()->role == 'Staff')
         {
@@ -237,6 +241,14 @@ class EnrolmentsController extends Controller
             if($data['staff']->manage_fees_products == 'Yes')
             {
                 $data['fees_manager'] = 'Yes';
+            }
+            if($data['staff']->manage_received_payments == 'Yes')
+            {
+                $data['itempayment_manager'] = 'Yes';
+            }
+            if($data['staff']->manage_finance_report == 'Yes')
+            {
+                $data['finance_manager'] = 'Yes';
             }
             if($data['staff']->manage_calendars == 'Yes')
             {
