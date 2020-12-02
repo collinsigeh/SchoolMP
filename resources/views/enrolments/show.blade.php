@@ -308,7 +308,7 @@
                                                 <button class="btn btn-sm btn-outline-primary">View all payments</button>
                                             @endif
                                             @if ($itempayment_manager == 'Yes')
-                                                <button class="btn btn-sm btn-primary" style="margin-left: 20px;">Add new payment</button>
+                                                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addStudentPaymentModal" style="margin-left: 20px;">Add new payment</button>
                                             @endif
                                             
                                             
@@ -386,7 +386,7 @@
                                 </table>
                             </div>
                             <div style="padding-bottom: 18px;" class="text-right">
-                                @if ($itempayment_manager == 'Yes' OR $finance_manager == 'Yes')
+                                @if ($student_privilege_manager == 'Yes')
                                     <button class="btn btn-sm btn-primary">Update privileges</button>
                                 @endif
                             </div>
@@ -445,5 +445,122 @@
   @endif
  
   @include('partials._add_subjects_for_student')
+
+<!-- addStudentPaymentModal -->
+<div class="modal fade" id="addStudentPaymentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentPaymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addStudentPaymentLabel">Add new payment received</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="create-form">
+                <form method="POST" action="{{ route('itempayments.store') }}">
+                    @csrf
+
+                    <input type="hidden" name="return_page" value="enrolments_show">
+                    <input type="hidden" name="enrolment_id" value="{{ $enrolment->id }}">
+
+                    <div class="form-group row">
+                        <label for="student" class="col-md-4 col-form-label text-md-right">{{ __('Student') }}</label>
+    
+                        <div class="col-md-8">
+                            <div class="alert alert-info">{!! '<b>'.$enrolment->user->name.'</b><br /><small>('.$enrolment->student->registration_number.')</small>' !!}</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('Class') }}</label>
+    
+                        <div class="col-md-8">
+                            <div class="alert alert-info">{{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row"> 
+                        <label for="item_paid_for" class="col-md-4 col-form-label text-md-right">{{ __('Item paid for') }}</label>
+    
+                        <div class="col-md-8">
+                            <select id="item_paid_for" type="text" class="form-control @error('item_paid_for') is-invalid @enderror" name="item_paid_for" autocomplete="item_paid_for" autofocus>
+                                @php
+                                    foreach ($arm->items as $item) {
+                                        echo '<option value="'.$item->id.'">'.$item->name.'</option>';
+                                    }
+                                @endphp
+                                <option value="0">No specific item</option>
+                            </select>
+    
+                            @error('item_paid_for')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="currency_symbol" value="{{ $setting->base_currency_symbol }}">
+                    <div class="form-group row">
+                        <label for="amount_received" class="col-md-4 col-form-label text-md-right">{{ __('Amount ('.$setting->base_currency_symbol.')') }}</label>
+    
+                        <div class="col-md-8">
+                            <input id="amount_received" type="text" class="form-control @error('amount_received') is-invalid @enderror" name="amount_received" value="{{ old('amount_received') }}" required autocomplete="amount_received" autofocus>
+                            <small class="text-muted">*** Enter amount only. <b>E.g. 450.75</b> ***</small>
+                            @error('amount_received')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row"> 
+                        <label for="method_of_payment" class="col-md-4 col-form-label text-md-right">{{ __('Method of payment') }}</label>
+    
+                        <div class="col-md-8">
+                            <select id="method_of_payment" type="text" class="form-control @error('method_of_payment') is-invalid @enderror" name="method_of_payment" autocomplete="method_of_payment" autofocus>
+                                <option value="Offline (Cash)">Offline (Cash)</option>
+                                <option value="Offline (Bank deposit)">Offline (Bank deposit)</option>
+                                <option value="Online">Online</option>
+                            </select>
+    
+                            @error('method_of_payment')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row"> 
+                        <label for="special_note" class="col-md-4 col-form-label text-md-right">{{ __('Special note (Optional):') }}</label>
+                        
+                        <div class="col-md-8">
+                            <textarea id="special_note" class="form-control @error('special_note') is-invalid @enderror" name="special_note">{{ old('special_note') }}</textarea>
+    
+                            @error('special_note')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Save') }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- End addStudentPaymentModal -->
 
 @endsection
