@@ -619,10 +619,12 @@
                     </tbody>
                 </table>
             </div>
+            @if ($itempayment_manager == 'Yes')
             <div class="text-center">
                 <hr>
                 <a href="{{ route('itempayments.index') }}" class="btn btn-sm btn-outline-primary">Go to payments page for more details</a>
             </div>
+            @endif
             @endif
         </div>
       </div>

@@ -21,7 +21,7 @@ class CreateItempaymentsTable extends Migration
             $table->integer('school_id');
             $table->string('currency_symbol', 25);
             $table->decimal('amount', 10, 2);
-            $table->enum('method', ['Offline', 'Online', 'Voucher']);
+            $table->enum('method', ['Offline (Cash)', 'Offline (Bank deposit)', 'Online']);
             $table->string('special_note')->nullable();
             $table->enum('status', ['Pending', 'Denied', 'Confirmed']);
             $table->integer('user_id'); //confirmed/entered by zero (0) is for system
