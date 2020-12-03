@@ -16,11 +16,22 @@
                                                         <td>{{ $classsubject->classsubject->subject->name }}</td>
                                                         @if ($arm->user->id == $user->id OR $student_manager == 'Yes')
                                                         <td class="text-right">
-                                                            <form action="{{ route('results.destroy', $classsubject->id) }}" method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <input type="submit" class="btn btn-sm btn-danger" value="X" />
-                                                            </form>
+                                                            <?php
+                                                                if($classsubject->subject_1st_test_score == 0 &&
+                                                                    $classsubject->subject_2nd_test_score == 0 &&
+                                                                    $classsubject->subject_3rd_test_score == 0 &&
+                                                                    $classsubject->subject_assignment_score == 0 &&
+                                                                    $classsubject->subject_exam_score == 0)
+                                                                {
+                                                                    ?>
+                                                                    <form action="{{ route('results.destroy', $classsubject->id) }}" method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <input type="submit" class="btn btn-sm btn-danger" value="X" />
+                                                                    </form>
+                                                                    <?php
+                                                                }
+                                                            ?>
                                                         </td>
                                                         @endif
                                                     </tr>

@@ -289,7 +289,7 @@
                                 <table class="table table-striped table-hover table-sm">
                                     <tr>
                                         <td>Total Fees:</td>
-                                        <td class="text-right"><?php echo $item->currency_symbol.' '.number_format($total_amount, 2) ?></td>
+                                        <td class="text-right"><?php echo $setting->base_currency_symbol.' '.number_format($total_amount, 2) ?></td>
                                     </tr>
                                     <tr>
                                         <td><b>Amount Paid:</b></td>
@@ -300,7 +300,7 @@
                                                 $amount_paid+= $itempayment->amount;
                                             }
                                         @endphp
-                                        <td class="text-right"><?php echo '<b>'.$item->currency_symbol.' '.number_format($amount_paid, 2).'</b>' ?></td>
+                                        <td class="text-right"><?php echo '<b>'.$setting->base_currency_symbol.' '.number_format($amount_paid, 2).'</b>' ?></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="text-right bg-white" style="padding-top: 15px;">

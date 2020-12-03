@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-            <h3>{{ $term->name }} Students {!! ' - <small>'.$term->session.'</small>' !!}</h3>
+            <h3>Students {!! ' - (<i>'.$term->name.' - <small>'.$term->session.'</small></i>)' !!}</h3>
           </div>
           <div class="col-4 text-right">
               @if ($user->role == 'Staff')
@@ -60,8 +60,7 @@
             <table class="table table-striped table-hover table-sm">
                     <thead>
                         <tr>
-                            <th>Class</th>
-                            <th>Name</th>
+                            <th colspan="2">Student</th>
                             <th>Gender</th>
                             <th>Fees</th>
                             <th>Status</th>
@@ -71,10 +70,16 @@
                     <tbody>
                         @foreach ($enrolments as $enrolment)
                             <tr>
-                                <td><span class="badge badge-secondary">{{ $enrolment->schoolclass->name }}</span></td>
-                                <td><b>{{ $enrolment->user->name }}</b><br /><small>({{ $enrolment->student->registration_number }})</small></td>
-                                <td><span class="badge badge-secondary">{{ $enrolment->user->gender }}</span></td>
-                                <td><span class="badge <?php
+                                <td style="width: 50px;"><img src="{{ config('app.url') }}/images/profile/{{ $enrolment->user->pic }}" alt="class_icon" class="collins-table-item-icon"></td>
+                                <td style="vertical-align: middle;">
+                                  <a class="collins-link-within-table" href="{{ route('enrolments.show', $enrolment->id) }}">
+                                    <b>{{ $enrolment->user->name }}</b><br />
+                                    <small>({{ $enrolment->student->registration_number }})</small><br />
+                                    <span class="badge badge-secondary">{{ $enrolment->schoolclass->name }}</span>
+                                  </a>
+                                </td>
+                                <td style="vertical-align: middle;"><span class="badge badge-secondary">{{ $enrolment->user->gender }}</span></td>
+                                <td style="vertical-align: middle;"><span class="badge <?php
                                     if($enrolment->fee_status == 'Unpaid')
                                     {
                                       echo 'badge-danger';
@@ -88,7 +93,7 @@
                                       echo 'badge-success';
                                     }
                                 ?>">{{ $enrolment->fee_status }}</span></td>
-                                <td><span class="badge <?php
+                                <td style="vertical-align: middle;"><span class="badge <?php
                                     if($enrolment->status == 'Active')
                                     {
                                       echo 'badge-success';
@@ -98,7 +103,7 @@
                                       echo 'badge-danger';
                                     }
                                 ?>">{{ $enrolment->status }}</span></td>
-                                <td class="text-right"><a href="{{ route('enrolments.show', $enrolment->id) }}" class="btn btn-sm btn-outline-primary">Manage</a></td>
+                                <td class="text-right" style="vertical-align: middle;"><a href="{{ route('enrolments.show', $enrolment->id) }}" class="btn btn-sm btn-outline-primary">Manage</a></td>
                             </tr>
                         @endforeach
                     </tbody>

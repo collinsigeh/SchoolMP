@@ -88,7 +88,7 @@
 
                     <div class="resource-details">
                         <div class="title">
-                            Students
+                            Students in {{ $arm->schoolclass->name.' '.$arm->name }}
                         </div>
                         <div class="body">
                             
@@ -99,30 +99,33 @@
                                           <td>None<td>
                                       </tr>
                                   @else
-                                      @php
-                                          $sn = 1;
-                                      @endphp
-                                      @foreach ($arm->enrolments as $enrolment)
-                                          <tr>
-                                              <td>{{ $sn }}</td>
-                                              <td>{!!  '<b>'.$enrolment->user->name.'</b><br /><small>('.$enrolment->student->registration_number.') ' !!}</td>
-                                              <td style="padding-top: 5px;"><span class="badge badge-secondary">{{ count($enrolment->results) }} subjects</span></td>
-                                              @if ($student_manager == 'Yes')
-                                                    <td class="text-right">
-                                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('enrolments.show', $enrolment->id) }}">Manage</a>
-                                                    </td>
-                                              @elseif ($arm->user_id > 0)
-                                                  @if ($arm->user->id == $user->id)
-                                                    <td class="text-right">
-                                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('enrolments.show', $enrolment->id) }}">Manage</a>
-                                                    </td>
-                                                  @endif
-                                              @endif
-                                          </tr>
-                                          @php
-                                              $sn++;
-                                          @endphp
-                                      @endforeach
+                                  <thead>
+                                      <tr>
+                                          <th colspan="2" style="vertical-align: top">Student</th>
+                                          <th style="vertical-align: top">Subjects enrolled for</th>
+                                          <th></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    @foreach ($arm->enrolments as $enrolment)
+                                        <tr>
+                                            <td style="width: 50px;"><img src="{{ config('app.url') }}/images/profile/{{ $enrolment->user->pic }}" alt="class_icon" class="collins-table-item-icon"></td>
+                                            <td>{!!  '<b>'.$enrolment->user->name.'</b><br /><small>('.$enrolment->student->registration_number.') ' !!}</td>
+                                            <td style="padding-top: 5px;"><span class="badge badge-secondary">{{ count($enrolment->results) }} subjects</span></td>
+                                            @if ($student_manager == 'Yes')
+                                                  <td class="text-right">
+                                                      <a class="btn btn-sm btn-outline-primary" href="{{ route('enrolments.show', $enrolment->id) }}">Manage</a>
+                                                  </td>
+                                            @elseif ($arm->user_id > 0)
+                                                @if ($arm->user->id == $user->id)
+                                                  <td class="text-right">
+                                                      <a class="btn btn-sm btn-outline-primary" href="{{ route('enrolments.show', $enrolment->id) }}">Manage</a>
+                                                  </td>
+                                                @endif
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                  </tbody>
                                   @endif
                                 </table>
                             </div>
@@ -155,7 +158,7 @@
                                       @endphp
                                       @foreach ($arm->classsubjects as $classsubject)
                                         <tr>
-                                            <td>{{ $sn }}</td>
+                                            <td>{{ $sn.'.' }}</td>
                                             <td><b>{{ $classsubject->subject->name }}</b></td>
                                             <td>
                                                 @if ($classsubject->user_id == 0)
@@ -177,12 +180,19 @@
                                                 </button>
                                             </td>
                                             <td class="text-right">
-                                                <form action="{{ route('classsubjects.destroy', $classsubject->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <input type="hidden" name="arm_id" value="{{ $arm->id }}">
-                                                    <input type="submit" class="btn btn-sm btn-danger" value="X" />
-                                                </form>
+                                                <?php
+                                                    if(count($classsubject->results) < 1)
+                                                    {
+                                                        ?>
+                                                        <form action="{{ route('classsubjects.destroy', $classsubject->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input type="hidden" name="arm_id" value="{{ $arm->id }}">
+                                                            <input type="submit" class="btn btn-sm btn-danger" value="X" />
+                                                        </form>
+                                                        <?php
+                                                    }
+                                                ?>
                                             </td>
                                           @else
                                           <td></td>

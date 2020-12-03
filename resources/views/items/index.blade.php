@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-            <h3>{{ $term->name }} Fees and Other Items {!! ' - <small>'.$term->session.'</small>' !!}</h3>
+            <h3>Fees and Other Items {!! ' - (<i>'.$term->name.' - <small>'.$term->session.'</small></i>)' !!}</h3>
           </div>
           <div class="col-4 text-right">
               @if ($user->role == 'Staff')
@@ -63,14 +63,15 @@
                             <th>Price</th>
                             <th>Classes affected</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($items as $item)
                             <tr>
                                 <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="item_icon" class="collins-table-item-icon"></td>
-                                <td style="vertical-align: middle;"><a class="collins-link-within-table" href="{{ route('items.edit', $item->id) }}">{{ $item->name }}</a></td>
-                                <td style="vertical-align: middle;">{{ $item->currency_symbol.' '.$item->amount }}</td>
+                                <td style="vertical-align: middle;"><a class="collins-link-within-table" href="{{ route('items.edit', $item->id) }}"><b>{{ $item->name }}</b></a></td>
+                                <td style="vertical-align: middle;">{{ $item->currency_symbol.' '.number_format($item->amount, 2) }}</td>
                                 <td style="vertical-align: middle;">
                                   <?php $arm_count = 0; ?>
                                     @foreach ($item->arms as $arm)
@@ -79,7 +80,20 @@
                                     @endforeach
                                     <?php if($arm_count == 0){ echo '<b>None!</b>'; } ?>
                                 </td>
-                                <td class="text-right" style="vertical-align: middle;"></td>
+                                <td style="vertical-align: middle;"><a href="#" class="btn btn-sm btn-outline-primary">Manage</a></td>
+                                <td class="text-right" style="vertical-align: middle;">
+                                  <?php
+                                      if(count($item->itempayments) < 1)
+                                      {
+                                          ?>
+                                          <form action="{{ route('itempayments.destroy', $item->id) }}" method="POST">
+                                              @csrf
+                                              @method('DELETE')
+                                              <input type="submit" class="btn btn-sm btn-danger" value="X" />
+                                          </form>
+                                          <?php
+                                      }
+                                  ?></td>
                             </tr>
                         @endforeach
                     </tbody>

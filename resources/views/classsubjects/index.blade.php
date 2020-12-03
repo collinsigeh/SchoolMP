@@ -77,7 +77,7 @@
                                         <?php $sn = 1; ?>
                                         @foreach ($classsubjectswithoutteacher as $item)
                                         <tr>
-                                            <td>{{ $sn }}</td>
+                                            <td>{{ $sn.'.' }}</td>
                                             <td>{{ $item->subject->name }}</td>
                                             <td><span class="badge badge-secondary">{{ $item->arm->schoolclass->name.' '.$item->arm->name }}</span></td>
                                             <td class="text-right">
@@ -104,18 +104,14 @@
                                 <table class="table table-striped table-hover table-sm">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Staff</th>
+                                            <th colspan="2">Staff</th>
                                             <th>Assigned Subjects</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php
-                                            $sn = 1;
-                                        @endphp
                                         @foreach ($allstaff as $this_staff)
                                             <tr>
-                                                <td>{{ $sn }}</td>
+                                                <td style="width: 50px;"><img src="{{ config('app.url') }}/images/profile/{{ $this_staff->user->pic }}" alt="staff_icon" class="collins-table-item-icon"></td>
                                                 <td>
                                                     <b>{{ $this_staff->user->name }}</b>
                                                     @php
@@ -153,15 +149,12 @@
                                                                     @endif
                                                                 @endforeach
                                                             @else
-                                                                <span class="badge badge-secondary">None</span>
+                                                                <span class="badge badge-secondary">No assigned subject</span>
                                                             @endif
                                                         </table>
                                                     </div>
                                                 </td>
                                             </tr>
-                                            @php
-                                                $sn++;
-                                            @endphp
                                         @endforeach
                                     </tbody>
                                 </table>

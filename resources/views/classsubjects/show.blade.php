@@ -115,7 +115,7 @@
                                 <table class="table table-striped table-hover table-sm">
                                   @if (count($classsubject->results) < 1)
                                       <tr>
-                                          <td>None<td>
+                                          <td>No student is enroled for now!<td>
                                       </tr>
                                   @else
                                       <thead>
