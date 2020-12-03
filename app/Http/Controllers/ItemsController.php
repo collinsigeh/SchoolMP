@@ -474,9 +474,13 @@ class ItemsController extends Controller
                 'school_id'     => $school_id,
                 'manage_fees_products'  => 'Yes'
             );
-            if(!empty(Staff::where($db_check)->get()))
+            $check_staff = Staff::where($db_check)->get();
+            if(!empty($check_staff))
             {
-                $resource_manager = true;
+                if($check_staff->count() == 1)
+                {
+                    $resource_manager = true;
+                }
             }
         }
 
