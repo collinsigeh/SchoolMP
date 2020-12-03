@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\User;
 use App\School;
+use App\Director;
 use App\Staff;
 use App\Term;
 use App\Itempayment;
@@ -48,8 +49,6 @@ class ItempaymentsController extends Controller
         {
             return redirect()->route('dashboard');
         }
-        echo $this->resource_manager($data['user'], $school_id);
-        die();
 
         if(session('term_id') < 1)
         {

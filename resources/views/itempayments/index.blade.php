@@ -62,8 +62,8 @@
                             <th colspan="2"  style="vertical-align: middle;">Amount received</th>
                             <th style="vertical-align: middle;">Item paid for</th>
                             <th style="vertical-align: middle;">Student</th>
-                            <th style="vertical-align: middle;">Date</th>
-                            <th style="vertical-align: middle;">Status</th>
+                            <th class="text-right" style="vertical-align: middle;">Status</th>
+                            <th class="text-right" style="vertical-align: middle;">Date recorded</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -87,8 +87,7 @@
                                         <span class="badge badge-secondary">{{ $itempayment->enrolment->arm->schoolclass->name.' '.$itempayment->enrolment->arm->name }}</span>
                                     @endif
                                 </td>
-                                <td style="vertical-align: middle;">{{ date('D, d-M-Y', strtotime($itempayment->created_at)) }}</td>
-                                <td style="vertical-align: middle;">
+                                <td class="text-right" style="vertical-align: middle;">
                                     @php
                                         if($itempayment->status == 'Confirmed')
                                         {
@@ -104,7 +103,10 @@
                                         }
                                     @endphp
                                 </td>
-                                <td class="text-right" style="vertical-align: middle;"></td>
+                                <td class="text-right" style="vertical-align: middle;"><small>{{ date('D, d-M-Y', strtotime($itempayment->created_at)) }}</small></td>
+                                <td class="text-right" style="vertical-align: middle;">
+                                    <a href="{{ route('itempayments.edit', $itempayment->id) }}" class="btn btn-sm btn-outline-primary">Details</a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
