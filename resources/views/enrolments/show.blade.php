@@ -570,7 +570,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="allPaymentLabel">Payments for {{ $enrolment->user->name }}</h5>
+          <h5 class="modal-title" id="allPaymentLabel">Payments summary</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -585,7 +585,7 @@
                         <tr>
                             <th>#</th>
                             <th>Payment</th>
-                            <th class="text-right">status</th>
+                            <th class="text-right">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -618,6 +618,10 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+            <div class="text-center">
+                <hr>
+                <a href="{{ route('itempayments.index') }}" class="btn btn-sm btn-outline-primary">Go to payments page for more details</a>
             </div>
             @endif
         </div>
