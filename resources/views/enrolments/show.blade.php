@@ -296,12 +296,15 @@
                                         <td class="text-right"><?php echo $setting->base_currency_symbol.' '.number_format($total_amount, 2) ?></td>
                                     </tr>
                                     <tr>
-                                        <td><b>Amount Paid:</b></td>
+                                        <td><b>Amount Paid <small>(& Confirmed)</small>:</b></td>
                                         @php
                                             $amount_paid = 0;
                                             foreach($enrolment->itempayments as $itempayment)
                                             {
-                                                $amount_paid+= $itempayment->amount;
+                                                if ($itempayment->status == 'Confirmed') 
+                                                {
+                                                    $amount_paid+= $itempayment->amount;
+                                                }
                                             }
                                         @endphp
                                         <td class="text-right"><?php echo '<b>'.$setting->base_currency_symbol.' '.number_format($amount_paid, 2).'</b>' ?></td>
