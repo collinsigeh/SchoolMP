@@ -25,6 +25,7 @@ class CreateItempaymentsTable extends Migration
             $table->string('special_note')->nullable();
             $table->enum('status', ['Pending', 'Denied', 'Confirmed']);
             $table->integer('user_id'); //confirmed/entered by zero (0) is for system
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }
