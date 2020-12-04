@@ -86,7 +86,7 @@
                                       if(count($item->itempayments) < 1)
                                       {
                                           ?>
-                                          <form action="{{ route('itempayments.destroy', $item->id) }}" method="POST">
+                                          <form action="{{ route('items.destroy', $item->id) }}" method="POST">
                                               @csrf
                                               @method('DELETE')
                                               <input type="submit" class="btn btn-sm btn-danger" value="X" />

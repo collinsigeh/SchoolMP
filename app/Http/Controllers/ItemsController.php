@@ -426,9 +426,48 @@ class ItemsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id=0)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            $request->session()->flash('error', 'Error 4' );
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $item = Item::find($id);
+        if(empty($item))
+        {
+            $request->session()->flash('error', 'Error 2: Attempt to delete unavailable resource.' );
+            return redirect()->route('items.index');
+        }
+
+        if(count($item->itempayments) > 0)
+        {
+            $request->session()->flash('error', 'Error 1: Attempt to delete an item that has linked payment.' );
+        }
+        else
+        {
+            DB::delete('delete from arm_item where item_id = ?', [$id]);
+
+            $item->delete();
+            $request->session()->flash('success', 'Item deleted');
+        }
+
+        return redirect()->route('items.index');
     }
 
     /**
