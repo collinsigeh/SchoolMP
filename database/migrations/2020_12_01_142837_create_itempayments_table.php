@@ -23,7 +23,7 @@ class CreateItempaymentsTable extends Migration
             $table->decimal('amount', 10, 2);
             $table->enum('method', ['Offline (Cash)', 'Offline (Bank deposit)', 'Online']);
             $table->string('special_note')->nullable();
-            $table->enum('status', ['Pending', 'Denied', 'Confirmed']);
+            $table->enum('status', ['Pending', 'Declined', 'Confirmed']);
             $table->integer('user_id'); //confirmed/entered by zero (0) is for system
             $table->integer('updated_by')->nullable();
             $table->timestamps();
