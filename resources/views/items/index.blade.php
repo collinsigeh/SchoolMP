@@ -80,7 +80,7 @@
                                     @endforeach
                                     <?php if($arm_count == 0){ echo '<b>None!</b>'; } ?>
                                 </td>
-                                <td style="vertical-align: middle;"><a href="#" class="btn btn-sm btn-outline-primary">Manage</a></td>
+                                <td style="vertical-align: middle;"><a href="{{ route('items.edit', $item->id) }}" class="btn btn-sm btn-outline-primary">Manage</a></td>
                                 <td class="text-right" style="vertical-align: middle;">
                                   <?php
                                       if(count($item->itempayments) < 1)
