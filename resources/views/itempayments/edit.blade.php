@@ -171,22 +171,24 @@
                         </div>
                     </div>
                     
-                    <div class="form-group row"> 
-                        <label for="updated_by" class="col-md-4 col-form-label text-md-right">{{ __('Last updated by') }}</label>
+                    @if ($itempayment->updated_by >= 1)
+                        <div class="form-group row"> 
+                            <label for="updated_by" class="col-md-4 col-form-label text-md-right">{{ __('Last updated by') }}</label>
 
-                        <div class="col-md-6">
-                            <div class="alert alert-info">
-                                {{ $itempayment->user->name }}
-                                @if ($itempayment->user->role == 'Staff')<br />
-                                <span class="badge badge-secondary">{{ $itempayment->user->staff->designation }}</span><br />
-                                <small>{{ $itempayment->user->email }} | {{ $itempayment->user->staff->phone }}</small>
-                                @else
-                                <span class="badge badge-secondary">{{ $itempayment->user->role }}</span><br />
-                                <small>{{ $itempayment->user->email }}</small>
-                                @endif
+                            <div class="col-md-6">
+                                <div class="alert alert-info">
+                                    {{ $last_updated_by->name }}
+                                    @if ($last_updated_by->role == 'Staff')<br />
+                                    <span class="badge badge-secondary">{{ $last_updated_by->staff->designation }}</span><br />
+                                    <small>{{ $last_updated_by->email }} | {{ $last_updated_by->staff->phone }}</small>
+                                    @else
+                                    <span class="badge badge-secondary">{{ $last_updated_by->role }}</span><br />
+                                    <small>{{ $last_updated_by->email }}</small>
+                                    @endif
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 @endif
 
                 <div class="form-group row mb-0">

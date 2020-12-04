@@ -237,6 +237,11 @@ class ItempaymentsController extends Controller
             $data['staff'] = $staff[0];
         }
 
+        if($data['itempayment']->updated_by >= 1)
+        {
+            $data['last_updated_by'] = User::find($data['itempayment']->updated_by);
+        }
+
         return view('itempayments.edit')->with($data);
     }
 
