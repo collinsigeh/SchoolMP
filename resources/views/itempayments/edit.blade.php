@@ -20,7 +20,11 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>{{ $itempayment->currency_symbol.' '.number_format($itempayment->amount, 2).' payment for '.$itempayment->item->name }}</h3>
+          <h3>{{ $itempayment->currency_symbol.' '.number_format($itempayment->amount, 2).' payment' }} 
+            @if ($itempayment->item_id >= 1)
+              {{ 'for '.$itempayment->item->name }}
+            @endif
+          </h3>
           </div>
           <div class="col-4 text-right">
             
@@ -32,7 +36,11 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
               <li class="breadcrumb-item"><a href="{{ route('itempayments.index') }}">Payments received</a></li>
-              <li class="breadcrumb-item active" aria-current="page">{{ $itempayment->currency_symbol.' '.number_format($itempayment->amount, 2).' payment for '.$itempayment->item->name }}</li>
+              <li class="breadcrumb-item active" aria-current="page">{{ $itempayment->currency_symbol.' '.number_format($itempayment->amount, 2).' payment' }} 
+                @if ($itempayment->item_id >= 1)
+                  {{ 'for '.$itempayment->item->name }}
+                @endif
+              </li>
             </ol>
           </nav>
           @include('partials._messages')
@@ -46,7 +54,7 @@
                 <div class="form-group row">
                     <label for="student" class="col-md-4 col-form-label text-md-right">{{ __('Student') }}</label>
 
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div class="alert alert-info">
                             @if ($itempayment->enrolment_id == 0)
                                 Not specified
@@ -60,67 +68,42 @@
                 <div class="form-group row"> 
                     <label for="item_paid_for" class="col-md-4 col-form-label text-md-right">{{ __('Item paid for') }}</label>
 
-                    <div class="col-md-8">
-                        <select id="item_paid_for" type="text" class="form-control @error('item_paid_for') is-invalid @enderror" name="item_paid_for" autocomplete="item_paid_for" autofocus>
-                            @php
-                                foreach ($itempayment->enrolment->arm->items as $item) {
-                                    echo '<option value="'.$item->id.'"';
-                                    if($item->id == $itempayment->item_id)
-                                    {
-                                        echo 'selected';
-                                    }
-                                    echo '>'.$item->name.'</option>';
-                                }
-                            @endphp
-                            <option value="0">No specific item</option>
-                        </select>
-
-                        @error('item_paid_for')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                    <div class="col-md-6">
+                        <div class="alert alert-info">
+                            @if ($itempayment->item_id == 0)
+                                No speicifc item
+                            @else
+                                {{ $itempayment->item->name }}
+                            @endif
+                        </div>
                     </div>
                 </div>
-
-                <input type="hidden" name="currency_symbol" value="{{ $itempayment->currency_symbol }}">
+                
                 <div class="form-group row">
-                    <label for="amount_received" class="col-md-4 col-form-label text-md-right">{{ __('Amount ('.$itempayment->currency_symbol.')') }}</label>
+                    <label for="amount_received" class="col-md-4 col-form-label text-md-right">{{ __('Amount received') }}</label>
 
-                    <div class="col-md-8">
-                        <input id="amount_received" type="text" class="form-control @error('amount_received') is-invalid @enderror" name="amount_received" value="{{ old('amount_received') }}" required autocomplete="amount_received" autofocus>
-                        <small class="text-muted">*** Enter amount only. <b>E.g. 450.75</b> ***</small>
-                        @error('amount_received')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                    <div class="col-md-6">
+                        <div class="alert alert-info">
+                            {{ $itempayment->currency_symbol.' '.number_format($itempayment->amount, 2) }}
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-group row"> 
                     <label for="method_of_payment" class="col-md-4 col-form-label text-md-right">{{ __('Method of payment') }}</label>
 
-                    <div class="col-md-8">
-                        <select id="method_of_payment" type="text" class="form-control @error('method_of_payment') is-invalid @enderror" name="method_of_payment" autocomplete="method_of_payment" autofocus>
-                            <option value="Offline (Cash)">Offline (Cash)</option>
-                            <option value="Offline (Bank deposit)">Offline (Bank deposit)</option>
-                            <option value="Online">Online</option>
-                        </select>
-
-                        @error('method_of_payment')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                    <div class="col-md-6">
+                        <div class="alert alert-info">
+                            {{ $itempayment->method }}
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-group row"> 
                     <label for="special_note" class="col-md-4 col-form-label text-md-right">{{ __('Special note (Optional):') }}</label>
                     
-                    <div class="col-md-8">
-                        <textarea id="special_note" class="form-control @error('special_note') is-invalid @enderror" name="special_note">{{ old('special_note') }}</textarea>
+                    <div class="col-md-6">
+                        <textarea id="special_note" class="form-control @error('special_note') is-invalid @enderror" name="special_note">{{ $itempayment->special_note }}</textarea>
 
                         @error('special_note')
                             <span class="invalid-feedback" role="alert">
@@ -129,7 +112,82 @@
                         @enderror
                     </div>
                 </div>
-                <input type="hidden" name="status" value="Confirmed">
+
+                <div class="form-group row"> 
+                    <label for="status" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}</label>
+
+                    <div class="col-md-6">
+                        <select id="status" type="text" class="form-control @error('status') is-invalid @enderror" name="status" autocomplete="status" autofocus>
+                            <option value="Pending" <?php if($itempayment->status == 'Pending'){ echo 'selected'; } ?>>Pending confirmation</option>
+                            <option value="Declined" <?php if($itempayment->status == 'Declined'){ echo 'selected'; } ?>>Declined</option>
+                            <option value="Confirmed" <?php if($itempayment->status == 'Confirmed'){ echo 'selected'; } ?>>Confirmed</option>
+                        </select>
+
+                        @error('status')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row"> 
+                    <label for="created_at" class="col-md-4 col-form-label text-md-right">{{ __('Date recorded') }}</label>
+
+                    <div class="col-md-6">
+                        <div class="alert alert-info">
+                            {{ date('D, d-M-Y', strtotime($itempayment->created_at)).' @ '.date('h:i A', strtotime($itempayment->created_at)) }}
+                        </div>
+                    </div>
+                </div>
+                
+                @if ($itempayment->user_id >= 1)
+                <div class="form-group row"> 
+                    <label for="recorded_by" class="col-md-4 col-form-label text-md-right">{{ __('Recorded by') }}</label>
+
+                    <div class="col-md-6">
+                        <div class="alert alert-info">
+                            {{ $itempayment->user->name }}
+                            @if ($itempayment->user->role == 'Staff')<br />
+                            <span class="badge badge-secondary">{{ $itempayment->user->staff->designation }}</span><br />
+                            <small>{{ $itempayment->user->email }} | {{ $itempayment->user->staff->phone }}</small>
+                            @else
+                            <span class="badge badge-secondary">{{ $itempayment->user->role }}</span><br />
+                            <small>{{ $itempayment->user->email }}</small>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if ($itempayment->created_at != $itempayment->updated_at)
+                    <div class="form-group row"> 
+                        <label for="updated_at" class="col-md-4 col-form-label text-md-right">{{ __('Last updated on') }}</label>
+
+                        <div class="col-md-6">
+                            <div class="alert alert-info">
+                                {{ date('D, d-M-Y', strtotime($itempayment->updated_at)).' @ '.date('h:i A', strtotime($itempayment->updated_at)) }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row"> 
+                        <label for="updated_by" class="col-md-4 col-form-label text-md-right">{{ __('Last updated by') }}</label>
+
+                        <div class="col-md-6">
+                            <div class="alert alert-info">
+                                {{ $itempayment->user->name }}
+                                @if ($itempayment->user->role == 'Staff')<br />
+                                <span class="badge badge-secondary">{{ $itempayment->user->staff->designation }}</span><br />
+                                <small>{{ $itempayment->user->email }} | {{ $itempayment->user->staff->phone }}</small>
+                                @else
+                                <span class="badge badge-secondary">{{ $itempayment->user->role }}</span><br />
+                                <small>{{ $itempayment->user->email }}</small>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @endif
 
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">

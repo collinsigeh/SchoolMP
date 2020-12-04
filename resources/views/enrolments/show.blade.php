@@ -598,7 +598,13 @@
                             <tr>
                                 <td>{{ $sn }}</td>
                                 <td>
-                                    {{ $itempayment->currency_symbol.' '.$itempayment->amount.' for '.$itempayment->item->name }}<br />
+                                    {{ $itempayment->currency_symbol.' '.$itempayment->amount.' for ' }}
+                                    @if ($itempayment->item_id == 0)
+                                        No specific item
+                                    @else
+                                        {{ $itempayment->item->name }}
+                                    @endif
+                                    <br />
                                     <small><i>Recorded on <?php echo date('D, d-M-Y', strtotime($itempayment->created_at)) ?></i></small>
                                 </td>
                                 <td class="text-right">

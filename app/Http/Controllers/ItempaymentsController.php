@@ -247,9 +247,84 @@ class ItempaymentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id = 0)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if(!$this->resource_manager($data['user'], $school_id))
+        {
+            return redirect()->route('dashboard');
+        }
+        
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        $this->validate($request, [
+            'item_paid_for' => ['required'],
+            'amount' => ['required', 'numeric'],
+            'method_of_payment' => ['required'],
+            'special_note' => ['required']
+        ]);
+
+        $name = ucwords(strtolower(trim($request->input('name'))));
+        $arm_count = $request->input('arm_count');
+
+        $item = Item::find($id);
+        if(empty($item))
+        {
+            $request->session()->flash('error', 'Unavailable resource.');
+            return redirect()->route('items.index');
+        }
+        if($item->count() < 1)
+        {
+            $request->session()->flash('error', 'Unavailable resource.');
+            return redirect()->route('items.index');
+        }
+
+        $item->school_id = $school_id;
+        $item->term_id = $term_id;
+        $item->name = $name;
+        $item->currency_symbol = $request->input('currency_symbol');
+        $item->amount = $request->input('amount');
+        $item->user_id = $user_id;
+
+        $item->save();
+
+        // clean up previous list of affected class
+        DB::delete('delete from arm_item where item_id = ?', [$item->id]);
+        // End - clean up previous list of affected class
+
+        // re-specify affected class
+        for ($i=0; $i < $arm_count; $i++) {
+            if($request->input($i) > 0)
+            {
+                DB::insert('insert into arm_item (arm_id, item_id) values (?, ?)', [$request->input($i), $item->id]);
+            }
+        }
+        // End - re-specify affected class
+
+        $request->session()->flash('success', 'Update saved!.');
+
+        return redirect()->route('items.edit', $id);
     }
 
     /**
