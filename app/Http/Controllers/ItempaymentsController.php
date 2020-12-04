@@ -173,9 +173,71 @@ class ItempaymentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id=0)
     {
-        //
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $data['itempayment'] = Itempayment::find($id);
+        if(empty($data['itempayment']))
+        {
+            $request->session()->flash('error', 'Unavailable resource.');
+            return redirect()->route('itempayments.index');
+        }
+        if($data['itempayment']->count() < 1)
+        {
+            $request->session()->flash('error', 'Unavailable resource.');
+            return redirect()->route('itempayments.index');
+        }
+
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        $data['school'] = School::find($school_id);
+
+        if(!$this->resource_manager($data['user'], $school_id))
+        {
+            return redirect()->route('dashboard');
+        }
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+
+        return view('itempayments.edit')->with($data);
     }
 
     /**

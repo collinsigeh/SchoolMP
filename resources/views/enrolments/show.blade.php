@@ -37,7 +37,9 @@
                 @elseif(session('enrolment_return_page') == 'arms_show')
                     <li class="breadcrumb-item"><a href="{{ route('arms.show', $arm->id) }}">{{ $arm->schoolclass->name.' '.$arm->name }}</a></li>
                 @else
-                    <li class="breadcrumb-item"><a href="{{ route('classsubjects.show', session('enrolment_return_page')->id) }}">{{ session('enrolment_return_page')->subject->name.' - '.session('enrolment_return_page')->arm->schoolclass->name.' '.session('enrolment_return_page')->arm->name }}</a></li>
+                    @if (null !== session('enrolment_return_page'))
+                        <li class="breadcrumb-item"><a href="{{ route('classsubjects.show', session('enrolment_return_page')->id) }}">{{ session('enrolment_return_page')->subject->name.' - '.session('enrolment_return_page')->arm->schoolclass->name.' '.session('enrolment_return_page')->arm->name }}</a></li>
+                    @endif
                 @endif
                 <li class="breadcrumb-item active" aria-current="page">{{ $enrolment->user->name }}</li>
               @else
@@ -47,7 +49,9 @@
                 @elseif(session('enrolment_return_page') == 'arms_show')
                     <li class="breadcrumb-item"><a href="{{ route('arms.show', $arm->id) }}">{{ $arm->schoolclass->name.' '.$arm->name }}</a></li>
                 @else
-                    <li class="breadcrumb-item"><a href="{{ route('classsubjects.show', session('enrolment_return_page')->id) }}">{{ session('enrolment_return_page')->subject->name.' - '.session('enrolment_return_page')->arm->schoolclass->name.' '.session('enrolment_return_page')->arm->name }}</a></li>
+                    @if (null !== session('enrolment_return_page'))
+                        <li class="breadcrumb-item"><a href="{{ route('classsubjects.show', session('enrolment_return_page')->id) }}">{{ session('enrolment_return_page')->subject->name.' - '.session('enrolment_return_page')->arm->schoolclass->name.' '.session('enrolment_return_page')->arm->name }}</a></li>
+                    @endif
                 @endif
                 <li class="breadcrumb-item active" aria-current="page">{{ $enrolment->user->name }}</li>
               @endif
