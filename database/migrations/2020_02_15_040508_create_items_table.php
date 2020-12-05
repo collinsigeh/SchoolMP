@@ -20,6 +20,7 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->string('currency_symbol', 25);
             $table->decimal('amount', 10, 2);
+            $table->enum('type', ['Required', 'Optional']);
             $table->integer('user_id');
             $table->timestamps();
         });

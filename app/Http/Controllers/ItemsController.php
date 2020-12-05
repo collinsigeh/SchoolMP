@@ -215,6 +215,7 @@ class ItemsController extends Controller
             'name' => ['required'],
             'currency_symbol' => ['required'],
             'amount' => ['required', 'numeric'],
+            'item_type' => ['required', 'in:Required,Optional'],
             'arm_count' => ['required', 'numeric']
         ]);
 
@@ -228,6 +229,7 @@ class ItemsController extends Controller
         $item->name = $name;
         $item->currency_symbol = $request->input('currency_symbol');
         $item->amount = $request->input('amount');
+        $item->type = $request->input('item_type');
         $item->user_id = $user_id;
 
         $item->save();

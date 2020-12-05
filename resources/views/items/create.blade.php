@@ -94,6 +94,23 @@
                 </div>
 
                 <div class="form-group row"> 
+                    <label for="item_type" class="col-md-4 col-form-label text-md-right">{{ __('Item type') }}</label>
+
+                    <div class="col-md-6">
+                        <select id="item_type" type="text" class="form-control @error('item_type') is-invalid @enderror" name="item_type" autocomplete="item_type" autofocus>
+                            <option value="Required">Required (Compulsory item)</option>
+                            <option value="Optional">Optional item</option>
+                        </select>
+
+                        @error('item_type')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row"> 
                     <label for="schoolclass_id" class="col-md-4 col-form-label text-md-right">{{ __('Classes affected') }}</label>
 
                     <div class="col-md-6">
