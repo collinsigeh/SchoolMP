@@ -592,6 +592,7 @@
                         <tr>
                             <th>#</th>
                             <th>Payment</th>
+                            <th class="text-right">Date</th>
                             <th class="text-right">Status</th>
                         </tr>
                     </thead>
@@ -599,16 +600,17 @@
                         <?php $sn = 1; ?>
                         @foreach ($enrolment->itempayments as $itempayment)
                             <tr>
-                                <td>{{ $sn }}</td>
+                                <td>{{ $sn.'.' }}</td>
                                 <td>
-                                    {{ $itempayment->currency_symbol.' '.$itempayment->amount.' for ' }}
+                                    {!! '<b>'.$itempayment->currency_symbol.' '.number_format($itempayment->amount, 2).'</b> for ' !!}
                                     @if ($itempayment->item_id == 0)
                                         No specific item
                                     @else
                                         {{ $itempayment->item->name }}
                                     @endif
-                                    <br />
-                                    <small><i>Recorded on <?php echo date('D, d-M-Y', strtotime($itempayment->created_at)) ?></i></small>
+                                </td>
+                                <td class="text-right">
+                                    <small><i><?php echo date('d-M-Y', strtotime($itempayment->created_at)) ?></i></small>
                                 </td>
                                 <td class="text-right">
                                     @php
