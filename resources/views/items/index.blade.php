@@ -86,11 +86,9 @@
                                       if(count($item->itempayments) < 1)
                                       {
                                           ?>
-                                          <form action="{{ route('items.destroy', $item->id) }}" method="POST">
-                                              @csrf
-                                              @method('DELETE')
-                                              <input type="submit" class="btn btn-sm btn-danger" value="X" />
-                                          </form>
+                                          <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmDeleteModal{{ $item->id }}">
+                                              X
+                                          </button>
                                           <?php
                                       }
                                   ?></td>
@@ -103,5 +101,15 @@
         @endif
     </div>
   </div>
+
+<!-- confirmDeleteModal Series -->
+@foreach ($items as $item)
+    @php
+        $itemid = $item->id;
+        $itemname = $item->name.' of '.$item->currency_symbol.' '.$item->amount;
+    @endphp
+    @include('partials._confirm_delete')
+@endforeach
+<!-- End confirmDeleteModal Series -->
 
 @endsection

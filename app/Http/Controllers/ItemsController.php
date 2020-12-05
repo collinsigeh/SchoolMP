@@ -450,6 +450,10 @@ class ItemsController extends Controller
             return redirect()->route('dashboard');
         }
 
+        $this->validate($request, [
+            'confirmation_to_delete' => ['required', 'in:DELETE']
+        ]);
+
         $item = Item::find($id);
         if(empty($item))
         {
