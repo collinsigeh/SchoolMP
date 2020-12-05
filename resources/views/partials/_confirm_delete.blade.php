@@ -20,6 +20,10 @@
                                 <th style="vertical-align: middle;">Item:</th>
                                 <td style="font-size: 1.2em;">{{ $itemname }}</td>
                             </tr>
+                            <tr>
+                                <th>Price:</th>
+                                <td>{{ $itemprice }}</td>
+                            </tr>
                         </table>
                     </div>
                     

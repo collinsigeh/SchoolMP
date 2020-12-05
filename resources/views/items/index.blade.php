@@ -105,8 +105,9 @@
 <!-- confirmDeleteModal Series -->
 @foreach ($items as $item)
     @php
-        $itemid = $item->id;
-        $itemname = $item->name.' of '.$item->currency_symbol.' '.$item->amount;
+        $itemid     = $item->id;
+        $itemname   = $item->name;
+        $itemprice  = $item->currency_symbol.' '.number_format($item->amount, 2);
     @endphp
     @include('partials._confirm_delete')
 @endforeach
