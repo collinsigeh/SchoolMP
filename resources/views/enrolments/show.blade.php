@@ -274,40 +274,99 @@
                             @endif
 
                             <div class="table-responsive collins-table-pem">
-                                <table class="table table-striped table-bordered table-hover table-sm">
+                                <table class="table table-bordered table-hover table-sm">
                                     <tr>
-                                        <th colspan="2" class="text-center">FEES BREAKDOWN</th>
+                                        <th colspan="2" class="text-center" style="background-color: #f1f1f1;">FEES & ITEMS ( REQUIRED )</th>
                                     </tr>
-                                    <?php $total_amount = 0; ?>
+                                    <?php $required_amount = 0; ?>
                                     @foreach ($enrolment->arm->items as $item)
-                                    <tr>
-                                        <td>{{ $item->name }}</td>
-                                        <td class="text-right">{{ $item->currency_symbol.' '.$item->amount }}</td>
-                                    </tr>
-                                    <?php $total_amount+= $item->amount; ?>
+                                    <?php if($item->type == 'Required'){ ?>
+                                        <tr>
+                                            <td>{{ '- '.$item->name }}</td>
+                                            <td class="text-right">{{ $item->currency_symbol.' '.$item->amount }}</td>
+                                        </tr>
+                                        <?php $required_amount+= $item->amount; ?>
+                                    <?php } ?>
                                     @endforeach
+                                    <tr>
+                                        <td  style="background-color: #f1f1f1;"><i>Sub-total Fee <small>(Required items)</small>:</i></td>
+                                        <td class="text-right" style="background-color: #f1f1f1;"><i><?php echo $setting->base_currency_symbol.' '.number_format($required_amount, 2) ?></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #f1f1f1;"><i>Amount Paid <small>(Required items)</small>:</i></td>
+                                        @php
+                                            $required_payment = 0;
+                                            foreach($enrolment->itempayments as $itempayment)
+                                            {
+                                                if ($itempayment->status == 'Confirmed' && $itempayment->item_id > 0) 
+                                                {
+                                                    if($itempayment->item->type == 'Required')
+                                                    {
+                                                        $required_payment+= $itempayment->amount;
+                                                    }
+                                                }
+                                            }
+                                        @endphp
+                                        <td class="text-right" style="background-color: #f1f1f1;"><i><?php echo $setting->base_currency_symbol.' '.number_format($required_payment, 2) ?></i></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="table-responsive collins-table-pem">
+                                <table class="table table-bordered table-hover table-sm">
+                                    <tr>
+                                        <th colspan="2" class="text-center" style="background-color: #f1f1f1;">FEES & ITEMS ( OPTIONAL )</th>
+                                    </tr>
+                                    <?php $optional_amount = 0; ?>
+                                    @foreach ($enrolment->arm->items as $item)
+                                    <?php if($item->type != 'Required'){ ?>
+                                        <tr>
+                                            <td>{{ '- '.$item->name }}</td>
+                                            <td class="text-right">{{ $item->currency_symbol.' '.$item->amount }}</td>
+                                        </tr>
+                                        <?php $optional_amount+= $item->amount; ?>
+                                    <?php } ?>
+                                    @endforeach
+                                    <tr>
+                                        <td  style="background-color: #f1f1f1;"><i>Sub-total Fee <small>(Optional items)</small>:</i></td>
+                                        <td class="text-right" style="background-color: #f1f1f1;"><i><?php echo $setting->base_currency_symbol.' '.number_format($optional_amount, 2) ?></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #f1f1f1;"><i>Amount Paid <small>(Optional items)</small>:</i></td>
+                                        @php
+                                            $optional_payment = 0;
+                                            foreach($enrolment->itempayments as $itempayment)
+                                            {
+                                                if ($itempayment->status == 'Confirmed') 
+                                                {
+                                                    if($itempayment->item_id > 0)
+                                                    {
+                                                        if($itempayment->item->type != 'Required')
+                                                        {
+                                                            $optional_payment+= $itempayment->amount;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        $optional_payment+= $itempayment->amount;
+                                                    }
+                                                }
+                                            }
+                                        @endphp
+                                        <td class="text-right" style="background-color: #f1f1f1;"><i><?php echo $setting->base_currency_symbol.' '.number_format($optional_payment, 2) ?></i></td>
+                                    </tr>
                                 </table>
                             </div>
 
                             <div class="table-responsive collins-table-pem" style="padding-bottom: 23px;">
                                 <table class="table table-striped table-hover table-sm">
                                     <tr>
-                                        <td>Total Fees:</td>
-                                        <td class="text-right"><?php echo $setting->base_currency_symbol.' '.number_format($total_amount, 2) ?></td>
+                                        <td style="background-color: #e6e6e6"><b><i>Total Fees:</i></b></td>
+                                        <td class="text-right" style="background-color: #e6e6e6"><b><i><?php echo $setting->base_currency_symbol.' '.number_format($required_amount + $optional_amount, 2) ?></i></b></td>
                                     </tr>
                                     <tr>
-                                        <td><b>Amount Paid <small>(& Confirmed)</small>:</b></td>
-                                        @php
-                                            $amount_paid = 0;
-                                            foreach($enrolment->itempayments as $itempayment)
-                                            {
-                                                if ($itempayment->status == 'Confirmed') 
-                                                {
-                                                    $amount_paid+= $itempayment->amount;
-                                                }
-                                            }
-                                        @endphp
-                                        <td class="text-right"><?php echo '<b>'.$setting->base_currency_symbol.' '.number_format($amount_paid, 2).'</b>' ?></td>
+                                        <td style="background-color: #e6e6e6"><b><i>Total Paid <small>(& Confirmed)</small>:</i></b></td>
+                                        <td class="text-right" style="background-color: #e6e6e6"><?php echo '<b><i>'.$setting->base_currency_symbol.' '.number_format($required_payment + $optional_payment, 2).'</i></b>' ?></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="text-right bg-white" style="padding-top: 15px;">
@@ -603,11 +662,13 @@
                                 <td>{{ $sn.'.' }}</td>
                                 <td>
                                     {!! '<b>'.$itempayment->currency_symbol.' '.number_format($itempayment->amount, 2).'</b> for ' !!}
-                                    @if ($itempayment->item_id == 0)
+                                    <small>
+                                        @if ($itempayment->item_id == 0)
                                         No specific item
-                                    @else
-                                        {{ $itempayment->item->name }}
-                                    @endif
+                                        @else
+                                            {{ $itempayment->item->name }}
+                                        @endif
+                                    </small>
                                 </td>
                                 <td class="text-right">
                                     <small><i><?php echo date('d-M-Y', strtotime($itempayment->created_at)) ?></i></small>
