@@ -274,26 +274,51 @@
                             @endif
 
                             <div class="table-responsive collins-table-pem">
-                                <table class="table table-bordered table-hover table-sm">
+                                <table class="table table-striped table-hover table-sm">
                                     <tr>
-                                        <th colspan="2" class="text-center" style="background-color: #f1f1f1;">FEES & ITEMS ( REQUIRED )</th>
+                                        <th colspan="4" class="text-center" style="background-color: #f1f1f1;">SCHOOL FEES & OTHER ITEMS</th>
                                     </tr>
-                                    <?php $required_amount = 0; ?>
+                                    <?php 
+                                        $required_amount = 0;
+                                        $optional_amount = 0;
+                                        $sn = 1;
+                                    ?>
                                     @foreach ($enrolment->arm->items as $item)
                                     <?php if($item->type == 'Required'){ ?>
                                         <tr>
-                                            <td>{{ '- '.$item->name }}</td>
+                                            <td>{{ $sn.'.'}}</td>
+                                            <td><b>{{ $item->name }}</b></td>
                                             <td class="text-right">{{ $item->currency_symbol.' '.$item->amount }}</td>
+                                            <td><span class="badge badge-secondary">Required</span></td>
                                         </tr>
                                         <?php $required_amount+= $item->amount; ?>
-                                    <?php } ?>
+                                    <?php }else{ ?>
+                                        <tr>
+                                            <td>{{ $sn.'.'}}</td>
+                                            <td><b>{{ $item->name }}</b></td>
+                                            <td class="text-right">{{ $item->currency_symbol.' '.$item->amount }}</td>
+                                            <td><span class="badge badge-light">Optional</span></td>
+                                        </tr>
+                                        <?php $optional_amount+= $item->amount; ?>
+                                    <?php } $sn++; ?>
                                     @endforeach
+                                </table>
+                            </div>
+
+                            <div class="table-responsive collins-table-pem">
+                                <table class="table table-hover table-sm">
                                     <tr>
-                                        <td  style="background-color: #f1f1f1;"><i>Sub-total Fee <small>(Required items)</small>:</i></td>
-                                        <td class="text-right" style="background-color: #f1f1f1;"><i><?php echo $setting->base_currency_symbol.' '.number_format($required_amount, 2) ?></i></td>
+                                        <th style="background-color: #f1f1f1"></th>
+                                        <th class="text-right"  style="background-color: #f1f1f1;">Fees (Sub-total)</th>
+                                        <th class="text-right" style="background-color: #f1f1f1;">Payments (Sub-total)</th>
                                     </tr>
                                     <tr>
-                                        <td style="background-color: #f1f1f1;"><i>Amount Paid <small>(Required items)</small>:</i></td>
+                                        <td style="background-color: #fff;"><i>Required Items:</i></td>
+                                        <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($required_amount, 2) ?></i></td>
+                                        <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($optional_amount, 2) ?></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #fff;"><i>Optional Items:</i></td>
                                         @php
                                             $required_payment = 0;
                                             foreach($enrolment->itempayments as $itempayment)
@@ -307,32 +332,7 @@
                                                 }
                                             }
                                         @endphp
-                                        <td class="text-right" style="background-color: #f1f1f1;"><i><?php echo $setting->base_currency_symbol.' '.number_format($required_payment, 2) ?></i></td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                            <div class="table-responsive collins-table-pem">
-                                <table class="table table-bordered table-hover table-sm">
-                                    <tr>
-                                        <th colspan="2" class="text-center" style="background-color: #f1f1f1;">FEES & ITEMS ( OPTIONAL )</th>
-                                    </tr>
-                                    <?php $optional_amount = 0; ?>
-                                    @foreach ($enrolment->arm->items as $item)
-                                    <?php if($item->type != 'Required'){ ?>
-                                        <tr>
-                                            <td>{{ '- '.$item->name }}</td>
-                                            <td class="text-right">{{ $item->currency_symbol.' '.$item->amount }}</td>
-                                        </tr>
-                                        <?php $optional_amount+= $item->amount; ?>
-                                    <?php } ?>
-                                    @endforeach
-                                    <tr>
-                                        <td  style="background-color: #f1f1f1;"><i>Sub-total Fee <small>(Optional items)</small>:</i></td>
-                                        <td class="text-right" style="background-color: #f1f1f1;"><i><?php echo $setting->base_currency_symbol.' '.number_format($optional_amount, 2) ?></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="background-color: #f1f1f1;"><i>Amount Paid <small>(Optional items)</small>:</i></td>
+                                        <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($required_payment, 2) ?></i></td>
                                         @php
                                             $optional_payment = 0;
                                             foreach($enrolment->itempayments as $itempayment)
@@ -353,7 +353,7 @@
                                                 }
                                             }
                                         @endphp
-                                        <td class="text-right" style="background-color: #f1f1f1;"><i><?php echo $setting->base_currency_symbol.' '.number_format($optional_payment, 2) ?></i></td>
+                                        <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($optional_payment, 2) ?></i></td>
                                     </tr>
                                 </table>
                             </div>
@@ -361,12 +361,12 @@
                             <div class="table-responsive collins-table-pem" style="padding-bottom: 23px;">
                                 <table class="table table-striped table-hover table-sm">
                                     <tr>
-                                        <td style="background-color: #e6e6e6"><b><i>Total Fees:</i></b></td>
-                                        <td class="text-right" style="background-color: #e6e6e6"><b><i><?php echo $setting->base_currency_symbol.' '.number_format($required_amount + $optional_amount, 2) ?></i></b></td>
+                                        <td style="background-color: #f1f1f1"><b><i>Total Fees:</i></b></td>
+                                        <td class="text-right" style="background-color: #f1f1f1"><b><i><?php echo $setting->base_currency_symbol.' '.number_format($required_amount + $optional_amount, 2) ?></i></b></td>
                                     </tr>
                                     <tr>
-                                        <td style="background-color: #e6e6e6"><b><i>Total Paid <small>(& Confirmed)</small>:</i></b></td>
-                                        <td class="text-right" style="background-color: #e6e6e6"><?php echo '<b><i>'.$setting->base_currency_symbol.' '.number_format($required_payment + $optional_payment, 2).'</i></b>' ?></td>
+                                        <td style="background-color: #f1f1f1"><b><i>Total Paid <small>(& Confirmed)</small>:</i></b></td>
+                                        <td class="text-right" style="background-color: #f1f1f1"><?php echo '<b><i>'.$setting->base_currency_symbol.' '.number_format($required_payment + $optional_payment, 2).'</i></b>' ?></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="text-right bg-white" style="padding-top: 15px;">
