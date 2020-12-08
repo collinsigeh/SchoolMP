@@ -117,17 +117,6 @@ class ItemsController extends Controller
         
         $data['school'] = School::find($school_id);
 
-        if(empty($data['school']->schoolclasses))
-        {
-            $request->session()->flash('error', "Please create at least a school class before attempting to create fees and other items for students." );
-            return redirect()->route('classes.create');
-        }
-        elseif($data['school']->schoolclasses->count() < 1)
-        {
-            $request->session()->flash('error', "Please create at least a school class before attempting to create fees and other items for students." );
-            return redirect()->route('classes.create');
-        }
-
         if(session('term_id') < 1)
         {
             return redirect()->route('dashboard');
@@ -135,6 +124,17 @@ class ItemsController extends Controller
         $term_id = session('term_id');
         
         $data['term'] = Term::find($term_id);
+
+        if(empty($data['term']->arms))
+        {
+            $request->session()->flash('error', "Please create at least a specific class arm before attempting to create fees and other items for students." );
+            return redirect()->route('classes.create');
+        }
+        elseif($data['term']->arms->count() < 1)
+        {
+            $request->session()->flash('error', "Please create at least a specific class arm before attempting to create fees and other items for students." );
+            return redirect()->route('arms.create');
+        }
 
         if($data['user']->role == 'Staff')
         {

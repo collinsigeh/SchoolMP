@@ -91,7 +91,82 @@ class ItempaymentsController extends Controller
      */
     public function create()
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if(!$this->resource_manager($data['user'], $school_id))
+        {
+            return redirect()->route('dashboard');
+        }
+        
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if(empty($data['term']->items))
+        {
+            $request->session()->flash('error', "Please create at least an item for students to pay for." );
+            return redirect()->route('items.create');
+        }
+        elseif($data['term']->items->count() < 1)
+        {
+            $request->session()->flash('error', "Please create at least an item for students to pay for." );
+            return redirect()->route('items.create');
+        }
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+
+        $db_check = array(
+            'school_id' => $school_id
+        );
+        $data['schoolclasses'] = Schoolclass::where($db_check)->orderBy('name', 'asc')->get();
+        
+        $data['setting'] = Setting::first();
+        if(empty($data['setting']))
+        {
+            $request->session()->flash('success', 'Error: Settings not found. Configure settings before creating product package.');
+            return redirect()->route('settings.index');
+        }
+        elseif($data['setting']->count() < 1)
+        {
+            $request->session()->flash('success', 'Error: Settings not found. Configure settings before creating product package.');
+            return redirect()->route('settings.index');
+        }
+
+        return view('items.create')->with($data);
     }
 
     /**
