@@ -59,6 +59,15 @@ class Term extends Model
     }
     
     /**
+     * Get the arms for the term.
+     *
+     */
+    public function items()
+    {
+        return $this->hasMany('App\Item');
+    }
+    
+    /**
      * Get the itempayments for the Term.
      */
     public function itempayments()
