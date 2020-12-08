@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-            <h3>New fee item</h3>
+            <h3>New student payment</h3>
           </div>
           <div class="col-4 text-right">
             
@@ -32,12 +32,12 @@
             <ol class="breadcrumb">
               @if ($user->usertype == 'Client')
                 <li class="breadcrumb-item"><a href="{{ route('schools.show', $school->id) }}">{{ $school->school }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('items.index') }}">Fees and other items</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create</li>
+                <li class="breadcrumb-item"><a href="{{ route('itempayments.index') }}">Payments received</a></li>
+                <li class="breadcrumb-item active" aria-current="page">New payment</li>
               @else
               <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('items.index') }}">Fees and other items</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create</li>
+                <li class="breadcrumb-item"><a href="{{ route('itempayments.index') }}">Payments received</a></li>
+                <li class="breadcrumb-item active" aria-current="page">New payment</li>
               @endif
             </ol>
           </nav>
@@ -45,18 +45,18 @@
         </div>
 
         <div class="create-form">
-            <form method="POST" action="{{ route('items.store') }}">
+            <form method="POST" action="{{ route('itempayments.store') }}">
                 @csrf
 
-                <input type="hidden" name="return_page" value="enrolments_show">
+                <input type="hidden" name="return_page" value="itempayments_index">
 
                 <div class="form-group row">
-                    <label for="student_enrolment_id" class="col-md-4 col-form-label text-md-right">{{ __('Student\'s Enrolment ID') }}</label>
+                    <label for="enrolment_id" class="col-md-4 col-form-label text-md-right">{{ __('Student\'s Enrolment ID') }}</label>
 
                     <div class="col-md-6">
-                        <input id="student_enrolment_id" type="number" class="form-control @error('student_enrolment_id') is-invalid @enderror" name="student_enrolment_id" value="{{ old('student_enrolment_id') }}" required autocomplete="student_enrolment_id" autofocus>
+                        <input id="enrolment_id" type="number" class="form-control @error('enrolment_id') is-invalid @enderror" name="enrolment_id" value="{{ old('enrolment_id') }}" required autocomplete="enrolment_id" autofocus>
                         
-                        @error('student_enrolment_id')
+                        @error('enrolment_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

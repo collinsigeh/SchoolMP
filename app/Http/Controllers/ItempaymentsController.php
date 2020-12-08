@@ -11,6 +11,7 @@ use App\Term;
 use App\Item;
 use App\Itempayment;
 use App\Setting;
+use App\Enrolment;
 use Illuminate\Http\Request;
 
 class ItempaymentsController extends Controller
@@ -208,6 +209,33 @@ class ItempaymentsController extends Controller
             'method_of_payment' => ['required'],
             'status'            => ['required']
         ]);
+
+        if($request->input('return_page') == 'itempayments_index')
+        {
+            // verify the validity of enrolment ID & that the item being paid for is for the student's class
+            $enrolment = Enrolment::find($request->input('enrolment_id'));
+            if(empty($enrolment))
+            {
+                $request->session()->flash('error', 'The enrolment ID is NOT recognized.');
+                return redirect()->route('itempayments.create');
+            }
+            if($request->input('item_paid_for') >= 1)
+            {
+                $item_found = 0;
+                foreach($enrolment->arm->items as $item)
+                {
+                    if($item->id == $request->input('item_paid_for'))
+                    {
+                        $item_found++;
+                    }
+                }
+                if($item_found < 1)
+                {
+                    $request->session()->flash('error', 'The item selected is wrong for the student with ID: '.$enrolment->id);
+                    return redirect()->route('itempayments.create');
+                }
+            }
+        }
 
         $itempayment = new Itempayment;
 
