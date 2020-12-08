@@ -8,7 +8,9 @@ use App\School;
 use App\Director;
 use App\Staff;
 use App\Term;
+use App\Item;
 use App\Itempayment;
+use App\Setting;
 use Illuminate\Http\Request;
 
 class ItempaymentsController extends Controller
@@ -150,9 +152,9 @@ class ItempaymentsController extends Controller
         }
 
         $db_check = array(
-            'school_id' => $school_id
+            'term_id' => $term_id
         );
-        $data['schoolclasses'] = Schoolclass::where($db_check)->orderBy('name', 'asc')->get();
+        $data['items'] = Item::where($db_check)->orderBy('name', 'asc')->get();
         
         $data['setting'] = Setting::first();
         if(empty($data['setting']))
@@ -166,7 +168,7 @@ class ItempaymentsController extends Controller
             return redirect()->route('settings.index');
         }
 
-        return view('items.create')->with($data);
+        return view('itempayments.create')->with($data);
     }
 
     /**
