@@ -195,7 +195,7 @@
                                 <tr>
                                   <td>
                                     <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('itempayments.index') }}">
-                                      <img src="{{ config('app.url') }}/images/icons/wallet_icon.png" alt="paymets_icon" class="options-icon">  Payments received
+                                      <img src="{{ config('app.url') }}/images/icons/earning_icon.png" alt="paymets_icon" class="options-icon">  Payments received
                                     </a>
                                   </td>
                                 </tr>
@@ -362,7 +362,7 @@
                                   <tr>
                                     <td>
                                       <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('itempayments.index') }}">
-                                        <img src="{{ config('app.url') }}/images/icons/wallet_icon.png" alt="paymets_icon" class="options-icon">  Payments received
+                                        <img src="{{ config('app.url') }}/images/icons/earning_icon.png" alt="paymets_icon" class="options-icon">  Payments received
                                       </a>
                                     </td>
                                   </tr>

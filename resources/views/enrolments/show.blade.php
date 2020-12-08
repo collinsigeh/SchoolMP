@@ -310,7 +310,7 @@
                                     <tr>
                                         <th style="background-color: #f1f1f1"></th>
                                         <th class="text-right"  style="background-color: #f1f1f1;">Fees (Sub-total)</th>
-                                        <th class="text-right" style="background-color: #f1f1f1;">Payments (Sub-total)</th>
+                                        <th class="text-right" style="background-color: #f1f1f1;">Payments Confirmed</th>
                                     </tr>
                                     <tr>
                                         <td style="background-color: #fff;"><i>Required Items:</i></td>
@@ -365,7 +365,7 @@
                                         <td class="text-right" style="background-color: #f1f1f1"><b><i><?php echo $setting->base_currency_symbol.' '.number_format($required_amount + $optional_amount, 2) ?></i></b></td>
                                     </tr>
                                     <tr>
-                                        <td style="background-color: #f1f1f1"><b><i>Total Paid <small>(& Confirmed)</small>:</i></b></td>
+                                        <td style="background-color: #f1f1f1"><b><i>Total Payments Confirmed:</i></b></td>
                                         <td class="text-right" style="background-color: #f1f1f1"><?php echo '<b><i>'.$setting->base_currency_symbol.' '.number_format($required_payment + $optional_payment, 2).'</i></b>' ?></td>
                                     </tr>
                                     <tr>
