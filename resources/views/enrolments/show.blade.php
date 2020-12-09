@@ -791,12 +791,13 @@
                     </tr>
                 </table>
             </div>
+            <small><div class="alert alert-info"><b>Hint: </b>Select the new payment status and click on save</div></small>
             <div class="create-form">
                 <form method="POST" action="{{ route('enrolments.update', $enrolment->id) }}">
                     @csrf
+                    @method('PUT')
 
                     <input type="hidden" name="return_page" value="enrolments_show">
-                    <input type="hidden" name="enrolment_id" value="{{ $enrolment->id }}">
 
                     <div class="form-group row"> 
                         <label for="fee_payment_status" class="col-md-4 col-form-label text-md-right">{{ __('Fees payment status ') }}</label>
