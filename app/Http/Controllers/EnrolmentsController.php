@@ -318,6 +318,26 @@ class EnrolmentsController extends Controller
             ]);
 
             $enrolment->fee_status = $request->input('fee_payment_status');
+            $enrolment->fee_update_by = $user_id;
+
+            $enrolment->save();
+
+            $request->session()->flash('success', 'Update saved');
+        }
+        elseif($request->input('item_to_update') == 'access_privileges')
+        {
+            $this->validate($request, [
+                'can_write_exams'               => ['required', 'in:No,Yes'],
+                'can_partake_in_CA'             => ['required', 'in:No,Yes'],
+                'can_partake_in_assignments'    => ['required', 'in:No,Yes'],
+                'can_access_termly_report'      => ['required', 'in:No,Yes']
+            ]);
+
+            $enrolment->access_exam = $request->input('can_write_exams');
+            $enrolment->access_ca = $request->input('can_partake_in_CA');
+            $enrolment->access_assignment = $request->input('can_partake_in_assignments');
+            $enrolment->access_result = $request->input('can_access_termly_report');
+            $enrolment->access_update_by = $user_id;
 
             $enrolment->save();
 

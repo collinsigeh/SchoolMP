@@ -878,8 +878,8 @@
     
                         <div class="col-md-7">
                             <select id="can_partake_in_CA" type="text" class="form-control @error('can_partake_in_CA') is-invalid @enderror" name="can_partake_in_CA" autocomplete="can_partake_in_CA" autofocus>
-                                <option value="No" <?php if($enrolment->access_exam == 'No'){ echo 'selected'; } ?>>No</option>
-                                <option value="Yes" <?php if($enrolment->access_exam == 'Yes'){ echo 'selected'; } ?>>Yes</option>
+                                <option value="No" <?php if($enrolment->access_ca == 'No'){ echo 'selected'; } ?>>No</option>
+                                <option value="Yes" <?php if($enrolment->access_ca == 'Yes'){ echo 'selected'; } ?>>Yes</option>
                             </select>
     
                             @error('can_partake_in_CA')
@@ -895,8 +895,8 @@
     
                         <div class="col-md-7">
                             <select id="can_partake_in_assignments" type="text" class="form-control @error('can_partake_in_assignments') is-invalid @enderror" name="can_partake_in_assignments" autocomplete="can_partake_in_assignments" autofocus>
-                                <option value="No" <?php if($enrolment->access_exam == 'No'){ echo 'selected'; } ?>>No</option>
-                                <option value="Yes" <?php if($enrolment->access_exam == 'Yes'){ echo 'selected'; } ?>>Yes</option>
+                                <option value="No" <?php if($enrolment->access_assignment == 'No'){ echo 'selected'; } ?>>No</option>
+                                <option value="Yes" <?php if($enrolment->access_assignment == 'Yes'){ echo 'selected'; } ?>>Yes</option>
                             </select>
     
                             @error('can_partake_in_assignments')
@@ -912,8 +912,8 @@
     
                         <div class="col-md-7">
                             <select id="can_access_termly_report" type="text" class="form-control @error('can_access_termly_report') is-invalid @enderror" name="can_access_termly_report" autocomplete="can_access_termly_report" autofocus>
-                                <option value="No" <?php if($enrolment->access_exam == 'No'){ echo 'selected'; } ?>>No</option>
-                                <option value="Yes" <?php if($enrolment->access_exam == 'Yes'){ echo 'selected'; } ?>>Yes</option>
+                                <option value="No" <?php if($enrolment->access_result == 'No'){ echo 'selected'; } ?>>No</option>
+                                <option value="Yes" <?php if($enrolment->access_result == 'Yes'){ echo 'selected'; } ?>>Yes</option>
                             </select>
     
                             @error('can_access_termly_report')
