@@ -309,16 +309,12 @@
                                 <table class="table table-hover table-sm">
                                     <tr>
                                         <th style="background-color: #f1f1f1"></th>
-                                        <th class="text-right"  style="background-color: #f1f1f1;">Fees (Sub-total)</th>
+                                        <th class="text-right"  style="background-color: #f1f1f1;">Fees Summary</th>
                                         <th class="text-right" style="background-color: #f1f1f1;">Payments Confirmed</th>
                                     </tr>
                                     <tr>
                                         <td style="background-color: #fff;"><i>Required Items:</i></td>
                                         <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($required_amount, 2) ?></i></td>
-                                        <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($optional_amount, 2) ?></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="background-color: #fff;"><i>Optional Items:</i></td>
                                         @php
                                             $required_payment = 0;
                                             foreach($enrolment->itempayments as $itempayment)
@@ -333,6 +329,10 @@
                                             }
                                         @endphp
                                         <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($required_payment, 2) ?></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #fff;"><i>Optional Items:</i></td>
+                                        <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($optional_amount, 2) ?></i></td>
                                         @php
                                             $optional_payment = 0;
                                             foreach($enrolment->itempayments as $itempayment)
@@ -355,29 +355,19 @@
                                         @endphp
                                         <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($optional_payment, 2) ?></i></td>
                                     </tr>
-                                </table>
-                            </div>
-
-                            <div class="table-responsive collins-table-pem" style="padding-bottom: 23px;">
-                                <table class="table table-striped table-hover table-sm">
                                     <tr>
-                                        <td style="background-color: #f1f1f1"><b><i>Total Fees:</i></b></td>
-                                        <td class="text-right" style="background-color: #f1f1f1"><b><i><?php echo $setting->base_currency_symbol.' '.number_format($required_amount + $optional_amount, 2) ?></i></b></td>
+                                        <th style="background-color: #f1f1f1">Total:</th>
+                                        <th class="text-right" style="background-color: #f1f1f1"><i>{{ $setting->base_currency_symbol.' '.number_format($required_amount + $optional_amount, 2) }}</i></th>
+                                        <th class="text-right" style="background-color: #f1f1f1"><i>{{ $setting->base_currency_symbol.' '.number_format($required_payment + $optional_payment, 2) }}</i></th>
                                     </tr>
                                     <tr>
-                                        <td style="background-color: #f1f1f1"><b><i>Total Payments Confirmed:</i></b></td>
-                                        <td class="text-right" style="background-color: #f1f1f1"><?php echo '<b><i>'.$setting->base_currency_symbol.' '.number_format($required_payment + $optional_payment, 2).'</i></b>' ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="text-right bg-white" style="padding-top: 15px;">
+                                        <td colspan="3" class="text-right bg-white" style="padding-top: 15px;">
                                             @if ($itempayment_manager == 'Yes' OR $finance_manager == 'Yes')
                                                 <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#allPaymentModal">View all payments</button>
                                             @endif
                                             @if ($itempayment_manager == 'Yes')
                                                 <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addStudentPaymentModal" style="margin-left: 20px;">Add new payment</button>
                                             @endif
-                                            
-                                            
                                         </td>
                                     </tr>
                                 </table>
@@ -512,124 +502,6 @@
  
   @include('partials._add_subjects_for_student')
 
-
-<!-- updateFeePaymentStatusModal -->
-<div class="modal fade" id="updateFeePaymentStatusModal" tabindex="-1" role="dialog" aria-labelledby="updateFeePaymentStatusModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="updateFeePaymentStatusModalLabel">Fee payment status {!! ' - (<i>'.$term->name.' - <small>'.$term->session.'</small>'.'</i>)' !!}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="create-form">
-                <form method="POST" action="{{ route('itempayments.store') }}">
-                    @csrf
-
-                    <input type="hidden" name="return_page" value="enrolments_show">
-                    <input type="hidden" name="enrolment_id" value="{{ $enrolment->id }}">
-
-                    <div class="form-group row">
-                        <label for="student" class="col-md-4 col-form-label text-md-right">{{ __('Student') }}</label>
-    
-                        <div class="col-md-8">
-                            <div class="alert alert-info">{!! '<b>'.$enrolment->user->name.'</b><br /><small>('.$enrolment->student->registration_number.')</small>' !!}</div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('Class') }}</label>
-    
-                        <div class="col-md-8">
-                            <div class="alert alert-info">{{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row"> 
-                        <label for="item_paid_for" class="col-md-4 col-form-label text-md-right">{{ __('Item paid for') }}</label>
-    
-                        <div class="col-md-8">
-                            <select id="item_paid_for" type="text" class="form-control @error('item_paid_for') is-invalid @enderror" name="item_paid_for" autocomplete="item_paid_for" autofocus>
-                                @php
-                                    foreach ($arm->items as $item) {
-                                        echo '<option value="'.$item->id.'">'.$item->name.'</option>';
-                                    }
-                                @endphp
-                                <option value="0">No specific item</option>
-                            </select>
-    
-                            @error('item_paid_for')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <input type="hidden" name="currency_symbol" value="{{ $setting->base_currency_symbol }}">
-                    <div class="form-group row">
-                        <label for="amount_received" class="col-md-4 col-form-label text-md-right">{{ __('Amount ('.$setting->base_currency_symbol.')') }}</label>
-    
-                        <div class="col-md-8">
-                            <input id="amount_received" type="text" class="form-control @error('amount_received') is-invalid @enderror" name="amount_received" value="{{ old('amount_received') }}" required autocomplete="amount_received" autofocus>
-                            <small class="text-muted">*** Enter amount only. <b>E.g. 450.75</b> ***</small>
-                            @error('amount_received')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row"> 
-                        <label for="method_of_payment" class="col-md-4 col-form-label text-md-right">{{ __('Method of payment') }}</label>
-    
-                        <div class="col-md-8">
-                            <select id="method_of_payment" type="text" class="form-control @error('method_of_payment') is-invalid @enderror" name="method_of_payment" autocomplete="method_of_payment" autofocus>
-                                <option value="Offline (Cash)">Offline (Cash)</option>
-                                <option value="Offline (Bank deposit)">Offline (Bank deposit)</option>
-                                <option value="Online">Online</option>
-                            </select>
-    
-                            @error('method_of_payment')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row"> 
-                        <label for="special_note" class="col-md-4 col-form-label text-md-right">{{ __('Special note (Optional):') }}</label>
-                        
-                        <div class="col-md-8">
-                            <textarea id="special_note" class="form-control @error('special_note') is-invalid @enderror" name="special_note">{{ old('special_note') }}</textarea>
-    
-                            @error('special_note')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <input type="hidden" name="status" value="Confirmed">
-
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Save') }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-      </div>
-    </div>
-</div>
-<!-- End updateFeePaymentStatusModal -->
 
 
 <!-- addStudentPaymentModal -->
@@ -827,5 +699,87 @@
     </div>
 </div>
 <!-- End allPaymentModal -->
+
+
+<!-- updateFeePaymentStatusModal -->
+<div class="modal fade" id="updateFeePaymentStatusModal" tabindex="-1" role="dialog" aria-labelledby="updateFeePaymentStatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateFeePaymentStatusModalLabel">Fee payment status {!! ' - (<i>'.$term->name.' - <small>'.$term->session.'</small>'.'</i>)' !!}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-info">
+                <b>{{ $enrolment->user->name }}</b><br/>
+                <small>({{ $enrolment->student->registration_number }})</small><br />
+                <span class="badge badge-secondary">{{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-sm">
+                    <tr>
+                        <th style="background-color: #f1f1f1"></th>
+                        <th class="text-right" style="background-color: #f1f1f1">Fees Summary</th>
+                        <th class="text-right" style="background-color: #f1f1f1">Payments Confirmed</th>
+                    </tr>
+                    <tr>
+                        <td>Required items:</td>
+                        <td class="text-right"><?php echo $setting->base_currency_symbol.' '.number_format($required_amount, 2) ?></td>
+                        <td class="text-right">{{ $setting->base_currency_symbol.' '.number_format($required_payment, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Optional items:</td>
+                        <td class="text-right"><?php echo $setting->base_currency_symbol.' '.number_format($optional_amount, 2) ?></td>
+                        <td class="text-right">{{ $setting->base_currency_symbol.' '.number_format($optional_payment, 2) }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #f1f1f1">Total:</th>
+                        <th class="text-right" style="background-color: #f1f1f1">{{ $setting->base_currency_symbol.' '.number_format($required_amount + $optional_amount, 2) }}</th>
+                        <th class="text-right" style="background-color: #f1f1f1">{{ $setting->base_currency_symbol.' '.number_format($required_payment + $optional_payment, 2) }}</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="create-form">
+                <form method="POST" action="{{ route('enrolments.update', $enrolment->id) }}">
+                    @csrf
+
+                    <input type="hidden" name="return_page" value="enrolments_show">
+                    <input type="hidden" name="enrolment_id" value="{{ $enrolment->id }}">
+
+                    <div class="form-group row"> 
+                        <label for="fee_payment_status" class="col-md-4 col-form-label text-md-right">{{ __('Fees payment status ') }}</label>
+    
+                        <div class="col-md-8">
+                            <select id="fee_payment_status" type="text" class="form-control @error('fee_payment_status') is-invalid @enderror" name="fee_payment_status" autocomplete="fee_payment_status" autofocus>
+                                <option value="Pending">Unpaid</option>
+                                <option value="Partly-paid">Partly-paid</option>
+                                <option value="Completely-paid">Completely-paid</option>
+                            </select>
+    
+                            @error('fee_payment_status')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Save') }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- End updateFeePaymentStatusModal -->
+
 
 @endsection
