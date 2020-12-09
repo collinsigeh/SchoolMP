@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="newSubjectLabel">Add subjects for {{ $enrolment->user->name }} - {{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</h5>
+          <h5 class="modal-title" id="newSubjectModalLabel">Add subjects for {{ $enrolment->user->name }} - {{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
