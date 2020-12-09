@@ -302,6 +302,7 @@
                                         <?php $optional_amount+= $item->amount; ?>
                                     <?php } $sn++; ?>
                                     @endforeach
+                                    <tr><td colspan="4" style="background-color: #fff;"></td></tr>
                                 </table>
                             </div>
 
@@ -628,7 +629,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="allPaymentModalLabel">Payments summary</h5>
+          <h5 class="modal-title" id="allPaymentModalLabel">Payments breakdown</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -642,48 +643,97 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Payment</th>
-                            <th class="text-right">Date</th>
-                            <th class="text-right">Status</th>
+                            <th>Item</th>
+                            <th>Payments</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $sn = 1; ?>
-                        @foreach ($enrolment->itempayments as $itempayment)
+                        <?php $sn = 1; $no_other_payment = 0; ?>
+                        @foreach ($enrolment->arm->items as $item)
                             <tr>
                                 <td>{{ $sn.'.' }}</td>
                                 <td>
-                                    {!! '<b>'.$itempayment->currency_symbol.' '.number_format($itempayment->amount, 2).'</b> for ' !!}
-                                    <small>
-                                        @if ($itempayment->item_id == 0)
-                                        No specific item
-                                        @else
-                                            {{ $itempayment->item->name }}
-                                        @endif
-                                    </small>
+                                    {{ $item->name }}<br />
+                                    <span class="badge badge-secondary">{{ $item->currency_symbol.' '.number_format($item->amount) }}</span>
                                 </td>
-                                <td class="text-right">
-                                    <small><i><?php echo date('d-M-Y', strtotime($itempayment->created_at)) ?></i></small>
-                                </td>
-                                <td class="text-right">
-                                    @php
-                                        if($itempayment->status == 'Confirmed')
-                                        {
-                                            echo '<span class="badge badge-success">Confirmed</span>';
-                                        }
-                                        elseif($itempayment->status == 'Declined')
-                                        {
-                                            echo '<span class="badge badge-danger">Declined</span>';
-                                        }
-                                        else
-                                        {
-                                            echo '<span class="badge badge-info">Pending</span>';
-                                        }
-                                        $sn++;
-                                    @endphp
+                                <td>
+                                    <?php $payments_for_item = 0; ?>
+                                    <table class="table table-sm">
+                                        @foreach ($enrolment->itempayments as $itempayment)
+                                            @if ($itempayment->item_id == $item->id)
+                                                <?php $payments_for_item++; ?>
+                                                <tr>
+                                                    <td>
+                                                        {!! '<b>'.$itempayment->currency_symbol.' '.number_format($itempayment->amount, 2).'</b>' !!}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <small><i><?php echo date('d-M-Y', strtotime($itempayment->created_at)) ?></i></small>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        @php
+                                                            if($itempayment->status == 'Confirmed')
+                                                            {
+                                                                echo '<span class="badge badge-success">Confirmed</span>';
+                                                            }
+                                                            elseif($itempayment->status == 'Declined')
+                                                            {
+                                                                echo '<span class="badge badge-danger">Declined</span>';
+                                                            }
+                                                            else
+                                                            {
+                                                                echo '<span class="badge badge-info">Pending</span>';
+                                                            }
+                                                        @endphp
+                                                    </td>
+                                                </tr>
+                                            @else
+                                                <?php if($itempayment->item_id == 0){ $no_other_payment++; } ?>
+                                            @endif
+                                        @endforeach
+                                        <?php if($payments_for_item == 0){ echo '<span class="badge badge-secondary">No payments yet</span>'; } ?>
+                                    </table>
                                 </td>
                             </tr>
+                            <?php $sn++; ?>
                         @endforeach
+                        @if ($no_other_payment > 0)
+                            <tr>
+                                <td>{{ $sn.'.' }}</td>
+                                <td>Other payments</td>
+                                <td>
+                                    <table class="table table-sm">
+                                        @foreach ($enrolment->itempayments as $itempayment)
+                                            @if ($itempayment->item_id == 0)
+                                                <tr>
+                                                    <td>
+                                                        {!! '<b>'.$itempayment->currency_symbol.' '.number_format($itempayment->amount, 2).'</b>' !!}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <small><i><?php echo date('d-M-Y', strtotime($itempayment->created_at)) ?></i></small>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        @php
+                                                            if($itempayment->status == 'Confirmed')
+                                                            {
+                                                                echo '<span class="badge badge-success">Confirmed</span>';
+                                                            }
+                                                            elseif($itempayment->status == 'Declined')
+                                                            {
+                                                                echo '<span class="badge badge-danger">Declined</span>';
+                                                            }
+                                                            else
+                                                            {
+                                                                echo '<span class="badge badge-info">Pending</span>';
+                                                            }
+                                                        @endphp
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </table>
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -706,7 +756,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="updateFeePaymentStatusModalLabel">Fee payment status {!! ' - (<i>'.$term->name.' - <small>'.$term->session.'</small>'.'</i>)' !!}</h5>
+          <h5 class="modal-title" id="updateFeePaymentStatusModalLabel">Fees payment status {!! ' - (<i>'.$term->name.' - <small>'.$term->session.'</small>'.'</i>)' !!}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -717,7 +767,7 @@
                 <small>({{ $enrolment->student->registration_number }})</small><br />
                 <span class="badge badge-secondary">{{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</span>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive" style="padding-bottom: 40px;">
                 <table class="table table-hover table-sm">
                     <tr>
                         <th style="background-color: #f1f1f1"></th>
