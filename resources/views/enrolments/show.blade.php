@@ -444,7 +444,7 @@
                             </div>
                             <div style="padding-bottom: 18px;" class="text-right">
                                 @if ($student_privilege_manager == 'Yes')
-                                    <button class="btn btn-sm btn-primary">Update privileges</button>
+                                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#updateStudentPrivilegesModal">Update privileges</button>
                                 @endif
                             </div>
                             @endif
@@ -750,7 +750,6 @@
 </div>
 <!-- End allPaymentModal -->
 
-
 <!-- updateFeePaymentStatusModal -->
 <div class="modal fade" id="updateFeePaymentStatusModal" tabindex="-1" role="dialog" aria-labelledby="updateFeePaymentStatusModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -804,9 +803,9 @@
     
                         <div class="col-md-8">
                             <select id="fee_payment_status" type="text" class="form-control @error('fee_payment_status') is-invalid @enderror" name="fee_payment_status" autocomplete="fee_payment_status" autofocus>
-                                <option value="Pending">Unpaid</option>
-                                <option value="Partly-paid">Partly-paid</option>
-                                <option value="Completely-paid">Completely-paid</option>
+                                <option value="Pending" <?php if($enrolment->fee_status == 'Unpaid'){ echo 'selected'; } ?>>Unpaid</option>
+                                <option value="Partly-paid" <?php if($enrolment->fee_status == 'Partly-paid'){ echo 'selected'; } ?>>Partly-paid</option>
+                                <option value="Completely-paid" <?php if($enrolment->fee_status == 'Completely-paid'){ echo 'selected'; } ?>>Completely-paid</option>
                             </select>
     
                             @error('fee_payment_status')
@@ -831,6 +830,114 @@
     </div>
 </div>
 <!-- End updateFeePaymentStatusModal -->
+
+<!-- updateStudentPrivilegesModal -->
+<div class="modal fade" id="updateStudentPrivilegesModal" tabindex="-1" role="dialog" aria-labelledby="updateStudentPrivilegesModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateStudentPrivilegesModalLabel">Update student's privileges {!! ' - (<i>'.$term->name.' - <small>'.$term->session.'</small>'.'</i>)' !!}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-info">
+                <b>{{ $enrolment->user->name }}</b><br/>
+                <small>({{ $enrolment->student->registration_number }})</small><br />
+                <span class="badge badge-secondary">{{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</span>
+            </div>
+            
+            <small><div class="alert alert-info"><b>Hint: </b>Select the preferred privileges and click on save</div></small>
+            <div class="create-form">
+                <form method="POST" action="{{ route('enrolments.update', $enrolment->id) }}">
+                    @csrf
+                    @method('PUT')
+
+                    <input type="hidden" name="item_to_update" value="access_privileges">
+
+                    <div class="form-group row"> 
+                        <label for="can_write_exams" class="col-md-5 col-form-label text-md-right">{{ __('Can write exams') }}</label>
+    
+                        <div class="col-md-7">
+                            <select id="can_write_exams" type="text" class="form-control @error('can_write_exams') is-invalid @enderror" name="can_write_exams" autocomplete="can_write_exams" autofocus>
+                                <option value="No" <?php if($enrolment->access_exam == 'No'){ echo 'selected'; } ?>>No</option>
+                                <option value="Yes" <?php if($enrolment->access_exam == 'Yes'){ echo 'selected'; } ?>>Yes</option>
+                            </select>
+    
+                            @error('can_write_exams')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row"> 
+                        <label for="can_partake_in_CA" class="col-md-5 col-form-label text-md-right">{{ __('Can partake in C.A.') }}</label>
+    
+                        <div class="col-md-7">
+                            <select id="can_partake_in_CA" type="text" class="form-control @error('can_partake_in_CA') is-invalid @enderror" name="can_partake_in_CA" autocomplete="can_partake_in_CA" autofocus>
+                                <option value="No" <?php if($enrolment->access_exam == 'No'){ echo 'selected'; } ?>>No</option>
+                                <option value="Yes" <?php if($enrolment->access_exam == 'Yes'){ echo 'selected'; } ?>>Yes</option>
+                            </select>
+    
+                            @error('can_partake_in_CA')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row"> 
+                        <label for="can_partake_in_assignments" class="col-md-5 col-form-label text-md-right">{{ __('Can partake in assignments') }}</label>
+    
+                        <div class="col-md-7">
+                            <select id="can_partake_in_assignments" type="text" class="form-control @error('can_partake_in_assignments') is-invalid @enderror" name="can_partake_in_assignments" autocomplete="can_partake_in_assignments" autofocus>
+                                <option value="No" <?php if($enrolment->access_exam == 'No'){ echo 'selected'; } ?>>No</option>
+                                <option value="Yes" <?php if($enrolment->access_exam == 'Yes'){ echo 'selected'; } ?>>Yes</option>
+                            </select>
+    
+                            @error('can_partake_in_assignments')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row"> 
+                        <label for="can_access_termly_report" class="col-md-5 col-form-label text-md-right">{{ __('Can access termly report') }}</label>
+    
+                        <div class="col-md-7">
+                            <select id="can_access_termly_report" type="text" class="form-control @error('can_access_termly_report') is-invalid @enderror" name="can_access_termly_report" autocomplete="can_access_termly_report" autofocus>
+                                <option value="No" <?php if($enrolment->access_exam == 'No'){ echo 'selected'; } ?>>No</option>
+                                <option value="Yes" <?php if($enrolment->access_exam == 'Yes'){ echo 'selected'; } ?>>Yes</option>
+                            </select>
+    
+                            @error('can_access_termly_report')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-5">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Save') }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- End updateStudentPrivilegesModal -->
 
 
 @endsection
