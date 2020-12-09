@@ -287,9 +287,44 @@ class EnrolmentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id = 0)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+        
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $user_id = Auth::user()->id;
+
+        $enrolment = Enrolment::find($id);
+        if(empty($enrolment))
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            'item_to_update' => ['required']
+        ]);
+
+        if($request->input('item_to_update') == 'fee_status')
+        {
+            $this->validate($request, [
+                'fee_payment_status' => ['required', 'in:Unpaid,Partly-paid,Completely-paid']
+            ]);
+
+            $enrolment->fee_status = $request->input('fee_payment_status');
+
+            $enrolment->save();
+
+            $request->session()->flash('success', 'Update saved');
+        }
+
+        return redirect()->route('enrolments.show', $id);
     }
 
     /**

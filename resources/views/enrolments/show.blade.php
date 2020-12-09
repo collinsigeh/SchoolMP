@@ -256,7 +256,7 @@
                                             }
                                             elseif($enrolment->fee_status == 'Partly-paid')
                                             {
-                                              echo 'badge-warning';
+                                              echo 'badge-primary';
                                             }
                                             elseif($enrolment->fee_status == 'Completely-paid')
                                             {
@@ -362,7 +362,7 @@
                                         <th class="text-right" style="background-color: #f1f1f1"><i>{{ $setting->base_currency_symbol.' '.number_format($required_payment + $optional_payment, 2) }}</i></th>
                                     </tr>
                                     <tr>
-                                        <td colspan="3" class="text-right bg-white" style="padding-top: 15px;">
+                                        <td colspan="3" class="text-right bg-white" style="padding-top: 15px; padding-bottom: 25px;">
                                             @if ($itempayment_manager == 'Yes' OR $finance_manager == 'Yes')
                                                 <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#allPaymentModal">View all payments</button>
                                             @endif
@@ -797,7 +797,7 @@
                     @csrf
                     @method('PUT')
 
-                    <input type="hidden" name="return_page" value="enrolments_show">
+                    <input type="hidden" name="item_to_update" value="fee_status">
 
                     <div class="form-group row"> 
                         <label for="fee_payment_status" class="col-md-4 col-form-label text-md-right">{{ __('Fees payment status ') }}</label>
