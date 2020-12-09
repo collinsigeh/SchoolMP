@@ -86,7 +86,7 @@
                                     }
                                     elseif($enrolment->fee_status == 'Partly-paid')
                                     {
-                                      echo 'badge-warning';
+                                      echo 'badge-primary';
                                     }
                                     elseif($enrolment->fee_status == 'Completely-paid')
                                     {
