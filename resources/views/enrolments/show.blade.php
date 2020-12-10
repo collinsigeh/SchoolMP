@@ -516,28 +516,17 @@
           </button>
         </div>
         <div class="modal-body">
+            <div class="alert alert-info" style="margin-bottom: 30px;">
+                <b>{{ $enrolment->user->name }}</b><br/>
+                <small>({{ $enrolment->student->registration_number }})</small><br />
+                <span class="badge badge-secondary">{{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</span>
+            </div>
             <div class="create-form">
                 <form method="POST" action="{{ route('itempayments.store') }}">
                     @csrf
 
                     <input type="hidden" name="return_page" value="enrolments_show">
                     <input type="hidden" name="enrolment_id" value="{{ $enrolment->id }}">
-
-                    <div class="form-group row">
-                        <label for="student" class="col-md-4 col-form-label text-md-right">{{ __('Student') }}</label>
-    
-                        <div class="col-md-8">
-                            <div class="alert alert-info">{!! '<b>'.$enrolment->user->name.'</b><br /><small>('.$enrolment->student->registration_number.')</small>' !!}</div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('Class') }}</label>
-    
-                        <div class="col-md-8">
-                            <div class="alert alert-info">{{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</div>
-                        </div>
-                    </div>
 
                     <div class="form-group row"> 
                         <label for="item_paid_for" class="col-md-4 col-form-label text-md-right">{{ __('Item paid for') }}</label>
@@ -635,6 +624,11 @@
           </button>
         </div>
         <div class="modal-body">
+            <div class="alert alert-info" style="margin-bottom: 30px;">
+                <b>{{ $enrolment->user->name }}</b><br/>
+                <small>({{ $enrolment->student->registration_number }})</small><br />
+                <span class="badge badge-secondary">{{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</span>
+            </div>
             @if (count($enrolment->itempayments) < 1)
                 <div class="alert alert-info">No payment yet.</div>
             @else
