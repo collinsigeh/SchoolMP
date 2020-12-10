@@ -69,7 +69,6 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Subject</th>
-                                                <th>Class</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -78,8 +77,10 @@
                                         @foreach ($classsubjectswithoutteacher as $item)
                                         <tr>
                                             <td>{{ $sn.'.' }}</td>
-                                            <td>{{ $item->subject->name }}</td>
-                                            <td><span class="badge badge-secondary">{{ $item->arm->schoolclass->name.' '.$item->arm->name }}</span></td>
+                                            <td>
+                                                <b>{{ $item->subject->name }}</b><br />
+                                                <small><span class="badge badge-secondary">{{ $item->arm->schoolclass->name.' '.$item->arm->name }}</span></small>
+                                            </td>
                                             <td class="text-right">
                                                 <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $item->id }}">
                                                     Assign teacher
@@ -135,10 +136,8 @@
                                                                     @if ($assigned_subject->user_id == $this_staff->user_id)
                                                                         <tr>
                                                                             <td style="width: 40%;">
-                                                                                {{ $assigned_subject->subject->name }}
-                                                                            </td>
-                                                                            <td>
-                                                                                <span class="badge badge-secondary">{{ $assigned_subject->arm->schoolclass->name.' '.$assigned_subject->arm->name }}</span>
+                                                                                {{ $assigned_subject->subject->name }}<br />
+                                                                                <small><span class="badge badge-secondary">{{ $assigned_subject->arm->schoolclass->name.' '.$assigned_subject->arm->name }}</span></small>
                                                                             </td>
                                                                             <td class="text-right">
                                                                                 <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $assigned_subject->id }}">
