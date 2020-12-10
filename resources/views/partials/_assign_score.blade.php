@@ -3,12 +3,17 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="assignScoreModal{{ $result_slip->id }}Label">{!!  '<b>'.$result_slip->enrolment->user->name.'</b><br /><small>('.$result_slip->enrolment->student->registration_number.')<br>'.$classsubject->arm->schoolclass->name.' '.$classsubject->arm->name !!}</small></h5>
+          <h5 class="modal-title" id="assignScoreModal{{ $result_slip->id }}Label">{{ $classsubject->subject->name.' - '.$classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }} - ({!! '<i>'.$term->name.' - <small>'.$term->session.'</small></i>' !!})</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
+            <div class="alert alert-info">
+                <b> {{ $result_slip->enrolment->user->name }} </b><br />
+                <small>({{ $result_slip->enrolment->student->registration_number }})</small><br />
+                <span class="badge badge-secondary">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}
+            </div>
             <div class="create-form">
                 <form method="POST" action="{{ route('results.update', $result_slip->id) }}">
                     @csrf
@@ -21,16 +26,6 @@
                             <input type="hidden" name="returnpage_id" value="'.$returnpage_id.'" />';
                         }
                     @endphp
-    
-                    <div class="form-group row"> 
-                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Subject') }}</label>
-    
-                        <div class="col-md-8">
-                            <div class="alert alert-info">
-                                <b>{{ $classsubject->arm->schoolclass->name.' '.$classsubject->subject->name }}</b><br />({!! $term->name.' - <small>'.$term->session.'</small>' !!})
-                            </div>
-                        </div>
-                    </div>
                     
                     <?php
                         if($classsubject->arm->resulttemplate->subject_1st_test_max_score > 0)
