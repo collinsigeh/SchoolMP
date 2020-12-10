@@ -306,54 +306,55 @@
                                 </table>
                             </div>
 
+                            @php
+                                $required_payment = 0;
+                                foreach($enrolment->itempayments as $itempayment)
+                                {
+                                    if ($itempayment->status == 'Confirmed' && $itempayment->item_id > 0) 
+                                    {
+                                        if($itempayment->item->type == 'Required')
+                                        {
+                                            $required_payment+= $itempayment->amount;
+                                        }
+                                    }
+                                }
+                                $optional_payment = 0;
+                                foreach($enrolment->itempayments as $itempayment)
+                                {
+                                    if ($itempayment->status == 'Confirmed') 
+                                    {
+                                        if($itempayment->item_id > 0)
+                                        {
+                                            if($itempayment->item->type != 'Required')
+                                            {
+                                                $optional_payment+= $itempayment->amount;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            $optional_payment+= $itempayment->amount;
+                                        }
+                                    }
+                                }
+                            @endphp
+                            @if ($itempayment_manager == 'Yes' OR $finance_manager == 'Yes')
                             <div class="table-responsive collins-table-pem">
                                 <table class="table table-hover table-sm">
                                     <tr>
-                                        <th style="background-color: #f1f1f1"></th>
-                                        <th class="text-right"  style="background-color: #f1f1f1;">Fees Summary</th>
+                                        <th colspan="3" class="text-center" style="background-color: #f1f1f1;">FEES & PAYMENT SUMMARY</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2" class="text-right"  style="background-color: #f1f1f1;">Fees Summary</th>
                                         <th class="text-right" style="background-color: #f1f1f1;">Payments Confirmed</th>
                                     </tr>
                                     <tr>
                                         <td style="background-color: #fff;"><i>Required Items:</i></td>
                                         <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($required_amount, 2) ?></i></td>
-                                        @php
-                                            $required_payment = 0;
-                                            foreach($enrolment->itempayments as $itempayment)
-                                            {
-                                                if ($itempayment->status == 'Confirmed' && $itempayment->item_id > 0) 
-                                                {
-                                                    if($itempayment->item->type == 'Required')
-                                                    {
-                                                        $required_payment+= $itempayment->amount;
-                                                    }
-                                                }
-                                            }
-                                        @endphp
                                         <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($required_payment, 2) ?></i></td>
                                     </tr>
                                     <tr>
                                         <td style="background-color: #fff;"><i>Optional Items:</i></td>
                                         <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($optional_amount, 2) ?></i></td>
-                                        @php
-                                            $optional_payment = 0;
-                                            foreach($enrolment->itempayments as $itempayment)
-                                            {
-                                                if ($itempayment->status == 'Confirmed') 
-                                                {
-                                                    if($itempayment->item_id > 0)
-                                                    {
-                                                        if($itempayment->item->type != 'Required')
-                                                        {
-                                                            $optional_payment+= $itempayment->amount;
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        $optional_payment+= $itempayment->amount;
-                                                    }
-                                                }
-                                            }
-                                        @endphp
                                         <td class="text-right" style="background-color: #fff;"><i><?php echo $setting->base_currency_symbol.' '.number_format($optional_payment, 2) ?></i></td>
                                     </tr>
                                     <tr>
@@ -363,9 +364,9 @@
                                     </tr>
                                     <tr>
                                         <td colspan="3" class="text-right bg-white" style="padding-top: 15px; padding-bottom: 25px;">
-                                            @if ($itempayment_manager == 'Yes' OR $finance_manager == 'Yes')
+                                            
                                                 <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#allPaymentModal">View all payments</button>
-                                            @endif
+                                            
                                             @if ($itempayment_manager == 'Yes')
                                                 <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addStudentPaymentModal" style="margin-left: 20px;">Add new payment</button>
                                             @endif
@@ -373,8 +374,8 @@
                                     </tr>
                                 </table>
                             </div>
-
-                            @if ($student_privilege_manager == 'Yes')
+                            @endif
+                            
                             <div class="table-responsive collins-table-pem">
                                 <table class="table table-striped table-bordered table-hover table-sm">
                                     <tr>
@@ -447,7 +448,6 @@
                                     <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#updateStudentPrivilegesModal">Update privileges</button>
                                 @endif
                             </div>
-                            @endif
                         </div>
                     </div>
 
