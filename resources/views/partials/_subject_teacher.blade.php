@@ -9,6 +9,10 @@
           </button>
         </div>
         <div class="modal-body">
+            <div class="alert alert-info">
+                <b>{{ $classsubject->subject->name }}</b><br />
+                <span class="badge badge-secondary">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</span>
+            </div>
             <div class="create-form">
                 <form method="POST" action="{{ route('classsubjects.update', $classsubject->id) }}">
                     @csrf
@@ -21,22 +25,6 @@
                             <input type="hidden" name="returnpage_id" value="'.$returnpage_id.'" />';
                         }
                     @endphp
-    
-                    <div class="form-group row"> 
-                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Subject') }}</label>
-    
-                        <div class="col-md-8">
-                            <div class="alert alert-info"><b>{{ $classsubject->subject->name }}</b></div>
-                        </div>
-                    </div>
-    
-                    <div class="form-group row"> 
-                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Class') }}</label>
-    
-                        <div class="col-md-8">
-                            <div class="alert alert-info">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</div>
-                        </div>
-                    </div>
     
                     <div class="form-group row"> 
                         <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('Subject teacher') }}</label>

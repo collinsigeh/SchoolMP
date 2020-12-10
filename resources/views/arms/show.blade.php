@@ -356,7 +356,10 @@
           </button>
         </div>
         <div class="modal-body">
-            <div class="alert alert-info"><b>{{ $arm->schoolclass->name.' '.$arm->name }} Fees & Other items</b></div>
+            <div class="alert alert-info">
+                <b>{{ $arm->schoolclass->name.' '.$arm->name }} Fees & Other items</b><br />
+                <span class="badge badge-secondary">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</span>
+            </div>
             <div class="table-responsive">
                 <table class="table table-sm table-hover">
                     <?php $sn = 1; ?>
