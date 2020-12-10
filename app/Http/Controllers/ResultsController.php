@@ -275,7 +275,7 @@ class ResultsController extends Controller
         if($result_slip->resulttemplate->subject_1st_test_max_score > 0)
         {
             $this->validate($request, [
-                '1st_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_1st_test_max_score]
+                '1st_test_score' => ['required', 'integer', 'min:0', 'max: '.$result_slip->resulttemplate->subject_1st_test_max_score]
             ]);
             
             $result_slip->subject_1st_test_score = $request->input('1st_test_score');
@@ -284,7 +284,7 @@ class ResultsController extends Controller
         if($result_slip->resulttemplate->subject_2nd_test_max_score > 0)
         {
             $this->validate($request, [
-                '2nd_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_2nd_test_max_score]
+                '2nd_test_score' => ['required', 'integer', 'min:0', 'max: '.$result_slip->resulttemplate->subject_2nd_test_max_score]
             ]);
             
             $result_slip->subject_2nd_test_score = $request->input('2nd_test_score');
@@ -293,7 +293,7 @@ class ResultsController extends Controller
         if($result_slip->resulttemplate->subject_3rd_test_max_score > 0)
         {
             $this->validate($request, [
-                '3rd_test_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_3rd_test_max_score]
+                '3rd_test_score' => ['required', 'integer', 'min:0', 'max: '.$result_slip->resulttemplate->subject_3rd_test_max_score]
             ]);
             
             $result_slip->subject_3rd_test_score = $request->input('3rd_test_score');
@@ -302,7 +302,7 @@ class ResultsController extends Controller
         if($result_slip->resulttemplate->subject_assignment_score > 0)
         {
             $this->validate($request, [
-                'assignment_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_assignment_score]
+                'assignment_score' => ['required', 'integer', 'min:0', 'max: '.$result_slip->resulttemplate->subject_assignment_score]
             ]);
             
             $result_slip->subject_assignment_score = $request->input('assignment_score');
@@ -311,7 +311,7 @@ class ResultsController extends Controller
         if($result_slip->resulttemplate->subject_exam_score > 0)
         {
             $this->validate($request, [
-                'exam_score' => ['required', 'numeric', 'min:0', 'max: '.$result_slip->resulttemplate->subject_exam_score]
+                'exam_score' => ['required', 'integer', 'min:0', 'max: '.$result_slip->resulttemplate->subject_exam_score]
             ]);
             
             $result_slip->subject_exam_score = $request->input('exam_score');

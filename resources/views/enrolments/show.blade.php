@@ -464,7 +464,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>Termly report</td>
-                                                <td class="text-right"><a href="#" class="btn btn-sm btn-primary">View</a> </td>
+                                                <td class="text-right"><button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#studentResultModal">View</button> </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -932,6 +932,140 @@
     </div>
 </div>
 <!-- End updateStudentPrivilegesModal -->
+
+<!-- studentResultModal -->
+<div class="modal fade bd-example-modal-lg" id="studentResultModal" tabindex="-1" role="dialog" aria-labelledby="studentResultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="studentResultModalLabel">Student Result {!! ' - (<i>'.$term->name.' - <small>'.$term->session.'</small>'.'</i>)' !!}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-info">
+                <b>{{ $enrolment->user->name }}</b><br/>
+                <small>({{ $enrolment->student->registration_number }})</small><br />
+                <span class="badge badge-secondary">{{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</span>
+            </div>
+            
+            <small><div class="alert alert-info"><b>Hint: </b>Select the preferred privileges and click on save</div></small>
+
+            @if ($enrolment->arm->resulttemplate->ca_display == 'Summary')
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm">
+                        <tr>
+                            <th style="vertical-align: middle">Subject</th>
+                            <th class="text-right" style="vertical-align: middle">C.A.<br><span class="badge badge-secondary">40 %</span></th>
+                            <th class="text-right" style="vertical-align: middle">Exam<br><span class="badge badge-secondary">60 %</span></th>
+                            <th class="text-right" style="vertical-align: middle">Total<br><span class="badge badge-secondary">100 %</span></th>
+                            <th class="text-right" style="vertical-align: middle">Grade</th>
+                            <th class="text-right" style="vertical-align: middle">Remark</th>
+                        </tr>
+                        @foreach ($enrolment->results as $result_slip)
+                            <tr>
+                                <td>{{ $result_slip->classsubject->subject->name }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            @elseif ($enrolment->arm->resulttemplate->ca_display == 'Breakdown')
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm">
+                        <tr>
+                            <th style="vertical-align: middle; background-color: #f1f1f1">Subject</th>
+                            @if ($enrolment->arm->resulttemplate->subject_1st_test_max_score > 0)
+                                <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">1st Test<br><span class="badge badge-secondary">{{ $enrolment->arm->resulttemplate->subject_1st_test_max_score }} %</span></th>
+                            @endif
+                            @if ($enrolment->arm->resulttemplate->subject_2nd_test_max_score > 0)
+                                <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">2nd Test<br><span class="badge badge-secondary">{{ $enrolment->arm->resulttemplate->subject_2nd_test_max_score }} %</span></th>
+                            @endif
+                            @if ($enrolment->arm->resulttemplate->subject_3rd_test_max_score > 0)
+                                <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">3rd Test<br><span class="badge badge-secondary">{{ $enrolment->arm->resulttemplate->subject_3rd_test_max_score }} %</span></th>
+                            @endif
+                            @if ($enrolment->arm->resulttemplate->subject_assignment_score > 0)
+                                <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">Ass. Score<br><span class="badge badge-secondary">{{ $enrolment->arm->resulttemplate->subject_assignment_score }} %</span></th>
+                            @endif
+                            <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">Exam<br><span class="badge badge-secondary">{{ $enrolment->arm->resulttemplate->subject_exam_score }} %</span></th>
+                            <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">Total<br><span class="badge badge-secondary">100 %</span></th>
+                            <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">Grade</th>
+                            <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">Remark</th>
+                        </tr>
+                        @foreach ($enrolment->results as $result_slip)
+                            <?php $total = 0; ?>
+                            <tr>
+                                <td style="background-color: #f1f1f1">{{ $result_slip->classsubject->subject->name }}</td>
+                                @if ($enrolment->arm->resulttemplate->subject_1st_test_max_score > 0)
+                                    <td class="text-right">{{ $result_slip->subject_1st_test_score }}</td>
+                                    <?php $total += $result_slip->subject_1st_test_score; ?>
+                                @endif
+                                @if ($enrolment->arm->resulttemplate->subject_2nd_test_max_score > 0)
+                                    <td class="text-right">{{ $result_slip->subject_2nd_test_score }}</td>
+                                    <?php $total += $result_slip->subject_2nd_test_score; ?>
+                                @endif
+                                @if ($enrolment->arm->resulttemplate->subject_3rd_test_max_score > 0)
+                                    <td class="text-right">{{ $result_slip->subject_3rd_test_score }}</td>
+                                    <?php $total += $result_slip->subject_3rd_test_score; ?>
+                                @endif
+                                @if ($enrolment->arm->resulttemplate->subject_assignment_score > 0)
+                                    <td class="text-right">{{ $result_slip->subject_assignment_score }}</td>
+                                    <?php $total += $result_slip->subject_assignment_score; ?>
+                                @endif
+                                <td class="text-right">{{ $result_slip->subject_exam_score }}</td>
+                                <?php $total += $result_slip->subject_exam_score; ?>
+                                <td class="text-right" style="background-color: #f1f1f1">{{ $total }}</td>
+                                @php
+                                    if($total >= 95 && $total <= 100)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->grade_95_to_100;
+                                        $remark = $enrolment->arm->resulttemplate->symbol_95_to_100;
+                                    }
+                                    elseif($total >= 90 && $total <= 94)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->grade_90_to_94;
+                                        $remark = $enrolment->arm->resulttemplate->symbol_90_to_94;
+                                    }
+                                    elseif($total >= 85 && $total <= 89)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->grade_90_to_94;
+                                        $remark = $enrolment->arm->resulttemplate->symbol_90_to_94;
+                                    }
+                                @endphp
+                                <td class="text-right"></td>
+                                <td class="text-right"></td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            @endif
+
+            <div class="create-form">
+                <form method="POST" action="#">
+                    @csrf
+                    @method('PUT')
+
+                    <input type="hidden" name="item_to_update" value="access_privileges">
+
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-5">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Save') }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- End studentResultModal -->
 
 
 @endsection

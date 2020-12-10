@@ -35,8 +35,8 @@
                                 <label for="1st_test_score" class="col-md-4 col-form-label text-md-right">{{ __('1st test score (%)') }}</label>
                                 
                                 <div class="col-md-8">
-                                    <input id="1st_test_score" type="text" class="form-control @error('1st_test_score') is-invalid @enderror" name="1st_test_score" value="{{ $result_slip->subject_1st_test_score }}" autocomplete="1st_test_score" autofocus required>
-                                    <small class="text-muted">*** Numbers only, Max of {{ $classsubject->arm->resulttemplate->subject_1st_test_max_score }} ***</small>
+                                    <input id="1st_test_score" type="number" class="form-control @error('1st_test_score') is-invalid @enderror" name="1st_test_score" value="{{ $result_slip->subject_1st_test_score }}" autocomplete="1st_test_score" autofocus required>
+                                    <small class="text-muted">*** Whole numbers only, Max of {{ $classsubject->arm->resulttemplate->subject_1st_test_max_score }} ***</small>
                                     @error('1st_test_score')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -56,8 +56,8 @@
                                 <label for="2nd_test_score" class="col-md-4 col-form-label text-md-right">{{ __('2nd test score (%)') }}</label>
                                 
                                 <div class="col-md-8">
-                                    <input id="2nd_test_score" type="text" class="form-control @error('2nd_test_score') is-invalid @enderror" name="2nd_test_score" value="{{ $result_slip->subject_2nd_test_score }}" autocomplete="2nd_test_score" autofocus required>
-                                    <small class="text-muted">*** Numbers only, Max of {{ $classsubject->arm->resulttemplate->subject_2nd_test_max_score }} ***</small>
+                                    <input id="2nd_test_score" type="number" class="form-control @error('2nd_test_score') is-invalid @enderror" name="2nd_test_score" value="{{ $result_slip->subject_2nd_test_score }}" autocomplete="2nd_test_score" autofocus required>
+                                    <small class="text-muted">*** Whole numbers only, Max of {{ $classsubject->arm->resulttemplate->subject_2nd_test_max_score }} ***</small>
                                     @error('2nd_test_score')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -77,8 +77,8 @@
                                 <label for="3rd_test_score" class="col-md-4 col-form-label text-md-right">{{ __('3rd test score (%)') }}</label>
                                 
                                 <div class="col-md-8">
-                                    <input id="3rd_test_score" type="text" class="form-control @error('3rd_test_score') is-invalid @enderror" name="3rd_test_score" value="{{ $result_slip->subject_3rd_test_score }}" autocomplete="3rd_test_score" autofocus required>
-                                    <small class="text-muted">*** Numbers only, Max of {{ $classsubject->arm->resulttemplate->subject_3rd_test_max_score }} ***</small>
+                                    <input id="3rd_test_score" type="number" class="form-control @error('3rd_test_score') is-invalid @enderror" name="3rd_test_score" value="{{ $result_slip->subject_3rd_test_score }}" autocomplete="3rd_test_score" autofocus required>
+                                    <small class="text-muted">*** Whole numbers only, Max of {{ $classsubject->arm->resulttemplate->subject_3rd_test_max_score }} ***</small>
                                     @error('3rd_test_score')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -98,8 +98,8 @@
                                 <label for="assignment_score" class="col-md-4 col-form-label text-md-right">{{ __('Assignment score (%)') }}</label>
             
                                 <div class="col-md-8">
-                                    <input id="assignment_score" type="text" class="form-control @error('assignment_score') is-invalid @enderror" name="assignment_score" value="{{ $result_slip->subject_assignment_score }}" autocomplete="assignment_score" autofocus required>
-                                    <small class="text-muted">*** Numbers only, Max of {{ $classsubject->arm->resulttemplate->subject_assignment_score }} ***</small>
+                                    <input id="assignment_score" type="number" class="form-control @error('assignment_score') is-invalid @enderror" name="assignment_score" value="{{ $result_slip->subject_assignment_score }}" autocomplete="assignment_score" autofocus required>
+                                    <small class="text-muted">*** Whole numbers only, Max of {{ $classsubject->arm->resulttemplate->subject_assignment_score }} ***</small>
                                     @error('assignment_score')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -119,8 +119,8 @@
                                 <label for="exam_score" class="col-md-4 col-form-label text-md-right">{{ __('Exam score (%)') }}</label>
             
                                 <div class="col-md-8">
-                                    <input id="exam_score" type="text" class="form-control @error('exam_score') is-invalid @enderror" name="exam_score" value="{{ $result_slip->subject_exam_score }}" autocomplete="exam_score" autofocus required>
-                                    <small class="text-muted">*** Numbers only, Max of {{ $classsubject->arm->resulttemplate->subject_exam_score }} ***</small>
+                                    <input id="exam_score" type="number" class="form-control @error('exam_score') is-invalid @enderror" name="exam_score" value="{{ $result_slip->subject_exam_score }}" autocomplete="exam_score" autofocus required>
+                                    <small class="text-muted">*** Whole numbers only, Max of {{ $classsubject->arm->resulttemplate->subject_exam_score }} ***</small>
                                     @error('exam_score')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
