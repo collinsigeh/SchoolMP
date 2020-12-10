@@ -103,7 +103,10 @@
                                       echo 'badge-danger';
                                     }
                                 ?>">{{ $enrolment->status }}</span></td>
-                                <td class="text-right" style="vertical-align: middle;"><a href="{{ route('enrolments.show', $enrolment->id) }}" class="btn btn-sm btn-outline-primary">Manage</a></td>
+                                <td class="text-right" style="vertical-align: middle;">
+                                  <button class="btn btn-sm btn-outline-primary" style="margin-bottom: 8px;" data-toggle="modal" data-target="#studentResultModal{{ $enrolment->id }}">View result</button>
+                                  <a href="{{ route('enrolments.show', $enrolment->id) }}" class="btn btn-sm btn-outline-primary" style="margin-bottom: 8px;">Manage</a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -113,5 +116,14 @@
         @endif
     </div>
   </div>
+
+<!-- assignScoreModal Series -->
+@foreach ($enrolments as $enrolment)
+    @php
+        $return_page = 'enrolments.index';
+    @endphp
+    @include('partials._student_result')
+@endforeach
+<!-- End assignScoreModal Series -->
 
 @endsection

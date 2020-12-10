@@ -114,12 +114,14 @@
                                             <td style="padding-top: 5px;"><span class="badge badge-secondary">{{ count($enrolment->results) }} subjects</span></td>
                                             @if ($student_manager == 'Yes')
                                                   <td class="text-right">
-                                                      <a class="btn btn-sm btn-outline-primary" href="{{ route('enrolments.show', $enrolment->id) }}">Manage</a>
+                                                    <button class="btn btn-sm btn-outline-primary" style="margin-bottom: 8px;" data-toggle="modal" data-target="#studentResultModal{{ $enrolment->id }}">View result</button>
+                                                      <a class="btn btn-sm btn-outline-primary" style="margin-bottom: 8px;" href="{{ route('enrolments.show', $enrolment->id) }}">Manage</a>
                                                   </td>
                                             @elseif ($arm->user_id > 0)
                                                 @if ($arm->user->id == $user->id)
                                                   <td class="text-right">
-                                                      <a class="btn btn-sm btn-outline-primary" href="{{ route('enrolments.show', $enrolment->id) }}">Manage</a>
+                                                    <button class="btn btn-sm btn-outline-primary" style="margin-bottom: 8px;" data-toggle="modal" data-target="#studentResultModal{{ $enrolment->id }}">View result</button>
+                                                      <a class="btn btn-sm btn-outline-primary" style="margin-bottom: 8px;" href="{{ route('enrolments.show', $enrolment->id) }}">Manage</a>
                                                   </td>
                                                 @endif
                                             @endif
@@ -174,8 +176,8 @@
                                             <td></td>
                                             @elseif ($classarm_manager == 'Yes')
                                             <td class="text-right">
-                                                <a href="{{ route('classsubjects.show', $classsubject->id) }}" class="btn btn-sm btn-outline-primary">View</a>
-                                                <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $classsubject->id }}">
+                                                <a href="{{ route('classsubjects.show', $classsubject->id) }}" class="btn btn-sm btn-outline-primary" style="margin-bottom: 8px;">View</a>
+                                                <button type="button" class="btn btn-sm btn-outline-primary" style="margin-bottom: 8px;" data-toggle="modal" data-target="#assignSubjectTeacherModal{{ $classsubject->id }}">
                                                     Edit
                                                 </button>
                                             </td>
@@ -441,5 +443,14 @@
     </div>
 </div>
 <!-- End newSubjectModal -->
+
+<!-- assignScoreModal Series -->
+@foreach ($arm->enrolments as $enrolment)
+    @php
+        $return_page = 'arms.show';
+    @endphp
+    @include('partials._student_result')
+@endforeach
+<!-- End assignScoreModal Series -->
 
 @endsection
