@@ -15,7 +15,9 @@
                 <span class="badge badge-secondary">{{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</span>
             </div>
             
-            <small><div class="alert alert-info"><b>Hint: </b>Select the preferred privileges and click on save</div></small>
+            <div class="text-right" style="padding-bottom: 8px;">
+                <a href="{{ route('results.show', $enrolment->id) }}" target="_blank" class="btn btn-outline-primary">View print version</a>
+            </div>
 
             @if ($enrolment->arm->resulttemplate->ca_display == 'Summary')
                 <div class="table-responsive">

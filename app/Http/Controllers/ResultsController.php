@@ -173,14 +173,34 @@ class ResultsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the the print version of termyl results using ID that is actually a representation of the 
+     * enrolment_id.
+     * 
+     * This is a special function taking advantage of show funciton in the ResultsController to avoid
+     * creating a new method for printing results.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id = 0)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+        
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $enrolment = Enrolment::find($id);
+        if(empty($enrolment))
+        {
+            return redirect()->route('dashboard');
+        }
+        echo $enrolment->user->name.'we are good to go';
+        die();
     }
 
     /**
