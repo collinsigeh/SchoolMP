@@ -194,13 +194,13 @@ class ResultsController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $enrolment = Enrolment::find($id);
-        if(empty($enrolment))
+        $data['enrolment'] = Enrolment::find($id);
+        if(empty($data['enrolment']))
         {
             return redirect()->route('dashboard');
         }
-        echo $enrolment->user->name.'we are good to go';
-        die();
+        
+        return view('results.show')->with($data);
     }
 
     /**
