@@ -170,22 +170,22 @@
                                                     @endif
                                                 @else
                                                   @if ($classsubject->user_id == $user->id)
-                                                      @if ($result_slip->status == 'Pending' OR $result_slip->status == 'NOT Approved')
+                                                      @if ($result_slip->enrolment->result_status == 'Pending' OR $result_slip->enrolment->result_status == 'NOT Approved')
                                                           <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#assignScoreModal{{ $result_slip->id }}">
                                                               Manage scores
                                                           </button>
                                                       @else
-                                                          @if ($result_slip->status == 'Pending Approval')
+                                                          @if ($result_slip->enrolment->result_status == 'Pending Approval')
                                                               <span class="badge badge-secondary">Pending Approval</span>
-                                                          @elseif ($result_slip->status == 'Approved')
+                                                          @elseif ($result_slip->enrolment->result_status == 'Approved')
                                                               <span class="badge badge-success">Approved</span>
                                                           @endif
                                                       @endif
                                                   @else
-                                                      @if ($result_slip->status == 'Pending' OR $result_slip->status == 'Pending Approval')
-                                                          <span class="badge badge-secondary">{{ $result_slip->status }}</span>
+                                                      @if ($result_slip->enrolment->result_status == 'Pending' OR $result_slip->enrolment->result_status == 'Pending Approval')
+                                                          <span class="badge badge-secondary">{{ $result_slip->enrolment->result_status }}</span>
                                                       @else
-                                                          @if ($result_slip->status == 'NOT Approved')
+                                                          @if ($result_slip->enrolment->result_status == 'NOT Approved')
                                                               <span class="badge badge-danger">NOT Approved</span>
                                                           @elseif ($result_slip->status == 'Approved')
                                                               <span class="badge badge-success">Approved</span>

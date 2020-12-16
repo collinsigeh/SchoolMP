@@ -18,11 +18,7 @@
             <div class="text-right" style="padding-bottom: 8px;">
                 <a href="{{ route('results.show', $enrolment->id) }}" target="_blank" class="btn btn-outline-primary">View print version</a>
             </div>
-
-            <?php 
-                $classteacher_comment = '';
-                $principal_comment = '';
-            ?>
+            
             @if ($enrolment->arm->resulttemplate->ca_display == 'Summary')
                 <div class="table-responsive">
                     <table class="table table-bordered table-sm">
@@ -36,8 +32,6 @@
                         </tr>
                         <?php 
                             $total = 0; 
-                            $classteacher_comment = $result_slip->classteacher_comment; 
-                            $principal_comment = $result_slip->principal_comment; 
                         ?>
                         @foreach ($enrolment->results as $result_slip)
                             <tr>
@@ -75,9 +69,7 @@
                         </tr>
                         @foreach ($enrolment->results as $result_slip)
                             <?php 
-                                $total = 0; 
-                                $classteacher_comment = $result_slip->classteacher_comment; 
-                                $principal_comment = $result_slip->principal_comment; 
+                                $total = 0;
                             ?>
                             <tr>
                                 <td style="background-color: #f1f1f1">{{ $result_slip->classsubject->subject->name }}</td>
@@ -227,7 +219,7 @@
                                 <label for="class_teacher_comment" class="col-md-4 col-form-label text-md-right">{{ __('Class teacher\'s comment:') }}</label>
                                 
                                 <div class="col-md-8">
-                                    <textarea id="class_teacher_comment" class="form-control @error('class_teacher_comment') is-invalid @enderror" name="class_teacher_comment" placeholder="Class teacher's comment here..." required>{{ $classteacher_comment }}</textarea>
+                                    <textarea id="class_teacher_comment" class="form-control @error('class_teacher_comment') is-invalid @enderror" name="class_teacher_comment" placeholder="Class teacher's comment here..." required>{{ $enrolment->classteacher_comment }}</textarea>
             
                                     @error('class_teacher_comment')
                                         <span class="invalid-feedback" role="alert">
@@ -241,7 +233,7 @@
                                 <label for="principal_comment" class="col-md-4 col-form-label text-md-right">{{ __('Principal\'s comment:') }}</label>
                                 
                                 <div class="col-md-8">
-                                    <textarea id="principal__comment" class="form-control @error('principal__comment') is-invalid @enderror" name="principal__comment" placeholder="Principal's comment here..." required>{{ $principal_comment }}</textarea>
+                                    <textarea id="principal__comment" class="form-control @error('principal__comment') is-invalid @enderror" name="principal__comment" placeholder="Principal's comment here..." required>{{ $enrolment->principal_comment }}</textarea>
             
                                     @error('principal__comment')
                                         <span class="invalid-feedback" role="alert">
