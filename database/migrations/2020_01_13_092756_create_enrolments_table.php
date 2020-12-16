@@ -29,7 +29,7 @@ class CreateEnrolmentsTable extends Migration
             $table->enum('access_assignment', ['No', 'Yes']);
             $table->enum('access_result', ['No', 'Yes']);
             $table->integer('access_update_by');
-            $table->enum('fee_status', ['Active', 'Inactive']);
+            $table->enum('status', ['Active', 'Inactive']);
             $table->integer('classteachercomment_by');
             $table->string('classteacher_comment');
             $table->integer('principalcomment_by');
