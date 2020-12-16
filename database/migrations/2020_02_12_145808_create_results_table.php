@@ -32,11 +32,6 @@ class CreateResultsTable extends Migration
             $table->enum('exam_score_by', ['No one', 'Teacher', 'System']);
             $table->integer('subjectteachercomment_by');
             $table->string('subjectteacher_comment');
-            $table->integer('classteachercomment_by');
-            $table->string('classteacher_comment');
-            $table->integer('principalcomment_by');
-            $table->string('principal_comment');
-            $table->enum('status', ['Pending', 'Pending Aproval' , 'NOT Approved', 'Approved']);
             $table->timestamps();
         });
     }
