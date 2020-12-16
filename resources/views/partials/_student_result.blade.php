@@ -244,12 +244,14 @@
                             </div>
                         
                             <div class="form-group row"> 
-                                <label for="result_status" class="col-md-4 col-form-label text-md-right">{{ __('Result status') }}</label>
+                                <label for="result_status" class="col-md-4 col-form-label text-md-right">{{ __('Result status:') }}</label>
     
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <select id="result_status" class="form-control @error('result_status') is-invalid @enderror" name="result_status" required autocomplete="result_status" autofocus>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
+                                        <option value="Pending" <?php if($enrolment->result_status == 'Pending'){ echo 'selected'; } ?>>Pending</option>
+                                        <option value="Pending Approval" <?php if($enrolment->result_status == 'Pending Approval'){ echo 'selected'; } ?>>Pending Approval</option>
+                                        <option value="NOT Approved" <?php if($enrolment->result_status == 'NOT Approved'){ echo 'selected'; } ?>>NOT Approved</option>
+                                        <option value="Approved" <?php if($enrolment->result_status == 'Approved'){ echo 'selected'; } ?>>Approved</option>
                                     </select>
     
                                     @error('result_status')
