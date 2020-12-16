@@ -19,6 +19,10 @@
                 <a href="{{ route('results.show', $enrolment->id) }}" target="_blank" class="btn btn-outline-primary">View print version</a>
             </div>
 
+            <?php 
+                $classteacher_comment = '';
+                $principal_comment = '';
+            ?>
             @if ($enrolment->arm->resulttemplate->ca_display == 'Summary')
                 <div class="table-responsive">
                     <table class="table table-bordered table-sm">
@@ -30,6 +34,11 @@
                             <th class="text-right" style="vertical-align: middle">Grade</th>
                             <th class="text-right" style="vertical-align: middle">Remark</th>
                         </tr>
+                        <?php 
+                            $total = 0; 
+                            $classteacher_comment = $result_slip->classteacher_comment; 
+                            $principal_comment = $result_slip->principal_comment; 
+                        ?>
                         @foreach ($enrolment->results as $result_slip)
                             <tr>
                                 <td>{{ $result_slip->classsubject->subject->name }}</td>
@@ -65,7 +74,11 @@
                             <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">Remark</th>
                         </tr>
                         @foreach ($enrolment->results as $result_slip)
-                            <?php $total = 0; ?>
+                            <?php 
+                                $total = 0; 
+                                $classteacher_comment = $result_slip->classteacher_comment; 
+                                $principal_comment = $result_slip->principal_comment; 
+                            ?>
                             <tr>
                                 <td style="background-color: #f1f1f1">{{ $result_slip->classsubject->subject->name }}</td>
                                 @if ($enrolment->arm->resulttemplate->subject_1st_test_max_score > 0)
@@ -203,6 +216,60 @@
                     @method('PUT')
 
                     <input type="hidden" name="item_to_update" value="access_privileges">
+
+                    <div class="resource-details" style="margin-top: 40px;">
+                        <div class="title">
+                            Coments & result status
+                        </div>
+                        <div class="body">
+
+                            <div class="form-group row"> 
+                                <label for="class_teacher_comment" class="col-md-4 col-form-label text-md-right">{{ __('Class teacher\'s comment:') }}</label>
+                                
+                                <div class="col-md-8">
+                                    <textarea id="class_teacher_comment" class="form-control @error('class_teacher_comment') is-invalid @enderror" name="class_teacher_comment" placeholder="Class teacher's comment here..." required>{{ $classteacher_comment }}</textarea>
+            
+                                    @error('class_teacher_comment')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row"> 
+                                <label for="principal_comment" class="col-md-4 col-form-label text-md-right">{{ __('Principal\'s comment:') }}</label>
+                                
+                                <div class="col-md-8">
+                                    <textarea id="principal__comment" class="form-control @error('principal__comment') is-invalid @enderror" name="principal__comment" placeholder="Principal's comment here..." required>{{ $principal_comment }}</textarea>
+            
+                                    @error('principal__comment')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        
+                            <div class="form-group row"> 
+                                <label for="result_status" class="col-md-4 col-form-label text-md-right">{{ __('Result status') }}</label>
+    
+                                <div class="col-md-6">
+                                    <select id="result_status" class="form-control @error('result_status') is-invalid @enderror" name="result_status" required autocomplete="result_status" autofocus>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+    
+                                    @error('result_status')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
 
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-5">
