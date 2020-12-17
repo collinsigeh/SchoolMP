@@ -16,7 +16,7 @@
             </div>
             
             <div class="text-right" style="padding-bottom: 8px;">
-                <a href="{{ route('results.show', $enrolment->id) }}" target="_blank" class="btn btn-outline-primary">View print version</a>
+                <a href="{{ route('results.show', $enrolment->id) }}" target="_blank" class="btn btn-primary">View print version</a>
             </div>
             
             @if ($enrolment->arm->resulttemplate->ca_display == 'Summary')

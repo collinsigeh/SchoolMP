@@ -701,6 +701,9 @@
                                                 <tr>
                                                     <td>
                                                         {!! '<b>'.$itempayment->currency_symbol.' '.number_format($itempayment->amount, 2).'</b>' !!}
+                                                        @if ($itempayment->item_id > 0)
+                                                            <br /><small>{{ $itempayent->item->name }}</small>
+                                                        @endif
                                                     </td>
                                                     <td class="text-right">
                                                         <small><i><?php echo date('d-M-Y', strtotime($itempayment->created_at)) ?></i></small>
