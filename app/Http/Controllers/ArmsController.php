@@ -333,6 +333,8 @@ class ArmsController extends Controller
         $data['fees_manager'] = 'No';
         $data['calendar_manager'] = 'No';
         $data['sessionterm_manager'] = 'No';
+        $data['manage_all_results'] = 'No';
+        $data['manage_student_promotion'] = 'No';
         if(Auth::user()->role == 'Consultant' || Auth::user()->role == 'Director')
         {
             $data['student_manager'] = 'Yes';
@@ -340,6 +342,8 @@ class ArmsController extends Controller
             $data['fees_manager'] = 'Yes';
             $data['calendar_manager'] = 'Yes';
             $data['sessionterm_manager'] = 'Yes';
+            $data['manage_all_results'] = 'Yes';
+            $data['manage_student_promotion'] = 'Yes';
         }
         elseif(Auth::user()->role == 'Staff')
         {
@@ -362,6 +366,14 @@ class ArmsController extends Controller
             if($data['staff']->manage_session_terms == 'Yes')
             {
                 $data['sessionterm_manager'] = 'Yes';
+            }
+            if($data['staff']->manage_all_results == 'Yes')
+            {
+                $data['manage_all_results'] = 'Yes';
+            }
+            if($data['staff']->manage_student_promotion == 'Yes')
+            {
+                $data['manage_student_promotion'] = 'Yes';
             }
         }
         session(['enrolment_return_page' => 'arms_show']);

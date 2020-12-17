@@ -97,6 +97,25 @@ class EnrolmentsController extends Controller
         $data['enrolments'] = Enrolment::where($db_check)->orderBy('schoolclass_id', 'asc')->paginate(50);
         session(['enrolment_return_page' => 'enrolments_index']);
 
+        $data['manage_all_results'] = 'No';
+        $data['manage_student_promotion'] = 'No';
+        if(Auth::user()->role == 'Consultant' || Auth::user()->role == 'Director')
+        {
+            $data['manage_all_results'] = 'Yes';
+            $data['manage_student_promotion'] = 'Yes';
+        }
+        elseif(Auth::user()->role == 'Staff')
+        {
+            if($data['staff']->manage_all_results == 'Yes')
+            {
+                $data['manage_all_results'] = 'Yes';
+            }
+            if($data['staff']->manage_student_promotion == 'Yes')
+            {
+                $data['manage_student_promotion'] = 'Yes';
+            }
+        }
+
         return view('enrolments.index')->with($data);
     }
 
@@ -213,6 +232,8 @@ class EnrolmentsController extends Controller
         $data['finance_manager']        = 'No';
         $data['calendar_manager']       = 'No';
         $data['sessionterm_manager']    = 'No';
+        $data['manage_all_results']     = 'No';
+        $data['manage_student_promotion'] = 'No';
         if(Auth::user()->role == 'Consultant' || Auth::user()->role == 'Director')
         {
             $data['student_manager']        = 'Yes';
@@ -223,6 +244,8 @@ class EnrolmentsController extends Controller
             $data['finance_manager']        = 'Yes';
             $data['calendar_manager']       = 'Yes';
             $data['sessionterm_manager']    = 'Yes';
+            $data['manage_all_results']     = 'Yes';
+            $data['manage_student_promotion'] = 'Yes';
         }
         elseif(Auth::user()->role == 'Staff')
         {
@@ -257,6 +280,14 @@ class EnrolmentsController extends Controller
             if($data['staff']->manage_session_terms == 'Yes')
             {
                 $data['sessionterm_manager'] = 'Yes';
+            }
+            if($data['staff']->manage_all_results == 'Yes')
+            {
+                $data['manage_all_results'] = 'Yes';
+            }
+            if($data['staff']->manage_student_promotion == 'Yes')
+            {
+                $data['manage_student_promotion'] = 'Yes';
             }
         }
         $data['setting'] = Setting::first();
