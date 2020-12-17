@@ -65,6 +65,9 @@ class StudentsController extends Controller
         
         $data['term'] = Term::find($term_id);
 
+        $data['manage_all_results'] = 'Yes';
+        $data['manage_student_promotion'] = 'Yes';
+
         if($data['user']->role == 'Staff')
         {
             $db_check = array(
@@ -81,6 +84,15 @@ class StudentsController extends Controller
                 return  redirect()->route('dashboard');
             }
             $data['staff'] = $staff[0];
+
+            if($data['staff']->manage_all_results == 'No')
+            {
+                $data['manage_all_results'] = 'No';
+            }
+            if($data['staff']->manage_students_promotion == 'No')
+            {
+                $data['manage_student_promotion'] = 'No';
+            }
         }
         
         $no_students = 0;

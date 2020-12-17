@@ -25,6 +25,7 @@ class CreateStaffTable extends Migration
             $table->string('employee_since', 25)->nullable();
             $table->enum('status', ['Active', 'Inactive']);
             $table->enum('manage_staff_account', ['No', 'Yes']);
+            $table->enum('manage_all_results', ['No', 'Yes']);
             $table->enum('manage_students_account', ['No', 'Yes']);
             $table->enum('manage_students_promotion', ['No', 'Yes']);
             $table->enum('manage_students_privileges', ['No', 'Yes']);
