@@ -15,9 +15,13 @@
                 <span class="badge badge-secondary">{{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}</span>
             </div>
             
-            <div class="text-right" style="padding-bottom: 8px;">
-                <a href="{{ route('results.show', $enrolment->id) }}" target="_blank" class="btn btn-primary">View print version</a>
-            </div>
+            @if ($enrolment->result_status == 'Approved')
+                <div class="text-right" style="padding-bottom: 8px;">
+                    <a href="{{ route('results.show', $enrolment->id) }}" target="_blank" class="btn btn-primary">View print version</a>
+                </div>
+            @else
+                <div class="alert alert-info"><b>Note: </b>The <b>print version</b> button will be displayed once this result is approved.</div>
+            @endif
             
             @if ($enrolment->arm->resulttemplate->ca_display == 'Summary')
                 <div class="table-responsive">
@@ -219,13 +223,17 @@
                                 <label for="class_teacher_comment" class="col-md-4 col-form-label text-md-right">{{ __('Class teacher\'s comment:') }}</label>
                                 
                                 <div class="col-md-8">
-                                    <textarea id="class_teacher_comment" class="form-control @error('class_teacher_comment') is-invalid @enderror" name="class_teacher_comment" placeholder="Class teacher's comment here..." required>{{ $enrolment->classteacher_comment }}</textarea>
-            
-                                    @error('class_teacher_comment')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    @if ($manage_all_results == 'Yes' OR $enrolment->arm->user_id == $user->id)
+                                        <textarea id="class_teacher_comment" class="form-control @error('class_teacher_comment') is-invalid @enderror" name="class_teacher_comment" placeholder="Class teacher's comment here..." required>{{ $enrolment->classteacher_comment }}</textarea>
+                
+                                        @error('class_teacher_comment')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    @else
+                                        <textarea id="class_teacher_comment" class="form-control @error('class_teacher_comment') is-invalid @enderror" name="class_teacher_comment" placeholder="Class teacher's comment here..." disabled>{{ $enrolment->classteacher_comment }}</textarea>
+                                    @endif
                                 </div>
                             </div>
 
@@ -233,34 +241,70 @@
                                 <label for="principal_comment" class="col-md-4 col-form-label text-md-right">{{ __('Principal\'s comment:') }}</label>
                                 
                                 <div class="col-md-8">
-                                    <textarea id="principal__comment" class="form-control @error('principal__comment') is-invalid @enderror" name="principal__comment" placeholder="Principal's comment here..." required>{{ $enrolment->principal_comment }}</textarea>
-            
-                                    @error('principal__comment')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    @if ($manage_all_results == 'Yes')
+                                        <textarea id="principal__comment" class="form-control @error('principal__comment') is-invalid @enderror" name="principal__comment" placeholder="Principal's comment here..." required>{{ $enrolment->principal_comment }}</textarea>
+                
+                                        @error('principal__comment')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    @else
+                                    <textarea id="principal__comment" class="form-control @error('principal__comment') is-invalid @enderror" name="principal__comment" placeholder="Principal's comment here..." disabled><?php if(strlen($enrolment->principal_comment) > 0){ echo $enrolment->principal_comment; }else{ echo 'None'; } ?></textarea>
+                                        
+                                    @endif
                                 </div>
                             </div>
-                        
+
+                            @if ($manage_student_promotion == 'Yes')
+                                <div class="form-group row"> 
+                                    <label for="result_status" class="col-md-4 col-form-label text-md-right">{{ __('Result status:') }}</label>
+        
+                                    <div class="col-md-8">
+                                        @if ($enrolment->result_status == 'Pending')
+                                            <div style="padding-bottom: 5px;"><span class="badge badge-secondary">NOT sent for approval</span></div>
+                                        @elseif ($enrolment->result_status == 'NOT Approved')
+                                            <span class="badge badge-secondary">Pending approval</span>
+                                        @elseif($enrolment->result_status == 'NOT Approved')
+                                            <div style="padding-bottom: 5px;"><span class="badge badge-danger">NOT approved</span></div>
+                                        @elseif ($result_slip->status == 'Approved')
+                                            <span class="badge badge-success">Approved</span>
+                                        @endif
+                                        <div class="small"><div class="alert alert-info">Choose either to approve or reject this result.</div></div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <input type="radio" name="result_status" id="result_status" value="Approved"> <label for="result_status">Approve</label>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="radio" name="result_status" id="result_status" value="NOT Approved"> <label for="result_status">Reject</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @elseif($enrolment->arm->user_id == $user->id)
                             <div class="form-group row"> 
                                 <label for="result_status" class="col-md-4 col-form-label text-md-right">{{ __('Result status:') }}</label>
     
                                 <div class="col-md-8">
-                                    <select id="result_status" class="form-control @error('result_status') is-invalid @enderror" name="result_status" required autocomplete="result_status" autofocus>
-                                        <option value="Pending" <?php if($enrolment->result_status == 'Pending'){ echo 'selected'; } ?>>Pending</option>
-                                        <option value="Pending Approval" <?php if($enrolment->result_status == 'Pending Approval'){ echo 'selected'; } ?>>Pending Approval</option>
-                                        <option value="NOT Approved" <?php if($enrolment->result_status == 'NOT Approved'){ echo 'selected'; } ?>>NOT Approved</option>
-                                        <option value="Approved" <?php if($enrolment->result_status == 'Approved'){ echo 'selected'; } ?>>Approved</option>
-                                    </select>
-    
-                                    @error('result_status')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    @if ($enrolment->result_status == 'Pending')
+                                        <div style="padding-bottom: 5px;"><span class="badge badge-secondary">NOT sent for approval</span></div>
+                                        <div class="small"><div class="alert alert-info">Check the box below to send for approval.</div></div>
+                                        <input type="checkbox" name="result_status" id="result_status" value="Pending Approval"> <label for="result_status">Send for approval.</label>
+                                    @elseif ($enrolment->result_status == 'NOT Approved')
+                                        <span class="badge badge-secondary">Pending approval</span>
+                                        <input type="hidden" name="result_status" value="">
+                                    @elseif($enrolment->result_status == 'NOT Approved')
+                                        <div style="padding-bottom: 5px;"><span class="badge badge-danger">NOT approved</span></div>
+                                        <div class="small"><div class="alert alert-info">Check the box below to resend for approval.</div></div>
+                                        <input type="checkbox" name="result_status" id="result_status" value="Pending Approval"> <label for="result_status">Resend for approval.</label>
+                                    @elseif ($result_slip->status == 'Approved')
+                                        <span class="badge badge-success">Approved</span>
+                                        <input type="hidden" name="result_status" value="">
+                                    @endif
                                 </div>
                             </div>
+                            @endif
+                        
 
                         </div>
                     </div>
