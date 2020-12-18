@@ -97,6 +97,22 @@
                 </div>
 
                 <div class="form-group row"> 
+                    <label for="" class="col-md-4 col-form-label text-md-right">{{ __('Type') }}</label>
+
+                    <div class="col-md-6">
+                        <div class="alert alert-info">Specify type of term accordingly.</div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <input type="radio" name="type" id="ordinary" value="Ordinary term" <?php if($term->type == 'Ordinary term'){ echo 'checked'; } ?> required> <label for="ordinary">Ordinary term</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="radio" name="type" id="promotion" value="Promotion term" <?php if($term->type == 'Promotion term'){ echo 'checked'; } ?> required> <label for="promotion">Promotion term</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row"> 
                     <label for="no_of_weeks" class="col-md-4 col-form-label text-md-right">{{ __('No. of weeks') }}</label>
 
                     <div class="col-md-6">
