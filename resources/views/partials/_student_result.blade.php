@@ -224,7 +224,7 @@
                                 <label for="class_teacher_comment" class="col-md-4 col-form-label text-md-right">{{ __('Class teacher\'s comment:') }}</label>
                                 
                                 <div class="col-md-8">
-                                    @if ($manage_all_results == 'Yes' OR $enrolment->arm->user_id == $user->id)
+                                    @if (($manage_all_results == 'Yes' OR $enrolment->arm->user_id == $user->id) && $enrolment->result_status != 'Approved')
                                         <textarea id="class_teacher_comment" class="form-control @error('class_teacher_comment') is-invalid @enderror" name="class_teacher_comment" placeholder="Class teacher's comment here...">{{ $enrolment->classteacher_comment }}</textarea>
                 
                                         @error('class_teacher_comment')
@@ -233,7 +233,7 @@
                                             </span>
                                         @enderror
                                     @else
-                                        <input type="button" name="class_teacher_comment" value="">
+                                        <input type="hidden" name="class_teacher_comment" value="">
                                         <textarea id="class_teacher_comment_display" class="form-control" name="class_teacher_comment_display" disabled>{{ $enrolment->classteacher_comment }}</textarea>
                                     @endif
                                 </div>
@@ -243,7 +243,7 @@
                                 <label for="principal_comment" class="col-md-4 col-form-label text-md-right">{{ __('Principal\'s comment:') }}</label>
                                 
                                 <div class="col-md-8">
-                                    @if ($manage_all_results == 'Yes')
+                                    @if ($manage_all_results == 'Yes' && $enrolment->result_status != 'Approved')
                                         <textarea id="principal_comment" class="form-control @error('principal_comment') is-invalid @enderror" name="principal_comment" placeholder="Principal's comment here...">{{ $enrolment->principal_comment }}</textarea>
                 
                                         @error('principal_comment')
@@ -325,13 +325,25 @@
                         </div>
                     </div>
 
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-5">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Save') }}
-                            </button>
+                    @if ($manage_all_results == 'Yes')
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-5">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Save') }}
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        @if ($enrolment->result_status != 'Approved')
+                            <div class="form-group row mb-0">
+                                <div class="col-md-6 offset-md-5">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Save') }}
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
                 </form>
             </div>
         </div>

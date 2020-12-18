@@ -380,7 +380,7 @@ class EnrolmentsController extends Controller
                 'return_page' => ['required']
             ]);
 
-            if(strlen($request->input('class_teacher_comment')) > 0 && $enrolment->result_status != 'Approved')
+            if(strlen($request->input('class_teacher_comment')) > 0)
             {
                 $enrolment->classteachercomment_by  = $user_id;
                 $enrolment->classteacher_comment    = $request->input('class_teacher_comment');
