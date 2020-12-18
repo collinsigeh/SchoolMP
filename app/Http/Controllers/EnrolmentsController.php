@@ -374,6 +374,19 @@ class EnrolmentsController extends Controller
 
             $request->session()->flash('success', 'Update saved');
         }
+        elseif($request->input('item_to_update') == 'student_result')
+        {
+            $this->validate($request, [
+                'fee_payment_status' => ['required', 'in:Unpaid,Partly-paid,Completely-paid']
+            ]);
+
+            $enrolment->fee_status = $request->input('fee_payment_status');
+            $enrolment->fee_update_by = $user_id;
+
+            $enrolment->save();
+
+            $request->session()->flash('success', 'Update saved');
+        }
 
         return redirect()->route('enrolments.show', $id);
     }

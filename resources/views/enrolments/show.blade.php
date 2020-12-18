@@ -937,6 +937,9 @@
 <!-- End updateStudentPrivilegesModal -->
 
 <!-- studentResultModal -->
+@php
+    $return_page = 'enrolments.show';
+@endphp
 @include('partials._student_result')
 <!-- End studentResultModal -->
 

@@ -207,15 +207,16 @@
             @endif
 
             <div class="create-form">
-                <form method="POST" action="#">
+                <form method="POST" action="{{ route('enrolments.show', $enrolment->id) }}">
                     @csrf
                     @method('PUT')
 
-                    <input type="hidden" name="item_to_update" value="access_privileges">
+                    <input type="hidden" name="item_to_update" value="student_result">
+                    <input type="hidden" name="return_page" value="{{ $return_page }}">
 
                     <div class="resource-details" style="margin-top: 40px;">
                         <div class="title">
-                            Coments & result status
+                            Comments & result status
                         </div>
                         <div class="body">
 
@@ -273,10 +274,10 @@
                                         <div class="small"><div class="alert alert-info">Choose either to approve or reject this result.</div></div>
                                         <div class="row">
                                             <div class="col-4">
-                                                <input type="radio" name="result_status" id="result_status" value="Approved"> <label for="result_status">Approve</label>
+                                                <input type="radio" name="result_status" id="result_status" value="Approved" required> <label for="result_status">Approve</label>
                                             </div>
                                             <div class="col-8">
-                                                <input type="radio" name="result_status" id="result_status" value="NOT Approved"> <label for="result_status">Reject</label>
+                                                <input type="radio" name="result_status" id="result_status" value="NOT Approved" required> <label for="result_status">Reject</label>
                                             </div>
                                         </div>
                                     </div>
@@ -288,14 +289,21 @@
                                 <div class="col-md-8">
                                     @if ($enrolment->result_status == 'Pending')
                                         <div style="padding-bottom: 5px;"><span class="badge badge-secondary">NOT sent for approval</span></div>
-                                        <div class="small"><div class="alert alert-info">Check the box below to send for approval.</div></div>
-                                        <input type="checkbox" name="result_status" id="result_status" value="Pending Approval"> <label for="result_status">Send for approval.</label>
+                                        <div class="small"><div class="alert alert-info">Choose whether or NOT to send this result for approval.</div></div>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <input type="radio" name="result_status" id="result_status" value="Approved" required> <label for="result_status">Send for approval</label>
+                                            </div>
+                                            <div class="col-7">
+                                                <input type="radio" name="result_status" id="result_status" value="NOT Approved" required> <label for="result_status">Do NOT send for approval</label>
+                                            </div>
+                                        </div>
                                     @elseif ($enrolment->result_status == 'NOT Approved')
                                         <span class="badge badge-secondary">Pending approval</span>
                                         <input type="hidden" name="result_status" value="">
                                     @elseif($enrolment->result_status == 'NOT Approved')
                                         <div style="padding-bottom: 5px;"><span class="badge badge-danger">NOT approved</span></div>
-                                        <div class="small"><div class="alert alert-info">Check the box below to resend for approval.</div></div>
+                                        <div class="small"><div class="alert alert-info">Choose whether or NOT to resend this result for approval.</div></div>
                                         <input type="checkbox" name="result_status" id="result_status" value="Pending Approval"> <label for="result_status">Resend for approval.</label>
                                     @elseif ($result_slip->status == 'Approved')
                                         <span class="badge badge-success">Approved</span>
