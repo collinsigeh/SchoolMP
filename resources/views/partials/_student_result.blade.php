@@ -279,10 +279,10 @@
                                         <div class="small"><div class="alert alert-info">Choose either to approve or reject this result.</div></div>
                                         <div class="row">
                                             <div class="col-4">
-                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_status{{ $enrolment->id }}" value="Approved" required> <label for="result_status{{ $enrolment->id }}">Approve</label>
+                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_statusa{{ $enrolment->id }}" value="Approved" required> <label for="result_statusa{{ $enrolment->id }}">Approve</label>
                                             </div>
                                             <div class="col-8">
-                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_status{{ $enrolment->id }}" value="NOT Approved" required> <label for="result_status{{ $enrolment->id }}">Reject</label>
+                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_statusb{{ $enrolment->id }}" value="NOT Approved" required> <label for="result_statusb{{ $enrolment->id }}">Reject</label>
                                             </div>
                                         </div>
                                     </div>
@@ -297,10 +297,10 @@
                                         <div class="small"><div class="alert alert-info">Choose whether or NOT to send this result for approval.</div></div>
                                         <div class="row">
                                             <div class="col-5">
-                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_status{{ $enrolment->id }}" value="Pending Approval" required> <label for="result_status{{ $enrolment->id }}">Send for approval</label>
+                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_statusa{{ $enrolment->id }}" value="Pending Approval" required> <label for="result_statusa{{ $enrolment->id }}">Send for approval</label>
                                             </div>
                                             <div class="col-7">
-                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_status{{ $enrolment->id }}" value="Do_nothing" required> <label for="result_status{{ $enrolment->id }}">Do NOT send for approval</label>
+                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_statusb{{ $enrolment->id }}" value="Do_nothing" required> <label for="result_statusb{{ $enrolment->id }}">Do NOT send for approval</label>
                                             </div>
                                         </div>
                                     @elseif ($enrolment->result_status == 'Pending Approval')
@@ -311,10 +311,10 @@
                                         <div class="small"><div class="alert alert-info">Choose whether or NOT to resend this result for approval.</div></div>
                                         <div class="row">
                                             <div class="col-5">
-                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_status{{ $enrolment->id }}" value="Pending Approval" required> <label for="result_status{{ $enrolment->id }}">Send for approval</label>
+                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_statusa{{ $enrolment->id }}" value="Pending Approval" required> <label for="result_statusa{{ $enrolment->id }}">Send for approval</label>
                                             </div>
                                             <div class="col-7">
-                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_status{{ $enrolment->id }}" value="Do_nothing" required> <label for="result_status{{ $enrolment->id }}">Do NOT send for approval</label>
+                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_statusb{{ $enrolment->id }}" value="Do_nothing" required> <label for="result_statusb{{ $enrolment->id }}">Do NOT send for approval</label>
                                             </div>
                                         </div>
                                     @elseif ($enrolment->result_status == 'Approved')
