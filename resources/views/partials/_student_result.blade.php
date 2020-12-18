@@ -258,7 +258,11 @@
                                 </div>
                             </div>
 
-                            @if ($manage_student_promotion == 'Yes')
+                            @if ($manage_student_promotion == 'Yes' && $enrolment->term->type == 'Promotion term')
+                                
+                            @endif
+
+                            @if ($manage_all_results == 'Yes')
                                 <div class="form-group row"> 
                                     <label class="col-md-4 col-form-label text-md-right">{{ __('Result status:') }}</label>
         

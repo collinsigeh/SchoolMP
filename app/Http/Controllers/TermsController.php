@@ -210,6 +210,7 @@ class TermsController extends Controller
             'subscription_id' => ['required', 'numeric', 'min:1'],
             'session' => ['required'],
             'name' => ['required'],
+            'type' => ['required', 'in:Ordinary term,Promotion term'],
             'no_of_weeks' => ['required', 'numeric', 'min:1'],
             'resumption_date' => ['required', 'date'],
             'closing_date' => ['required', 'date', 'after:resumption_date'],
@@ -273,6 +274,7 @@ class TermsController extends Controller
         $term->subscription_id = $subscription->id;
         $term->session = $request->input('session');
         $term->name = $request->input('name');
+        $term->type = $request->input('type');
         $term->no_of_weeks = $no_weeks;
         $term->resumption_date = ucwords(strtolower($request->input('resumption_date')));
         $term->closing_date = ucwords(strtolower($request->input('closing_date')));

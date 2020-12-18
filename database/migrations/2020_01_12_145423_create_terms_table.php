@@ -19,6 +19,7 @@ class CreateTermsTable extends Migration
             $table->integer('subscription_id');
             $table->string('session', 10);
             $table->enum('name', ['1st Term', '2nd Term', '3rd Term', 'Summer Classes', 'Special Classes']);
+            $table->enum('name', ['Ordinary term', 'Promotion term']);
             $table->integer('no_of_weeks');
             $table->string('resumption_date', 25);
             $table->string('closing_date', 25);
