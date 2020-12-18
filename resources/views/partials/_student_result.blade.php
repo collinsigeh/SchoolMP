@@ -269,7 +269,7 @@
                                             <span class="badge badge-info">Waiting for approval</span>
                                         @elseif($enrolment->result_status == 'NOT Approved')
                                             <div style="padding-bottom: 5px;"><span class="badge badge-danger">NOT approved</span></div>
-                                        @elseif ($result_slip->status == 'Approved')
+                                        @elseif ($enrolment->result_status == 'Approved')
                                             <span class="badge badge-success">Approved</span>
                                         @endif
                                         <div class="small"><div class="alert alert-info">Choose either to approve or reject this result.</div></div>
@@ -313,7 +313,7 @@
                                                 <input type="radio" name="result_status{{ $enrolment->id }}" id="result_status{{ $enrolment->id }}" value="Do_nothing" required> <label for="result_status{{ $enrolment->id }}">Do NOT send for approval</label>
                                             </div>
                                         </div>
-                                    @elseif ($result_slip->status == 'Approved')
+                                    @elseif ($enrolment->result_status == 'Approved')
                                         <span class="badge badge-success">Approved</span>
                                         <input type="hidden" name="result_status{{ $enrolment->id }}" value="">
                                     @endif
