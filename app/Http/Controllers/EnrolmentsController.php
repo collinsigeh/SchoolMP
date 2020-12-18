@@ -377,15 +377,40 @@ class EnrolmentsController extends Controller
         elseif($request->input('item_to_update') == 'student_result')
         {
             $this->validate($request, [
-                'fee_payment_status' => ['required', 'in:Unpaid,Partly-paid,Completely-paid']
+                'return_page' => ['required']
             ]);
 
-            $enrolment->fee_status = $request->input('fee_payment_status');
-            $enrolment->fee_update_by = $user_id;
+            if(strlen($request->input('class_teacher_comment')) > 0)
+            {
+                $enrolment->classteachercomment_by  = $user_id;
+                $enrolment->classteacher_comment    = $request->input('class_teacher_comment');
+            }
+            if(strlen($request->input('principal_comment')) > 0)
+            {
+                $enrolment->principalcomment_by = $user_id;
+                $enrolment->principal_comment   = $request->input('principal_comment');
+            }
+            if($request->input('result_status'.$id) != 'Do_nothing')
+            {
+                $enrolment->result_status = $request->input('result_status'.$id);
+            }
 
             $enrolment->save();
 
             $request->session()->flash('success', 'Update saved');
+
+            if($request->input('return_page') == 'enrolments.show')
+            {
+                return redirect()->route('enrolments.show', $enrolment->id);
+            }
+            elseif($request->input('return_page') == 'enrolments.index')
+            {
+                return redirect()->route('enrolments.index');
+            }
+            elseif($request->input('return_page') == 'arms.show')
+            {
+                return redirect()->route('arms.show', $enrolment->arm->id);
+            }
         }
 
         return redirect()->route('enrolments.show', $id);
