@@ -216,7 +216,7 @@
 
                     <div class="resource-details" style="margin-top: 40px;">
                         <div class="title">
-                            Comments & result status
+                            Comments <?php if($manage_student_promotion == 'Yes' && $enrolment->term->type == 'Promotion term'){ echo ', promotion detail, '; } ?>& result status
                         </div>
                         <div class="body">
 
@@ -259,7 +259,31 @@
                             </div>
 
                             @if ($manage_student_promotion == 'Yes' && $enrolment->term->type == 'Promotion term')
-                                
+                                <div class="form-group row"> 
+                                    <label for="schoolclass_id" class="col-md-4 col-form-label text-md-right">{{ __('Next class (promotion):') }}</label>
+                
+                                    <div class="col-md-8">
+                                        <div class="alert alert-info">Specify the class arm that this student will promoted to.</div>
+                                        <div class="row">
+                                            @foreach ($enrolment->school->schoolclasses as $schoolclass)
+                                                <div class="col-md-6">
+                                                    <div style="border: solid 1px #e2e2e2; background-color: #fff; margin: 3px 0; padding: 7px 10px;">
+                                                        <span class="badge badge-info">{{ $schoolclass->name }} classes</span>
+                                                        <?php $class_displayed = 0; ?>
+                                                        @foreach ($schoolclass->arms as $arm)
+                                                            <div style="vertical-align: middle; padding: 5px 0 5px 10px;">
+                                                                <input type="radio" name="next_class" id="next_class{{ $enrolment->id.'_'.$arm->id }}" value="{{ $arm->id }}"> &nbsp;&nbsp;<label for="next_class{{ $enrolment->id.'_'.$arm->id }}">{{ $schoolclass->name.' '.$arm->name }}</label>
+                                                            </div>
+                                                            <?php $class_displayed++; ?>
+                                                        @endforeach
+                                                        <?php if($class_displayed == 0){ echo '<div style="vertical-align: middle; padding: 5px 0 5px 10px;"><b>None!</b></div>'; } ?>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div style="padding: 15px;"></div>
+                                    </div>
+                                </div>
                             @endif
 
                             @if ($manage_all_results == 'Yes')
