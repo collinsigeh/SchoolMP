@@ -262,7 +262,7 @@
                                         <textarea id="principal_comment_display" class="form-control" name="principal_comment_display" disabled><?php if(strlen($enrolment->principal_comment) > 0){ echo $enrolment->principal_comment; }else{ echo 'None'; } ?></textarea>
                                     @endif
                                 </div>
-                            </div>{{ $manage_student_promotion }}
+                            </div>
 
                             @if ($manage_student_promotion == 'Yes' && $enrolment->term->type == 'Promotion term')
                                 <div class="form-group row"> 

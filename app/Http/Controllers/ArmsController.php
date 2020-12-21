@@ -371,7 +371,7 @@ class ArmsController extends Controller
             {
                 $data['manage_all_results'] = 'Yes';
             }
-            if($data['staff']->manage_student_promotion == 'Yes')
+            if($data['staff']->manage_students_promotion == 'Yes')
             {
                 $data['manage_student_promotion'] = 'Yes';
             }
