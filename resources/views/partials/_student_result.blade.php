@@ -20,7 +20,10 @@
                     <a href="{{ route('results.show', $enrolment->id) }}" target="_blank" class="btn btn-primary">View print version</a>
                 </div>
             @else
-                <div class="alert alert-info"><b>Note: </b>The <b>print version</b> button will be displayed once this result is approved.</div>
+                <div class="alert alert-info">
+                    <p><small>Result status:</small> <span class="badge badge-danger">NOT approved!</span></p>
+                    <small><b>Note: </b>The <b>print version</b> button will be displayed once this result is approved.</small>
+                </div>
             @endif
             
             @if ($enrolment->arm->resulttemplate->ca_display == 'Summary')
@@ -263,7 +266,7 @@
                                     <label for="schoolclass_id" class="col-md-4 col-form-label text-md-right">{{ __('Next class (promotion):') }}</label>
                 
                                     <div class="col-md-8">
-                                        <div class="alert alert-info">Specify the class arm that this student will promoted to.</div>
+                                        <div class="alert alert-info">Specify the class arm that this student will be promoted to.</div>
                                         <div class="row">
                                             @foreach ($enrolment->school->schoolclasses as $schoolclass)
                                                 <div class="col-md-6">
