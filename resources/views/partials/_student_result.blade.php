@@ -17,7 +17,7 @@
             
             @if ($enrolment->result_status == 'Approved')
                 <div class="alert alert-info">
-                    <small>Result status:</small> <span class="badge badge-success">Approved!</span>
+                    <small>Result status:</small> <span class="badge badge-success">Approved!</span>1
                 </div>
                 <div class="text-right" style="padding-bottom: 8px;">
                     <a href="{{ route('results.show', $enrolment->id) }}" target="_blank" class="btn btn-primary">View print version</a>
@@ -262,7 +262,7 @@
                                         <textarea id="principal_comment_display" class="form-control" name="principal_comment_display" disabled><?php if(strlen($enrolment->principal_comment) > 0){ echo $enrolment->principal_comment; }else{ echo 'None'; } ?></textarea>
                                     @endif
                                 </div>
-                            </div>
+                            </div>{{ $manage_student_promotion }}
 
                             @if ($manage_student_promotion == 'Yes' && $enrolment->term->type == 'Promotion term')
                                 <div class="form-group row"> 
