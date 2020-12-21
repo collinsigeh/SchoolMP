@@ -16,6 +16,9 @@
             </div>
             
             @if ($enrolment->result_status == 'Approved')
+                <div class="alert alert-info">
+                    <small>Result status:</small> <span class="badge badge-success">Approved!</span>
+                </div>
                 <div class="text-right" style="padding-bottom: 8px;">
                     <a href="{{ route('results.show', $enrolment->id) }}" target="_blank" class="btn btn-primary">View print version</a>
                 </div>
