@@ -17,7 +17,7 @@
             
             @if ($enrolment->result_status == 'Approved')
                 <div class="alert alert-info">
-                    <small>Result status:</small> <span class="badge badge-success">Approved!</span>1
+                    <small>Result status:</small> <span class="badge badge-success">Approved!</span>
                 </div>
                 <div class="text-right" style="padding-bottom: 8px;">
                     <a href="{{ route('results.show', $enrolment->id) }}" target="_blank" class="btn btn-primary">View print version</a>
@@ -213,7 +213,7 @@
             @endif
 
             <div class="create-form">
-                <form method="POST" action="{{ route('enrolments.show', $enrolment->id) }}">
+                <form method="POST" action="{{ route('enrolments.update', $enrolment->id) }}">
                     @csrf
                     @method('PUT')
 
@@ -278,7 +278,7 @@
                                                         <?php $class_displayed = 0; ?>
                                                         @foreach ($schoolclass->arms as $arm)
                                                             <div style="vertical-align: middle; padding: 5px 0 5px 10px;">
-                                                                <input type="radio" name="next_class" id="next_class{{ $enrolment->id.'_'.$arm->id }}" value="{{ $arm->id }}"> &nbsp;&nbsp;<label for="next_class{{ $enrolment->id.'_'.$arm->id }}">{{ $schoolclass->name.' '.$arm->name }}</label>
+                                                                <input type="radio" name="next_class" id="next_class{{ $enrolment->id.'_'.$arm->id }}" value="{{ $arm->id }}" required> &nbsp;&nbsp;<label for="next_class{{ $enrolment->id.'_'.$arm->id }}">{{ $schoolclass->name.' '.$arm->name }}</label>
                                                             </div>
                                                             <?php $class_displayed++; ?>
                                                         @endforeach
