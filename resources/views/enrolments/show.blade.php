@@ -339,12 +339,13 @@
                             @endphp
                             @if ($itempayment_manager == 'Yes' OR $finance_manager == 'Yes')
                             <div class="table-responsive collins-table-pem">
-                                <table class="table table-hover table-sm">
+                                <table class="table table-bordered table-hover table-sm">
                                     <tr>
                                         <th colspan="3" class="text-center" style="background-color: #f1f1f1;">FEES & PAYMENT SUMMARY</th>
                                     </tr>
                                     <tr>
-                                        <th colspan="2" class="text-right"  style="background-color: #f1f1f1;">Fees Summary</th>
+                                        <th style="background-color: #f1f1f1;"></th>
+                                        <th class="text-right" style="background-color: #f1f1f1;">Fees Summary</th>
                                         <th class="text-right" style="background-color: #f1f1f1;">Payments Confirmed</th>
                                     </tr>
                                     <tr>
@@ -618,7 +619,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="allPaymentModalLabel">Payments breakdown</h5>
+          <h5 class="modal-title" id="allPaymentModalLabel">Payments breakdown {!! ' - (<i>'.$term->name.' - <small>'.$term->session.'</small>'.'</i>)' !!}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

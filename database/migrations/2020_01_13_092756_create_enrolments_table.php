@@ -30,11 +30,12 @@ class CreateEnrolmentsTable extends Migration
             $table->enum('access_result', ['No', 'Yes']);
             $table->integer('access_update_by');
             $table->enum('status', ['Active', 'Inactive']);
-            $table->integer('classteachercomment_by');
-            $table->string('classteacher_comment');
-            $table->integer('principalcomment_by');
-            $table->string('principal_comment');
+            $table->integer('classteachercomment_by')->nullable();
+            $table->string('classteacher_comment')->nullable();
+            $table->integer('principalcomment_by')->nullable();
+            $table->string('principal_comment')->nullable();
             $table->enum('result_status', ['Pending', 'Pending Aproval' , 'NOT Approved', 'Approved']);
+            $table->integer('next_class')->nullable();
             $table->integer('created_by');
             $table->timestamps();
         });

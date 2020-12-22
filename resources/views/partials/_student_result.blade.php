@@ -231,7 +231,7 @@
                                 
                                 <div class="col-md-8">
                                     @if (($manage_all_results == 'Yes' OR $enrolment->arm->user_id == $user->id) && $enrolment->result_status != 'Approved')
-                                        <textarea id="class_teacher_comment" class="form-control @error('class_teacher_comment') is-invalid @enderror" name="class_teacher_comment" placeholder="Class teacher's comment here...">{{ $enrolment->classteacher_comment }}</textarea>
+                                        <textarea id="class_teacher_comment" class="form-control @error('class_teacher_comment') is-invalid @enderror" name="class_teacher_comment" placeholder="Enter class teacher's comment here...">{{ $enrolment->classteacher_comment }}</textarea>
                 
                                         @error('class_teacher_comment')
                                             <span class="invalid-feedback" role="alert">
@@ -250,7 +250,7 @@
                                 
                                 <div class="col-md-8">
                                     @if ($manage_all_results == 'Yes' && $enrolment->result_status != 'Approved')
-                                        <textarea id="principal_comment" class="form-control @error('principal_comment') is-invalid @enderror" name="principal_comment" placeholder="Principal's comment here...">{{ $enrolment->principal_comment }}</textarea>
+                                        <textarea id="principal_comment" class="form-control @error('principal_comment') is-invalid @enderror" name="principal_comment" placeholder="Enter principal's comment here...">{{ $enrolment->principal_comment }}</textarea>
                 
                                         @error('principal_comment')
                                             <span class="invalid-feedback" role="alert">
@@ -290,6 +290,8 @@
                                         <div style="padding: 15px;"></div>
                                     </div>
                                 </div>
+                            @else
+                                <input type="hidden" name="next_class" value="{{ $enrolment->next_class }}">
                             @endif
 
                             @if ($manage_all_results == 'Yes')
