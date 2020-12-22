@@ -18,6 +18,11 @@
             @if ($enrolment->result_status == 'Approved')
                 <div class="alert alert-info">
                     <small>Result status:</small> <span class="badge badge-success">Approved!</span>
+                    @if ($enrolment->next_class < 1 && $enrolment->term->type == 'Promotion term')
+                        <div style="padding-top: 8px;">
+                            <small><b>IMPORTANT:</b> The next (promotion/demotion) class is not specified.</small>
+                        </div>
+                    @endif
                 </div>
                 <div class="text-right" style="padding-bottom: 8px;">
                     <a href="{{ route('results.show', $enrolment->id) }}" target="_blank" class="btn btn-primary">View print version</a>
@@ -264,34 +269,43 @@
                                 </div>
                             </div>
 
-                            @if ($manage_student_promotion == 'Yes' && $enrolment->term->type == 'Promotion term')
+                            @if ($enrolment->term->type == 'Promotion term')
                                 <div class="form-group row"> 
-                                    <label for="schoolclass_id" class="col-md-4 col-form-label text-md-right">{{ __('Next class (promotion):') }}</label>
-                
+                                    <label for="present_class" class="col-md-4 col-form-label text-md-right">{{ __('Present class:') }}</label>
+                                    
                                     <div class="col-md-8">
-                                        <div class="alert alert-info">Specify the class arm that this student will be promoted to.</div>
-                                        <div class="row">
-                                            @foreach ($enrolment->school->schoolclasses as $schoolclass)
-                                                <div class="col-md-6">
-                                                    <div style="border: solid 1px #e2e2e2; background-color: #fff; margin: 3px 0; padding: 7px 10px;">
-                                                        <span class="badge badge-info">{{ $schoolclass->name }} classes</span>
-                                                        <?php $class_displayed = 0; ?>
-                                                        @foreach ($schoolclass->arms as $arm)
-                                                            <div style="vertical-align: middle; padding: 5px 0 5px 10px;">
-                                                                <input type="radio" name="next_class" id="next_class{{ $enrolment->id.'_'.$arm->id }}" value="{{ $arm->id }}" required> &nbsp;&nbsp;<label for="next_class{{ $enrolment->id.'_'.$arm->id }}">{{ $schoolclass->name.' '.$arm->name }}</label>
-                                                            </div>
-                                                            <?php $class_displayed++; ?>
-                                                        @endforeach
-                                                        <?php if($class_displayed == 0){ echo '<div style="vertical-align: middle; padding: 5px 0 5px 10px;"><b>None!</b></div>'; } ?>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                        <div style="padding: 15px;"></div>
+                                        <input type="text" class="form-control" value="{{ $enrolment->schoolclass->name.' '.$enrolment->arm->name }}" disabled>
                                     </div>
                                 </div>
-                            @else
-                                <input type="hidden" name="next_class" value="{{ $enrolment->next_class }}">
+                                @if ($manage_student_promotion == 'Yes')
+                                    <div class="form-group row"> 
+                                        <label for="schoolclass_id" class="col-md-4 col-form-label text-md-right">{{ __('Next class (promotion/demotion):') }}</label>
+                    
+                                        <div class="col-md-8">
+                                            <div class="alert alert-info">Specify the class arm that this student will be promoted or demoted to.</div>
+                                            <div class="row">
+                                                @foreach ($enrolment->school->schoolclasses as $schoolclass)
+                                                    <div class="col-md-6">
+                                                        <div style="border: solid 1px #e2e2e2; background-color: #fff; margin: 3px 0; padding: 7px 10px;">
+                                                            <span class="badge badge-info">{{ $schoolclass->name }} classes</span>
+                                                            <?php $class_displayed = 0; ?>
+                                                            @foreach ($schoolclass->arms as $arm)
+                                                                <div style="vertical-align: middle; padding: 5px 0 5px 10px;">
+                                                                    <input type="radio" name="next_class" id="next_class{{ $enrolment->id.'_'.$arm->id }}" value="{{ $arm->id }}" required> &nbsp;&nbsp;<label for="next_class{{ $enrolment->id.'_'.$arm->id }}">{{ $schoolclass->name.' '.$arm->name }}</label>
+                                                                </div>
+                                                                <?php $class_displayed++; ?>
+                                                            @endforeach
+                                                            <?php if($class_displayed == 0){ echo '<div style="vertical-align: middle; padding: 5px 0 5px 10px;"><b>None!</b></div>'; } ?>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            <div style="padding: 15px;"></div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <input type="hidden" name="next_class" value="{{ $enrolment->next_class }}">
+                                @endif
                             @endif
 
                             @if ($manage_all_results == 'Yes')
@@ -311,7 +325,7 @@
                                         <div class="small"><div class="alert alert-info">Choose either to approve or reject this result.</div></div>
                                         <div class="row">
                                             <div class="col-4">
-                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_statusa{{ $enrolment->id }}" value="Approved" required> <label for="result_statusa{{ $enrolment->id }}">Approve</label>
+                                                <input type="radio" name="result_status{{ $enrolment->id }}" id="result_statusa{{ $enrolment->id }}" value="Approved" <?php if($enrolment->result_status == 'Approved'){ echo 'checked'; } ?> required> <label for="result_statusa{{ $enrolment->id }}">Approve</label>
                                             </div>
                                             <div class="col-8">
                                                 <input type="radio" name="result_status{{ $enrolment->id }}" id="result_statusb{{ $enrolment->id }}" value="NOT Approved" required> <label for="result_statusb{{ $enrolment->id }}">Reject</label>
@@ -365,7 +379,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-5">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Save') }}
+                                    {{ __('Submit') }}
                                 </button>
                             </div>
                         </div>
@@ -374,7 +388,7 @@
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-5">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Save') }}
+                                        {{ __('Submit') }}
                                     </button>
                                 </div>
                             </div>

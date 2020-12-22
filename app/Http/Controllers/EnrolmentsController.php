@@ -394,6 +394,10 @@ class EnrolmentsController extends Controller
             {
                 $enrolment->result_status = $request->input('result_status'.$id);
             }
+            if($enrolment->term->type == 'Promotion term')
+            {
+                $enrolment->next_class = $request->input('next_class');
+            }
 
             $enrolment->save();
 
