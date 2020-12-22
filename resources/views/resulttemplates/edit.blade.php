@@ -80,7 +80,7 @@
                                 {{ 'selected' }}
                             @endif>Summary</option>
                             <option value="Breakdown" @if ($resulttemplate->ca_display == 'Breakdown')
-                                {{ 'Breakdown' }}
+                                {{ 'selected' }}
                             @endif>Breakdown</option>
                         </select>
     

@@ -51,7 +51,14 @@
                         @foreach ($enrolment->results as $result_slip)
                             <tr>
                                 <td>{{ $result_slip->classsubject->subject->name }}</td>
-                                <td></td>
+                                <td>
+                                    @php
+                                        $ca = $result_slip->subject_1st_test_score + $result_slip->subject_2nd_test_score +
+                                            $result_slip->subject_3rd_test_score + $result_slip->subject_assignment_score +
+                                            $result_slip->subject_exam_score;
+                                    @endphp
+                                    {{ $ca }}
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -216,6 +223,26 @@
                     </table>
                 </div>
             @endif
+            
+            <div style="padding-top: 20px">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm">
+                        <tr class="text-center" style="background-color: #f1f1f1">
+                            <th colspan="8">Overall Performance</th>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>No. of subjects:</b></small></td>
+                            <td style="vertical-align: middle">17</td>
+                            <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Total score:</b></small></td>
+                            <td style="vertical-align: middle">1580</td>
+                            <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Avg. score:</b></small></td>
+                            <td style="vertical-align: middle">92.94 <span class="badge badge-secondary">%</span></td>
+                            <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Remark:</b></small></td>
+                            <td style="vertical-align: middle">Distinction</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
 
             <div class="create-form">
                 <form method="POST" action="{{ route('enrolments.update', $enrolment->id) }}">
