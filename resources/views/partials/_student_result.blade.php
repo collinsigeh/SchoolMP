@@ -38,31 +38,145 @@
                 <div class="table-responsive">
                     <table class="table table-bordered table-sm">
                         <tr>
-                            <th style="vertical-align: middle">Subject</th>
-                            <th class="text-right" style="vertical-align: middle">C.A.<br><span class="badge badge-secondary">40 %</span></th>
-                            <th class="text-right" style="vertical-align: middle">Exam<br><span class="badge badge-secondary">60 %</span></th>
-                            <th class="text-right" style="vertical-align: middle">Total<br><span class="badge badge-secondary">100 %</span></th>
-                            <th class="text-right" style="vertical-align: middle">Grade</th>
-                            <th class="text-right" style="vertical-align: middle">Remark</th>
+                            <th style="vertical-align: middle; background-color: #f1f1f1">Subject</th>
+                            @php
+                                $ca_max = $enrolment->arm->resulttemplate->subject_1st_test_max_score +
+                                        $enrolment->arm->resulttemplate->subject_2nd_test_max_score +
+                                        $enrolment->arm->resulttemplate->subject_3rd_test_max_score +
+                                        $enrolment->arm->resulttemplate->subject_assignment_score
+                            @endphp
+                            <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">C.A.<br><span class="badge badge-secondary">{{ $ca_max }} %</span></th>
+                            <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">Exam<br><span class="badge badge-secondary">{{ $enrolment->arm->resulttemplate->subject_exam_score }} %</span></th>
+                            <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">Total<br><span class="badge badge-secondary">100 %</span></th>
+                            <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">Grade</th>
+                            <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">Remark</th>
                         </tr>
                         <?php 
-                            $total = 0; 
+                            $total = 0;
+                            $no_of_subjects = 0;
+                            $total_score = 0;
                         ?>
                         @foreach ($enrolment->results as $result_slip)
                             <tr>
-                                <td>{{ $result_slip->classsubject->subject->name }}</td>
-                                <td>
+                                <td style="background-color: #f1f1f1">{{ $result_slip->classsubject->subject->name }}</td>
+                                <td class="text-right">
                                     @php
                                         $ca = $result_slip->subject_1st_test_score + $result_slip->subject_2nd_test_score +
-                                            $result_slip->subject_3rd_test_score + $result_slip->subject_assignment_score +
-                                            $result_slip->subject_exam_score;
+                                            $result_slip->subject_3rd_test_score + $result_slip->subject_assignment_score;
+
+                                        $total = $ca + $result_slip->subject_exam_score;
                                     @endphp
                                     {{ $ca }}
                                 </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td class="text-right">{{ $result_slip->subject_exam_score }}</td>
+                                <td class="text-right" style="background-color: #f1f1f1">{{ $total }}</td>
+                                @php
+                                    if($total >= 95 && $total <= 100)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_95_to_100;
+                                        $remark = $enrolment->arm->resulttemplate->grade_95_to_100;
+                                    }
+                                    elseif($total >= 90 && $total <= 94)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_90_to_94;
+                                        $remark = $enrolment->arm->resulttemplate->grade_90_to_94;
+                                    }
+                                    elseif($total >= 85 && $total <= 89)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_85_to_89;
+                                        $remark = $enrolment->arm->resulttemplate->grade_85_to_89;
+                                    }
+                                    elseif($total >= 80 && $total <= 84)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_80_to_84;
+                                        $remark = $enrolment->arm->resulttemplate->grade_80_to_84;
+                                    }
+                                    elseif($total >= 75 && $total <= 79)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_75_to_79;
+                                        $remark = $enrolment->arm->resulttemplate->grade_75_to_79;
+                                    }
+                                    elseif($total >= 70 && $total <= 74)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_70_to_74;
+                                        $remark = $enrolment->arm->resulttemplate->grade_70_to_74;
+                                    }
+                                    elseif($total >= 65 && $total <= 69)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_65_to_69;
+                                        $remark = $enrolment->arm->resulttemplate->grade_65_to_69;
+                                    }
+                                    elseif($total >= 60 && $total <= 64)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_60_to_64;
+                                        $remark = $enrolment->arm->resulttemplate->grade_60_to_64;
+                                    }
+                                    elseif($total >= 55 && $total <= 59)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_55_to_59;
+                                        $remark = $enrolment->arm->resulttemplate->grade_55_to_59;
+                                    }
+                                    elseif($total >= 50 && $total <= 54)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_50_to_54;
+                                        $remark = $enrolment->arm->resulttemplate->grade_50_to_54;
+                                    }
+                                    elseif($total >= 45 && $total <= 49)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_45_to_49;
+                                        $remark = $enrolment->arm->resulttemplate->grade_45_to_49;
+                                    }
+                                    elseif($total >= 40 && $total <= 44)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->grade_40_to_44;
+                                        $remark = $enrolment->arm->resulttemplate->symbol_40_to_44;
+                                    }
+                                    elseif($total >= 35 && $total <= 39)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_35_to_39;
+                                        $remark = $enrolment->arm->resulttemplate->grade_35_to_39;
+                                    }
+                                    elseif($total >= 30 && $total <= 34)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_30_to_34;
+                                        $remark = $enrolment->arm->resulttemplate->grade_30_to_34;
+                                    }
+                                    elseif($total >= 25 && $total <= 29)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_25_to_29;
+                                        $remark = $enrolment->arm->resulttemplate->grade_25_to_29;
+                                    }
+                                    elseif($total >= 20 && $total <= 24)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_20_to_24;
+                                        $remark = $enrolment->arm->resulttemplate->grade_20_to_24;
+                                    }
+                                    elseif($total >= 15 && $total <= 19)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_15_to_19;
+                                        $remark = $enrolment->arm->resulttemplate->grade_15_to_19;
+                                    }
+                                    elseif($total >= 10 && $total <= 14)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_10_to_14;
+                                        $remark = $enrolment->arm->resulttemplate->grade_10_to_14;
+                                    }
+                                    elseif($total >= 5 && $total <= 9)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_5_to_9;
+                                        $remark = $enrolment->arm->resulttemplate->grade_5_to_9;
+                                    }
+                                    elseif($total >= 0 && $total <= 4)
+                                    {
+                                        $grade  = $enrolment->arm->resulttemplate->symbol_0_to_4;
+                                        $remark = $enrolment->arm->resulttemplate->grade_0_to_4;
+                                    }
+
+                                    $no_of_subjects++;
+                                    $total_score += $total;
+                                @endphp
+                                <td class="text-right" style="background-color: #f1f1f1">{{ $grade }}</td>
+                                <td class="text-right">{{ $remark }}</td>
                             </tr>
                         @endforeach
                     </table>
@@ -215,6 +329,9 @@
                                         $grade  = $enrolment->arm->resulttemplate->symbol_0_to_4;
                                         $remark = $enrolment->arm->resulttemplate->grade_0_to_4;
                                     }
+
+                                    $no_of_subjects++;
+                                    $total_score += $total;
                                 @endphp
                                 <td class="text-right" style="background-color: #f1f1f1">{{ $grade }}</td>
                                 <td class="text-right">{{ $remark }}</td>
@@ -232,13 +349,104 @@
                         </tr>
                         <tr>
                             <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>No. of subjects:</b></small></td>
-                            <td style="vertical-align: middle">17</td>
+                            <td style="vertical-align: middle">{{ $no_of_subjects }}</td>
                             <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Total score:</b></small></td>
-                            <td style="vertical-align: middle">1580</td>
+                            <td style="vertical-align: middle">{{ $total_score }}</td>
+                            @php
+                                if($no_of_subjects >= 1)
+                                {
+                                    $avg_score = $total_score / $no_of_subjects;
+                                }
+                                else
+                                {
+                                    $avg_score = 0;
+                                }
+                                
+                                if($avg_score >= 95 && $avg_score <= 100)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_95_to_100;
+                                }
+                                elseif($avg_score >= 90 && $avg_score <= 94)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_90_to_94;
+                                }
+                                elseif($avg_score >= 85 && $avg_score <= 89)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_85_to_89;
+                                }
+                                elseif($avg_score >= 80 && $avg_score <= 84)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_80_to_84;
+                                }
+                                elseif($avg_score >= 75 && $avg_score <= 79)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_75_to_79;
+                                }
+                                elseif($avg_score >= 70 && $avg_score <= 74)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_70_to_74;
+                                }
+                                elseif($avg_score >= 65 && $avg_score <= 69)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_65_to_69;
+                                }
+                                elseif($avg_score >= 60 && $avg_score <= 64)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_60_to_64;
+                                }
+                                elseif($avg_score >= 55 && $avg_score <= 59)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_55_to_59;
+                                }
+                                elseif($avg_score >= 50 && $avg_score <= 54)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_50_to_54;
+                                }
+                                elseif($avg_score >= 45 && $avg_score <= 49)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_45_to_49;
+                                }
+                                elseif($avg_score >= 40 && $avg_score <= 44)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->symbol_40_to_44;
+                                }
+                                elseif($avg_score >= 35 && $avg_score <= 39)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_35_to_39;
+                                }
+                                elseif($avg_score >= 30 && $avg_score <= 34)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_30_to_34;
+                                }
+                                elseif($avg_score >= 25 && $avg_score <= 29)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_25_to_29;
+                                }
+                                elseif($avg_score >= 20 && $avg_score <= 24)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_20_to_24;
+                                }
+                                elseif($avg_score >= 15 && $avg_score <= 19)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_15_to_19;
+                                }
+                                elseif($avg_score >= 10 && $avg_score <= 14)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_10_to_14;
+                                }
+                                elseif($avg_score >= 5 && $avg_score <= 9)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_5_to_9;
+                                }
+                                elseif($avg_score >= 0 && $avg_score <= 4)
+                                {
+                                    $overall_remark = $enrolment->arm->resulttemplate->grade_0_to_4;
+                                }
+                            @endphp
                             <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Avg. score:</b></small></td>
-                            <td style="vertical-align: middle">92.94 <span class="badge badge-secondary">%</span></td>
+                            <td style="vertical-align: middle">{{ number_format($avg_score, 2) }} <span class="badge badge-secondary">%</span></td>
                             <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Remark:</b></small></td>
-                            <td style="vertical-align: middle">Distinction</td>
+                            <td style="vertical-align: middle">{{ $overall_remark }}</td>
                         </tr>
                     </table>
                 </div>
