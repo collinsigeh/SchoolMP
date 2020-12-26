@@ -34,10 +34,15 @@
                 </div>
             @endif
             
+            @php
+                $no_of_subjects = 0;
+                $total_score = 0;
+            @endphp
             @if ($enrolment->arm->resulttemplate->ca_display == 'Summary')
                 <div class="table-responsive">
                     <table class="table table-bordered table-sm">
                         <tr>
+                            <th>#</th>
                             <th style="vertical-align: middle; background-color: #f1f1f1">Subject</th>
                             @php
                                 $ca_max = $enrolment->arm->resulttemplate->subject_1st_test_max_score +
@@ -53,11 +58,13 @@
                         </tr>
                         <?php 
                             $total = 0;
-                            $no_of_subjects = 0;
-                            $total_score = 0;
                         ?>
                         @foreach ($enrolment->results as $result_slip)
+                            @php
+                                $no_of_subjects++;
+                            @endphp
                             <tr>
+                                <td>{{ $no_of_subjects }}</td>
                                 <td style="background-color: #f1f1f1">{{ $result_slip->classsubject->subject->name }}</td>
                                 <td class="text-right">
                                     @php
@@ -172,7 +179,6 @@
                                         $remark = $enrolment->arm->resulttemplate->grade_0_to_4;
                                     }
 
-                                    $no_of_subjects++;
                                     $total_score += $total;
                                 @endphp
                                 <td class="text-right" style="background-color: #f1f1f1">{{ $grade }}</td>
@@ -185,6 +191,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered table-sm">
                         <tr>
+                            <th>#</th>
                             <th style="vertical-align: middle; background-color: #f1f1f1">Subject</th>
                             @if ($enrolment->arm->resulttemplate->subject_1st_test_max_score > 0)
                                 <th class="text-right" style="vertical-align: middle; background-color: #f1f1f1">1st Test<br><span class="badge badge-secondary">{{ $enrolment->arm->resulttemplate->subject_1st_test_max_score }} %</span></th>
@@ -206,8 +213,10 @@
                         @foreach ($enrolment->results as $result_slip)
                             <?php 
                                 $total = 0;
+                                $no_of_subjects++;
                             ?>
                             <tr>
+                                <td>{{ $no_of_subjects }}</td>
                                 <td style="background-color: #f1f1f1">{{ $result_slip->classsubject->subject->name }}</td>
                                 @if ($enrolment->arm->resulttemplate->subject_1st_test_max_score > 0)
                                     <td class="text-right">{{ $result_slip->subject_1st_test_score }}</td>
@@ -330,7 +339,6 @@
                                         $remark = $enrolment->arm->resulttemplate->grade_0_to_4;
                                     }
 
-                                    $no_of_subjects++;
                                     $total_score += $total;
                                 @endphp
                                 <td class="text-right" style="background-color: #f1f1f1">{{ $grade }}</td>
@@ -345,12 +353,10 @@
                 <div class="table-responsive">
                     <table class="table table-bordered table-sm">
                         <tr class="text-center" style="background-color: #f1f1f1">
-                            <th colspan="8">Overall Performance</th>
+                            <th colspan="6">Overall Performance</th>
                         </tr>
                         <tr>
-                            <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>No. of subjects:</b></small></td>
-                            <td style="vertical-align: middle">{{ $no_of_subjects }}</td>
-                            <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Total score:</b></small></td>
+                            <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Grand total score:</b></small></td>
                             <td style="vertical-align: middle">{{ $total_score }}</td>
                             @php
                                 if($no_of_subjects >= 1)
@@ -443,9 +449,9 @@
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_0_to_4;
                                 }
                             @endphp
-                            <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Avg. score:</b></small></td>
+                            <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Avg. total score:</b></small></td>
                             <td style="vertical-align: middle">{{ number_format($avg_score, 2) }} <span class="badge badge-secondary">%</span></td>
-                            <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Remark:</b></small></td>
+                            <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Result Summary:</b></small></td>
                             <td style="vertical-align: middle">{{ $overall_remark }}</td>
                         </tr>
                     </table>

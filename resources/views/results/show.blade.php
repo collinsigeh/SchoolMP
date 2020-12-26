@@ -10,9 +10,9 @@
 	<script> 
 		function printDiv() { 
 			var divContents = document.getElementById("GFG").innerHTML; 
-			var a = window.open('', '', 'height=500, width=500'); 
+			var a = window.open('', '', 'height=500, width=800'); 
 			a.document.write('<html>'); 
-			a.document.write('<body > <h1>Div contents are <br>'); 
+			a.document.write('<body> <h1>Div contents are <br>'); 
 			a.document.write(divContents); 
 			a.document.write('</body></html>'); 
 			a.document.close(); 
@@ -23,11 +23,11 @@
 
 <body> 
 	<center> 
-		<div id="GFG" style="background-color: green;"> 
+		<div id="GFG"> 
 			
 			<h2>Geeksforgeeks result for {{ $enrolment->user->name }}</h2> 
 			
-			<table border="1px"> 
+			<table border="1px" cellspacing="0"> 
 				<tr> 
 					<td style="text-align: right">computer</td> 
 					<td>Algorithmmmmmmmmmmmmmmmm</td> 
