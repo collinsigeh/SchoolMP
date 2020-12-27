@@ -357,7 +357,7 @@
                         </tr>
                         <tr>
                             <td style="vertical-align: middle; background-color: #f1f1f1"><small><b>Grand total score:</b></small></td>
-                            <td style="vertical-align: middle">{{ $total_score }}</td>
+                            <td style="vertical-align: middle">{{ $total_score.' / '.($no_of_subjects * 100) }}</td>
                             @php
                                 if($no_of_subjects >= 1)
                                 {
