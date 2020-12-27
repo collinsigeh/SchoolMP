@@ -475,12 +475,95 @@
 					
 					<table border="0" cellspacing="0" width="100%">
 						<tr>
-							<td width="250px">
+							<td width="250px" style="vertical-align: top">
 								<table width="100%" cellspacing="0" style="margin-top: 15px; border:1px solid #d3d3d3; text-align: left; font-size: 0.9em;">
 									<tr style="vertical-align: middle;">
 										<td width="20px" style="border:1px solid #d3d3d3; padding: 3px;">
 											<div style="font-size: 0.9em; font-weight: 600;">Key to Grades</div>
-																					
+											<table>
+												@php
+													$grade_symbol = $enrolment->arm->resulttemplate->symbol_95_to_100;
+													$grade = $enrolment->arm->resulttemplate->grade_95_to_100;
+													$score = $starting_score = 100;
+													while ($score >= -1) {
+														if($score >= 95 && $score <= 100)
+														{
+															if($grade_symbol != $enrolment->arm->resulttemplate->symbol_95_to_100 &&
+																$grade != $enrolment->arm->resulttemplate->grade_95_to_100)
+															{
+																echo '<tr><td>'.($score+1).' - '.$starting_score.'</td><td> : '.$grade_symbol.' = '.$grade.'</td></tr>';
+																$starting_score = $score;
+																$grade_symbol = $enrolment->arm->resulttemplate->symbol_95_to_100;
+																$grade = $enrolment->arm->resulttemplate->grade_95_to_100;
+															}
+														}
+														if($score >= 65 && $score < 70)
+														{
+															if($grade_symbol != $enrolment->arm->resulttemplate->symbol_65_to_69 &&
+																$grade != $enrolment->arm->resulttemplate->grade_65_to_69)
+															{
+																echo '<tr><td>'.($score+1).' - '.$starting_score.'</td><td> : '.$grade_symbol.' = '.$grade.'</td></tr>';
+																$starting_score = $score;
+																$grade_symbol = $enrolment->arm->resulttemplate->symbol_65_to_69;
+																$grade = $enrolment->arm->resulttemplate->grade_65_to_69;
+															}
+														}
+														if($score >= 45 && $score < 50)
+														{
+															if($grade_symbol != $enrolment->arm->resulttemplate->symbol_45_to_49 &&
+																$grade != $enrolment->arm->resulttemplate->grade_45_to_49)
+															{
+																echo '<tr><td>'.($score+1).' - '.$starting_score.'</td><td> : '.$grade_symbol.' = '.$grade.'</td></tr>';
+																$starting_score = $score;
+																$grade_symbol = $enrolment->arm->resulttemplate->symbol_45_to_49;
+																$grade = $enrolment->arm->resulttemplate->grade_45_to_49;
+															}
+														}
+														if($score >= 10 && $score < 15)
+														{
+															if($grade_symbol != $enrolment->arm->resulttemplate->symbol_10_to_14 &&
+																$grade != $enrolment->arm->resulttemplate->grade_10_to_14)
+															{
+																echo '<tr><td>'.($score+1).' - '.$starting_score.'</td><td> : '.$grade_symbol.' = '.$grade.'</td></tr>';
+																$starting_score = $score;
+																$grade_symbol = $enrolment->arm->resulttemplate->symbol_10_to_14;
+																$grade = $enrolment->arm->resulttemplate->grade_10_to_14;
+															}
+														}
+														if($score >= 5 && $score < 10)
+														{
+															if($grade_symbol != $enrolment->arm->resulttemplate->symbol_5_to_9 &&
+																$grade != $enrolment->arm->resulttemplate->grade_5_to_9)
+															{
+																echo '<tr><td>'.($score+1).' - '.$starting_score.'</td><td> : '.$grade_symbol.' = '.$grade.'</td></tr>';
+																$starting_score = $score;
+																$grade_symbol = $enrolment->arm->resulttemplate->symbol_5_to_9;
+																$grade = $enrolment->arm->resulttemplate->grade_5_to_9;
+															}
+														}
+														if($score >= 0 && $score < 5)
+														{
+															if($grade_symbol != $enrolment->arm->resulttemplate->symbol_0_to_4 &&
+																$grade != $enrolment->arm->resulttemplate->grade_0_to_4)
+															{
+																echo '<tr><td>'.($score+1).' - '.$starting_score.'</td><td> : '.$grade_symbol.' = '.$grade.'</td></tr>';
+																$starting_score = $score;
+																$grade_symbol = $enrolment->arm->resulttemplate->symbol_0_to_4;
+																$grade = $enrolment->arm->resulttemplate->grade_0_to_4;
+															}
+														}
+														if($score >= -1 && $score < 0)
+														{
+															if($grade_symbol != '' &&
+																$grade != '')
+															{
+																echo '<tr><td>'.($score+1).' - '.$starting_score.'</td><td> : '.$grade_symbol.' = '.$grade.'</td></tr>';
+															}
+														}
+														$score--;
+													}
+												@endphp	
+											</table>		
 										</td>
 									</tr>
 								</table>
@@ -488,7 +571,7 @@
 							<td width="10px">
 
 							</td>
-							<td>
+							<td style="vertical-align: top">
 								<table width="100%" cellspacing="0" style="margin-top: 15px; border:1px solid #d3d3d3; text-align: left; font-size: 0.9em;">
 									<tr style="vertical-align: middle;">
 										<td width="20px" style="border:1px solid #d3d3d3; padding: 3px;">
