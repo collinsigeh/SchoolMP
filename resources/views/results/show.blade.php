@@ -126,6 +126,11 @@
 					</table>
 
 					<?php
+						$no_of_subjects 	= 0;
+						$grand_total_score	= 0;
+						$avg_total_score 	= 0;
+						$result_summary		= '';
+
 						if($enrolment->arm->resulttemplate->ca_display == 'Summary')
 						{
 							$ca = $enrolment->arm->resulttemplate->subject_1st_test_max_score + 
@@ -168,6 +173,9 @@
 									$result_slip->subject_3rd_test_score + $result_slip->subject_assignment_score;
 
 								$total = $ca + $result_slip->subject_exam_score;
+
+								$no_of_subjects++;
+								$grand_total_score += $total;
 
 								if($total >= 95 && $total <= 100)
                                 {
@@ -343,6 +351,9 @@
 								$total = $result_slip->subject_1st_test_score + $result_slip->subject_2nd_test_score +
 										$result_slip->subject_3rd_test_score + $result_slip->subject_assignment_score +
 										$result_slip->subject_exam_score;
+								
+								$no_of_subjects++;
+								$grand_total_score += $total;
 
 								if($total >= 95 && $total <= 100)
 								{
@@ -717,11 +728,183 @@
 							<td style="vertical-align: top">
 								<table width="100%" cellspacing="0" style="margin-top: 15px; border:1px solid #d3d3d3; text-align: left; font-size: 0.9em;">
 									<tr style="vertical-align: middle;">
-										<td width="20px" style="border:1px solid #d3d3d3; padding: 3px;">
-											<div style="padding-bottom: 8px; font-size: 0.9em; font-weight: 600; text-align: center;">Overall Performance</div>											
+										<td width="20px" style="border:1px solid #d3d3d3; padding: 3px 8px;">
+											<div style="font-size: 0.9em; font-weight: 600; text-align: center;">Session / Term Information</div>
+
+											<table width="100%" cellspacing="0" style="margin-top: 15px; border:1px solid #d3d3d3; text-align: left; font-size: 0.9em;">
+												<tr style="vertical-align: middle; text-align:center;">
+													<td width="100px" style="border:1px solid #d3d3d3; background-color: #e2e2e2; padding: 3px; font-size: 0.9em; font-weight: 600;">
+														Term Begins				
+													</td>
+													<td width="100px" style="border:1px solid #d3d3d3; background-color: #e2e2e2; padding: 3px; font-size: 0.9em; font-weight: 600;">
+														Term Ends				
+													</td>
+													<td width="100px" style="border:1px solid #d3d3d3; background-color: #e2e2e2; padding: 3px; font-size: 0.9em; font-weight: 600;">
+														Next Term Begins				
+													</td>
+												</tr>
+												<tr style="vertical-align: middle; text-align:center;">
+													<td style="border:1px solid #d3d3d3; padding: 3px;">
+														{{ date('d-M-Y', strtotime($enrolment->term->resumption_date)) }}
+													</td>
+													<td style="border:1px solid #d3d3d3; padding: 3px;">
+														{{ date('d-M-Y', strtotime($enrolment->term->closing_date)) }}
+													</td>
+													<td style="border:1px solid #d3d3d3; padding: 3px;">
+														{{ date('d-M-Y', strtotime($enrolment->term->next_term_resumption_date)) }}
+													</td>
+												</tr>
+											</table>										
 										</td>
 									</tr>
 								</table>
+								<table width="100%" cellspacing="0" style="margin-top: 12px; border:1px solid #d3d3d3; text-align: left; font-size: 0.9em;">
+									<tr style="vertical-align: middle;">
+										<td width="20px" style="border:1px solid #d3d3d3; padding: 3px 8px;">
+											<div style="font-size: 0.9em; font-weight: 600; text-align: center;">Overall Performance</div>	
+											@php
+												if($no_of_subjects > 0)
+												{
+													$avg_total_score = $grand_total_score/$no_of_subjects;
+
+													if($avg_total_score >= 95 && $avg_total_score <= 100)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_95_to_100;
+													}
+													elseif($avg_total_score >= 90 && $avg_total_score < 95)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_90_to_94;
+													}
+													elseif($avg_total_score >= 85 && $avg_total_score < 90)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_85_to_89;
+													}
+													elseif($avg_total_score >= 80 && $avg_total_score < 85)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_80_to_84;
+													}
+													elseif($avg_total_score >= 75 && $avg_total_score < 80)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_75_to_79;
+													}
+													elseif($avg_total_score >= 70 && $avg_total_score < 75)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_70_to_74;
+													}
+													elseif($avg_total_score >= 65 && $avg_total_score < 70)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_65_to_69;
+													}
+													elseif($avg_total_score >= 60 && $avg_total_score < 65)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_60_to_64;
+													}
+													elseif($avg_total_score >= 55 && $avg_total_score < 60)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_55_to_59;
+													}
+													elseif($avg_total_score >= 50 && $avg_total_score < 55)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_50_to_54;
+													}
+													elseif($avg_total_score >= 45 && $avg_total_score < 50)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_45_to_49;
+													}
+													elseif($avg_total_score >= 40 && $avg_total_score < 45)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_40_to_44;
+													}
+													elseif($avg_total_score >= 35 && $avg_total_score < 40)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_35_to_39;
+													}
+													elseif($avg_total_score >= 30 && $avg_total_score < 35)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_30_to_34;
+													}
+													elseif($avg_total_score >= 25 && $avg_total_score < 30)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_25_to_29;
+													}
+													elseif($avg_total_score >= 20 && $avg_total_score < 25)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_20_to_24;
+													}
+													elseif($avg_total_score >= 15 && $avg_total_score < 20)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_15_to_19;
+													}
+													elseif($avg_total_score >= 10 && $avg_total_score < 15)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_10_to_14;
+													}
+													elseif($avg_total_score >= 5 && $avg_total_score < 10)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_5_to_9;
+													}
+													elseif($avg_total_score >= 0 && $avg_total_score < 5)
+													{
+														$result_summary = $enrolment->arm->resulttemplate->grade_0_to_4;
+													}
+												}
+											@endphp
+											<table width="100%" cellspacing="0" style="margin-top: 15px; border:1px solid #d3d3d3; text-align: left; font-size: 0.9em;">
+												<tr style="vertical-align: middle;">
+													<td width="100px" style="border:1px solid #d3d3d3; background-color: #e2e2e2; padding: 3px; font-size: 0.9em; font-weight: 600;">
+														Grand Total Score:					
+													</td>
+													<td style="border:1px solid #d3d3d3; padding: 3px;">
+														{{ $grand_total_score.' / '.($no_of_subjects*100) }}
+													</td>
+												</tr>
+												<tr style="vertical-align: middle;">
+													<td style="border:1px solid #d3d3d3; background-color: #e2e2e2; padding: 3px; font-size: 0.9em; font-weight: 600;">
+														Avg. Total Score:					
+													</td>
+													<td style="border:1px solid #d3d3d3; padding: 3px;">
+														{{ number_format($avg_total_score, 2) }}
+													</td>
+												</tr>
+												<tr style="vertical-align: middle;">
+													<td style="border:1px solid #d3d3d3; background-color: #e2e2e2; padding: 3px; font-size: 0.9em; font-weight: 600;">
+														Result Summary:					
+													</td>
+													<td style="border:1px solid #d3d3d3; padding: 3px;">
+														{{ $result_summary }}
+													</td>
+												</tr>
+											</table>										
+										</td>
+									</tr>
+								</table>
+
+							</td>
+						</tr>
+					</table>
+					<table width="100%" cellspacing="0" style="margin-top: 15px; text-align: left; font-size: 0.9em;">
+						<tr style="vertical-align: top;">
+							<td width="200px" style="font-size: 0.9em; font-weight: 600; text-align: right;">
+								Class teacher's comment:
+							</td>
+							<td width="10px"></td>
+							<td>
+								<div style="border-bottom:1px solid #d3d3d3;">
+									{{ $enrolment->classteacher_comment }}
+								</div>
+							</td>
+						</tr>
+					</table>
+					<table width="100%" cellspacing="0" style="margin-top: 15px; margin-bottom: 20px; text-align: left; font-size: 0.9em;">
+						<tr style="vertical-align: top;">
+							<td width="200px" style="font-size: 0.9em; font-weight: 600; text-align: right;">
+								Principal's comment:
+							</td>
+							<td width="10px"></td>
+							<td>
+								<div style="border-bottom:1px solid #d3d3d3;">
+									{{ $enrolment->principal_comment }}
+								</div>
 							</td>
 						</tr>
 					</table>
