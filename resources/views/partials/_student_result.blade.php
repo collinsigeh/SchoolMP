@@ -372,79 +372,79 @@
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_95_to_100;
                                 }
-                                elseif($avg_score >= 90 && $avg_score <= 94)
+                                elseif($avg_score >= 90 && $avg_score < 95)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_90_to_94;
                                 }
-                                elseif($avg_score >= 85 && $avg_score <= 89)
+                                elseif($avg_score >= 85 && $avg_score < 90)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_85_to_89;
                                 }
-                                elseif($avg_score >= 80 && $avg_score <= 84)
+                                elseif($avg_score >= 80 && $avg_score < 85)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_80_to_84;
                                 }
-                                elseif($avg_score >= 75 && $avg_score <= 79)
+                                elseif($avg_score >= 75 && $avg_score < 80)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_75_to_79;
                                 }
-                                elseif($avg_score >= 70 && $avg_score <= 74)
+                                elseif($avg_score >= 70 && $avg_score < 75)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_70_to_74;
                                 }
-                                elseif($avg_score >= 65 && $avg_score <= 69)
+                                elseif($avg_score >= 65 && $avg_score < 70)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_65_to_69;
                                 }
-                                elseif($avg_score >= 60 && $avg_score <= 64)
+                                elseif($avg_score >= 60 && $avg_score < 65)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_60_to_64;
                                 }
-                                elseif($avg_score >= 55 && $avg_score <= 59)
+                                elseif($avg_score >= 55 && $avg_score < 60)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_55_to_59;
                                 }
-                                elseif($avg_score >= 50 && $avg_score <= 54)
+                                elseif($avg_score >= 50 && $avg_score < 55)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_50_to_54;
                                 }
-                                elseif($avg_score >= 45 && $avg_score <= 49)
+                                elseif($avg_score >= 45 && $avg_score < 50)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_45_to_49;
                                 }
-                                elseif($avg_score >= 40 && $avg_score <= 44)
+                                elseif($avg_score >= 40 && $avg_score < 45)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->symbol_40_to_44;
                                 }
-                                elseif($avg_score >= 35 && $avg_score <= 39)
+                                elseif($avg_score >= 35 && $avg_score < 40)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_35_to_39;
                                 }
-                                elseif($avg_score >= 30 && $avg_score <= 34)
+                                elseif($avg_score >= 30 && $avg_score < 35)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_30_to_34;
                                 }
-                                elseif($avg_score >= 25 && $avg_score <= 29)
+                                elseif($avg_score >= 25 && $avg_score < 30)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_25_to_29;
                                 }
-                                elseif($avg_score >= 20 && $avg_score <= 24)
+                                elseif($avg_score >= 20 && $avg_score < 25)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_20_to_24;
                                 }
-                                elseif($avg_score >= 15 && $avg_score <= 19)
+                                elseif($avg_score >= 15 && $avg_score < 20)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_15_to_19;
                                 }
-                                elseif($avg_score >= 10 && $avg_score <= 14)
+                                elseif($avg_score >= 10 && $avg_score < 15)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_10_to_14;
                                 }
-                                elseif($avg_score >= 5 && $avg_score <= 9)
+                                elseif($avg_score >= 5 && $avg_score < 10)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_5_to_9;
                                 }
-                                elseif($avg_score >= 0 && $avg_score <= 4)
+                                elseif($avg_score >= 0 && $avg_score < 5)
                                 {
                                     $overall_remark = $enrolment->arm->resulttemplate->grade_0_to_4;
                                 }
