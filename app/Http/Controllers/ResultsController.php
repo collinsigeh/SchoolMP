@@ -152,11 +152,6 @@ class ResultsController extends Controller
                 $studentsubject->exam_score_by  = 'No one';
                 $studentsubject->subjectteachercomment_by  = 0;
                 $studentsubject->subjectteacher_comment  = '';
-                $studentsubject->classteachercomment_by  = 0;
-                $studentsubject->classteacher_comment  = '';
-                $studentsubject->principalcomment_by  = 0;
-                $studentsubject->principal_comment  = '';
-                $studentsubject->status = 'Pending';
     
                 $studentsubject->save();
                 $request->session()->flash('success', 'Subjects enrolled successfully.');
@@ -241,11 +236,6 @@ class ResultsController extends Controller
             return redirect()->route('dashboard');
         }
         $school_id = session('school_id');
-
-        if(!$this->resource_manager($data['user'], $school_id))
-        {
-            return redirect()->route('dashboard');
-        }
         
         $data['school'] = School::find($school_id);
 
@@ -273,6 +263,11 @@ class ResultsController extends Controller
         elseif($result_slip->count() < 1)
         {
             return  redirect()->route('dashboard');
+        }
+
+        if(!$this->resource_manager($data['user'], $school_id) && $result_slip->classsubject->user_id != $user_id)
+        {
+            return redirect()->route('dashboard');
         }
 
         if($result_slip->enrolment_status == 'Inactive')
