@@ -50,6 +50,26 @@
             <form method="POST" action="{{ route('itempayments.update', $itempayment->id) }}">
                 @csrf
                 @method('PUT')
+                
+                <div class="form-group row">
+                    <label for="amount_received" class="col-md-4 col-form-label text-md-right">{{ __('Amount received') }}</label>
+
+                    <div class="col-md-6">
+                        <div class="alert alert-info">
+                            {{ $itempayment->currency_symbol.' '.number_format($itempayment->amount, 2) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row"> 
+                    <label for="method_of_payment" class="col-md-4 col-form-label text-md-right">{{ __('Method of payment') }}</label>
+
+                    <div class="col-md-6">
+                        <div class="alert alert-info">
+                            {{ $itempayment->method }}
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-group row">
                     <label for="student" class="col-md-4 col-form-label text-md-right">{{ __('Student') }}</label>
@@ -69,33 +89,25 @@
                     <label for="item_paid_for" class="col-md-4 col-form-label text-md-right">{{ __('Item paid for') }}</label>
 
                     <div class="col-md-6">
-                        <div class="alert alert-info">
-                            @if ($itempayment->item_id == 0)
-                                No speicifc item
-                            @else
-                                {{ $itempayment->item->name }}
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group row">
-                    <label for="amount_received" class="col-md-4 col-form-label text-md-right">{{ __('Amount received') }}</label>
+                        <select id="item_paid_for" type="text" class="form-control @error('item_paid_for') is-invalid @enderror" name="item_paid_for" autocomplete="item_paid_for" autofocus>
+                            @php
+                                foreach ($items as $item) {
+                                    echo '<option value="'.$item->id.'"';
+                                    if($item->id == $itempayment->item_id)
+                                    {
+                                        echo 'selected';
+                                    }
+                                    echo'>'.$item->name.'</option>';
+                                }
+                            @endphp
+                            <option value="0" <?php if($itempayment->item_id == 0){ echo 'selected'; } ?>>No specific item</option>
+                        </select>
 
-                    <div class="col-md-6">
-                        <div class="alert alert-info">
-                            {{ $itempayment->currency_symbol.' '.number_format($itempayment->amount, 2) }}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row"> 
-                    <label for="method_of_payment" class="col-md-4 col-form-label text-md-right">{{ __('Method of payment') }}</label>
-
-                    <div class="col-md-6">
-                        <div class="alert alert-info">
-                            {{ $itempayment->method }}
-                        </div>
+                        @error('item_paid_for')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
 

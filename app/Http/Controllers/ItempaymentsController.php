@@ -351,6 +351,11 @@ class ItempaymentsController extends Controller
             $data['last_updated_by'] = User::find($data['itempayment']->updated_by);
         }
 
+        $db_check = array(
+            'term_id' => $term_id
+        );
+        $data['items'] = Item::where($db_check)->orderBy('name', 'asc')->get();
+
         return view('itempayments.edit')->with($data);
     }
 
@@ -408,6 +413,7 @@ class ItempaymentsController extends Controller
             return redirect()->route('itempayments.index');
         }
 
+        $itempayment->item_id       = $request->input('item_paid_for');
         $itempayment->special_note  = $request->input('special_note');
         $itempayment->status        = $request->input('status');
         $itempayment->updated_by    = $user_id;
