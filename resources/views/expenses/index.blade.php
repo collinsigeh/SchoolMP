@@ -71,7 +71,12 @@
                             <tr>
                                 <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="expense_icon" class="collins-table-item-icon"></td>
                                 <td style="vertical-align: middle;"><a class="collins-link-within-table" href="{{ route('expenses.edit', $expense->id) }}"><b>{{ $expense->currency_symbol.' '.number_format($expense->amount, 2) }}</b></a></td>
-                                <td style="vertical-align: middle;">{{ $expense->description }}</td>
+                                <td style="vertical-align: middle;">
+                                  {{ substr($expense->description, 0, 25) }}
+                                  @if (strlen($expense->description) > 25)
+                                      {{ '...' }}
+                                  @endif
+                                </td>
                                 <td style="vertical-align: middle;">{{ $expense->receipient_name }}</td>
                                 <td class="text-right" style="vertical-align: middle;"><small>{{ date('D, d-M-Y', strtotime($expense->created_at)) }}</small></td>
                                 <td class="text-right" style="vertical-align: middle;">
