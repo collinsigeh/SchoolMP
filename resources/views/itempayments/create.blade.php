@@ -52,10 +52,10 @@
 
                 <div class="form-group row">
                     <label for="enrolment_id" class="col-md-4 col-form-label text-md-right">{{ __('Student\'s Enrolment ID') }}</label>
-
+                    
                     <div class="col-md-6">
                         <input id="enrolment_id" type="number" class="form-control @error('enrolment_id') is-invalid @enderror" name="enrolment_id" value="{{ old('enrolment_id') }}" required autocomplete="enrolment_id" autofocus>
-                        
+                        <small class="text-muted">*** Enter zero ( <b>0</b> ) for non-student payments ***</small>
                         @error('enrolment_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
