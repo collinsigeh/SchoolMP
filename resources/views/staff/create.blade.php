@@ -303,6 +303,23 @@
                         </div>
                         
                         <div class="form-group row"> 
+                            <label for="manage_fees_products" class="col-md-4 col-form-label text-md-right">{{ __('Manage Fees & Products') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="manage_fees_products" class="form-control @error('manage_fees_products') is-invalid @enderror" name="manage_fees_products" required autocomplete="manage_fees_products" autofocus>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+
+                                @error('manage_fees_products')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row"> 
                             <label for="manage_received_payments" class="col-md-4 col-form-label text-md-right">{{ __('Manage Received Payments') }}</label>
 
                             <div class="col-md-6">
@@ -320,15 +337,15 @@
                         </div>
                         
                         <div class="form-group row"> 
-                            <label for="manage_fees_products" class="col-md-4 col-form-label text-md-right">{{ __('Manage Fees & Products') }}</label>
+                            <label for="manage_requests" class="col-md-4 col-form-label text-md-right">{{ __('Manage Expenses & Payout Requests') }}</label>
 
                             <div class="col-md-6">
-                                <select id="manage_fees_products" class="form-control @error('manage_fees_products') is-invalid @enderror" name="manage_fees_products" required autocomplete="manage_fees_products" autofocus>
+                                <select id="manage_requests" class="form-control @error('manage_requests') is-invalid @enderror" name="manage_requests" required autocomplete="manage_requests" autofocus>
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option>
                                 </select>
 
-                                @error('manage_fees_products')
+                                @error('manage_requests')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -448,23 +465,6 @@
                                 </select>
 
                                 @error('manage_subjects')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="form-group row"> 
-                            <label for="manage_requests" class="col-md-4 col-form-label text-md-right">{{ __('Manage Requests') }}</label>
-
-                            <div class="col-md-6">
-                                <select id="manage_requests" class="form-control @error('manage_requests') is-invalid @enderror" name="manage_requests" required autocomplete="manage_requests" autofocus>
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                </select>
-
-                                @error('manage_requests')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -142,7 +142,7 @@
                             <table class="table table-striped table-hover table-sm">
                                 <tbody>
                                     <tr>
-                                        <td>Can manage staff account & privileges:</td>
+                                        <td width="280px;">Can manage staff account & privileges:</td>
                                         <td>
                                             <p>
                                                 @if ($this_staff->manage_staff_account == 'Yes')
@@ -202,6 +202,18 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td>Can manage fees & products:</td>
+                                        <td>
+                                            <p>
+                                                @if ($this_staff->manage_fees_products == 'Yes')
+                                                    <span class="badge badge-success">Yes</span>
+                                                @else
+                                                    <span class="badge badge-danger">No</span>
+                                                @endif
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>Can manage received payments:</td>
                                         <td>
                                             <p>
@@ -214,10 +226,10 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Can manage fees & products:</td>
+                                        <td>Can manage expenses & payout requests:</td>
                                         <td>
                                             <p>
-                                                @if ($this_staff->manage_fees_products == 'Yes')
+                                                @if ($this_staff->manage_requests == 'Yes')
                                                     <span class="badge badge-success">Yes</span>
                                                 @else
                                                     <span class="badge badge-danger">No</span>
@@ -302,18 +314,6 @@
                                         <td>
                                             <p>
                                                 @if ($this_staff->manage_subjects == 'Yes')
-                                                    <span class="badge badge-success">Yes</span>
-                                                @else
-                                                    <span class="badge badge-danger">No</span>
-                                                @endif
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Can manage requests:</td>
-                                        <td>
-                                            <p>
-                                                @if ($this_staff->manage_requests == 'Yes')
                                                     <span class="badge badge-success">Yes</span>
                                                 @else
                                                     <span class="badge badge-danger">No</span>
