@@ -379,6 +379,7 @@ class TermsController extends Controller
         $data['classarm_manager']       = 'No';
         $data['fees_manager']           = 'No';
         $data['itempayment_manager']    = 'No';
+        $data['expense_manager']        = 'No';
         $data['calendar_manager']       = 'No';
         $data['sessionterm_manager']    = 'No';
         $data['subscription_manager']   = 'No';
@@ -390,6 +391,7 @@ class TermsController extends Controller
             $data['classarm_manager']       = 'Yes';
             $data['fees_manager']           = 'Yes';
             $data['itempayment_manager']    = 'Yes';
+            $data['expense_manager']        = 'Yes';
             $data['calendar_manager']       = 'Yes';
             $data['sessionterm_manager']    = 'Yes';
             $data['subscription_manager']   = 'Yes';
@@ -413,6 +415,10 @@ class TermsController extends Controller
             if($data['staff']->manage_received_payments == 'Yes')
             {
                 $data['itempayment_manager'] = 'Yes';
+            }
+            if($data['staff']->manage_requests == 'Yes')
+            {
+                $data['expense_manager'] = 'Yes';
             }
             if($data['staff']->manage_calendars == 'Yes')
             {

@@ -41,6 +41,8 @@ Route::resource('/directors', 'DirectorsController');
 
 Route::resource('/enrolments', 'EnrolmentsController');
 
+Route::resource('/expenses', 'ExpensesController');
+
 Route::resource('/guardians', 'GuardiansController');
 
 Route::resource('/itempayments', 'ItempaymentsController');
