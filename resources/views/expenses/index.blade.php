@@ -72,8 +72,8 @@
                                 <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="expense_icon" class="collins-table-item-icon"></td>
                                 <td style="vertical-align: middle;"><a class="collins-link-within-table" href="{{ route('expenses.edit', $expense->id) }}"><b>{{ $expense->currency_symbol.' '.number_format($expense->amount, 2) }}</b></a></td>
                                 <td style="vertical-align: middle;">
-                                  {{ substr($expense->description, 0, 25) }}
-                                  @if (strlen($expense->description) > 25)
+                                  {{ substr($expense->description, 0, 35) }}
+                                  @if (strlen($expense->description) > 35)
                                       {{ '...' }}
                                   @endif
                                 </td>
