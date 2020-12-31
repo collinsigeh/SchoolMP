@@ -77,7 +77,7 @@
                                       {{ '...' }}
                                   @endif
                                 </td>
-                                <td style="vertical-align: middle;">{{ $expense->receipient_name }}</td>
+                                <td style="vertical-align: middle;">{{ $expense->recipient_name }}</td>
                                 <td class="text-right" style="vertical-align: middle;"><small>{{ date('D, d-M-Y', strtotime($expense->created_at)) }}</small></td>
                                 <td class="text-right" style="vertical-align: middle;">
                                     <a href="{{ route('expenses.edit', $expense->id) }}" class="btn btn-sm btn-outline-primary">Details</a>

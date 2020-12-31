@@ -186,7 +186,7 @@ class ExpensesController extends Controller
             'currency_symbol'   => ['required'],
             'amount'            => ['required', 'numeric'],
             'description'       => ['required'],
-            'receipient_name'   => ['required']
+            'recipient_name'    => ['required']
         ]);
 
         $expense = new Expense;
@@ -196,8 +196,8 @@ class ExpensesController extends Controller
         $expense->currency_symbol   = $request->input('currency_symbol');
         $expense->amount            = $request->input('amount');
         $expense->description       = $request->input('description');
-        $expense->receipient_name   = $request->input('receipient_name');
-        $expense->receipient_phone  = $request->input('receipient_phone');
+        $expense->recipient_name    = $request->input('recipient_name');
+        $expense->recipient_phone   = $request->input('recipient_phone');
         $expense->user_id           = $user_id;
 
         $expense->save();
@@ -288,6 +288,11 @@ class ExpensesController extends Controller
             $data['staff'] = $staff[0];
         }
 
+        if($data['expense']->updated_by >= 1)
+        {
+            $data['last_updated_by'] = User::find($data['expense']->updated_by);
+        }
+
         return view('expenses.edit')->with($data);
     }
 
@@ -298,9 +303,62 @@ class ExpensesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id=0)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if(!$this->resource_manager($data['user'], $school_id))
+        {
+            return redirect()->route('dashboard');
+        }
+        
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        $this->validate($request, [
+            'description' => ['required']
+        ]);
+
+        $expense = Expense::find($id);
+        if(empty($expense))
+        {
+            $request->session()->flash('error', 'Unavailable resource.');
+            return redirect()->route('expenses.index');
+        }
+        if($expense->count() < 1)
+        {
+            $request->session()->flash('error', 'Unavailable resource.');
+            return redirect()->route('expenses.index');
+        }
+
+        $expense->description       = $request->input('description');
+        $expense->recipient_phone   = $request->input('recipient_phone');
+        $expense->updated_by        = $user_id;
+
+        $expense->save();
+
+        $request->session()->flash('success', 'Update saved!.');
+
+        return redirect()->route('expenses.edit', $id);
     }
 
     /**

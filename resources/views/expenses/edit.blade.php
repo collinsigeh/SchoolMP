@@ -61,12 +61,12 @@
                     </div>
                 </div>
 
-                <div class="form-group row"> 
-                    <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Special note (Optional):') }}</label>
+                <div class="form-group row">
+                    <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
                     
                     <div class="col-md-6">
-                        <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description">{{ old('description') }}</textarea>
-
+                        <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="Brief description of payment" required>{{ $expense->description }}</textarea>
+                        
                         @error('description')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -74,18 +74,24 @@
                         @enderror
                     </div>
                 </div>
-
-                <div class="form-group row"> 
-                    <label for="status" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}</label>
+                
+                <div class="form-group row">
+                    <label for="recipient" class="col-md-4 col-form-label text-md-right">{{ __('Recipient') }}</label>
 
                     <div class="col-md-6">
-                        <select id="status" type="text" class="form-control @error('status') is-invalid @enderror" name="status" autocomplete="status" autofocus>
-                            <option value="Pending" <?php if($itempayment->status == 'Pending'){ echo 'selected'; } ?>>Pending confirmation</option>
-                            <option value="Declined" <?php if($itempayment->status == 'Declined'){ echo 'selected'; } ?>>Declined</option>
-                            <option value="Confirmed" <?php if($itempayment->status == 'Confirmed'){ echo 'selected'; } ?>>Confirmed</option>
-                        </select>
+                        <div class="alert alert-info">
+                            {{ $expense->recipient_name }}
+                        </div>
+                    </div>
+                </div>
 
-                        @error('status')
+                <div class="form-group row">
+                    <label for="recipient_phone" class="col-md-4 col-form-label text-md-right">{{ __('Recipient phone (Optional)') }}</label>
+                    
+                    <div class="col-md-6">
+                        <input id="recipient_phone" type="text" class="form-control @error('recipient_phone') is-invalid @enderror" name="recipient_phone" value="{{ $expense->recipient_phone }}" autocomplete="recipient_phone" autofocus>
+                        
+                        @error('recipient_phone')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -98,42 +104,42 @@
 
                     <div class="col-md-6">
                         <div class="alert alert-info">
-                            {{ date('D, d-M-Y', strtotime($itempayment->created_at)).' @ '.date('h:i A', strtotime($itempayment->created_at)) }}
+                            {{ date('D, d-M-Y', strtotime($expense->created_at)).' @ '.date('h:i A', strtotime($expense->created_at)) }}
                         </div>
                     </div>
                 </div>
                 
-                @if ($itempayment->user_id >= 1)
+                @if ($expense->user_id >= 1)
                 <div class="form-group row"> 
                     <label for="recorded_by" class="col-md-4 col-form-label text-md-right">{{ __('Recorded by') }}</label>
 
                     <div class="col-md-6">
                         <div class="alert alert-info">
-                            {{ $itempayment->user->name }}
-                            @if ($itempayment->user->role == 'Staff')<br />
-                            <span class="badge badge-secondary">{{ $itempayment->user->staff->designation }}</span><br />
-                            <small>{{ $itempayment->user->email }} | {{ $itempayment->user->staff->phone }}</small>
+                            {{ $expense->user->name }}
+                            @if ($expense->user->role == 'Staff')<br />
+                            <span class="badge badge-secondary">{{ $expense->user->staff->designation }}</span><br />
+                            <small>{{ $expense->user->email }} | {{ $expense->user->staff->phone }}</small>
                             @else
-                            <span class="badge badge-secondary">{{ $itempayment->user->role }}</span><br />
-                            <small>{{ $itempayment->user->email }}</small>
+                            <span class="badge badge-secondary">{{ $expense->user->role }}</span><br />
+                            <small>{{ $expense->user->email }}</small>
                             @endif
                         </div>
                     </div>
                 </div>
                 @endif
 
-                @if ($itempayment->created_at != $itempayment->updated_at)
+                @if ($expense->created_at != $expense->updated_at)
                     <div class="form-group row"> 
                         <label for="updated_at" class="col-md-4 col-form-label text-md-right">{{ __('Last updated on') }}</label>
 
                         <div class="col-md-6">
                             <div class="alert alert-info">
-                                {{ date('D, d-M-Y', strtotime($itempayment->updated_at)).' @ '.date('h:i A', strtotime($itempayment->updated_at)) }}
+                                {{ date('D, d-M-Y', strtotime($expense->updated_at)).' @ '.date('h:i A', strtotime($expense->updated_at)) }}
                             </div>
                         </div>
                     </div>
                     
-                    @if ($itempayment->updated_by >= 1)
+                    @if ($expense->updated_by >= 1)
                         <div class="form-group row"> 
                             <label for="updated_by" class="col-md-4 col-form-label text-md-right">{{ __('Last updated by') }}</label>
 

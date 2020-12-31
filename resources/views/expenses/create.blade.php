@@ -78,12 +78,12 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="receipient_name" class="col-md-4 col-form-label text-md-right">{{ __('Receipient') }}</label>
+                    <label for="recipient_name" class="col-md-4 col-form-label text-md-right">{{ __('Recipient') }}</label>
                     
                     <div class="col-md-6">
-                        <input id="receipient_name" type="text" class="form-control @error('receipient_name') is-invalid @enderror" name="receipient_name" value="{{ old('receipient_name') }}" required autocomplete="receipient_name" autofocus>
+                        <input id="recipient_name" type="text" class="form-control @error('recipient_name') is-invalid @enderror" name="recipient_name" value="{{ old('recipient_name') }}" required autocomplete="recipient_name" autofocus>
                         
-                        @error('receipient_name')
+                        @error('recipient_name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -92,12 +92,12 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="receipient_phone" class="col-md-4 col-form-label text-md-right">{{ __('Receipient phone (Optional)') }}</label>
+                    <label for="recipient_phone" class="col-md-4 col-form-label text-md-right">{{ __('Recipient phone (Optional)') }}</label>
                     
                     <div class="col-md-6">
-                        <input id="receipient_phone" type="text" class="form-control @error('receipient_phone') is-invalid @enderror" name="receipient_phone" value="{{ old('receipient_phone') }}" autocomplete="receipient_phone" autofocus>
+                        <input id="recipient_phone" type="text" class="form-control @error('recipient_phone') is-invalid @enderror" name="recipient_phone" value="{{ old('recipient_phone') }}" autocomplete="recipient_phone" autofocus>
                         
-                        @error('receipient_phone')
+                        @error('recipient_phone')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
