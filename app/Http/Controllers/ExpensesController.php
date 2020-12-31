@@ -230,16 +230,16 @@ class ExpensesController extends Controller
         {
             return redirect()->route('dashboard');
         }
-        $data['itempayment'] = Itempayment::find($id);
-        if(empty($data['itempayment']))
+        $data['expense'] = Expense::find($id);
+        if(empty($data['expense']))
         {
             $request->session()->flash('error', 'Unavailable resource.');
-            return redirect()->route('itempayments.index');
+            return redirect()->route('expenses.index');
         }
-        if($data['itempayment']->count() < 1)
+        if($data['expense']->count() < 1)
         {
             $request->session()->flash('error', 'Unavailable resource.');
-            return redirect()->route('itempayments.index');
+            return redirect()->route('expenses.index');
         }
 
         if(Auth::user()->status !== 'Active')
@@ -288,17 +288,7 @@ class ExpensesController extends Controller
             $data['staff'] = $staff[0];
         }
 
-        if($data['itempayment']->updated_by >= 1)
-        {
-            $data['last_updated_by'] = User::find($data['itempayment']->updated_by);
-        }
-
-        $db_check = array(
-            'term_id' => $term_id
-        );
-        $data['items'] = Item::where($db_check)->orderBy('name', 'asc')->get();
-
-        return view('itempayments.edit')->with($data);
+        return view('expenses.edit')->with($data);
     }
 
     /**
