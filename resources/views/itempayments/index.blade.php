@@ -75,6 +75,12 @@
                                 <td style="vertical-align: middle;">
                                     @if ($itempayment->item_id == 0)
                                         {{ 'No specific item' }}
+                                        @if (strlen($itempayment->special_note) > 0)
+                                            {{ ' - '.substr($itempayment->special_note, 0, 30) }}
+                                            @if (strlen($itempayment->special_note) > 30)
+                                                {{ '...' }}
+                                            @endif
+                                        @endif
                                     @else
                                         {{ $itempayment->item->name }}
                                     @endif
