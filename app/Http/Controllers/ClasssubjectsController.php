@@ -12,6 +12,7 @@ use App\Term;
 use App\Arm;
 use App\Classsubject;
 use App\Result;
+use App\Enrolment;
 use Illuminate\Http\Request;
 
 class ClasssubjectsController extends Controller
@@ -167,18 +168,74 @@ class ClasssubjectsController extends Controller
 
         foreach($request->subject as $this_subject)
         {
-            $classsubject = new Classsubject;
+            $subject_added = 0;
+            foreach($data['arm']->classsubjects as $this_classsubject)
+            {
+                if($this_classsubject->subject_id == $this_subject)
+                {
+                    $subject_added++;
+                }
+            }
+            if($subject_added == 0)
+            {
+                $classsubject = new Classsubject;
+    
+                $classsubject->term_id = $term_id;
+                $classsubject->arm_id = $arm_id;
+                $classsubject->subject_id = $this_subject;
+                $classsubject->type = $request->input($this_subject);
+                $classsubject->user_id = 0;
+    
+                $classsubject->save();
 
-            $classsubject->term_id = $term_id;
-            $classsubject->arm_id = $arm_id;
-            $classsubject->subject_id = $this_subject;
-            $classsubject->type = 'Compulsory';
-            $classsubject->user_id = 0;
-
-            $classsubject->save();
+                // after adding Compulsory subjects you will add it for all existing student enrolment 
+                // in the class who do not have it registered
+                if($classsubject->type == 'Compulsory')
+                {
+                    $db_check_enrolment = array(
+                        'arm_id' => $arm_id
+                    );
+                    $student_enrolments = Enrolment::where($db_check_enrolment)->get();
+        
+                    foreach($student_enrolments as $student_enrolment)
+                    {
+                        $enrolled_for_this_subject = 0;
+                        foreach($student_enrolment->results as $result_slip)
+                        {
+                            if($enrolled_for_this_subject == 0 && $result_slip->classsubject_id == $classsubject->id)
+                            {
+                                $enrolled_for_this_subject++;
+                            }
+                        }
+                        if($enrolled_for_this_subject == 0)
+                        {
+                            $studentsubject = new Result;
+                
+                            $studentsubject->school_id = $school_id;
+                            $studentsubject->term_id = $term_id;
+                            $studentsubject->enrolment_id = $student_enrolment->id;
+                            $studentsubject->classsubject_id = $classsubject->id;
+                            $studentsubject->resulttemplate_id = $data['arm']->resulttemplate_id;
+                            $studentsubject->subject_1st_test_score = 0;
+                            $studentsubject->first_score_by  = 'No one';
+                            $studentsubject->subject_2nd_test_score = 0;
+                            $studentsubject->second_score_by  = 'No one';
+                            $studentsubject->subject_3rd_test_score = 0;
+                            $studentsubject->third_score_by  = 'No one';
+                            $studentsubject->subject_assignment_score = 0;
+                            $studentsubject->assignment_score_by  = 'No one';
+                            $studentsubject->subject_exam_score = 0;
+                            $studentsubject->exam_score_by  = 'No one';
+                            $studentsubject->subjectteachercomment_by  = 0;
+                            $studentsubject->subjectteacher_comment  = '';
+                
+                            $studentsubject->save();
+                        }
+                    }
+                }
+                $request->session()->flash('success', 'Class subjects added successfully.');
+            }
         }
-
-        $request->session()->flash('success', 'Class subjects added successfully.');
 
         return redirect()->route('arms.show', $arm_id);
     }

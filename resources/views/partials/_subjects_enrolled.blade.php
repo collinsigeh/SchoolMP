@@ -14,7 +14,7 @@
                                                 @foreach ($enrolment->results as $classsubject)
                                                     <tr>
                                                         <td>{{ $classsubject->classsubject->subject->name }}</td>
-                                                        @if ($arm->user->id == $user->id OR $student_manager == 'Yes')
+                                                        @if ($arm->user_id == $user->id OR $student_manager == 'Yes')
                                                         <td class="text-right">
                                                             <?php
                                                                 if($classsubject->subject_1st_test_score == 0 &&

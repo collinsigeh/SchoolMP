@@ -91,7 +91,7 @@ class ResultsController extends Controller
             'enrolment_id' => ['required', 'min:1']
         ]);
 
-        if($data['arm']->user->id != $user_id && $data['user']->role != 'Director')
+        if($data['arm']->user_id != $user_id && $data['user']->role != 'Director')
         {
             if($data['user']->role == 'Staff')
             {
@@ -156,12 +156,6 @@ class ResultsController extends Controller
                 $studentsubject->save();
                 $request->session()->flash('success', 'Subjects enrolled successfully.');
             }
-        }
-
-        if($data['user']->role != 'Staff')
-        {
-            $enrolment = Enrolment::find($request->input('enrolment_id'));
-            return redirect()->route('students.show', $enrolment->student_id);
         }
 
         return redirect()->route('enrolments.show', $request->input('enrolment_id'));
@@ -398,12 +392,7 @@ class ResultsController extends Controller
             $enrolledsubject->delete();
             $request->session()->flash('success', 'Record deleted');
         }
-
-        if($data['user']->role != 'Staff')
-        {
-            $enrolment = Enrolment::find($enrolment_id);
-            return redirect()->route('students.show', $enrolment->student_id);
-        }
+        
         return redirect()->route('enrolments.show', $enrolment_id);
     }
 
