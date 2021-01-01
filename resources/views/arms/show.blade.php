@@ -360,7 +360,7 @@
         <div class="modal-body">
             <div class="alert alert-info">
                 <b>{{ $arm->schoolclass->name.' '.$arm->name }} Fees & Other items</b><br />
-                <span class="badge badge-secondary">{{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</span>
+                <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
             </div>
             <div class="table-responsive">
                 <table class="table table-sm table-hover">
