@@ -399,7 +399,16 @@
                     <input type="hidden" name="from_form" value="true">
 
                     <div class="form-group row">
-                        <label for="password" class="col-md-12 col-form-label">{{ __('Tick the subjects to add and click on save') }}</label>
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <b><u>Hint:</u></b>
+                                <ol>
+                                    <li>Tick the subjects to add.</li>
+                                    <li>Choose the subject type (compulsory or elective).</li>
+                                    <li>Click on save.</li>
+                                </ol>
+                            </div>
+                        </div>
         
                         @foreach ($school->subjects as $subject)
                             @php
@@ -416,31 +425,37 @@
                             @endforeach
 
                             @if ($isassigned == 0)
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="subject['{{ $subject->id }}']" id="subject{{ $subject->id }}" {{ old('remember') ? 'checked' : '' }} value="{{ $subject->id }}">
-
-                                    <label class="form-check-label" for="subject{{ $subject->id }}">
-                                        {{ $subject->name }}
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="{{ 'a'.$subject->id }}">
-                                            <input type="radio" name="{{ $subject->id }}" id="{{ 'a'.$subject->id }}" value="Compulsory" checked required>
-                                            Compulsory
-                                        </label>
+                                <div class="col-md-12">
+                                    <div style="margin: 10px 0; border: 1px solid #b3b3b3; border-radius: 4px; background-color: #e4e4e4; padding: 12px 8px 2px 8px;">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="subject['{{ $subject->id }}']" id="subject{{ $subject->id }}" {{ old('remember') ? 'checked' : '' }} value="{{ $subject->id }}">
+                
+                                                    <label class="form-check-label" for="subject{{ $subject->id }}">
+                                                        <b>{{ $subject->name }}</b>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <label for="{{ 'a'.$subject->id }}">
+                                                            <input type="radio" name="{{ $subject->id }}" id="{{ 'a'.$subject->id }}" value="Compulsory" checked required>
+                                                            Compulsory
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label for="{{ 'b'.$subject->id }}">
+                                                            <input type="radio" name="{{ $subject->id }}" id="{{ 'b'.$subject->id }}" value="Elective" required>
+                                                            Elective
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-6">
-                                        <label for="{{ 'b'.$subject->id }}">
-                                            <input type="radio" name="{{ $subject->id }}" id="{{ 'b'.$subject->id }}" value="Elective" required>
-                                            Elective
-                                        </label>
-                                    </div>
                                 </div>
-                            </div>
                             @endif
                         @endforeach
                     </div>
