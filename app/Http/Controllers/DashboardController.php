@@ -78,9 +78,44 @@ class DashboardController extends Controller
             if($data['user']->role == 'Student')
             {
                 /*
-                * Student status check
+                * Check student status
                 *
                 */
+                if(empty($data['user']->student->school))
+                {
+                    return redirect()->route('dashboard.relogin');
+                }
+                session(['school_id' => $data['user']->student->school->id]);
+                if(session('school_id') < 1)
+                {
+                    return redirect()->route('dashboard.relogin');
+                }
+
+                $data['school'] = School::find(session('school_id'));
+                if(empty($data['school']))
+                {
+                    return redirect()->route('dashboard.relogin');
+                }
+                elseif($data['school']->count() < 1)
+                {
+                    return  redirect()->route('dashboard.relogin');
+                }
+                
+                $db_check = array(
+                    'user_id'   => $data['user']->id,
+                    'school_id' => $data['school']->id
+                );
+                $student = Student::where($db_check)->get();
+                if(empty($student))
+                {
+                    return  redirect()->route('dashboard.relogin');
+                }
+                elseif($student->count() < 1)
+                {
+                    return  redirect()->route('dashboard.relogin');
+                }
+                $data['student'] = $student[0];
+
                 return view('students.dashboard')->with($data);
             }
             elseif($data['user']->role == 'Director')

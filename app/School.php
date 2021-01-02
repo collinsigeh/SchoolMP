@@ -34,6 +34,15 @@ class School extends Model
     }
     
     /**
+     * Get all students for the school.
+     *
+     */
+    public function students()
+    {
+        return $this->hasMany('App\Student');
+    }
+    
+    /**
      * Get the session terms for the school.
      *
      */

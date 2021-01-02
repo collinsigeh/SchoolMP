@@ -38,6 +38,7 @@
                 
                 
                 @if (!$currentterm)
+
                     <span style="font-size: 2em;">Not Available!</span><br />
                     @if (count($previousterms) >= 1)
                             <a href="{{ route('terms.index') }}" class="btn btn-sm btn-primary" style="margin-top:- 15px;">View session terms</a>
@@ -48,10 +49,11 @@
                                 There's <b>no active session term</b> at present. Please contact the school admin.
                             @endif
                     @endif
+                    
                 @else
 
-                <span style="font-size: 2em;">{!! $currentterm->name.' (<small>'.$currentterm->session.'</small>)' !!}</span><br />
-                <a href="{{ route('terms.show', $currentterm->id) }}" class="btn btn-sm btn-primary" style="margin-top:- 15px;">Enter</a>
+                    <span style="font-size: 2em;">{!! $currentterm->name.' (<small>'.$currentterm->session.'</small>)' !!}</span><br />
+                    <a href="{{ route('terms.show', $currentterm->id) }}" class="btn btn-sm btn-primary" style="margin-top:- 15px;">Enter</a>
                 
                 @endif
               </div>

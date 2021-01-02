@@ -111,6 +111,12 @@
                                             {{ $enrolment->student->registration_number }}
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th class="bg-light">Reg. email:</th>
+                                        <td>
+                                            {{ $enrolment->user->email }}
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
                             
