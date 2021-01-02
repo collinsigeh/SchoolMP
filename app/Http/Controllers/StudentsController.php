@@ -13,6 +13,7 @@ use App\Arm;
 use App\Student;
 use App\Enrolment;
 use App\Order;
+use App\Result;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Image;
@@ -448,6 +449,45 @@ class StudentsController extends Controller
         $enrolment->created_by = $user_id;
 
         $enrolment->save();
+
+        foreach($enrolment->arm->classsubjects as $classsubject)
+        {
+            if($classsubject->type == 'Compulsory')
+            {
+                $enrolled_for_this_subject = 0;
+                foreach($enrolment->results as $result_slip)
+                {
+                    if($enrolled_for_this_subject == 0 && $result_slip->classsubject_id == $classsubject->id)
+                    {
+                        $enrolled_for_this_subject++;
+                    }
+                }
+                if($enrolled_for_this_subject == 0)
+                {
+                    $studentsubject = new Result;
+        
+                    $studentsubject->school_id = $school_id;
+                    $studentsubject->term_id = $term_id;
+                    $studentsubject->enrolment_id = $enrolment->id;
+                    $studentsubject->classsubject_id = $classsubject->id;
+                    $studentsubject->resulttemplate_id = $arm->resulttemplate_id;
+                    $studentsubject->subject_1st_test_score = 0;
+                    $studentsubject->first_score_by  = 'No one';
+                    $studentsubject->subject_2nd_test_score = 0;
+                    $studentsubject->second_score_by  = 'No one';
+                    $studentsubject->subject_3rd_test_score = 0;
+                    $studentsubject->third_score_by  = 'No one';
+                    $studentsubject->subject_assignment_score = 0;
+                    $studentsubject->assignment_score_by  = 'No one';
+                    $studentsubject->subject_exam_score = 0;
+                    $studentsubject->exam_score_by  = 'No one';
+                    $studentsubject->subjectteachercomment_by  = 0;
+                    $studentsubject->subjectteacher_comment  = '';
+        
+                    $studentsubject->save();
+                }
+            }
+        }
 
         // ensure the accuracy of the final price for post-paid orders
         if($subscription_payment == 'Post-paid' && $subscription_price_type == 'Per-student')

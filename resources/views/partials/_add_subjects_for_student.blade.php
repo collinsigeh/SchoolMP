@@ -17,7 +17,11 @@
                     <input type="hidden" name="enrolment_id" value="{{ $enrolment->id }}">
 
                     <div class="form-group row">
-                        <label for="password" class="col-md-12 col-form-label">{{ __('Tick the subjects to add and click on save') }}</label>
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                Tick the subjects to add and click on save.
+                            </div>
+                        </div>
         
                         @foreach ($arm->classsubjects as $classsubject)
                             @php
