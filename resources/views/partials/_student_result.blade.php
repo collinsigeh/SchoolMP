@@ -532,7 +532,7 @@
                                                             <?php $class_displayed = 0; ?>
                                                             @foreach ($schoolclass->arms as $arm)
                                                                 <div style="vertical-align: middle; padding: 5px 0 5px 10px;">
-                                                                    <input type="radio" name="next_class" id="next_class{{ $enrolment->id.'_'.$arm->id }}" value="{{ $arm->id }}" required> &nbsp;&nbsp;<label for="next_class{{ $enrolment->id.'_'.$arm->id }}">{{ $schoolclass->name.' '.$arm->name }}</label>
+                                                                    <input type="radio" name="next_class" id="next_class{{ $enrolment->id.'_'.$arm->id }}" value="{{ $arm->id }}" required <?php if($arm->id == $enrolment->next_class){ echo 'checked'; } ?>> &nbsp;&nbsp;<label for="next_class{{ $enrolment->id.'_'.$arm->id }}">{{ $schoolclass->name.' '.$arm->name }}</label>
                                                                 </div>
                                                                 <?php $class_displayed++; ?>
                                                             @endforeach
