@@ -11,6 +11,7 @@ use App\Staff;
 use App\Term;
 use App\Arm;
 use App\Resulttemplate;
+use App\Classsubject;
 use Illuminate\Http\Request;
 
 class ArmsController extends Controller
@@ -243,6 +244,30 @@ class ArmsController extends Controller
         $arm->created_by = $user_id;
 
         $arm->save();
+
+        foreach($request->subject as $this_subject)
+        {
+            $subject_added = 0;
+            foreach($arm->classsubjects as $this_classsubject)
+            {
+                if($this_classsubject->subject_id == $this_subject)
+                {
+                    $subject_added++;
+                }
+            }
+            if($subject_added == 0)
+            {
+                $classsubject = new Classsubject;
+    
+                $classsubject->term_id = $term_id;
+                $classsubject->arm_id = $arm->id;
+                $classsubject->subject_id = $this_subject;
+                $classsubject->type = $request->input($this_subject);
+                $classsubject->user_id = 0;
+    
+                $classsubject->save();
+            }
+        }
 
         $request->session()->flash('success', 'Class arm created.');
 

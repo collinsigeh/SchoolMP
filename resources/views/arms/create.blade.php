@@ -109,13 +109,61 @@
                     <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Brief description (Optional):') }}</label>
                     
                     <div class="col-md-6">
-                        <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="Maybe a little about this arm. E.g. Science class">{{ old('description') }}</textarea>
+                        <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="E.g. Science class">{{ old('description') }}</textarea>
 
                         @error('description')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row"> 
+                    <label for="subjects" class="col-md-4 col-form-label text-md-right">{{ __('Subjects:') }}</label>
+                    
+                    <div class="col-md-6">
+                        <div class="alert alert-info">
+                            <p>Select the subjects that will be taken by students of this class.</p>
+                            <b><u>Hint:</u></b>
+                            <ol>
+                                <li>Tick the subjects to add.</li>
+                                <li>Choose the subject type (compulsory or elective).</li>
+                                <li>Click on save.</li>
+                            </ol>
+                        </div>
+
+                        @foreach ($school->subjects as $subject)
+                            <div style="margin: 10px 0; border: 1px solid #b3b3b3; border-radius: 4px; background-color: #e4e4e4; padding: 12px 8px 2px 8px;">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="subject['{{ $subject->id }}']" id="subject{{ $subject->id }}" {{ old('remember') ? 'checked' : '' }} value="{{ $subject->id }}">
+        
+                                            <label class="form-check-label" for="subject{{ $subject->id }}">
+                                                <b>{{ $subject->name }}</b>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <label for="{{ 'a'.$subject->id }}">
+                                                    <input type="radio" name="{{ $subject->id }}" id="{{ 'a'.$subject->id }}" value="Compulsory" checked required>
+                                                    Compulsory
+                                                </label>
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="{{ 'b'.$subject->id }}">
+                                                    <input type="radio" name="{{ $subject->id }}" id="{{ 'b'.$subject->id }}" value="Elective" required>
+                                                    Elective
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 
