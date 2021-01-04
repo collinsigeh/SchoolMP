@@ -6,7 +6,7 @@
 
 <div class="container-fluid">
     <div class="row">
-      @include('partials._staff_sidebar')
+      @include('partials._student_sidebar')
 
       <div class="col-md-10 main">
         <div class="row">
