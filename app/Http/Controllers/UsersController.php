@@ -787,6 +787,21 @@ class UsersController extends Controller
                 $school_id = session('school_id');
                 
                 $data['school'] = School::find($school_id);
+                
+                $db_check = array(
+                    'user_id'   => $data['user']->id,
+                    'school_id' => $data['school']->id
+                );
+                $student = Student::where($db_check)->get();
+                if(empty($student))
+                {
+                    return  redirect()->route('dashboard');
+                }
+                elseif($student->count() < 1)
+                {
+                    return  redirect()->route('dashboard');
+                }
+                $data['student'] = $student[0];
 
                 return view('students.profile')->with($data);
             }
