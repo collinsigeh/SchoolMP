@@ -40,8 +40,8 @@
                     <table class="table table-striped table-sm">
                       @foreach ($student->enrolments as $enrolment)
                         <tr>
-                          <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="voucher_icon" class="collins-table-item-icon"></td>
-                          <td style="vertical-align: middle"><a href="{{ route('students.term', $enrolment->term->id) }}">{!! $enrolment->term->name.' - <small><i>'.$enrolment->term->session.'</i></small>' !!}</a></td>
+                          <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="collins-table-item-icon"></td>
+                          <td style="vertical-align: middle"><a class="collins-link-within-table" href="{{ route('students.term', $enrolment->term->id) }}">{!! '<b>'.$enrolment->term->name.'</b> - <small><i>'.$enrolment->term->session.'</i></small>' !!}</a></td>
                         </tr>
                       @endforeach
                     </table>

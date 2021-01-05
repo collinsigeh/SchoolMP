@@ -751,6 +751,11 @@ class StudentsController extends Controller
             return view('welcome.inactive');
         }
 
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
         $user_id = Auth::user()->id;
 
         $db_check = array(
@@ -780,7 +785,17 @@ class StudentsController extends Controller
             return  redirect()->route('dashboard');
         }
         $data['student'] = $student[0];
+        $data['term'] = Term::find($id);
+        if(empty($data['term']))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($data['term']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+        session(['term_id' => $data['term']->id]);
 
-        
+        return view('students.term')->with($data);
     }
 }

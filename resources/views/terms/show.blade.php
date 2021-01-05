@@ -61,7 +61,7 @@
                           <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover table-sm">
                                 <tr>
-                                  <td><b>Resumption date:</b> {{ $term->resumption_date }}</td>
+                                  <td><b>Resumption date:</b> {{ date('D, d-M-Y', strtotime($term->resumption_date)) }}</td>
                                 </tr>
                             </table>
                           </div>
@@ -70,7 +70,7 @@
                           <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover table-sm">
                                 <tr>
-                                  <td><b>Closing date:</b> {{ $term->closing_date }}</td>
+                                  <td><b>Closing date:</b> {{ date('D, d-M-y', strtotime($term->closing_date)) }}</td>
                                 </tr>
                             </table>
                           </div>
@@ -250,7 +250,7 @@
                           <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover table-sm">
                                 <tr>
-                                  <td><b>Resumption date:</b> {{ $term->resumption_date }}</td>
+                                  <td><b>Resumption date:</b> {{ date('D, d-M-Y', strtotime($term->resumption_date)) }}</td>
                                 </tr>
                             </table>
                           </div>
@@ -259,7 +259,7 @@
                           <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover table-sm">
                                 <tr>
-                                  <td><b>Closing date:</b> {{ $term->closing_date }}</td>
+                                  <td><b>Closing date:</b> {{ date('D, d-M-Y', strtotime($term->closing_date)) }}</td>
                                 </tr>
                             </table>
                           </div>

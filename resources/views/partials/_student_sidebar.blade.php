@@ -16,7 +16,7 @@
     </div>
     @if (count($student->enrolments) > 0)
     <div class="link">
-      <a href="{{ route('terms.index') }}">Session terms</a>
+      <a href="{{ route('dashboard') }}">Session terms</a>
     </div>
     @endif
   </div>
