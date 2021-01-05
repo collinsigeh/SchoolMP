@@ -82,6 +82,7 @@ Route::get('/staff/new', 'StaffController@new')->name('staff.new');
 Route::post('/staff/add', 'StaffController@add')->name('staff.add');
 Route::resource('/staff', 'StaffController');
 
+Route::get('/students/term/{id}', 'StudentsController@term')->name('students.term');
 Route::resource('/students', 'StudentsController');
 
 Route::resource('/subjects', 'SubjectsController');

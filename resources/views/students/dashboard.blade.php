@@ -33,7 +33,18 @@
             <div class="col-md-12">
               @if (count($student->enrolments) > 0)
                   <div class="alert alert-info">
-                    Select a term.
+                    Select a term to continue.
+                  </div>
+
+                  <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                      @foreach ($student->enrolments as $enrolment)
+                        <tr>
+                          <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="voucher_icon" class="collins-table-item-icon"></td>
+                          <td style="vertical-align: middle"><a href="{{ route('students.term', $enrolment->term->id) }}">{!! $enrolment->term->name.' - <small><i>'.$enrolment->term->session.'</i></small>' !!}</a></td>
+                        </tr>
+                      @endforeach
+                    </table>
                   </div>
               @else
                 <div class="alert alert-info">
