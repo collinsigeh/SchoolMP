@@ -785,16 +785,16 @@ class StudentsController extends Controller
             return  redirect()->route('dashboard');
         }
         $data['student'] = $student[0];
-        $data['term'] = Term::find($id);
-        if(empty($data['term']))
+        $data['enrolment'] = Enrolment::find($id);
+        if(empty($data['enrolment']))
         {
             return redirect()->route('dashboard');
         }
-        elseif($data['term']->count() < 1)
+        elseif($data['enrolment']->count() < 1)
         {
             return  redirect()->route('dashboard');
         }
-        session(['term_id' => $data['term']->id]);
+        session(['enrolment_id' => $data['enrolment']->id]);
 
         return view('students.term')->with($data);
     }

@@ -33,7 +33,7 @@
             <div class="col-md-12">
               @if (count($student->enrolments) > 0)
                   <div class="alert alert-info">
-                    Select a term to continue.
+                    <h5>Hello!</h5>Select a term to continue.
                   </div>
 
                   <div class="table-responsive">
@@ -41,7 +41,7 @@
                       @foreach ($student->enrolments as $enrolment)
                         <tr>
                           <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="collins-table-item-icon"></td>
-                          <td style="vertical-align: middle"><a class="collins-link-within-table" href="{{ route('students.term', $enrolment->term->id) }}">{!! '<b>'.$enrolment->term->name.'</b> - <small><i>'.$enrolment->term->session.'</i></small>' !!}</a></td>
+                          <td style="vertical-align: middle"><a class="collins-link-within-table" href="{{ route('students.term', $enrolment->id) }}">{!! '<b>'.$enrolment->term->name.'</b> - <small><i>'.$enrolment->term->session.'</i></small>' !!}</a></td>
                         </tr>
                       @endforeach
                     </table>
