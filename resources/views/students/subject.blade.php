@@ -12,7 +12,7 @@
 
         <div class="row">
           <div class="col-8">
-            <h3>{!! $enrolment->term->name.' - <small><i>'.$enrolment->term->session.'</i></small>' !!}</h3>
+            <h3>{{ $result_slip->classsubject->subject->name }}</h3>
           </div>
           <div class="col-4 text-right">
             
@@ -23,7 +23,8 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{ config('app.url') }}/schools">Dashboard</a></li>
-              <li class="breadcrumb-item active" aria-current="page">{!! $enrolment->term->name.' - <small>'.$enrolment->term->session.'</small>' !!}</li>
+              <li class="breadcrumb-item"><a href="{{ route('students.term', $result_slip->enrolment_id) }}">{!! $result_slip->term->name.' - <small><i>'.$result_slip->term->session.'</i></small>' !!}</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{{ $result_slip->classsubject->subject->name }}</li>
             </ol>
           </nav>
           @include('partials._messages')
@@ -34,7 +35,7 @@
             <div class="col-md-8">
                 <div class="alert alert-info">
                     <div style="margin-bottom: 30px;">
-                      <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $enrolment->term->name.' - <small>'.$enrolment->term->session.'</small>' !!}</span>
+                      <img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subject_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $result_slip->classsubject->subject->name.' - ('.$result_slip->term->name.' - <small><i>'.$result_slip->term->session.'</i></small>)' !!}</span>
                     </div>
 
                     <div class="row">
@@ -42,10 +43,7 @@
                         <div class="table-responsive">
                           <table class="table table-striped table-bordered table-hover table-sm">
                               <tr class="bg-light">
-                                <td><b>Class:</b></td><td>{{ $enrolment->arm->schoolclass->name.' '.$enrolment->arm->name }}</td>
-                              </tr>
-                              <tr class="bg-light">
-                                <td><b>Enrolment ID:</b></td><td>{{ $enrolment->id }}</td>
+                                <td width="115px;"><b>Class:</b></td><td>{{ $result_slip->enrolment->arm->schoolclass->name.' '.$result_slip->enrolment->arm->name }}</td>
                               </tr>
                           </table>
                         </div>
@@ -54,10 +52,7 @@
                         <div class="table-responsive">
                           <table class="table table-striped table-bordered table-hover table-sm">
                               <tr class="bg-light">
-                                <td><b>Resumption date:</b></td><td>{{ date('D, d-M-Y', strtotime($enrolment->term->resumption_date)) }}</td>
-                              </tr>
-                              <tr class="bg-light">
-                                <td><b>Closing date:</b></td><td>{{ date('D, d-M-Y', strtotime($enrolment->term->closing_date)) }}</td>
+                                <td width="115px;"><b>Subject teacher:</b></td><td>{{ $result_slip->classsubject->user->name }}</td>
                               </tr>
                           </table>
                         </div>
@@ -67,24 +62,12 @@
 
                 <div class="resource-details">
                     <div class="title">
-                        My Subjects
+                        Performance summary
                     </div>
                     <div class="body">                          
                         <div class="table-responsive bg-light">
                             <table class="table table-striped table-hover table-sm">
-                                @if (count($enrolment->results) < 1)
-                                    <tr>
-                                        <td>None</td>
-                                    </tr>
-                                @else
-                                    @foreach ($enrolment->results as $result_slip)
-                                        <tr>
-                                            <td>
-                                                <a class="collins-link-within-table" href="{{ route('students.subject', $result_slip->id) }}"><img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subject_icon" class="collins-table-item-icon">  <b>{{ $result_slip->classsubject->subject->name }}</b></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
+                                <tr><td></td></tr>
                             </table>
                         </div>
                     </div>
@@ -94,7 +77,7 @@
             <div class="col-md-4">
                 <div class="resource-details">
                     <div class="title">
-                        Term options
+                        More options
                     </div>
                     <div class="body">
                       <div class="table-responsive">    
@@ -102,22 +85,22 @@
                             <tr>
                               <td>
                                 <button class="btn btn-sm btn-block btn-outline-primary text-left"  data-toggle="modal" data-target="#feesBreakdownModal">
-                                  <img src="{{ config('app.url') }}/images/icons/fees_icon.png" alt="fees_icon" class="options-icon">  School fees breakdown
+                                  <img src="{{ config('app.url') }}/images/icons/lessons_icon.png" alt="lessons_icon" class="options-icon">  Lessons
                                 </button>
                               </td>
                             </tr>
                             <tr>
                               <td>
                                 <button class="btn btn-sm btn-block btn-outline-primary text-left"  data-toggle="modal" data-target="#feesBreakdownModal">
-                                  <img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="payment_icon" class="options-icon">  My payment history
+                                  <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="options-icon">    Quizes, Tests & Exams
                                 </button>
                               </td>
                             </tr>
                             <tr>
                               <td>
-                                <button class="btn btn-sm btn-block btn-outline-primary text-left"  data-toggle="modal" data-target="#feesBreakdownModal">
-                                  <img src="{{ config('app.url') }}/images/icons/result_template_icon.png" alt="result_icon" class="options-icon">  Termly result
-                                </button>
+                                <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('students.term', $result_slip->enrolment_id) }}">
+                                  <img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subjects_icon" class="options-icon">  Back to subjects
+                                </a>
                               </td>
                             </tr>
                         </table>
@@ -131,10 +114,5 @@
       
     </div>
   </div>
-
-@php
-    $arm = $enrolment->arm;
-@endphp
-@include('partials._fees_breakdown')
 
 @endsection
