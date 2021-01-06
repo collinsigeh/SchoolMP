@@ -52,7 +52,14 @@
                         <div class="table-responsive">
                           <table class="table table-striped table-bordered table-hover table-sm">
                               <tr class="bg-light">
-                                <td width="115px;"><b>Subject teacher:</b></td><td>{{ $result_slip->classsubject->user->name }}</td>
+                                <td width="115px;"><b>Subject teacher:</b></td>
+                                <td>
+                                    @if ($result_slip->classsubject->user_id > 0)
+                                        {{ $result_slip->classsubject->user->name }}
+                                    @else
+                                        <span class="badge badge-danger">NOT specified</span>
+                                    @endif
+                                </td>
                               </tr>
                           </table>
                         </div>
@@ -62,12 +69,71 @@
 
                 <div class="resource-details">
                     <div class="title">
-                        Performance summary
+                        My performance summary
                     </div>
                     <div class="body">                          
                         <div class="table-responsive bg-light">
-                            <table class="table table-striped table-hover table-sm">
-                                <tr><td></td></tr>
+                            <table class="table table-striped table-hover table-bordered table-sm">
+                                @if ($result_slip->resulttemplate->subject_1st_test_max_score > 0)
+                                    <tr>
+                                        <th width="115px">1st Test:</th>
+                                        <td>
+                                            @if ($result_slip->first_score_by != 'No one')
+                                                {{ $result_slip->subject_1st_test_score.' / '.$result_slip->resulttemplate->subject_1st_test_max_score }}
+                                            @else
+                                                <span class="badge badge-secondary">None yet!</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if ($result_slip->resulttemplate->subject_2nd_test_max_score > 0)
+                                    <tr>
+                                        <th width="115px">2nd Test:</th>
+                                        <td>
+                                            @if ($result_slip->second_score_by != 'No one')
+                                                {{ $result_slip->subject_2nd_test_score.' / '.$result_slip->resulttemplate->subject_2nd_test_max_score }}
+                                            @else
+                                                <span class="badge badge-secondary">None yet!</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if ($result_slip->resulttemplate->subject_3rd_test_max_score > 0)
+                                    <tr>
+                                        <th width="115px">3rd Test:</th>
+                                        <td>
+                                            @if ($result_slip->third_score_by != 'No one')
+                                                {{ $result_slip->subject_3rd_test_score.' / '.$result_slip->resulttemplate->subject_3rd_test_max_score }}
+                                            @else
+                                                <span class="badge badge-secondary">None yet!</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if ($result_slip->resulttemplate->subject_assignment_score > 0)
+                                    <tr>
+                                        <th width="115px">Assignment:</th>
+                                        <td>
+                                            @if ($result_slip->assignment_score_by != 'No one')
+                                                {{ $result_slip->subject_assignment_score.' / '.$result_slip->resulttemplate->subject_assignment_score }}
+                                            @else
+                                                <span class="badge badge-secondary">None yet!</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if ($result_slip->resulttemplate->subject_exam_score > 0)
+                                    <tr>
+                                        <th width="115px">Exam:</th>
+                                        <td>
+                                            @if ($result_slip->exam_score_by != 'No one')
+                                                {{ $result_slip->subject_exam_score.' / '.$result_slip->resulttemplate->subject_exam_score }}
+                                            @else
+                                                <span class="badge badge-secondary">None yet!</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endif
                             </table>
                         </div>
                     </div>
