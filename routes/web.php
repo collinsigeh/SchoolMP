@@ -49,6 +49,9 @@ Route::resource('/itempayments', 'ItempaymentsController');
 
 Route::resource('/items', 'ItemsController');
 
+Route::get('/lessons/listing/{id}', 'LessonsController@listing')->name('lessons.listing');
+Route::resource('/lessons', 'LessonsController');
+
 Route::get('/orders/all', 'OrdersController@all')->name('orders.all');
 Route::get('/orders/detail/{id}', 'OrdersController@detail')->name('orders.detail');
 Route::put('orders/changedetail/{id}', 'OrdersController@changedetail')->name('orders.changedetail');

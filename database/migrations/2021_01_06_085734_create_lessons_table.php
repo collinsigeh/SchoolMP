@@ -16,6 +16,7 @@ class CreateLessonsTable extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('school_id');
+            $table->integer('subject_id');
             $table->integer('term_id');
             $table->string('name');
             $table->enum('type', ['Video', 'Audio', 'Text']);

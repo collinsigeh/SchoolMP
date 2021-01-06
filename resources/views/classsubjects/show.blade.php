@@ -207,9 +207,9 @@
                             <table class="table">
                               <tr>
                                 <td>
-                                  <button class="btn btn-sm btn-block btn-outline-primary text-left"  data-toggle="modal" data-target="#feesBreakdownModal">
+                                  <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('lessons.listing', $classsubject->id) }}">
                                     <img src="{{ config('app.url') }}/images/icons/lessons_icon.png" alt="lessons_icon" class="options-icon">  Lessons & notes
-                                  </button>
+                                  </a>
                                 </td>
                               </tr>
                               <tr>

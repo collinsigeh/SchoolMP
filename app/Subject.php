@@ -41,4 +41,13 @@ class Subject extends Model
     {
         return $this->hasMany('App\Classsubjects');
     }
+    
+    /**
+     * Get the lessons for the subject.
+     *
+     */
+    public function lessons()
+    {
+        return $this->hasMany('App\Lesson');
+    }
 }

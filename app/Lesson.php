@@ -17,6 +17,15 @@ class Lesson extends Model
     }
 
     /**
+     * Get the subject that has lesson.
+     *
+     */
+    public function subject()
+    {
+        return $this->belongsTo('App\Subject');
+    }
+
+    /**
      * Get the term that has lesson.
      *
      */
