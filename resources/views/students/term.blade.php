@@ -116,7 +116,7 @@
                             <tr>
                               <td>
                                 <button class="btn btn-sm btn-block btn-outline-primary text-left"  data-toggle="modal" data-target="#feesBreakdownModal">
-                                  <img src="{{ config('app.url') }}/images/icons/result_template_icon.png" alt="result_icon" class="options-icon">  Termly result
+                                  <img src="{{ config('app.url') }}/images/icons/result_icon.png" alt="result_icon" class="options-icon">  Termly result
                                 </button>
                               </td>
                             </tr>

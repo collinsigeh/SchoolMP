@@ -59,7 +59,7 @@ class Term extends Model
     }
     
     /**
-     * Get the arms for the term.
+     * Get the items for the term.
      *
      */
     public function items()
@@ -73,5 +73,14 @@ class Term extends Model
     public function itempayments()
     {
         return $this->hasmany('App\Itempayment');
+    }
+    
+    /**
+     * Get the ;essos for the term.
+     *
+     */
+    public function lessons()
+    {
+        return $this->hasMany('App\Lesson');
     }
 }

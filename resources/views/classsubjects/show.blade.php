@@ -205,11 +205,25 @@
                         <div class="body">
                           <div class="table-responsive">    
                             <table class="table">
+                              <tr>
+                                <td>
+                                  <button class="btn btn-sm btn-block btn-outline-primary text-left"  data-toggle="modal" data-target="#feesBreakdownModal">
+                                    <img src="{{ config('app.url') }}/images/icons/lessons_icon.png" alt="lessons_icon" class="options-icon">  Lessons & notes
+                                  </button>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <button class="btn btn-sm btn-block btn-outline-primary text-left"  data-toggle="modal" data-target="#feesBreakdownModal">  
+                                    <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="options-icon">    Quizes, Tests & Exams
+                                  </button>
+                                </td>
+                              </tr>
                                 @if ($classarm_manager == 'Yes')
                                 <tr>
                                   <td>
                                     <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('arms.index') }}">
-                                      <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="options-icon"> Class arms
+                                      <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="classes_icon" class="options-icon"> Back to classes
                                     </a>
                                   </td>
                                 </tr>

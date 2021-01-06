@@ -40,4 +40,13 @@ class Classsubject extends Model
     {
         return $this->hasmany('App\Result');
     }
+    
+    /**
+     * The lessons that belongs to this classsubject.
+     *
+     */
+    public function lessons()
+    {
+        return $this->belongsToMany('App\Lesson');
+    }
 }

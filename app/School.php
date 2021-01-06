@@ -120,4 +120,13 @@ class School extends Model
     {
         return $this->hasmany('App\Itempayment');
     }
+    
+    /**
+     * Get the lessons for the school.
+     *
+     */
+    public function lessons()
+    {
+        return $this->hasMany('App\Lesson');
+    }
 }

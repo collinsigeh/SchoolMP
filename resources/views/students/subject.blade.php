@@ -151,7 +151,7 @@
                             <tr>
                               <td>
                                 <button class="btn btn-sm btn-block btn-outline-primary text-left"  data-toggle="modal" data-target="#feesBreakdownModal">
-                                  <img src="{{ config('app.url') }}/images/icons/lessons_icon.png" alt="lessons_icon" class="options-icon">  Lessons
+                                  <img src="{{ config('app.url') }}/images/icons/lessons_icon.png" alt="lessons_icon" class="options-icon">  Lessons & notes
                                 </button>
                               </td>
                             </tr>
@@ -165,7 +165,7 @@
                             <tr>
                               <td>
                                 <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('students.term', $result_slip->enrolment_id) }}">
-                                  <img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subjects_icon" class="options-icon">  Back to subjects
+                                  <img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subjects_icon" class="options-icon">  Back to subject list
                                 </a>
                               </td>
                             </tr>
