@@ -43,7 +43,7 @@
                         <div class="table-responsive">
                           <table class="table table-striped table-bordered table-hover table-sm">
                               <tr class="bg-light">
-                                <td width="115px;"><b>Class:</b></td><td>{{ $result_slip->enrolment->arm->schoolclass->name.' '.$result_slip->enrolment->arm->name }}</td>
+                                <td width="130px;"><b>Class:</b></td><td>{{ $result_slip->enrolment->arm->schoolclass->name.' '.$result_slip->enrolment->arm->name }}</td>
                               </tr>
                           </table>
                         </div>
@@ -52,7 +52,7 @@
                         <div class="table-responsive">
                           <table class="table table-striped table-bordered table-hover table-sm">
                               <tr class="bg-light">
-                                <td width="115px;"><b>Subject teacher:</b></td>
+                                <td width="130px;"><b>Subject teacher:</b></td>
                                 <td>
                                     @if ($result_slip->classsubject->user_id > 0)
                                         {{ $result_slip->classsubject->user->name }}

@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>{{ $classsubject->subject->name.' - '.$classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</h3>
+          <h3>{{ $classsubject->subject->name }}</h3>
           </div>
           <div class="col-4 text-right">
             
@@ -66,7 +66,7 @@
                         <div class="col-md-6">
                             <div class="table-responsive">
                               <table class="table table-striped table-hover table-sm">
-                                  <tr>
+                                  <tr class="bg-light">
                                     <td><b>Class:</b> {{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }} </td>
                                   </tr>
                               </table>
@@ -76,7 +76,7 @@
                         <div class="col-md-6">
                             <div class="table-responsive">
                               <table class="table table-striped table-hover table-sm">
-                                  <tr>
+                                  <tr class="bg-light">
                                     <th>Subject teacher:</th>                           
                                     @if ($classsubject->user_id < 1)
                                         <td>

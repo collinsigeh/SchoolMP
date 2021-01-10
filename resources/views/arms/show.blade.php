@@ -59,7 +59,7 @@
 
                       <div class="table-responsive">
                         <table class="table table-striped table-hover table-sm">
-                            <tr>
+                            <tr class="bg-light">
                               <th>Class teacher:</th>                           
                               @if ($arm->user_id < 1)
                                   <td>

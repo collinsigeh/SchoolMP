@@ -37,7 +37,7 @@ class LessonsController extends Controller
     }
 
     /**
-     * Display a listing of lessons for specific subject (including all classubject).
+     * Display a listing of lessons for specific classsubject.
      *
      * @param  int  $id (ID of classsubject that referenced the listing)
      * @return \Illuminate\Http\Response
@@ -58,9 +58,6 @@ class LessonsController extends Controller
             return  redirect()->route('dashboard');
         }
 
-        echo $data['classsubject']->subject_id;
-        die();
-
         if(Auth::user()->status !== 'Active')
         {
             return view('welcome.inactive');
@@ -75,11 +72,6 @@ class LessonsController extends Controller
         }
         $school_id = session('school_id');
         $data['school'] = School::find($school_id);
-
-        if(!$this->resource_manager($data['user'], $school_id))
-        {
-            return redirect()->route('dashboard');
-        }
 
         if(session('term_id') < 1)
         {
@@ -106,13 +98,8 @@ class LessonsController extends Controller
             }
             $data['staff'] = $staff[0];
         }
-        
-        $db_check = array(
-            'term_id' => $term_id
-        );
-        $data['items'] = Item::where($db_check)->orderBy('name', 'asc')->simplePaginate(50);
 
-        return view('items.index')->with($data);
+        return view('lessons.listing')->with($data);
     }
 
 
