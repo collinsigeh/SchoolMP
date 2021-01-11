@@ -68,4 +68,13 @@ class Arm extends Model
     {
         return $this->belongsToMany('App\Item');
     }
+    
+    /**
+     * The lessons that belongs to this arm.
+     *
+     */
+    public function lessons()
+    {
+        return $this->belongsToMany('App\Lesson');
+    }
 }

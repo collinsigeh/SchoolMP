@@ -19,7 +19,7 @@ class CreateLessonsTable extends Migration
             $table->integer('subject_id');
             $table->integer('term_id');
             $table->string('name');
-            $table->enum('type', ['Video', 'Audio', 'Text']);
+            $table->enum('type', ['Video', 'Audio', 'Photo', 'Text']);
             $table->string('medialink');
             $table->integer('user_id');
             $table->timestamps();

@@ -50,6 +50,10 @@ Route::resource('/itempayments', 'ItempaymentsController');
 Route::resource('/items', 'ItemsController');
 
 Route::get('/lessons/listing/{id}', 'LessonsController@listing')->name('lessons.listing');
+Route::get('/lessons/newvideo/{id}', 'LessonsController@newvideo')->name('lessons.newvideo');
+Route::get('/lessons/newaudio/{id}', 'LessonsController@newaudio')->name('lessons.newaudio');
+Route::get('/lessons/newphoto/{id}', 'LessonsController@newphoto')->name('lessons.newphoto');
+Route::get('/lessons/newtext/{id}', 'LessonsController@newtext')->name('lessons.newtext');
 Route::resource('/lessons', 'LessonsController');
 
 Route::get('/orders/all', 'OrdersController@all')->name('orders.all');

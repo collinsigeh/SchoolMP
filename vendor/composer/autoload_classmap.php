@@ -36,6 +36,7 @@ return array(
     'App\\Http\\Controllers\\GuardiansController' => $baseDir . '/app/Http/Controllers/GuardiansController.php',
     'App\\Http\\Controllers\\ItempaymentsController' => $baseDir . '/app/Http/Controllers/ItempaymentsController.php',
     'App\\Http\\Controllers\\ItemsController' => $baseDir . '/app/Http/Controllers/ItemsController.php',
+    'App\\Http\\Controllers\\LessonsController' => $baseDir . '/app/Http/Controllers/LessonsController.php',
     'App\\Http\\Controllers\\MysubjectsController' => $baseDir . '/app/Http/Controllers/MysubjectsController.php',
     'App\\Http\\Controllers\\OrdersController' => $baseDir . '/app/Http/Controllers/OrdersController.php',
     'App\\Http\\Controllers\\PackagesController' => $baseDir . '/app/Http/Controllers/PackagesController.php',

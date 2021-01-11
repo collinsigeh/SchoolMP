@@ -35,11 +35,11 @@ class Lesson extends Model
     }
 
     /**
-     * The classsubjects that belongs to the lesson.
+     * The arms that belongs to the lesson.
      *
      */
-    public function classsubjects()
+    public function arms()
     {
-        return $this->belongsToMany('App\Classsubject');
+        return $this->belongsToMany('App\Arm');
     }
 }
