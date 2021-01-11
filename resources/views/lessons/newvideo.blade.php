@@ -80,7 +80,7 @@
                         <label for="medialink" class="col-md-4 col-form-label text-md-right">{{ __('Media link') }}</label>
     
                         <div class="col-md-6">
-                            <input id="medialink" type="medialink" class="form-control @error('medialink') is-invalid @enderror" name="medialink" value="{{ old('medialink') }}" placeholder="E.g. https://youtube.com/v5hOD7sol88/" required autocomplete="medialink" autofocus>
+                            <input id="medialink" type="text" class="form-control @error('medialink') is-invalid @enderror" name="medialink" value="{{ old('medialink') }}" placeholder="E.g. https://youtube.com/v5hOD7sol88/" required autocomplete="medialink" autofocus>
                             <small class="text-muted">*** External URL link to the video ***</small>
                             @error('medialink')
                                 <span class="invalid-feedback" role="alert">

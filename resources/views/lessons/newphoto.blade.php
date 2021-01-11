@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>{!! $classsubject->subject->name.' (<i>New audio lesson</i>)' !!}</h3>
+          <h3>{!! $classsubject->subject->name.' (<i>New photo lesson</i>)' !!}</h3>
           </div>
           <div class="col-4 text-right">
             <button class="btn btn-primary" data-toggle="modal" data-target="#newLessonModal">New resource</button>
@@ -33,7 +33,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('classsubjects.show', $classsubject->id) }}">{{ $classsubject->subject->name.' - '.$classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('lessons.listing', $classsubject->id) }}">Lessons</a></li>
-                <li class="breadcrumb-item active" aria-current="page">New audio</li>
+                <li class="breadcrumb-item active" aria-current="page">New photo (image file)</li>
             </ol>
           </nav>
           @include('partials._messages')
@@ -43,12 +43,12 @@
 
             <div class="row">
                 <div class="col-md-6 offset-md-4">
-                    <div class="alert alert-info">Complete the form below to add a new audio lesson.</div>
+                    <div class="alert alert-info">Complete the form below to add a new photo lesson.</div>
                 </div>
             </div>
 
             <div class="create-form">
-                <form method="POST" action="{{ route('lessons.store') }}">
+                <form method="POST" action="{{ route('lessons.store') }}" enctype="multipart/form-data">
                     @csrf
                     
                     <input type="hidden" name="classsubject_id" value="{{ $classsubject->id }}">
@@ -74,15 +74,15 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="type" value="Audio">
-
+                    <input type="hidden" name="type" value="Photo">
+                
                     <div class="form-group row"> 
-                        <label for="medialink" class="col-md-4 col-form-label text-md-right">{{ __('Media link') }}</label>
+                        <label for="photo" class="col-md-4 col-form-label text-md-right">{{ __('Photo (image file)') }}</label>
     
                         <div class="col-md-6">
-                            <input id="medialink" type="text" class="form-control @error('medialink') is-invalid @enderror" name="medialink" value="{{ old('medialink') }}" placeholder="E.g. https://audiolink.com/42516/" required autocomplete="medialink" autofocus>
-                            <small class="text-muted">*** External URL link to the audio ***</small>
-                            @error('medialink')
+                            <input id="photo" type="file" class="form-control @error('photo') is-invalid @enderror" name="photo" value="{{ old('photo') }}" autocomplete="photo" autofocus>
+    
+                            @error('photo')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

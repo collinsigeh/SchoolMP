@@ -1027,6 +1027,20 @@ class UsersController extends Controller
                 $school_id = session('school_id');
                 
                 $data['school'] = School::find($school_id);
+                $db_check = array(
+                    'user_id'   => $data['user']->id,
+                    'school_id' => $data['school']->id
+                );
+                $staff = Staff::where($db_check)->get();
+                if(empty($staff))
+                {
+                    return  redirect()->route('dashboard');
+                }
+                elseif($staff->count() < 1)
+                {
+                    return  redirect()->route('dashboard');
+                }
+                $data['staff'] = $staff[0];
 
                 return view('staff.profileedit')->with($data);
             }

@@ -13,6 +13,8 @@ use App\Arm;
 use App\Classsubject;
 use App\Lesson;
 use Illuminate\Http\Request;
+use Image;
+use Storage;
 
 use Illuminate\Support\Facades\DB;
 
@@ -236,6 +238,72 @@ class LessonsController extends Controller
         return view('lessons.newaudio')->with($data);
     }
 
+    /**
+     * Show the form for creating audio lesson.
+     *
+     * @param  int  $id (ID of the class subject)
+     * @return \Illuminate\Http\Response
+     */
+    public function newphoto($id=0)
+    {
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $data['classsubject'] = Classsubject::find($id);
+        if(empty($data['classsubject']))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($data['classsubject']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+
+        return view('lessons.newphoto')->with($data);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -303,6 +371,27 @@ class LessonsController extends Controller
             ]);
 
             $medialink = $request->input('medialink');
+        }
+        elseif($request->input('type') == 'Photo')
+        {
+            $this->validate($request, [
+                'photo' => ['required', 'image', 'max:1999']
+            ]);
+
+            if($request->hasFile('photo'))
+            {
+                $image = $request->file('photo');
+                $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
+                $location = public_path('images/lesson_photo/' . $filename);
+                Image::make($image)->save($location);
+    
+                $medialink = $filename;
+            }
+            else
+            {
+                $request->session()->flash('error', "An unexpected error occured!");
+                return redirect()->route('terms.show', $term_id);
+            }
         }
         
         $arm_count = $request->input('arm_count');

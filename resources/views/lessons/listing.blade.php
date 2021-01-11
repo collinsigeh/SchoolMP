@@ -44,16 +44,13 @@
           
                     <div class="alert alert-info">
                       <div style="margin-bottom: 30px;">
-                        <img src="{{ config('app.url') }}/images/icons/lessons_icon.png" alt="lessons_icon" class="collins-this-term-icon"> <span class="collins-this-term">{{ $classsubject->subject->name }} Lessons</span>
+                        <img src="{{ config('app.url') }}/images/icons/lessons_icon.png" alt="lessons_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $classsubject->subject->name.' Lessons '.$term->name.' - <small>'.$term->session.'</small>' !!}</span>
                       </div>
 
                       <div class="row">
                         <div class="col-md-6">
                             <div class="table-responsive">
                               <table class="table table-striped table-bordered table-hover table-sm">
-                                  <tr class="bg-light">
-                                      <td width="130px"><b>Term:</b></td><td>{!! $term->name.' - <small>'.$term->session.'</small>' !!}</td>
-                                  </tr>
                                   <tr class="bg-light">
                                     <td width="130px"><b>Class:</b></td><td>{{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }} </td>
                                   </tr>
