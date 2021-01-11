@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>Lessons & notes</h3>
+          <h3>{!! $classsubject->subject->name.' (<i>Lessons & notes</i>)' !!}</h3>
           </div>
           <div class="col-4 text-right">
             <button class="btn btn-primary" data-toggle="modal" data-target="#newLessonModal">New resource</button>
@@ -89,37 +89,36 @@
                             
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover table-sm">
-                                  @if (count($classsubject->arm->lessons) < 1)
+                                  <thead>
                                       <tr>
-                                          <td>No lesson yet.<td>
+                                          <th>#</th>
+                                          <th>Lesson</th>
+                                          <th>Type</th>
                                       </tr>
-                                  @else
-                                      <thead>
-                                          <tr>
-                                              <th>#</th>
-                                              <th>Lesson</th>
-                                              <th>Type</th>
-                                          </tr>
-                                      </thead>
-                                      @php
-                                          $sn = 1;
-                                      @endphp
-                                      @foreach ($classsubject->arm->lessons as $lesson)
-                                          <tr>
-                                              <td>{{ $sn }}</td>
-                                              <td>
-                                                  {{ substr($lesson->name, 0, 42) }}
-                                                  @if (strlen($lesson->name) > 42)
-                                                      ...
-                                                  @endif
-                                              </td>
-                                              <td>{{ $lesson->type }}</td>
-                                          </tr>
-                                          @php
-                                              $sn++;
-                                          @endphp
-                                      @endforeach
-                                  @endif
+                                  </thead>
+                                  @php
+                                      $sn = 1;
+                                  @endphp
+                                  @foreach ($classsubject->arm->lessons as $lesson)
+                                    <?php
+                                    if($lesson->subject_id == $classsubject->subject_id)
+                                    {
+                                      ?>
+                                      <tr>
+                                          <td>{{ $sn }}</td>
+                                          <td>
+                                              {{ substr($lesson->name, 0, 42) }}
+                                              @if (strlen($lesson->name) > 42)
+                                                  ...
+                                              @endif
+                                          </td>
+                                          <td>{{ $lesson->type }}</td>
+                                      </tr>
+                                      <?php
+                                      $sn++;
+                                    }
+                                    ?>
+                                  @endforeach
                                 </table>
                             </div>
                         </div>
