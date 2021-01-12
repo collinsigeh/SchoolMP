@@ -23,7 +23,14 @@
           <h3>{!! $classsubject->subject->name.' (<i>Lessons & notes</i>)' !!}</h3>
           </div>
           <div class="col-4 text-right">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#newLessonModal">New resource</button>
+            <?php
+            if($classsubject->user_id == $user->id)
+            {
+              ?>
+              <button class="btn btn-primary" data-toggle="modal" data-target="#newLessonModal">New resource</button>
+              <?php
+            }
+            ?>
           </div>
         </div>
         <hr />
@@ -80,7 +87,15 @@
 
                     <div class="resource-details">
                         <div class="title">
-                            Lessons & notes <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newLessonModal">Add new</button>
+                            Lessons & notes 
+                            <?php
+                            if($classsubject->user_id == $user->id)
+                            {
+                              ?>
+                              <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newLessonModal">Add new</button>
+                              <?php
+                            }
+                            ?>
                         </div>
                         <div class="body">
                             
@@ -91,6 +106,7 @@
                                           <th>#</th>
                                           <th>Lesson</th>
                                           <th>Type</th>
+                                          <th></th>
                                       </tr>
                                   </thead>
                                   @php
@@ -131,6 +147,16 @@
                                             </a>
                                           </td>
                                           <td>{{ $lesson->type }}</td>
+                                          <td class="text-right">
+                                            <?php
+                                              if($lesson->user_id == $user->id)
+                                              {
+                                                ?>
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $lesson->id }}">X</button>
+                                                <?php
+                                              }
+                                            ?>
+                                          </td>
                                       </tr>
                                       <?php
                                       $sn++;
@@ -186,5 +212,11 @@
 <!-- New Lesson Modal -->
 @include('partials._new_lesson')
 <!-- End New Lesson Modal -->
+
+<!-- confirmLessonDeletionModal Series -->
+@foreach ($classsubject->arm->lessons as $lesson)
+@include('partials._confirm_lesson_deletion')
+@endforeach
+<!-- End confirmLessonDeletionModal Series -->
 
 @endsection
