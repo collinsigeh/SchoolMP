@@ -37,7 +37,10 @@
                     
                     <div class="form-group row mb-0">
                         <div class="col-md-12">
-                            <div class="alert alert-info"><b>Hint: </b>To confirm the deletion of this lesson resource, type <b>DELETE</b> in the box provided and click the <b>Confirm</b> button.</div>
+                            <div class="alert alert-info">
+                                <p><b>Hint: </b>To confirm the deletion of this lesson resource, type <b>DELETE</b> in the box provided and click the <b>Confirm</b> button.</p>
+                                <b>Note: </b>Deleting this resource will also delete it from every class using it. If you want to delete it for only this class, modify it instead.
+                            </div>
                         </div>
     
                         <div class="col-md-5 offset-md-2">
