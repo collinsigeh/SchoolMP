@@ -44,7 +44,7 @@
           
                     <div class="alert alert-info">
                       <div style="margin-bottom: 30px;">
-                        <img src="{{ config('app.url') }}/images/icons/lessons_icon.png" alt="lessons_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $classsubject->subject->name.' Lessons '.$term->name.' - <small>'.$term->session.'</small>' !!}</span>
+                        <img src="{{ config('app.url') }}/images/icons/lessons_icon.png" alt="lessons_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $classsubject->subject->name.' Lessons (<i>'.$term->name.' - <small>'.$term->session.'</small></i>)' !!}</span>
                       </div>
 
                       <div class="row">
@@ -113,6 +113,14 @@
                                             elseif($lesson->type == 'Audio')
                                             {
                                               echo 'href="'.$lesson->medialink.'" target="_blank"';
+                                            }
+                                            elseif($lesson->type == 'Photo')
+                                            {
+                                              echo 'href="'.config('app.url').'/images/lesson_photo/'.$lesson->medialink.'" target="_blank"';
+                                            }
+                                            elseif($lesson->type == 'Text')
+                                            {
+                                              echo 'href="'.config('app.url').'/lesson_docs/'.$lesson->medialink.'" target="_blank"';
                                             }
                                             ?>
                                             >

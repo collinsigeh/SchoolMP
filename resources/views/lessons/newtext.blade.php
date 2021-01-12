@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>{!! $classsubject->subject->name.' (<i>New photo learning resource</i>)' !!}</h3>
+          <h3>{!! $classsubject->subject->name.' (<i>New text learning resource</i>)' !!}</h3>
           </div>
           <div class="col-4 text-right">
             <button class="btn btn-primary" data-toggle="modal" data-target="#newLessonModal">New resource</button>
@@ -33,7 +33,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('classsubjects.show', $classsubject->id) }}">{{ $classsubject->subject->name.' - '.$classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('lessons.listing', $classsubject->id) }}">Lessons</a></li>
-                <li class="breadcrumb-item active" aria-current="page">New photo (image file)</li>
+                <li class="breadcrumb-item active" aria-current="page">New text  (document file)</li>
             </ol>
           </nav>
           @include('partials._messages')
@@ -43,7 +43,7 @@
 
             <div class="row">
                 <div class="col-md-6 offset-md-4">
-                    <div class="alert alert-info">Complete the form below to add a new photo learning resource.</div>
+                    <div class="alert alert-info">Complete the form below to add a new text learning resource.</div>
                 </div>
             </div>
 
@@ -74,15 +74,15 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="type" value="Photo">
+                    <input type="hidden" name="type" value="Text">
                 
                     <div class="form-group row"> 
-                        <label for="photo" class="col-md-4 col-form-label text-md-right">{{ __('Photo (image file)') }}</label>
+                        <label for="text_document" class="col-md-4 col-form-label text-md-right">{{ __('Document file') }}</label>
     
                         <div class="col-md-6">
-                            <input id="photo" type="file" class="form-control @error('photo') is-invalid @enderror" name="photo" value="{{ old('photo') }}" autocomplete="photo" required autofocus>
+                            <input id="text_document" type="file" class="form-control @error('text_document') is-invalid @enderror" name="text_document" value="{{ old('text_document') }}" required autocomplete="text_document" autofocus>
     
-                            @error('photo')
+                            @error('text_document')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

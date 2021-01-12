@@ -59,7 +59,7 @@
           
                     <div class="alert alert-info">
                       <div style="margin-bottom: 30px;">
-                        <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="class_icon" class="collins-this-term-icon"> <span class="collins-this-term">{{ $classsubject->subject->name }} ({!! $term->name.' - <small>'.$term->session.'</small>' !!})</span>
+                        <img src="{{ config('app.url') }}/images/icons/classes_icon.png" alt="class_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $classsubject->subject->name.' (<i>'.$term->name.' - <small>'.$term->session.'</small></i>)' !!}</span>
                       </div>
 
                       <div class="row">
