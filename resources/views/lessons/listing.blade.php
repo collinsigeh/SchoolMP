@@ -152,6 +152,7 @@
                                               if($lesson->user_id == $user->id OR $user->role == 'Director')
                                               {
                                                 ?>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $lesson->id }}">Modify</button>
                                                 <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $lesson->id }}">X</button>
                                                 <?php
                                               }
@@ -218,5 +219,11 @@
 @include('partials._confirm_lesson_deletion')
 @endforeach
 <!-- End confirmLessonDeletionModal Series -->
+
+<!-- modifyLessonModal Series -->
+@foreach ($classsubject->arm->lessons as $lesson)
+@include('partials._modify_lesson')
+@endforeach
+<!-- End modifyLessonModal Series -->
 
 @endsection

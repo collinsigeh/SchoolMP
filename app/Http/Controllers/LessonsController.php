@@ -538,7 +538,7 @@ class LessonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id=0)
     {
         //
     }
@@ -550,9 +550,54 @@ class LessonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id=0)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        $this->validate($request, [
+            'classsubject_id'   => ['required', 'numeric'],
+            'arm_count'         => ['required', 'numeric']
+        ]);
+        
+        $arm_count = $request->input('arm_count');
+
+        // clean up previous list of affected class
+        DB::delete('delete from arm_lesson where lesson_id = ?', [$id]);
+        // End - clean up previous list of affected class
+
+        // re-specify affected class
+        for ($i=0; $i < $arm_count; $i++) {
+            if($request->input($i) > 0)
+            {
+                DB::insert('insert into arm_lesson (arm_id, lesson_id) values (?, ?)', [$request->input($i), $id]);
+            }
+        }
+        // End - re-specify affected class
+
+        $request->session()->flash('success', 'Update saved!.');
+
+        return redirect()->route('lessons.listing', $request->input('classsubject_id'));
     }
 
     /**
