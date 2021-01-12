@@ -149,7 +149,7 @@
                                           <td>{{ $lesson->type }}</td>
                                           <td class="text-right">
                                             <?php
-                                              if($lesson->user_id == $user->id)
+                                              if($lesson->user_id == $user->id OR $user->role == 'Director')
                                               {
                                                 ?>
                                                 <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $lesson->id }}">X</button>
