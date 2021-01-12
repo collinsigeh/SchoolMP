@@ -49,6 +49,7 @@
                                 </span>
                             @enderror
                         </div>
+                        <input type="hidden" name="classsubject_id" value="{{ $classsubject->id }}">
 
                         <div class="col-md-3">
                             <button type="submit" class="btn btn-danger">

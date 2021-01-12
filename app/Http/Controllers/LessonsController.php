@@ -561,8 +561,46 @@ class LessonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id=0)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            $request->session()->flash('error', 'Error 4' );
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            'confirmation_to_delete' => ['required', 'in:DELETE'],
+            'classsubject_id'        => ['required']
+        ]);
+
+        $lesson = Lesson::find($id);
+
+        if(empty($lesson))
+        {
+            $request->session()->flash('error', 'Error 2: Attempt to delete unavailable resource.' );
+            return redirect()->route('dashboard');
+        }
+
+        DB::delete('delete from arm_lesson where lesson_id = ?', [$id]);
+
+        $lesson->delete();
+        $request->session()->flash('success', 'Item deleted');
+        
+        return redirect()->route('lessons.listing', $request->input('classsubject_id'));
     }
 }
