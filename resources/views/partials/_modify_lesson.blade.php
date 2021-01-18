@@ -46,11 +46,29 @@
                                         <div style="border: solid 1px #e2e2e2; background-color: #fff; margin: 3px 0; padding: 7px 10px;">
                                             <span class="badge badge-info">{{ $schoolclass->name }} classes</span>
                                             <?php $class_displayed = 0; ?>
-                                            @foreach ($schoolclass->arms as $arm)
-                                                <div style="vertical-align: middle; padding: 5px 0 5px 10px;">
-                                                    <input type="checkbox" name="{{ $arm_count }}" id="{{ $arm_count }}" value="{{ $arm->id }}"> &nbsp;&nbsp;<label for="{{ $arm_count }}">{{ $schoolclass->name.' '.$arm->name }}</label>
-                                                </div>
-                                                <?php $class_displayed++; $arm_count++; ?>
+                                            @foreach ($schoolclass->arms as $this_arm)
+                                                <?php 
+                                                $show_classarm = 'No';
+                                                if($this_arm->term_id == $term->id)
+                                                { // ensure the class arms are applicable for that term & that the staff is responsible for the classsubject
+                                                    foreach($this_arm->classsubjects as $this_classsubject)
+                                                    {
+                                                        if($this_classsubject->term_id == $term->id && $this_classsubject->user_id == $user->id && $this_classsubject->subject_id == $classsubject->subject_id)
+                                                        {
+                                                            $show_classarm = 'Yes';
+                                                        }
+                                                    }
+                                                    if($show_classarm == 'Yes')
+                                                    {
+                                                    ?>
+                                                        <div style="vertical-align: middle; padding: 5px 0 5px 10px;">
+                                                            <input type="checkbox" name="{{ $arm_count }}" id="{{ $arm_count }}" value="{{ $this_arm->id }}"> &nbsp;&nbsp;<label for="{{ $arm_count }}">{{ $schoolclass->name.' '.$this_arm->name }}</label>
+                                                        </div>
+                                                    <?php
+                                                    $class_displayed++; $arm_count++;
+                                                    }
+                                                }
+                                                ?>
                                             @endforeach
                                             <?php if($class_displayed == 0){ echo '<div style="vertical-align: middle; padding: 5px 0 5px 10px;"><b>None!</b></div>'; } ?>
                                         </div>

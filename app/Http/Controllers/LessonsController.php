@@ -610,6 +610,19 @@ class LessonsController extends Controller
         
         $arm_count = $request->input('arm_count');
 
+        $affected_classes = 0;
+        for ($i=0; $i < $arm_count; $i++) {
+            if($request->input($i) > 0)
+            {
+                $affected_classes++;
+            }
+        }
+        if($affected_classes < 1)
+        {
+            $request->session()->flash('error', "<p>The classes taking the lesson was not specified.</p>Please re-submit the lesson.");
+            return redirect()->route('lessons.listing', $request->input('classsubject_id'));
+        }
+
         // clean up previous list of affected class
         DB::delete('delete from arm_lesson where lesson_id = ?', [$id]);
         // End - clean up previous list of affected class

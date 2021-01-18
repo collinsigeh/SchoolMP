@@ -149,10 +149,15 @@
                                           <td>{{ $lesson->type }}</td>
                                           <td class="text-right">
                                             <?php
-                                              if($lesson->user_id == $user->id OR $user->role == 'Director')
+                                              if($lesson->user_id == $user->id)
                                               {
                                                 ?>
                                                 <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $lesson->id }}">Modify</button>
+                                                <?php
+                                              }
+                                              if(($classsubject->user_id == $user->id && $lesson->user_id == $user->id) OR $user->role == 'Director')
+                                              {
+                                                ?>
                                                 <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $lesson->id }}">X</button>
                                                 <?php
                                               }
