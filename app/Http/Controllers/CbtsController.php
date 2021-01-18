@@ -79,7 +79,7 @@ class CbtsController extends Controller
             $data['staff'] = $staff[0];
         }
 
-        return view('lessons.listing')->with($data);
+        return view('cbts.listing')->with($data);
     }
 
     /**
