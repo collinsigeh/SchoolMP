@@ -215,7 +215,7 @@
                               <tr>
                                 <td>
                                   <button class="btn btn-sm btn-block btn-outline-primary text-left"  data-toggle="modal" data-target="#feesBreakdownModal">  
-                                    <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="options-icon">    Quizes, Tests & Exams
+                                    <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="options-icon"> CBT - Quizes, Tests & Exams
                                   </button>
                                 </td>
                               </tr>

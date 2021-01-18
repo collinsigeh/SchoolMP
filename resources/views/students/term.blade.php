@@ -71,6 +71,11 @@
                     </div>
                     <div class="body">                          
                         <div class="table-responsive bg-light">
+                            @if (count($enrolment->results) >= 1)
+                                <div class="alert alert-info">
+                                  Click on a subject to view your performance and access the lessons and CBTs.
+                                </div>
+                            @endif
                             <table class="table table-striped table-hover table-sm">
                                 @if (count($enrolment->results) < 1)
                                     <tr>

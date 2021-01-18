@@ -28,6 +28,13 @@ Route::resource('/bankdetails', 'BankdetailsController');
 
 Route::resource('/calendars', 'CalendarsController');
 
+Route::get('/cbts/listing/{id}', 'CbtsController@listing')->name('cbts.listing');
+Route::get('/lessons/newvideo/{id}', 'LessonsController@newvideo')->name('lessons.newvideo');
+Route::get('/lessons/newaudio/{id}', 'LessonsController@newaudio')->name('lessons.newaudio');
+Route::get('/lessons/newphoto/{id}', 'LessonsController@newphoto')->name('lessons.newphoto');
+Route::get('/lessons/newtext/{id}', 'LessonsController@newtext')->name('lessons.newtext');
+Route::resource('/cbts', 'CbtsController');
+
 Route::resource('/classes', 'ClassesController');
 
 Route::resource('/classsubjects', 'ClasssubjectsController');
