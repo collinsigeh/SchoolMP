@@ -497,6 +497,34 @@ class LessonsController extends Controller
         
         $arm_count = $request->input('arm_count');
 
+        $affected_classes = 0;
+        for ($i=0; $i < $arm_count; $i++) {
+            if($request->input($i) > 0)
+            {
+                $affected_classes++;
+            }
+        }
+        if($affected_classes < 1)
+        {
+            $request->session()->flash('error', "<p>The classes taking the lesson was not specified.</p>Please re-submit the lesson.");
+            if($request->input('type') == 'Video')
+            {
+                return redirect()->route('lessons.newvideo', $classsubject->id);
+            }
+            elseif($request->input('type') == 'Audio')
+            {
+                return redirect()->route('lessons.newaudio', $classsubject->id);
+            }
+            elseif($request->input('type') == 'Photo')
+            {
+                return redirect()->route('lessons.newphoto', $classsubject->id);
+            }
+            else
+            {
+                return redirect()->route('lessons.newtext', $classsubject->id);
+            }
+        }
+
         $lesson = new Lesson;
 
         $lesson->school_id  = $school_id;

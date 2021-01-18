@@ -97,7 +97,7 @@ class User extends Authenticatable
      */
     public function classsubjects()
     {
-        return $this->hasMany('App\Classsubjects');
+        return $this->hasMany('App\Classsubject');
     }
     
     /**
