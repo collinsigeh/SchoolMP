@@ -29,10 +29,11 @@ Route::resource('/bankdetails', 'BankdetailsController');
 Route::resource('/calendars', 'CalendarsController');
 
 Route::get('/cbts/listing/{id}', 'CbtsController@listing')->name('cbts.listing');
-Route::get('/lessons/newvideo/{id}', 'LessonsController@newvideo')->name('lessons.newvideo');
-Route::get('/lessons/newaudio/{id}', 'LessonsController@newaudio')->name('lessons.newaudio');
-Route::get('/lessons/newphoto/{id}', 'LessonsController@newphoto')->name('lessons.newphoto');
-Route::get('/lessons/newtext/{id}', 'LessonsController@newtext')->name('lessons.newtext');
+Route::get('/cbts/newexam/{id}', 'CbtsController@newexam')->name('cbts.newexam');
+Route::get('/cbts/new3rdtest/{id}', 'CbtsController@new3rdtest')->name('cbts.new3rdtest');
+Route::get('/cbts/new2ndtest/{id}', 'CbtsController@new2ndtest')->name('cbts.new2ndtest');
+Route::get('/cbts/new1sttest/{id}', 'CbtsController@newtext')->name('cbts.new1sttest');
+Route::get('/cbts/newpractice/{id}', 'CbtsController@newpractice')->name('cbts.newpractice');
 Route::resource('/cbts', 'CbtsController');
 
 Route::resource('/classes', 'ClassesController');

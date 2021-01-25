@@ -340,9 +340,9 @@
 
         </div>
 
-<!-- New Lesson Modal -->
-@include('partials._new_lesson')
-<!-- End New Lesson Modal -->
+<!-- New Cbt Modal -->
+@include('partials._new_cbt')
+<!-- End New Cbt Modal -->
 
 <!-- confirmLessonDeletionModal Series -->
 @foreach ($classsubject->arm->cbts as $lesson)
