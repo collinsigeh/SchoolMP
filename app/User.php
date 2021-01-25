@@ -177,4 +177,12 @@ class User extends Authenticatable
     {
         return $this->hasmany('App\Question');
     }
+    
+    /**
+     * Get the cbt attempts supervised by the User.
+     */
+    public function attempts()
+    {
+        return $this->hasmany('App\Attempt');
+    }
 }

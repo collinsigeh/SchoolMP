@@ -27,7 +27,7 @@
             if($classsubject->user_id == $user->id)
             {
               ?>
-              <button class="btn btn-primary" data-toggle="modal" data-target="#newLessonModal">New CBT</button>
+              <button class="btn btn-primary" data-toggle="modal" data-target="#newCBTnModal">New CBT</button>
               <?php
             }
             ?>
@@ -92,7 +92,7 @@
                             if($classsubject->user_id == $user->id)
                             {
                               ?>
-                              <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newLessonModal">Add new</button>
+                              <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newCBTModal">Add new</button>
                               <?php
                             }
                             ?>

@@ -1,10 +1,10 @@
 
-<!-- New Lesson Modal -->
-<div class="modal fade" id="newLessonModal" tabindex="-1" role="dialog" aria-labelledby="newLessonModalLabel" aria-hidden="true">
+<!-- New CBT Modal -->
+<div class="modal fade" id="newCBTModal" tabindex="-1" role="dialog" aria-labelledby="newCBTModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="nwLessonModalLabel">New CBT</h5>
+          <h5 class="modal-title" id="newCBTModalLabel">New CBT</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -24,4 +24,4 @@
       </div>
     </div>
   </div>
-  <!-- End New Lesson Modal -->
+  <!-- End New CBT Modal -->

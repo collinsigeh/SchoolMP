@@ -8,6 +8,15 @@ class Attempt extends Model
 {
 
     /**
+     * Get the user who supervised the attempt.
+     *
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    /**
      * Get the school that has the attempt.
      *
      */
