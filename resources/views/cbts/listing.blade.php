@@ -109,10 +109,163 @@
                                   </thead>
                                   @php
                                       $sn = 1;
+                                      $has_exam = $has_3rd_test = $has_2nd_test = $has_1st_test = 'No';
                                   @endphp
                                   @foreach ($classsubject->arm->cbts as $cbt)
                                     <?php
                                     if($cbt->subject_id == $classsubject->subject_id && $cbt->type == 'Exam')
+                                    {
+                                      $has_exam = 'Yes';
+                                      ?>
+                                      <tr>
+                                        <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
+                                          <td>
+                                            <a href="#">
+                                              {{ substr($cbt->name, 0, 42) }}
+                                              @if (strlen($cbt->name) > 42)
+                                                  ...
+                                              @endif
+                                            </a>
+                                          </td>
+                                          <td class="text-right">
+                                            <?php
+                                              if($cbt->user_id == $user->id)
+                                              {
+                                                ?>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Modify</button>
+                                                <?php
+                                              }
+                                              if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
+                                              {
+                                                ?>
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $cbt->id }}">X</button>
+                                                <?php
+                                              }
+                                            ?>
+                                          </td>
+                                      </tr>
+                                      <?php
+                                      $sn++;
+                                    }
+                                    ?>
+                                  @endforeach
+                                  @foreach ($classsubject->arm->cbts as $cbt)
+                                    <?php
+                                    if($cbt->subject_id == $classsubject->subject_id && $cbt->type == '3rd Test')
+                                    {
+                                      $has_3rd_test = 'Yes';
+                                      ?>
+                                      <tr>
+                                        <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
+                                          <td>
+                                            <a href="#">
+                                              {{ substr($cbt->name, 0, 42) }}
+                                              @if (strlen($cbt->name) > 42)
+                                                  ...
+                                              @endif
+                                            </a>
+                                          </td>
+                                          <td class="text-right">
+                                            <?php
+                                              if($cbt->user_id == $user->id)
+                                              {
+                                                ?>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Modify</button>
+                                                <?php
+                                              }
+                                              if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
+                                              {
+                                                ?>
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $cbt->id }}">X</button>
+                                                <?php
+                                              }
+                                            ?>
+                                          </td>
+                                      </tr>
+                                      <?php
+                                      $sn++;
+                                    }
+                                    ?>
+                                  @endforeach
+                                  @foreach ($classsubject->arm->cbts as $cbt)
+                                    <?php
+                                    if($cbt->subject_id == $classsubject->subject_id && $cbt->type == '2nd Test')
+                                    {
+                                      $has_2nd_test = 'Yes';
+                                      ?>
+                                      <tr>
+                                        <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
+                                          <td>
+                                            <a href="#">
+                                              {{ substr($cbt->name, 0, 42) }}
+                                              @if (strlen($cbt->name) > 42)
+                                                  ...
+                                              @endif
+                                            </a>
+                                          </td>
+                                          <td class="text-right">
+                                            <?php
+                                              if($cbt->user_id == $user->id)
+                                              {
+                                                ?>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Modify</button>
+                                                <?php
+                                              }
+                                              if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
+                                              {
+                                                ?>
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $cbt->id }}">X</button>
+                                                <?php
+                                              }
+                                            ?>
+                                          </td>
+                                      </tr>
+                                      <?php
+                                      $sn++;
+                                    }
+                                    ?>
+                                  @endforeach
+                                  @foreach ($classsubject->arm->cbts as $cbt)
+                                    <?php
+                                    if($cbt->subject_id == $classsubject->subject_id && $cbt->type == '1st Test')
+                                    {
+                                      $has_1st_test = 'Yes';
+                                      ?>
+                                      <tr>
+                                        <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
+                                          <td>
+                                            <a href="#">
+                                              {{ substr($cbt->name, 0, 42) }}
+                                              @if (strlen($cbt->name) > 42)
+                                                  ...
+                                              @endif
+                                            </a>
+                                          </td>
+                                          <td class="text-right">
+                                            <?php
+                                              if($cbt->user_id == $user->id)
+                                              {
+                                                ?>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Modify</button>
+                                                <?php
+                                              }
+                                              if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
+                                              {
+                                                ?>
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $cbt->id }}">X</button>
+                                                <?php
+                                              }
+                                            ?>
+                                          </td>
+                                      </tr>
+                                      <?php
+                                      $sn++;
+                                    }
+                                    ?>
+                                  @endforeach
+                                  @foreach ($classsubject->arm->cbts as $cbt)
+                                    <?php
+                                    if($cbt->subject_id == $classsubject->subject_id && $cbt->type != 'Exam' && $cbt->type == '3rd Test' && $cbt->type == '2nd Test' && $cbt->type == '1st Test')
                                     {
                                       ?>
                                       <tr>
