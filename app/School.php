@@ -129,4 +129,36 @@ class School extends Model
     {
         return $this->hasMany('App\Lesson');
     }
+    
+    /**
+     * Get the cbts for the school.
+     */
+    public function cbts()
+    {
+        return $this->hasmany('App\Cbt');
+    }
+    
+    /**
+     * Get the questions for the school.
+     */
+    public function questions()
+    {
+        return $this->hasmany('App\Question');
+    }
+    
+    /**
+     * Get the attempts for the school.
+     */
+    public function attempts()
+    {
+        return $this->hasmany('App\Attempt');
+    }
+    
+    /**
+     * Get the questionattempts for the school.
+     */
+    public function questionattempts()
+    {
+        return $this->hasmany('App\Questionattempt');
+    }
 }

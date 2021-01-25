@@ -2,6 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\User;
+use App\School;
+use App\Schoolclass;
+use App\Director;
+use App\Staff;
+use App\Term;
+use App\Arm;
+use App\Classsubject;
+use App\Cbt;
 use Illuminate\Http\Request;
 
 class CbtsController extends Controller

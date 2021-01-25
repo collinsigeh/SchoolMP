@@ -192,13 +192,13 @@
 <!-- End New Lesson Modal -->
 
 <!-- confirmLessonDeletionModal Series -->
-@foreach ($classsubject->arm->lessons as $lesson)
+@foreach ($classsubject->arm->cbts as $lesson)
 @include('partials._confirm_lesson_deletion')
 @endforeach
 <!-- End confirmLessonDeletionModal Series -->
 
 <!-- modifyLessonModal Series -->
-@foreach ($classsubject->arm->lessons as $lesson)
+@foreach ($classsubject->arm->cbts as $lesson)
 @include('partials._modify_lesson')
 @endforeach
 <!-- End modifyLessonModal Series -->

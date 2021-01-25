@@ -93,4 +93,20 @@ class Enrolment extends Model
     {
         return $this->hasmany('App\Itempayment');
     }
+    
+    /**
+     * Get the attempts for the enrolment.
+     */
+    public function attempts()
+    {
+        return $this->hasmany('App\Attempt');
+    }
+    
+    /**
+     * Get the questionattempts for the enrolment.
+     */
+    public function questionattempts()
+    {
+        return $this->hasmany('App\Questionattempt');
+    }
 }

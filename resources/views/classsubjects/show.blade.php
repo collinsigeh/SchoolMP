@@ -214,9 +214,9 @@
                               </tr>
                               <tr>
                                 <td>
-                                  <button class="btn btn-sm btn-block btn-outline-primary text-left"  data-toggle="modal" data-target="#feesBreakdownModal">  
+                                  <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('cbts.listing', $classsubject->id) }}">  
                                     <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="options-icon"> CBT - Quizes, Tests & Exams
-                                  </button>
+                                  </a>
                                 </td>
                               </tr>
                                 @if ($classarm_manager == 'Yes')

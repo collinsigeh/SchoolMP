@@ -152,4 +152,29 @@ class User extends Authenticatable
     {
         return $this->hasmany('App\Itempayment');
     }
+    
+    /**
+     * Get the lessons created by the User.
+     *
+     */
+    public function lessons()
+    {
+        return $this->hasMany('App\Lesson');
+    }
+    
+    /**
+     * Get the cbts created by the User.
+     */
+    public function cbts()
+    {
+        return $this->hasmany('App\Cbt');
+    }
+    
+    /**
+     * Get the questions created by the User.
+     */
+    public function questions()
+    {
+        return $this->hasmany('App\Question');
+    }
 }

@@ -77,4 +77,13 @@ class Arm extends Model
     {
         return $this->belongsToMany('App\Lesson');
     }
+    
+    /**
+     * The cbts that belongs to this arm.
+     *
+     */
+    public function cbts()
+    {
+        return $this->belongsToMany('App\Cbt');
+    }
 }

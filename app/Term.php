@@ -76,11 +76,43 @@ class Term extends Model
     }
     
     /**
-     * Get the ;essos for the term.
+     * Get the lessos for the term.
      *
      */
     public function lessons()
     {
         return $this->hasMany('App\Lesson');
+    }
+    
+    /**
+     * Get the cbts for the term.
+     */
+    public function cbts()
+    {
+        return $this->hasmany('App\Cbt');
+    }
+    
+    /**
+     * Get the questions for the term.
+     */
+    public function questions()
+    {
+        return $this->hasmany('App\Question');
+    }
+    
+    /**
+     * Get the attempts for the term.
+     */
+    public function attempts()
+    {
+        return $this->hasmany('App\Attempt');
+    }
+    
+    /**
+     * Get the questionattempts for the term.
+     */
+    public function questionattempts()
+    {
+        return $this->hasmany('App\Questionattempt');
     }
 }

@@ -50,4 +50,29 @@ class Subject extends Model
     {
         return $this->hasMany('App\Lesson');
     }
+    
+    /**
+     * Get the cbts for the subject.
+     *
+     */
+    public function cbts()
+    {
+        return $this->hasMany('App\Cbt');
+    }
+    
+    /**
+     * Get the questions for the subject.
+     */
+    public function questions()
+    {
+        return $this->hasmany('App\Question');
+    }
+    
+    /**
+     * Get the attempts for the subject.
+     */
+    public function attempts()
+    {
+        return $this->hasmany('App\Attempt');
+    }
 }
