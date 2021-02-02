@@ -163,9 +163,124 @@ class CbtsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        $this->validate($request, [
+            'classsubject_id' => ['required'],
+            'type'      => ['required', 'in:Exam,3rd Test,2nd Test,1st Test, Practice Quiz'],
+            'arm_count' => ['required', 'numeric'],
+            'number_of_questions' => ['required', 'integer', 'min:1'],
+            'duration' => ['required', 'integer', 'min:1'],
+            'use_as_termly_score' => ['required', 'in:No,Yes'],
+            'number_of_attempts' => ['required', 'integer', 'min:1']
+        ]);
+        
+        $classsubject = Classsubject::find($request->input('classsubject_id'));
+        if(empty($classsubject))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($classsubject->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+                
+        $arm_count = $request->input('arm_count');
+
+        $affected_classes = 0;
+        for ($i=0; $i < $arm_count; $i++) {
+            if($request->input($i) > 0)
+            {
+                $affected_classes++;
+            }
+        }
+        if($affected_classes < 1)
+        {
+            $request->session()->flash('error', "<p>The classes taking the CBT was not specified.</p>Please re-submit the CBT details.");
+            if($request->input('type') == 'Exam')
+            {
+                return redirect()->route('cbts.newexam', $classsubject->id);
+            }
+            elseif($request->input('type') == '3rd Test')
+            {
+                return redirect()->route('cbts.new3rdtest', $classsubject->id);
+            }
+            elseif($request->input('type') == '2nd Test')
+            {
+                return redirect()->route('cbts.new2ndtest', $classsubject->id);
+            }
+            elseif($request->input('type') == '1st Test')
+            {
+                return redirect()->route('cbts.new1sttest', $classsubject->id);
+            }
+            else
+            {
+                return redirect()->route('cbts.newpractice', $classsubject->id);
+            }
+        }
+
+        $name           = $request->input('type');
+        $status         = 'Pending Approval';
+        $approved_by    = 0;
+        if($request->input('type') == 'Practice Quiz')
+        {
+            $name           = $request->input('name');
+            $status         = 'Approved';
+            $approved_by    = $user_id;
+        }
+
+        $cbt = new Cbt;
+
+        $cbt->school_id         = $school_id;
+        $cbt->subject_id        = $classsubject->subject_id;
+        $cbt->term_id           = $term_id;
+        $cbt->type              = $request->input('type');
+        $cbt->name              = $request->input('name');
+        $cbt->no_questions      = $request->input('number_of_questions');
+        $cbt->duration          = $request->input('duration');
+        $cbt->termly_score      = $request->input('termly_score');
+        $cbt->no_attempts       = $request->input('number_of_attempts');
+        $cbt->supervisor_pass   = $request->input('supervisor_password');
+        $cbt->user_id           = $user_id;
+        $cbt->status            = $status;
+        $cbt->approved_by       = $approved_by;
+
+        $cbt->save();
+
+        for ($i=0; $i < $arm_count; $i++) {
+            if($request->input($i) > 0)
+            {
+                DB::insert('insert into arm_cbt (arm_id, cbt_id) values (?, ?)', [$request->input($i), $cbt->id]);
+            }
+        }
+
+        $request->session()->flash('success', 'CBT created. Start adding questions!');
+
+        return redirect()->route('cbts.show', $classsubject->id);
     }
 
     /**
