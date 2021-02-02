@@ -13,6 +13,7 @@ use App\Arm;
 use App\Classsubject;
 use App\Cbt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CbtsController extends Controller
 {
@@ -466,7 +467,7 @@ class CbtsController extends Controller
 
         $this->validate($request, [
             'classsubject_id' => ['required'],
-            'type'      => ['required', 'in:Exam,3rd Test,2nd Test,1st Test, Practice Quiz'],
+            'type'      => ['required', 'in:Exam,3rd Test,2nd Test,1st Test,Practice Quiz'],
             'arm_count' => ['required', 'numeric'],
             'number_of_questions' => ['required', 'integer', 'min:1'],
             'duration' => ['required', 'integer', 'min:1'],
@@ -522,7 +523,7 @@ class CbtsController extends Controller
         $approved_by    = 0;
         if($request->input('type') == 'Practice Quiz')
         {
-            $name           = $request->input('name');
+            $name           = $request->input('title_of_quiz');
             $status         = 'Approved';
             $approved_by    = $user_id;
 
@@ -537,16 +538,18 @@ class CbtsController extends Controller
             ]);
         }
 
+        session(['classsubject_id' => $classsubject->subject_id]);
+
         $cbt = new Cbt;
 
         $cbt->school_id         = $school_id;
         $cbt->subject_id        = $classsubject->subject_id;
         $cbt->term_id           = $term_id;
         $cbt->type              = $request->input('type');
-        $cbt->name              = $request->input('name');
+        $cbt->name              = $name;
         $cbt->no_questions      = $request->input('number_of_questions');
         $cbt->duration          = $request->input('duration');
-        $cbt->termly_score      = $request->input('termly_score');
+        $cbt->termly_score      = $request->input('use_as_termly_score');
         $cbt->no_attempts       = $request->input('number_of_attempts');
         $cbt->supervisor_pass   = $request->input('supervisor_password');
         $cbt->user_id           = $user_id;
@@ -564,7 +567,7 @@ class CbtsController extends Controller
 
         $request->session()->flash('success', 'CBT created. Start adding questions!');
 
-        return redirect()->route('cbts.show', $classsubject->id);
+        return redirect()->route('cbts.show', $cbt->id);
     }
 
     /**
@@ -573,9 +576,82 @@ class CbtsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id=0)
     {
-        //
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $data['cbt'] = Cbt::find($id);
+        if(empty($data['cbt']))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($data['cbt']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if(session('classsubject_id') > 0)
+        {
+            $data['classsubject_id'] = session('classsubject_id');
+            $data['classsubject'] = Classsubject::find($data['classsubject_id']);
+            if(!empty($data['classsubject']))
+            {
+                $data['classsubject_id'] = $data['classsubject']->id;
+            }
+            else
+            {
+                $data['classsubject_id'] = 0;
+            }
+        }
+        else
+        {
+            $data['classsubject_id'] = 0;
+        }
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+
+        return view('cbts.show')->with($data);
     }
 
     /**

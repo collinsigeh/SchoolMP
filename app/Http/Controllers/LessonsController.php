@@ -15,7 +15,6 @@ use App\Lesson;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
-
 use Illuminate\Support\Facades\DB;
 
 class LessonsController extends Controller

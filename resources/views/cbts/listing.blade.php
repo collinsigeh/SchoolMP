@@ -27,7 +27,7 @@
             if($classsubject->user_id == $user->id)
             {
               ?>
-              <button class="btn btn-primary" data-toggle="modal" data-target="#newCBTnModal">New CBT</button>
+              <button class="btn btn-primary" data-toggle="modal" data-target="#newCBTModal">New CBT</button>
               <?php
             }
             ?>
@@ -51,7 +51,7 @@
           
                     <div class="alert alert-info">
                       <div style="margin-bottom: 30px;">
-                        <img src="{{ config('app.url') }}/images/icons/lessons_icon.png" alt="lessons_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $classsubject->subject->name.' Lessons (<i>'.$term->name.' - <small>'.$term->session.'</small></i>)' !!}</span>
+                        <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $classsubject->subject->name.' CBTs (<i>'.$term->name.' - <small>'.$term->session.'</small></i>)' !!}</span>
                       </div>
 
                       <div class="row">
