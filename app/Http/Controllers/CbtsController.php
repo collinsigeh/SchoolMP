@@ -470,8 +470,7 @@ class CbtsController extends Controller
             'arm_count' => ['required', 'numeric'],
             'number_of_questions' => ['required', 'integer', 'min:1'],
             'duration' => ['required', 'integer', 'min:1'],
-            'use_as_termly_score' => ['required', 'in:No,Yes'],
-            'number_of_attempts' => ['required', 'integer', 'min:1']
+            'use_as_termly_score' => ['required', 'in:No,Yes']
         ]);
         
         $classsubject = Classsubject::find($request->input('classsubject_id'));
@@ -526,6 +525,16 @@ class CbtsController extends Controller
             $name           = $request->input('name');
             $status         = 'Approved';
             $approved_by    = $user_id;
+
+            $this->validate($request, [
+                'number_of_attempts' => ['required', 'integer', 'min:0']
+            ]);
+        }
+        else
+        {
+            $this->validate($request, [
+                'number_of_attempts' => ['required', 'integer', 'min:1']
+            ]);
         }
 
         $cbt = new Cbt;

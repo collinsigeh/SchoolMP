@@ -104,36 +104,9 @@
                         </div>
                     </div>
 
-                    <div class="form-group row"> 
-                        <label for="use_as_termly_score" class="col-md-4 col-form-label text-md-right">{{ __('Use as Termly Score') }}</label>
-    
-                        <div class="col-md-6">
-                            <select name="use_as_termly_score" id="use_as_termly_score" class="form-control" required>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                            <small class="text-muted">*** Use this CBT performance as the termly score? ***</small>
-                            @error('use_as_termly_score')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
+                    <input type="hidden" name="use_as_termly_score" value="No">
 
-                    <div class="form-group row"> 
-                        <label for="number_of_attempts" class="col-md-4 col-form-label text-md-right">{{ __('Number of Attempts') }}</label>
-    
-                        <div class="col-md-6">
-                            <input id="number_of_attempts" type="number" class="form-control @error('number_of_attempts') is-invalid @enderror" name="number_of_attempts" value="{{ old('number_of_attempts') }}" required autocomplete="number_of_attempts" autofocus>
-                            <small class="text-muted">*** How many times can a student attempt this CBT? ***</small>
-                            @error('number_of_attempts')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
+                    <input type="hidden" name="number_of_attempts" value="0">
 
                     <div class="form-group row"> 
                         <label for="schoolclass_id" class="col-md-4 col-form-label text-md-right">{{ __('Classes affected') }}</label>
