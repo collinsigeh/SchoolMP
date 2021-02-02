@@ -32,7 +32,7 @@ Route::get('/cbts/listing/{id}', 'CbtsController@listing')->name('cbts.listing')
 Route::get('/cbts/newexam/{id}', 'CbtsController@newexam')->name('cbts.newexam');
 Route::get('/cbts/new3rdtest/{id}', 'CbtsController@new3rdtest')->name('cbts.new3rdtest');
 Route::get('/cbts/new2ndtest/{id}', 'CbtsController@new2ndtest')->name('cbts.new2ndtest');
-Route::get('/cbts/new1sttest/{id}', 'CbtsController@newtext')->name('cbts.new1sttest');
+Route::get('/cbts/new1sttest/{id}', 'CbtsController@new1sttest')->name('cbts.new1sttest');
 Route::get('/cbts/newpractice/{id}', 'CbtsController@newpractice')->name('cbts.newpractice');
 Route::resource('/cbts', 'CbtsController');
 

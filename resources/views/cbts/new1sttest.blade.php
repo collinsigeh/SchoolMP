@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>{!! $classsubject->subject->name.' (<i>New CBT - Exam</i>)' !!}</h3>
+          <h3>{!! $classsubject->subject->name.' (<i>New CBT - 1st Test</i>)' !!}</h3>
           </div>
           <div class="col-4 text-right">
             <button class="btn btn-primary" data-toggle="modal" data-target="#newCBTModal">New CBT</button>
@@ -33,7 +33,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('classsubjects.show', $classsubject->id) }}">{{ $classsubject->subject->name.' - '.$classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('cbts.listing', $classsubject->id) }}">CBTs</a></li>
-                <li class="breadcrumb-item active" aria-current="page">New Exam</li>
+                <li class="breadcrumb-item active" aria-current="page">New CBT - 1st Test</li>
             </ol>
           </nav>
           @include('partials._messages')
@@ -43,7 +43,7 @@
 
             <div class="row">
                 <div class="col-md-6 offset-md-4">
-                    <div class="alert alert-info">Complete the form below to add a new CBT exam.</div>
+                    <div class="alert alert-info">Complete the form below to add a new CBT - 1st Test.</div>
                 </div>
             </div>
 
@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="type" value="Exam">
+                    <input type="hidden" name="type" value="1st Test">
 
                     <div class="form-group row"> 
                         <label for="number_of_questions" class="col-md-4 col-form-label text-md-right">{{ __('Number of Questions') }}</label>

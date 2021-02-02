@@ -159,11 +159,286 @@ class CbtsController extends Controller
     }
 
     /**
+     * Show the form for creating 3rd test CBT.
+     *
+     * @param  int  $id (ID of the class subject)
+     * @return \Illuminate\Http\Response
+     */
+    public function new3rdtest($id=0)
+    {
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $data['classsubject'] = Classsubject::find($id);
+        if(empty($data['classsubject']))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($data['classsubject']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+
+        return view('cbts.new3rdtest')->with($data);
+    }
+
+    /**
+     * Show the form for creating 2nd test CBT.
+     *
+     * @param  int  $id (ID of the class subject)
+     * @return \Illuminate\Http\Response
+     */
+    public function new2ndtest($id=0)
+    {
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $data['classsubject'] = Classsubject::find($id);
+        if(empty($data['classsubject']))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($data['classsubject']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+
+        return view('cbts.new2ndtest')->with($data);
+    }
+
+    /**
+     * Show the form for creating 1st test CBT.
+     *
+     * @param  int  $id (ID of the class subject)
+     * @return \Illuminate\Http\Response
+     */
+    public function new1sttest($id=0)
+    {
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $data['classsubject'] = Classsubject::find($id);
+        if(empty($data['classsubject']))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($data['classsubject']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+
+        return view('cbts.new1sttest')->with($data);
+    }
+
+    /**
+     * Show the form for creating practice CBT.
+     *
+     * @param  int  $id (ID of the class subject)
+     * @return \Illuminate\Http\Response
+     */
+    public function newpractice($id=0)
+    {
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $data['classsubject'] = Classsubject::find($id);
+        if(empty($data['classsubject']))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($data['classsubject']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+
+        return view('cbts.newpractice')->with($data);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
         if(Auth::user()->status !== 'Active')
         {
@@ -281,17 +556,6 @@ class CbtsController extends Controller
         $request->session()->flash('success', 'CBT created. Start adding questions!');
 
         return redirect()->route('cbts.show', $classsubject->id);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**

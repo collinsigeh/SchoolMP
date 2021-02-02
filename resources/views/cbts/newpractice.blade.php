@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>{!! $classsubject->subject->name.' (<i>New CBT - Exam</i>)' !!}</h3>
+          <h3>{!! $classsubject->subject->name.' (<i>New CBT - Practice Quiz</i>)' !!}</h3>
           </div>
           <div class="col-4 text-right">
             <button class="btn btn-primary" data-toggle="modal" data-target="#newCBTModal">New CBT</button>
@@ -33,7 +33,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('classsubjects.show', $classsubject->id) }}">{{ $classsubject->subject->name.' - '.$classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }}</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('cbts.listing', $classsubject->id) }}">CBTs</a></li>
-                <li class="breadcrumb-item active" aria-current="page">New Exam</li>
+                <li class="breadcrumb-item active" aria-current="page">New CBT - Practice Quiz</li>
             </ol>
           </nav>
           @include('partials._messages')
@@ -43,7 +43,7 @@
 
             <div class="row">
                 <div class="col-md-6 offset-md-4">
-                    <div class="alert alert-info">Complete the form below to add a new CBT exam.</div>
+                    <div class="alert alert-info">Complete the form below to add a new CBT - Practice Quiz.</div>
                 </div>
             </div>
 
@@ -60,7 +60,21 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="type" value="Exam">
+                    <input type="hidden" name="type" value="Practice Quiz">
+
+                    <div class="form-group row"> 
+                        <label for="title_of_quiz" class="col-md-4 col-form-label text-md-right">{{ __('Title of Quiz') }}</label>
+    
+                        <div class="col-md-6">
+                            <input id="title_of_quiz" type="text" class="form-control @error('title_of_quiz') is-invalid @enderror" name="title_of_quiz" value="{{ old('title_of_quiz') }}" required autocomplete="title_of_quiz" autofocus>
+                            
+                            @error('title_of_quiz')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
 
                     <div class="form-group row"> 
                         <label for="number_of_questions" class="col-md-4 col-form-label text-md-right">{{ __('Number of Questions') }}</label>
@@ -114,20 +128,6 @@
                             <input id="number_of_attempts" type="number" class="form-control @error('number_of_attempts') is-invalid @enderror" name="number_of_attempts" value="{{ old('number_of_attempts') }}" required autocomplete="number_of_attempts" autofocus>
                             <small class="text-muted">*** How many times can a student attempt this CBT? ***</small>
                             @error('number_of_attempts')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row"> 
-                        <label for="supervisor_password" class="col-md-4 col-form-label text-md-right">{{ __('Supervisor Password (Optional)') }}</label>
-    
-                        <div class="col-md-6">
-                            <input id="supervisor_password" type="text" class="form-control @error('supervisor_password') is-invalid @enderror" name="supervisor_password" value="{{ old('supervisor_password') }}" autocomplete="supervisor_password" autofocus>
-                            <small class="text-muted">*** Case-sensitive. Leave blank if CBT will not be supervised? ***</small>
-                            @error('supervisor_password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
