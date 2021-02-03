@@ -18,7 +18,7 @@
                         <table class="table table-sm table-striped">
                             <tr>
                                 <th style="vertical-align: middle;">CBT:</th>
-                                <td style="font-size: 1.2em;">{{ $cbt->name }}</td>
+                                <td style="font-size: 1.2em;">{!! $cbt->name.' - <i>'.$cbt->subject->name.'<br /><span class="badge badge-secondary">'.$cbt->term->name.' <small>'.$cbt->term->session.'</i></span>' !!}</td>
                             </tr>
                             <tr>
                                 <th style="vertical-align: middle;">Type:</th>

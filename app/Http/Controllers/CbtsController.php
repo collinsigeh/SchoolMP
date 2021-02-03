@@ -737,6 +737,7 @@ class CbtsController extends Controller
         }
 
         DB::delete('delete from arm_cbt where cbt_id = ?', [$id]);
+        DB::delete('delete from questions where cbt_id = ?', [$id]);
 
         $cbt->delete();
         $request->session()->flash('success', 'Item deleted');
