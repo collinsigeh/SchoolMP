@@ -20,14 +20,14 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>{!! $cbt->subject->name.' (<i>'.$cbt->name.'</i>)' !!}</h3>
+          <h3>{!! $cbt->name.' - <i>'.$cbt->subject->name.'</i>' !!}</h3>
           </div>
           <div class="col-4 text-right">
             <?php
             if($cbt->user_id == $user->id)
             {
               ?>
-              <button class="btn btn-primary" data-toggle="modal" data-target="#newCBTnModal">New Question</button>
+              <button class="btn btn-primary" data-toggle="modal" data-target="#newQuestionModal">New Question</button>
               <?php
             }
             ?>
@@ -44,7 +44,7 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ $cbt->name }}</li>
                 @else
                     <li class="breadcrumb-item"><a href="{{ route('cbts.index') }}">CBTs</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ $cbt->subject->name.' - '.$cbt->name }}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $cbt->name.' - '.$cbt->subject->name }}</li>
                 @endif
             </ol>
           </nav>
@@ -57,7 +57,7 @@
           
                     <div class="alert alert-info">
                       <div style="margin-bottom: 30px;">
-                        <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $cbt->subject->name.' - '.$cbt->name.' (<i>'.$term->name.' - <small>'.$term->session.'</small></i>)' !!}</span>
+                        <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $cbt->name.' - '.$cbt->subject->name.' (<i>'.$term->name.' - <small>'.$term->session.'</small></i>)' !!}</span>
                       </div>
 
                       <div class="row">
@@ -98,7 +98,7 @@
                             if($cbt->user_id == $user->id)
                             {
                               ?>
-                              <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newCBTModal">Add new</button>
+                              <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newQuestionModal">Add new</button>
                               <?php
                             }
                             ?>
@@ -177,9 +177,9 @@
 
         </div>
 
-<!-- New Cbt Modal -->
-@include('partials._new_cbt')
-<!-- End New Cbt Modal -->
+<!-- New Question Modal -->
+@include('partials._new_question')
+<!-- End New Question Modal -->
 
 <!-- confirmLessonDeletionModal Series -->
 @foreach ($classsubject->arm->cbts as $lesson)

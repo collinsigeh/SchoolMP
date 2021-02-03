@@ -51,7 +51,7 @@
           
                     <div class="alert alert-info">
                       <div style="margin-bottom: 30px;">
-                        <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $classsubject->subject->name.' CBTs (<i>'.$term->name.' - <small>'.$term->session.'</small></i>)' !!}</span>
+                        <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! 'CBTs (<i>'.$term->name.' - <small>'.$term->session.'</small></i>)' !!}</span>
                       </div>
 
                       <div class="row">
@@ -59,7 +59,7 @@
                             <div class="table-responsive">
                               <table class="table table-striped table-bordered table-hover table-sm">
                                   <tr class="bg-light">
-                                    <td width="130px"><b>Class:</b></td><td>{{ $classsubject->arm->schoolclass->name.' '.$classsubject->arm->name }} </td>
+                                    <td width="130px"><b>Subject:</b></td><td>{{ $classsubject->subject->name }} </td>
                                   </tr>
                               </table>
                             </div>
@@ -101,12 +101,6 @@
                             
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover table-sm">
-                                  <thead>
-                                      <tr>
-                                          <th colspan="2">CBT</th>
-                                          <th></th>
-                                      </tr>
-                                  </thead>
                                   @php
                                       $sn = 1;
                                       $has_exam = $has_3rd_test = $has_2nd_test = $has_1st_test = 'No';
@@ -119,22 +113,43 @@
                                       ?>
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
-                                          <td>
-                                            <a href="#">
+                                          <td style="vertical-align: middle;">
+                                            <a class="collins-link-within-table" href="#">
                                               {{ substr($cbt->name, 0, 42) }}
                                               @if (strlen($cbt->name) > 42)
                                                   ...
                                               @endif
+                                              <br>
+                                              @foreach ($cbt->arms as $arm)
+                                                <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
+                                              @endforeach
                                             </a>
                                           </td>
-                                          <td class="text-right">
+                                          <td style="vertical-align: middle">
+                                            @php
+                                                if($cbt->status == 'Rejected')
+                                                {
+                                                  echo '<span class="badge badge-danger">NOT Approved</span>';
+                                                }
+                                                elseif($cbt->status == 'Approved')
+                                                {
+                                                  echo '<span class="badge badge-success">Approved</span>';
+                                                }
+                                                else
+                                                {
+                                                  echo '<span class="badge badge-secondary">Pending Approval</span>';
+                                                }
+                                            @endphp
+                                          </td>
+                                          <td class="text-right" style="vertical-align: middle;">
                                             <?php
                                               if($cbt->user_id == $user->id)
                                               {
                                                 ?>
-                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Modify</button>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Details</button>
                                                 <?php
                                               }
+                                              echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
                                               if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
                                               {
                                                 ?>
@@ -157,15 +172,35 @@
                                       ?>
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
-                                          <td>
-                                            <a href="#">
+                                          <td style="vertical-align: middle;">
+                                            <a class="collins-link-within-table" href="#">
                                               {{ substr($cbt->name, 0, 42) }}
                                               @if (strlen($cbt->name) > 42)
                                                   ...
                                               @endif
+                                              <br>
+                                              @foreach ($cbt->arms as $arm)
+                                                <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
+                                              @endforeach
                                             </a>
                                           </td>
-                                          <td class="text-right">
+                                          <td style="vertical-align: middle">
+                                            @php
+                                                if($cbt->status == 'Rejected')
+                                                {
+                                                  echo '<span class="badge badge-danger">NOT Approved</span>';
+                                                }
+                                                elseif($cbt->status == 'Approved')
+                                                {
+                                                  echo '<span class="badge badge-success">Approved</span>';
+                                                }
+                                                else
+                                                {
+                                                  echo '<span class="badge badge-secondary">Pending Approval</span>';
+                                                }
+                                            @endphp
+                                          </td>
+                                          <td class="text-right" style="vertical-align: middle;">
                                             <?php
                                               if($cbt->user_id == $user->id)
                                               {
@@ -173,6 +208,7 @@
                                                 <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Modify</button>
                                                 <?php
                                               }
+                                              echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
                                               if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
                                               {
                                                 ?>
@@ -195,15 +231,35 @@
                                       ?>
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
-                                          <td>
-                                            <a href="#">
+                                          <td style="vertical-align: middle;">
+                                            <a class="collins-link-within-table" href="#">
                                               {{ substr($cbt->name, 0, 42) }}
                                               @if (strlen($cbt->name) > 42)
                                                   ...
                                               @endif
+                                              <br>
+                                              @foreach ($cbt->arms as $arm)
+                                                <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
+                                              @endforeach
                                             </a>
                                           </td>
-                                          <td class="text-right">
+                                          <td style="vertical-align: middle">
+                                            @php
+                                                if($cbt->status == 'Rejected')
+                                                {
+                                                  echo '<span class="badge badge-danger">NOT Approved</span>';
+                                                }
+                                                elseif($cbt->status == 'Approved')
+                                                {
+                                                  echo '<span class="badge badge-success">Approved</span>';
+                                                }
+                                                else
+                                                {
+                                                  echo '<span class="badge badge-secondary">Pending Approval</span>';
+                                                }
+                                            @endphp
+                                          </td>
+                                          <td class="text-right" style="vertical-align: middle;">
                                             <?php
                                               if($cbt->user_id == $user->id)
                                               {
@@ -211,6 +267,7 @@
                                                 <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Modify</button>
                                                 <?php
                                               }
+                                              echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
                                               if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
                                               {
                                                 ?>
@@ -233,15 +290,35 @@
                                       ?>
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
-                                          <td>
-                                            <a href="#">
+                                          <td style="vertical-align: middle;">
+                                            <a class="collins-link-within-table" href="#">
                                               {{ substr($cbt->name, 0, 42) }}
                                               @if (strlen($cbt->name) > 42)
                                                   ...
                                               @endif
+                                              <br>
+                                              @foreach ($cbt->arms as $arm)
+                                                <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
+                                              @endforeach
                                             </a>
                                           </td>
-                                          <td class="text-right">
+                                          <td style="vertical-align: middle">
+                                            @php
+                                                if($cbt->status == 'Rejected')
+                                                {
+                                                  echo '<span class="badge badge-danger">NOT Approved</span>';
+                                                }
+                                                elseif($cbt->status == 'Approved')
+                                                {
+                                                  echo '<span class="badge badge-success">Approved</span>';
+                                                }
+                                                else
+                                                {
+                                                  echo '<span class="badge badge-secondary">Pending Approval</span>';
+                                                }
+                                            @endphp
+                                          </td>
+                                          <td class="text-right" style="vertical-align: middle;">
                                             <?php
                                               if($cbt->user_id == $user->id)
                                               {
@@ -249,6 +326,7 @@
                                                 <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Modify</button>
                                                 <?php
                                               }
+                                              echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
                                               if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
                                               {
                                                 ?>
@@ -265,27 +343,51 @@
                                   @endforeach
                                   @foreach ($classsubject->arm->cbts as $cbt)
                                     <?php
-                                    if($cbt->subject_id == $classsubject->subject_id && $cbt->type != 'Exam' && $cbt->type == '3rd Test' && $cbt->type == '2nd Test' && $cbt->type == '1st Test')
+                                    if($cbt->subject_id == $classsubject->subject_id && $cbt->type != 'Exam' && $cbt->type != '3rd Test' && $cbt->type != '2nd Test' && $cbt->type != '1st Test')
                                     {
                                       ?>
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
-                                          <td>
-                                            <a href="#">
+                                          <td style="vertical-align: middle;">
+                                            <a class="collins-link-within-table" href="#">
+                                              <b>
                                               {{ substr($cbt->name, 0, 42) }}
                                               @if (strlen($cbt->name) > 42)
                                                   ...
                                               @endif
+                                              </b>
+                                              {{ ' - n'.$cbt->id }}
+                                              <br>
+                                              @foreach ($cbt->arms as $arm)
+                                                <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
+                                              @endforeach
                                             </a>
                                           </td>
-                                          <td class="text-right">
+                                          <td style="vertical-align: middle">
+                                            @php
+                                                if($cbt->status == 'Rejected')
+                                                {
+                                                  echo '<span class="badge badge-danger">NOT Approved</span>';
+                                                }
+                                                elseif($cbt->status == 'Approved')
+                                                {
+                                                  echo '<span class="badge badge-success">Approved</span>';
+                                                }
+                                                else
+                                                {
+                                                  echo '<span class="badge badge-secondary">Pending Approval</span>';
+                                                }
+                                            @endphp
+                                          </td>
+                                          <td class="text-right" style="vertical-align: middle;">
                                             <?php
                                               if($cbt->user_id == $user->id)
                                               {
                                                 ?>
-                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Modify</button>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Details</button>
                                                 <?php
                                               }
+                                              echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
                                               if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
                                               {
                                                 ?>
@@ -300,6 +402,9 @@
                                     }
                                     ?>
                                   @endforeach
+                                  @if ($sn < 2)
+                                      <tr><td>None yet!</td></tr>
+                                  @endif
                                 </table>
                             </div>
                         </div>
