@@ -82,6 +82,8 @@ Route::resource('/paymentvouchers', 'PaymentvouchersController');
 
 Route::resource('/products', 'ProductsController');
 
+Route::resource('/questions', 'QuestionsController');
+
 Route::resource('/results', 'ResultsController');
 
 Route::resource('/resulttemplates', 'ResulttemplatesController');

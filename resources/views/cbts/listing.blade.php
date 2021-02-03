@@ -137,7 +137,7 @@
                                                 }
                                                 else
                                                 {
-                                                  echo '<span class="badge badge-secondary">Pending Approval</span>';
+                                                  echo '<span class="badge badge-info">Pending Approval</span>';
                                                 }
                                             @endphp
                                           </td>
@@ -199,7 +199,7 @@
                                                 }
                                                 else
                                                 {
-                                                  echo '<span class="badge badge-secondary">Pending Approval</span>';
+                                                  echo '<span class="badge badge-info">Pending Approval</span>';
                                                 }
                                             @endphp
                                           </td>
@@ -261,7 +261,7 @@
                                                 }
                                                 else
                                                 {
-                                                  echo '<span class="badge badge-secondary">Pending Approval</span>';
+                                                  echo '<span class="badge badge-info">Pending Approval</span>';
                                                 }
                                             @endphp
                                           </td>
@@ -323,7 +323,7 @@
                                                 }
                                                 else
                                                 {
-                                                  echo '<span class="badge badge-secondary">Pending Approval</span>';
+                                                  echo '<span class="badge badge-info">Pending Approval</span>';
                                                 }
                                             @endphp
                                           </td>
@@ -387,7 +387,7 @@
                                                 }
                                                 else
                                                 {
-                                                  echo '<span class="badge badge-secondary">Pending Approval</span>';
+                                                  echo '<span class="badge badge-info">Pending Approval</span>';
                                                 }
                                             @endphp
                                           </td>

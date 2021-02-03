@@ -19,13 +19,11 @@ class CreateQuestionsTable extends Migration
             $table->integer('subject_id');
             $table->integer('term_id');
             $table->integer('cbt_id');
-            $table->integer('prev_question');
-            $table->integer('next_question');
             $table->text('question');
             $table->string('question_photo')->nullable();
-            $table->text('option_a');
+            $table->text('option_a')->nullable();
             $table->string('option_a_photo')->nullable();
-            $table->text('option_b');
+            $table->text('option_b')->nullable();
             $table->string('option_b_photo')->nullable();
             $table->text('option_c')->nullable();
             $table->string('option_c_photo')->nullable();

@@ -24,7 +24,7 @@
           </div>
           <div class="col-4 text-right">
             <?php
-            if($cbt->user_id == $user->id)
+            if($cbt->user_id == $user->id && count($cbt->questions) < $cbt->no_questions)
             {
               ?>
               <button class="btn btn-primary" data-toggle="modal" data-target="#newQuestionModal">New Question</button>
@@ -65,8 +65,23 @@
                             <div class="table-responsive">
                               <table class="table table-striped table-bordered table-hover table-sm">
                                   <tr class="bg-light">
-                                    <td width="130px"><b>Classes:</b></td><td>display classes here! </td>
+                                    <td width="130px"><b>Req. Questions:</b></td><td>{{ $cbt->no_questions }}</td>
                                   </tr>
+                                  <tr class="bg-light">
+                                    <td width="130px"><b>All Questions:</b></td><td>{{ count($cbt->questions) }}</td>
+                                  </tr>
+                              </table>
+                            </div>
+                            <div class="table-responsive">
+                              <table class="table table-striped table-bordered table-hover table-sm">
+                                  <tr class="bg-light">
+                                    <td width="130px"><b>Duration:</b></td><td>{{ $cbt->duration.' minutes' }}</td>
+                                  </tr>
+                                  @if (strlen($cbt->supervisor_pass) > 0)
+                                  <tr class="bg-light">
+                                    <td width="130px"><b>Supervisor Pass:</b></td><td>{{ $cbt->supervisor_pass }}</td>
+                                  </tr>
+                                  @endif
                               </table>
                             </div>
                         </div>
@@ -74,6 +89,14 @@
                         <div class="col-md-6">
                             <div class="table-responsive">
                               <table class="table table-striped table-bordered table-hover table-sm">
+                                <tr class="bg-light">
+                                  <td width="130px"><b>Classes affected:</b></td>
+                                  <td>
+                                      @foreach ($cbt->arms as $arm)
+                                          <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
+                                      @endforeach
+                                  </td>
+                                </tr>
                                   <tr class="bg-light">
                                     <td width="130px"><b>Created by:</b></td>                           
                                     @if ($cbt->user_id < 1)
@@ -95,7 +118,7 @@
                         <div class="title">
                             {{ $cbt->name }} Questions
                             <?php
-                            if($cbt->user_id == $user->id)
+                            if($cbt->user_id == $user->id && count($cbt->questions) < $cbt->no_questions)
                             {
                               ?>
                               <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newQuestionModal">Add new</button>
@@ -107,13 +130,13 @@
                             
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover table-sm">
+                                  @php
+                                      $sn = 1;
+                                  @endphp
                                   @foreach ($cbt->questions as $question)
-                                      @php
-                                          $question_no = $question->prev_question+1;
-                                      @endphp
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
-                                        <td>{!! '<b>Q '.$question_no.':</b>' !!}</td>
+                                        <td>{!! '<b>Q '.$sn.':</b>' !!}</td>
                                         <td>
                                             <a href="#">
                                               {{ substr($question->question, 0, 84) }}
@@ -134,7 +157,14 @@
                                             ?>
                                         </td>
                                       </tr>
+                                      <?php $sn++; ?>
                                   @endforeach
+                                  @php
+                                      if($sn < 2)
+                                      {
+                                          echo '<tr><td>None yet!</td></tr>';
+                                      }
+                                  @endphp
                                 </table>
                             </div>
                         </div>

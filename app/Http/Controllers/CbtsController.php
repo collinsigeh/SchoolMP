@@ -643,6 +643,8 @@ class CbtsController extends Controller
             $data['classsubject_id'] = 0;
         }
 
+        session(['classsubject_id' => $data['classsubject_id']]);
+
         if($data['user']->role == 'Staff')
         {
             $db_check = array(
