@@ -109,6 +109,29 @@
                                   </tr>
                               </table>
                             </div>
+                            <div class="table-responsive">
+                              <table class="table table-striped table-bordered table-hover table-sm">
+                                <tr class="bg-light">
+                                  <td width="130px"><b>Status:</b></td>
+                                  <td>
+                                    @php
+                                        if($cbt->status == 'Rejected')
+                                        {
+                                          echo '<span class="badge badge-danger">NOT Approved</span>';
+                                        }
+                                        elseif($cbt->status == 'Approved')
+                                        {
+                                          echo '<span class="badge badge-success">Approved</span>';
+                                        }
+                                        else
+                                        {
+                                          echo '<span class="badge badge-info">Pending Approval</span>';
+                                        }
+                                    @endphp
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
                         </div>
                       </div>
                     </div>
@@ -116,7 +139,7 @@
 
                     <div class="resource-details">
                         <div class="title">
-                            {{ $cbt->name }} Questions
+                            CBT Questions
                             <?php
                             if($cbt->user_id == $user->id && count($cbt->questions) < $cbt->no_questions)
                             {
@@ -136,16 +159,16 @@
                                   @foreach ($cbt->questions as $question)
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
-                                        <td>{!! '<b>Q '.$sn.':</b>' !!}</td>
-                                        <td>
-                                            <a href="#">
+                                        <td style="vertical-align: middle">{!! '<b>Q '.$sn.':</b>' !!}</td>
+                                        <td style="vertical-align: middle">
+                                            <a href="#" class="collins-link-within-table">
                                               {{ substr($question->question, 0, 84) }}
                                               @if (strlen($question->question) > 84)
                                                   ...
                                               @endif
                                             </a>
                                         </td>
-                                        <td class="text-right">
+                                        <td class="text-right" style="vertical-align: middle">
                                             <?php
                                               if(($question->user_id == $user->id && $question->user_id == $user->id) OR $user->role == 'Director')
                                               {
@@ -183,6 +206,13 @@
                           <div class="table-responsive">    
                             <table class="table">
                                 @if ($classsubject_id > 0)
+                                <tr>
+                                  <td>
+                                    <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('cbts.listing', $classsubject_id) }}">
+                                      <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="options-icon">  Back to CBT list
+                                    </a>
+                                  </td>
+                                </tr>
                                 <tr>
                                   <td>
                                     <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('classsubjects.show', $classsubject_id) }}">

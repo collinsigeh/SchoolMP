@@ -38,9 +38,9 @@
                     </div>
 
                     <div class="form-group row"> 
-                        <label for="question_photo" class="col-md-3 col-form-label text-md-right">{{ __('Question photo (Optional)') }}</label>
+                        <label for="question_photo" class="col-md-3 offset-md-3 col-form-label text-md-right">{{ __('Question photo (Optional)') }}</label>
 
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <input id="question_photo" type="file" class="form-control @error('question_photo') is-invalid @enderror" name="question_photo" value="{{ old('question_photo') }}" autocomplete="question_photo" autofocus>
 
                             @error('question_photo')
@@ -66,9 +66,9 @@
                     </div>
 
                     <div class="form-group row"> 
-                        <label for="option_a_photo" class="col-md-3 col-form-label text-md-right">{{ __('Option A photo (Optional)') }}</label>
+                        <label for="option_a_photo" class="col-md-3 offset-md-3 col-form-label text-md-right">{{ __('Option A photo (Optional)') }}</label>
 
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <input id="option_a_photo" type="file" class="form-control @error('option_a_photo') is-invalid @enderror" name="option_a_photo" value="{{ old('option_a_photo') }}" autocomplete="option_a_photo" autofocus>
 
                             @error('option_a_photo')
@@ -94,9 +94,9 @@
                     </div>
 
                     <div class="form-group row"> 
-                        <label for="option_b_photo" class="col-md-3 col-form-label text-md-right">{{ __('Option B photo (Optional)') }}</label>
+                        <label for="option_b_photo" class="col-md-3 offset-md-3 col-form-label text-md-right">{{ __('Option B photo (Optional)') }}</label>
 
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <input id="option_b_photo" type="file" class="form-control @error('option_b_photo') is-invalid @enderror" name="option_b_photo" value="{{ old('option_b_photo') }}" autocomplete="option_b_photo" autofocus>
 
                             @error('option_b_photo')
@@ -122,9 +122,9 @@
                     </div>
 
                     <div class="form-group row"> 
-                        <label for="option_c_photo" class="col-md-3 col-form-label text-md-right">{{ __('Option C photo (Optional)') }}</label>
+                        <label for="option_c_photo" class="col-md-3 offset-md-3 col-form-label text-md-right">{{ __('Option C photo (Optional)') }}</label>
 
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <input id="option_c_photo" type="file" class="form-control @error('option_c_photo') is-invalid @enderror" name="option_c_photo" value="{{ old('option_c_photo') }}" autocomplete="option_c_photo" autofocus>
 
                             @error('option_c_photo')
@@ -150,9 +150,9 @@
                     </div>
 
                     <div class="form-group row"> 
-                        <label for="option_d_photo" class="col-md-3 col-form-label text-md-right">{{ __('Option D photo (Optional)') }}</label>
+                        <label for="option_d_photo" class="col-md-3 offset-md-3 col-form-label text-md-right">{{ __('Option D photo (Optional)') }}</label>
 
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <input id="option_d_photo" type="file" class="form-control @error('option_d_photo') is-invalid @enderror" name="option_d_photo" value="{{ old('option_d_photo') }}" autocomplete="option_d_photo" autofocus>
 
                             @error('option_d_photo')
@@ -178,9 +178,9 @@
                     </div>
 
                     <div class="form-group row"> 
-                        <label for="option_e_photo" class="col-md-3 col-form-label text-md-right">{{ __('Option E photo (Optional)') }}</label>
+                        <label for="option_e_photo" class="col-md-3 offset-md-3 col-form-label text-md-right">{{ __('Option E photo (Optional)') }}</label>
 
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <input id="option_e_photo" type="file" class="form-control @error('option_e_photo') is-invalid @enderror" name="option_e_photo" value="{{ old('option_e_photo') }}" autocomplete="option_e_photo" autofocus>
 
                             @error('option_e_photo')
