@@ -173,7 +173,7 @@
                                               if(($question->user_id == $user->id && $question->user_id == $user->id) OR $user->role == 'Director')
                                               {
                                                 ?>
-                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $question->id }}">Modify</button>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyQuestionModal{{ $question->id }}">Details</button>
                                                 <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $question->id }}">X</button>
                                                 <?php
                                               }
@@ -247,10 +247,14 @@
 @endforeach
 <!-- End confirmLessonDeletionModal Series -->
 
-<!-- modifyLessonModal Series -->
-@foreach ($classsubject->arm->cbts as $lesson)
-@include('partials._modify_lesson')
+<!-- modifyQuestionModal Series -->
+@php
+    $sn = 1;
+@endphp
+@foreach ($cbt->questions as $question)
+@include('partials._modify_question')
+<?php $sn++; ?>
 @endforeach
-<!-- End modifyLessonModal Series -->
+<!-- End modifyQuestionModal Series -->
 
 @endsection
