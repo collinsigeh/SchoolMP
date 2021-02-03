@@ -152,9 +152,12 @@
                                               echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
                                               if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
                                               {
+                                                if(count($cbt->attempts) < 1)
+                                                {
                                                 ?>
-                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $cbt->id }}">X</button>
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmCBTDeletionModal{{ $cbt->id }}">X</button>
                                                 <?php
+                                                }
                                               }
                                             ?>
                                           </td>
@@ -211,9 +214,12 @@
                                               echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
                                               if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
                                               {
+                                                if(count($cbt->attempts) < 1)
+                                                {
                                                 ?>
-                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $cbt->id }}">X</button>
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmCBTDeletionModal{{ $cbt->id }}">X</button>
                                                 <?php
+                                                }
                                               }
                                             ?>
                                           </td>
@@ -270,9 +276,12 @@
                                               echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
                                               if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
                                               {
+                                                if(count($cbt->attempts) < 1)
+                                                {
                                                 ?>
-                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $cbt->id }}">X</button>
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmCBTDeletionModal{{ $cbt->id }}">X</button>
                                                 <?php
+                                                }
                                               }
                                             ?>
                                           </td>
@@ -329,9 +338,12 @@
                                               echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
                                               if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
                                               {
+                                                if(count($cbt->attempts) < 1)
+                                                {
                                                 ?>
-                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $cbt->id }}">X</button>
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmCBTDeletionModal{{ $cbt->id }}">X</button>
                                                 <?php
+                                                }
                                               }
                                             ?>
                                           </td>
@@ -390,9 +402,12 @@
                                               echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
                                               if(($classsubject->user_id == $user->id && $cbt->user_id == $user->id) OR $user->role == 'Director')
                                               {
+                                                if(count($cbt->attempts) < 1)
+                                                {
                                                 ?>
-                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $cbt->id }}">X</button>
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmCBTDeletionModal{{ $cbt->id }}">X</button>
                                                 <?php
+                                                }
                                               }
                                             ?>
                                           </td>
@@ -449,11 +464,11 @@
 @include('partials._new_cbt')
 <!-- End New Cbt Modal -->
 
-<!-- confirmLessonDeletionModal Series -->
-@foreach ($classsubject->arm->cbts as $lesson)
-@include('partials._confirm_lesson_deletion')
+<!-- confirmCBTDeletionModal Series -->
+@foreach ($classsubject->arm->cbts as $cbt)
+@include('partials._confirm_cbt_deletion')
 @endforeach
-<!-- End confirmLessonDeletionModal Series -->
+<!-- End confirmCBTDeletionModal Series -->
 
 <!-- modifyLessonModal Series -->
 @foreach ($classsubject->arm->cbts as $lesson)

@@ -1,33 +1,33 @@
-<!-- confirmLessonDeletionModal -->
-<div class="modal fade" id="confirmLessonDeletionModal{{ $lesson->id }}" tabindex="-1" role="dialog" aria-labelledby="confirmLessonDeletionModal{{ $lesson->id }}Label" aria-hidden="true">
+<!-- confirmCBTDeletionModal -->
+<div class="modal fade" id="confirmCBTDeletionModal{{ $cbt->id }}" tabindex="-1" role="dialog" aria-labelledby="confirmCBTDeletionModal{{ $cbt->id }}Label" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="confirmLessonDeletionModal{{ $lesson->id }}Label">Confirm deletion</h5>
+          <h5 class="modal-title" id="confirmCBTDeletionModal{{ $cbt->id }}Label">Confirm deletion</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
             <div class="create-form">
-                <form method="POST" action="{{ route('lessons.destroy', $lesson->id) }}">
+                <form method="POST" action="{{ route('cbts.destroy', $cbt->id) }}">
                     @csrf
                     @method('DELETE')
 
                     <div class="table-responsive">
                         <table class="table table-sm table-striped">
                             <tr>
-                                <th style="vertical-align: middle;">Lesson:</th>
-                                <td style="font-size: 1.2em;">{{ $lesson->name }}</td>
+                                <th style="vertical-align: middle;">CBT:</th>
+                                <td style="font-size: 1.2em;">{{ $cbt->name }}</td>
                             </tr>
                             <tr>
-                                <th style="vertical-align: middle;">Resource type:</th>
-                                <td>{{ $lesson->type }}</td>
+                                <th style="vertical-align: middle;">Type:</th>
+                                <td>{{ $cbt->type }}</td>
                             </tr>
                             <tr>
                                 <th>Classes affected:</th>
                                 <td>
-                                    @foreach ($lesson->arms as $arm)
+                                    @foreach ($cbt->arms as $arm)
                                         <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
                                     @endforeach
                                 </td>
@@ -66,4 +66,4 @@
       </div>
     </div>
 </div>
-<!-- End confirmLessonDeletionModal -->
+<!-- End confirmCBTDeletionModal -->

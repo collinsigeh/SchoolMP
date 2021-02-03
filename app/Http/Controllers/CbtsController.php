@@ -693,8 +693,52 @@ class CbtsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id=0)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            $request->session()->flash('error', 'Error 4' );
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            'confirmation_to_delete' => ['required', 'in:DELETE'],
+            'classsubject_id'        => ['required']
+        ]);
+
+        $cbt = Cbt::find($id);
+
+        if(empty($cbt))
+        {
+            $request->session()->flash('error', 'Error 2: Attempt to delete unavailable resource.' );
+            return redirect()->route('dashboard');
+        }
+
+        if(count($cbt->attempts) > 0)
+        {
+            $request->session()->flash('error', 'Error 1: Attempt to delete CBT that has been attempted.' );
+            return redirect()->route('dashboard');
+        }
+
+        DB::delete('delete from arm_cbt where cbt_id = ?', [$id]);
+
+        $cbt->delete();
+        $request->session()->flash('success', 'Item deleted');
+        
+        return redirect()->route('cbts.listing', $request->input('classsubject_id'));
     }
 }
