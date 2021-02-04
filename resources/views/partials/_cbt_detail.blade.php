@@ -42,6 +42,19 @@
                     </td>
                   </tr>
                   <tr class="bg-light">
+                    <td width="130px"><b>Used as termly score:</b></td><td>{{ $cbt->termly_score }}</td>
+                  </tr>
+                  <tr class="bg-light">
+                    <td width="130px"><b>Attempts allowed:</b></td>
+                    <td>
+                        @if ($cbt->no_attempts < 1)
+                            NOT Applicable
+                        @else
+                            {{ $cbt->no_attempts }}
+                        @endif
+                    </td>
+                  </tr>
+                  <tr class="bg-light">
                     <td width="130px"><b>Created by:</b></td>                           
                     @if ($cbt->user_id < 1)
                         <td>
