@@ -3,7 +3,11 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="cbtDetailModal{{ $cbt->id }}Label">{!! $cbt->name.' - <i>'.$cbt->subject->name.' - ('.$cbt->term->name.' <small>'.$cbt->term->session.'</i></small>)' !!}</h5>
+          @if ($cbt->type == 'Practice Quiz')
+            <h5 class="modal-title" id="cbtDetailModal{{ $cbt->id }}Label">{!! $cbt->name.' - no.'.$cbt->id.' - (<i>'.$cbt->term->name.' <small>'.$cbt->term->session.'</i></small>)' !!}</h5>
+          @else
+            <h5 class="modal-title" id="cbtDetailModal{{ $cbt->id }}Label">{!! $cbt->name.' - (<i>'.$cbt->term->name.' <small>'.$cbt->term->session.'</i></small>)' !!}</h5>
+          @endif
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -11,6 +15,9 @@
         <div class="modal-body">
             <div class="table-responsive">
               <table class="table table-striped table-bordered table-hover table-sm">
+                <tr class="bg-light">
+                  <td width="130px"><b>Subject:</b></td><td>{{ $cbt->subject->name }}</td>
+                </tr>
                   <tr class="bg-light">
                     <td width="130px"><b>CBT Type:</b></td><td>{{ $cbt->type }}</td>
                   </tr>

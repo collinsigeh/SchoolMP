@@ -376,7 +376,7 @@
                                                   ...
                                               @endif
                                               </b>
-                                              {{ ' - n'.$cbt->id }}
+                                              {{ ' - no.'.$cbt->id }}
                                               <br>
                                               @foreach ($cbt->arms as $arm)
                                                 <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
