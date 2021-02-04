@@ -672,9 +672,83 @@ class CbtsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id=0)
     {
-        //
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $data['cbt'] = Cbt::find($id);
+        if(empty($data['cbt']))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($data['cbt']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        if(session('classsubject_id') > 0)
+        {
+            $data['classsubject_id'] = session('classsubject_id');
+            $data['classsubject'] = Classsubject::find($data['classsubject_id']);
+            if(!empty($data['classsubject']))
+            {
+                $data['classsubject_id'] = $data['classsubject']->id;
+            }
+            else
+            {
+                $data['classsubject_id'] = 0;
+            }
+        }
+        else
+        {
+            $data['classsubject_id'] = 0;
+        }
+        session(['classsubject_id' => $data['classsubject_id']]);
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+
+        return view('cbts.edit')->with($data);
     }
 
     /**
@@ -684,9 +758,121 @@ class CbtsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id=0)
     {
-        //
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $cbt = Cbt::find($id);
+        if(empty($cbt))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($cbt->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        $this->validate($request, [
+            'classsubject_id' => ['required'],
+            'name' => ['required', 'max:191'],
+            'number_of_questions' => ['required', 'integer', 'min:1'],
+            'duration' => ['required', 'integer', 'min:1'],
+            'arm_count' => ['required', 'numeric']
+        ]);
+
+        if($cbt->type != 'Practice Quiz')
+        {
+            $this->validate($request, [
+                'number_of_attempts' => ['required', 'integer', 'min:1'],
+                'use_as_termly_score' => ['required', 'in:No,Yes']
+            ]);
+        }
+        
+        if($request->input('classsubject_id') > 0)
+        {
+            $classsubject = Classsubject::find($request->input('classsubject_id'));
+            if(empty($classsubject))
+            {
+                return redirect()->route('dashboard');
+            }
+            elseif($classsubject->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+        }
+        
+        $arm_count = $request->input('arm_count');
+
+        $affected_classes = 0;
+        for ($i=0; $i < $arm_count; $i++) {
+            if($request->input($i) > 0)
+            {
+                $affected_classes++;
+            }
+        }
+        if($affected_classes < 1 && $request->input('arm_count') != 0)
+        {
+            $request->session()->flash('error', 'The classes partaking this CBT was not specified.');
+            return redirect()->route('cbts.edit', $cbt->id);
+        }
+        
+        $cbt->name              = $request->input('name');
+        $cbt->no_questions      = $request->input('number_of_questions');
+        $cbt->duration          = $request->input('duration');
+        if($cbt->type != 'Practice Quiz')
+        {
+            $cbt->termly_score      = $request->input('use_as_termly_score');
+            $cbt->no_attempts       = $request->input('number_of_attempts');
+            $cbt->supervisor_pass   = $request->input('supervisor_password');
+        }
+
+        $cbt->save();
+
+        if($request->input('arm_count') != 0)
+        {
+            // clean up previous list of affected class
+            DB::delete('delete from arm_cbt where cbt_id = ?', [$id]);
+            // End - clean up previous list of affected class
+    
+            // re-specify affected class
+            for ($i=0; $i < $arm_count; $i++) {
+                if($request->input($i) > 0)
+                {
+                    DB::insert('insert into arm_cbt (arm_id, cbt_id) values (?, ?)', [$request->input($i), $id]);
+                }
+            }
+            // End - re-specify affected class
+        }
+
+        $request->session()->flash('success', 'Update saved!.');
+
+        return redirect()->route('cbts.edit', $cbt->id);
     }
 
     /**

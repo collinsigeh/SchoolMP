@@ -67,7 +67,7 @@
     
                         <div class="col-md-6">
                             <input id="number_of_questions" type="number" class="form-control @error('number_of_questions') is-invalid @enderror" name="number_of_questions" value="{{ old('number_of_questions') }}" required autocomplete="number_of_questions" autofocus>
-                            <small class="text-muted">*** How many questions will this CBT containt? ***</small>
+                            <small class="text-muted">*** How many questions will this CBT contain? ***</small>
                             @error('number_of_questions')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
