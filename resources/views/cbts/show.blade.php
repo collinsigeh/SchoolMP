@@ -161,7 +161,7 @@
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
                                         <td style="vertical-align: middle">{!! '<b>Q '.$sn.':</b>' !!}</td>
                                         <td style="vertical-align: middle">
-                                            <a href="#" class="collins-link-within-table">
+                                            <a href="#" class="collins-link-within-table" data-toggle="modal" data-target="#questionDetailModal{{ $question->id }}">
                                               {{ substr($question->question, 0, 84) }}
                                               @if (strlen($question->question) > 84)
                                                   ...
@@ -169,12 +169,11 @@
                                             </a>
                                         </td>
                                         <td class="text-right" style="vertical-align: middle">
-                                            <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#questionDetailModal{{ $question->id }}">Detail</button>
+                                            <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#questionDetailModal{{ $question->id }}">Details</button>
                                             <?php
                                               if(($question->user_id == $user->id && $question->user_id == $user->id) OR $user->role == 'Director')
                                               {
                                                 ?>
-                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyQuestionModal{{ $question->id }}">Modify</button>
                                                 <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $question->id }}">X</button>
                                                 <?php
                                               }
