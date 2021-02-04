@@ -58,6 +58,7 @@ class CbtsController extends Controller
         {
             return  redirect()->route('dashboard');
         }
+        session(['classsubject_id' => $data['classsubject']->id]);
 
         if(Auth::user()->status !== 'Active')
         {
@@ -642,7 +643,6 @@ class CbtsController extends Controller
         {
             $data['classsubject_id'] = 0;
         }
-
         session(['classsubject_id' => $data['classsubject_id']]);
 
         if($data['user']->role == 'Staff')

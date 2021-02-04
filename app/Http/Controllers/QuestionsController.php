@@ -10,9 +10,9 @@ use App\Director;
 use App\Staff;
 use App\Term;
 use App\Arm;
-use App\Classsubject;
 use App\Cbt;
 use App\Question;
+use App\Subject;
 use Illuminate\Http\Request;
 use Image;
 use Storage;
@@ -83,22 +83,10 @@ class QuestionsController extends Controller
         $data['term'] = Term::find($term_id);
 
         $this->validate($request, [
-            'classsubject_id'   => ['required'],
             'cbt_id'            => ['required'],
             'question'          => ['required'],
             'correct_option'    => ['required', 'in:A,B,C,D,E']
         ]);
-        
-        $classsubject = Classsubject::find($request->input('classsubject_id'));
-        if(empty($classsubject))
-        {
-            return redirect()->route('dashboard');
-        }
-        elseif($classsubject->count() < 1)
-        {
-            return  redirect()->route('dashboard');
-        }
-        session(['classsubject_id' => $classsubject->id]);
         
         $cbt = Cbt::find($request->input('cbt_id'));
         if(empty($cbt))
@@ -244,7 +232,7 @@ class QuestionsController extends Controller
         $question = new Question;
 
         $question->school_id        = $school_id;
-        $question->subject_id       = $classsubject->subject_id;
+        $question->subject_id       = $cbt->subject_id;
         $question->term_id          = $term_id;
         $question->cbt_id           = $cbt->id;
         $question->question         = $request->input('question');
@@ -286,9 +274,67 @@ class QuestionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id = 0)
     {
-        //
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        } 
+        $data['question'] = Question::find($id);
+        if(empty($data['question']))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($data['question']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if(!$this->resource_manager($data['user'], $school_id))
+        {
+            if($question->user_id != $user_id)
+            {
+                $request->session()->flash('error', "An attempt to edit questions without authorization.");
+                return redirect()->route('cbts.show', $question->cbt_id);
+            }
+        }
+        
+        $data['school'] = School::find($school_id);
+        $data['term'] = Term::find($data['question']->term_id);
+
+        if($data['user']->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'   => $data['user']->id,
+                'school_id' => $data['school']->id
+            );
+            $staff = Staff::where($db_check)->get();
+            if(empty($staff))
+            {
+                return  redirect()->route('dashboard');
+            }
+            elseif($staff->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+            $data['staff'] = $staff[0];
+        }
+
+        return view('questions.edit')->with($data);
     }
 
     /**
@@ -482,7 +528,7 @@ class QuestionsController extends Controller
 
         $request->session()->flash('success', 'Update saved.');
 
-        return redirect()->route('cbts.show', $question->cbt_id);
+        return redirect()->route('questions.edit', $question->id);
     }
 
     /**
@@ -494,5 +540,65 @@ class QuestionsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Check if the logged-in user can manipulate this resource by special privilege.
+     * All directors are managers already but staff earn it by special privilege
+     *
+     * @return boolean
+     */
+    public function resource_manager($user, $school_id)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+        
+        $resource_manager = false;
+
+        if($user->usertype == 'Client')
+        {
+            foreach($user->schools as $school)
+            {
+                if($school->id == $school_id)
+                {
+                    $resource_manager = true;
+                }
+            }
+        }
+        elseif($user->role == 'Director')
+        {
+            $db_check = array(
+                'user_id'   => $user->id,
+                'school_id' => $school_id
+            );
+            $directorcases = Director::where($db_check)->get();
+            if(!empty($directorcases))
+            {
+                if($directorcases->count() > 0)
+                {
+                    $resource_manager = true;
+                }
+            }
+        }
+        elseif($user->role == 'Staff')
+        {
+            $db_check = array(
+                'user_id'       => $user->id,
+                'school_id'     => $school_id,
+                'manage_subjects'  => 'Yes'
+            );
+            $staffcases = Staff::where($db_check)->get();
+            if(!empty($staffcases))
+            {
+                if($staffcases->count() > 0)
+                {
+                    $resource_manager = true;
+                }
+            }
+        }
+
+        return $resource_manager;
     }
 }

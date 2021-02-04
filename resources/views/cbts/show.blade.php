@@ -20,7 +20,7 @@
       <div class="col-md-10 main">
         <div class="row">
           <div class="col-8">
-          <h3>{!! $cbt->name.' - <i>'.$cbt->subject->name.'</i>' !!}</h3>
+          <h3>{!! $cbt->name.' CBT - <i>'.$cbt->subject->name.'</i>' !!}</h3>
           </div>
           <div class="col-4 text-right">
             <?php
@@ -57,7 +57,7 @@
           
                     <div class="alert alert-info">
                       <div style="margin-bottom: 30px;">
-                        <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $cbt->name.' - '.$cbt->subject->name.' (<i>'.$term->name.' - <small>'.$term->session.'</small></i>)' !!}</span>
+                        <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $cbt->name.' CBT - '.$cbt->subject->name.' (<i>'.$term->name.' - <small>'.$term->session.'</small></i>)' !!}</span>
                       </div>
 
                       <div class="row">
@@ -139,7 +139,7 @@
 
                     <div class="resource-details">
                         <div class="title">
-                            CBT Questions
+                            {{ $cbt->name.' CBT Questions' }}
                             <?php
                             if($cbt->user_id == $user->id && count($cbt->questions) < $cbt->no_questions)
                             {
@@ -169,11 +169,12 @@
                                             </a>
                                         </td>
                                         <td class="text-right" style="vertical-align: middle">
+                                            <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#questionDetailModal{{ $question->id }}">Detail</button>
                                             <?php
                                               if(($question->user_id == $user->id && $question->user_id == $user->id) OR $user->role == 'Director')
                                               {
                                                 ?>
-                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyQuestionModal{{ $question->id }}">Details</button>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyQuestionModal{{ $question->id }}">Modify</button>
                                                 <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $question->id }}">X</button>
                                                 <?php
                                               }
@@ -241,11 +242,11 @@
 @include('partials._new_question')
 <!-- End New Question Modal -->
 
-<!-- confirmLessonDeletionModal Series -->
-@foreach ($classsubject->arm->cbts as $lesson)
-@include('partials._confirm_lesson_deletion')
+<!-- confirmQuestionDeletionModal Series -->
+@foreach ($cbt->questions as $question)
+@include('partials._confirm_question_deletion')
 @endforeach
-<!-- End confirmLessonDeletionModal Series -->
+<!-- End confirmQuestionDeletionModal Series -->
 
 <!-- modifyQuestionModal Series -->
 @php
@@ -256,5 +257,15 @@
 <?php $sn++; ?>
 @endforeach
 <!-- End modifyQuestionModal Series -->
+
+<!-- questionDetailModal Series -->
+@php
+$sn = 1;
+@endphp
+@foreach ($cbt->questions as $question)
+@include('partials._question_detail')
+<?php $sn++; ?>
+@endforeach
+<!-- End questionDetailModal Series -->
 
 @endsection

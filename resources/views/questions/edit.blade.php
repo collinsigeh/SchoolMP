@@ -1,29 +1,59 @@
-<!-- modifyQuestionModal -->
-<div class="modal fade" id="modifyQuestionModal{{ $question->id }}" tabindex="-1" role="dialog" aria-labelledby="modifyQuestionModal{{ $question->id }}Label" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modifyQuestionModal{{ $question->id }}Label">Modify Question</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+@extends('layouts.school')
+
+@section('title', $school->school)
+
+@section('content')
+
+<div class="container-fluid">
+    <div class="row">
+      @if ($user->usertype == 'Client')
+        @include('partials._clients_sidebar')
+      @else
+        @if ($user->role == 'Director')
+            @include('partials._directors_sidebar')
+        @endif
+        @if ($user->role == 'Staff')
+            @include('partials._staff_sidebar')
+        @endif
+      @endif
+
+      <div class="col-md-10 main">
+        <h3>Modify CBT Question</h3>
+        <hr />
+        <div class="pagenav">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('terms.show', $term->id) }}">{!! $term->name.' - <small>'.$term->session.'</small>' !!}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('cbts.show', $question->cbt_id) }}">{{ $question->cbt->name.' CBT - '.$question->cbt->subject->name }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Modify question ID: {{ $question->cbt_id }}</li>
+            </ol>
+          </nav>
+          @include('partials._messages')
         </div>
-        <div class="modal-body">
+
+        <div class="welcome">
+
             <div class="alert alert-info">
                 <b>
-                    {!! $cbt->name.' - '.$cbt->subject->name.' (<i>'.$cbt->term->name.' - <small>'.$cbt->term->session.'</small></i>)' !!}<br  />
-                    Question {{ $sn.' of '.$cbt->no_questions }}
+                    {!! $question->cbt->name.' - '.$question->cbt->subject->name.' (<i>'.$question->cbt->term->name.' - <small>'.$question->cbt->term->session.'</small></i>)' !!}
+                    
+                    <div class="classes">
+                        @foreach ($question->cbt->arms as $arm)
+                            <span class="badge badge-info">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
+                        @endforeach
+                    </div>
                 </b>
             </div>
+
             <div class="create-form">
                 <form method="POST" action="{{ route('questions.update', $question->id) }}">
                     @csrf
                     @method('PUT')
 
                     <div class="form-group row"> 
-                        <label for="question" class="col-md-3 col-form-label text-md-right">{{ __('Question') }}</label>
+                        <label for="question" class="col-md-4 col-form-label text-md-right">{{ __('Question') }}</label>
     
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <textarea id="question" class="form-control @error('question') is-invalid @enderror" name="question" required autocomplete="question" placeholder="Enter the question here..." autofocus>{{ $question->question }}</textarea>
                             
                             @error('question')
@@ -37,7 +67,7 @@
                     <div class="form-group row"> 
                         <label for="question_photo" class="col-md-3 offset-md-3 col-form-label text-md-right">{{ __('Question photo (Optional)') }}</label>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             @if (strlen($question->question_photo) > 0)
                                 <a href="{{ config('app.url') }}/images/questions/{{ $question->question_photo }}" target="_blank" title="Click to view">
                                     <img src="{{ config('app.url') }}/images/questions/{{ $question->question_photo }}" style="max-width: 220px; border: 1px solid #dfdede;" alt="Photo can't display" />
@@ -54,9 +84,9 @@
                     </div>
 
                     <div class="form-group row"> 
-                        <label for="option_a" class="col-md-3 col-form-label text-md-right">{{ __('Option A') }}</label>
+                        <label for="option_a" class="col-md-4 col-form-label text-md-right">{{ __('Option A') }}</label>
     
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <textarea id="option_a" class="form-control @error('option_a') is-invalid @enderror" name="option_a" autocomplete="option_a" placeholder="Enter option A here..." autofocus>{{ $question->option_a }}</textarea>
                             
                             @error('option_a')
@@ -70,7 +100,7 @@
                     <div class="form-group row"> 
                         <label for="option_a_photo" class="col-md-3 offset-md-3 col-form-label text-md-right">{{ __('Option A photo (Optional)') }}</label>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             @if (strlen($question->option_a_photo) > 0)
                                 <a href="{{ config('app.url') }}/images/questions/{{ $question->option_a_photo }}" target="_blank" title="Click to view">
                                     <img src="{{ config('app.url') }}/images/questions/{{ $question->option_a_photo }}" style="max-width: 220px; border: 1px solid #dfdede;" alt="Photo can't display" />
@@ -87,9 +117,9 @@
                     </div>
 
                     <div class="form-group row"> 
-                        <label for="option_b" class="col-md-3 col-form-label text-md-right">{{ __('Option B') }}</label>
+                        <label for="option_b" class="col-md-4 col-form-label text-md-right">{{ __('Option B') }}</label>
     
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <textarea id="option_b" class="form-control @error('option_b') is-invalid @enderror" name="option_b" autocomplete="option_b" placeholder="Enter option B here..." autofocus>{{ $question->option_b }}</textarea>
                             
                             @error('option_b')
@@ -103,7 +133,7 @@
                     <div class="form-group row"> 
                         <label for="option_b_photo" class="col-md-3 offset-md-3 col-form-label text-md-right">{{ __('Option B photo (Optional)') }}</label>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             @if (strlen($question->option_b_photo) > 0)
                                 <a href="{{ config('app.url') }}/images/questions/{{ $question->option_b_photo }}" target="_blank" title="Click to view">
                                     <img src="{{ config('app.url') }}/images/questions/{{ $question->option_b_photo }}" style="max-width: 220px; border: 1px solid #dfdede;" alt="Photo can't display" />
@@ -120,9 +150,9 @@
                     </div>
 
                     <div class="form-group row"> 
-                        <label for="option_c" class="col-md-3 col-form-label text-md-right">{{ __('Option C (Optional)') }}</label>
+                        <label for="option_c" class="col-md-4 col-form-label text-md-right">{{ __('Option C (Optional)') }}</label>
     
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <textarea id="option_c" class="form-control @error('option_c') is-invalid @enderror" name="option_c" autocomplete="option_c" placeholder="Enter option C here..." autofocus>{{ $question->option_c }}</textarea>
                             
                             @error('option_c')
@@ -136,7 +166,7 @@
                     <div class="form-group row"> 
                         <label for="option_c_photo" class="col-md-3 offset-md-3 col-form-label text-md-right">{{ __('Option C photo (Optional)') }}</label>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             @if (strlen($question->option_c_photo) > 0)
                                 <a href="{{ config('app.url') }}/images/questions/{{ $question->option_c_photo }}" target="_blank" title="Click to view">
                                     <img src="{{ config('app.url') }}/images/questions/{{ $question->option_c_photo }}" style="max-width: 220px; border: 1px solid #dfdede;" alt="Photo can't display" />
@@ -153,9 +183,9 @@
                     </div>
 
                     <div class="form-group row"> 
-                        <label for="option_d" class="col-md-3 col-form-label text-md-right">{{ __('Option D (Optional)') }}</label>
+                        <label for="option_d" class="col-md-4 col-form-label text-md-right">{{ __('Option D (Optional)') }}</label>
     
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <textarea id="option_d" class="form-control @error('option_d') is-invalid @enderror" name="option_d" autocomplete="option_d" placeholder="Enter option D here..." autofocus>{{ $question->option_d }}</textarea>
                             
                             @error('option_d')
@@ -169,7 +199,7 @@
                     <div class="form-group row"> 
                         <label for="option_d_photo" class="col-md-3 offset-md-3 col-form-label text-md-right">{{ __('Option D photo (Optional)') }}</label>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             @if (strlen($question->option_d_photo) > 0)
                                 <a href="{{ config('app.url') }}/images/questions/{{ $question->option_d_photo }}" target="_blank" title="Click to view">
                                     <img src="{{ config('app.url') }}/images/questions/{{ $question->option_d_photo }}" style="max-width: 220px; border: 1px solid #dfdede;" alt="Photo can't display" />
@@ -186,9 +216,9 @@
                     </div>
 
                     <div class="form-group row"> 
-                        <label for="option_e" class="col-md-3 col-form-label text-md-right">{{ __('Option E (Optional)') }}</label>
+                        <label for="option_e" class="col-md-4 col-form-label text-md-right">{{ __('Option E (Optional)') }}</label>
     
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <textarea id="option_e" class="form-control @error('option_e') is-invalid @enderror" name="option_e"  autocomplete="option_e" placeholder="Enter option E here..." autofocus>{{ $question->option_e }}</textarea>
                             
                             @error('option_e')
@@ -202,7 +232,7 @@
                     <div class="form-group row"> 
                         <label for="option_e_photo" class="col-md-3 offset-md-3 col-form-label text-md-right">{{ __('Option E photo (Optional)') }}</label>
 
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             @if (strlen($question->option_e_photo) > 0)
                                 <a href="{{ config('app.url') }}/images/questions/{{ $question->option_e_photo }}" target="_blank" title="Click to view">
                                     <img src="{{ config('app.url') }}/images/questions/{{ $question->option_e_photo }}" style="max-width: 220px; border: 1px solid #dfdede;" alt="Photo can't display" />
@@ -219,9 +249,9 @@
                     </div>
                         
                     <div class="form-group row"> 
-                        <label for="correct_option" class="col-md-3 col-form-label text-md-right">{{ __('Correct Option') }}</label>
+                        <label for="correct_option" class="col-md-4 col-form-label text-md-right">{{ __('Correct Option') }}</label>
 
-                        <div class="col-md-9">
+                        <div class="col-md-6">
                             <select id="correct_option" class="form-control @error('correct_option') is-invalid @enderror" name="correct_option" required autocomplete="correct_option" autofocus>
                                 <option value="">Select the correct option</option>
                                 <option value="A" <?php if($question->correct_option == 'A'){ echo 'selected'; } ?>>Option A</option>
@@ -238,16 +268,17 @@
                             @enderror
                         </div>
                     </div>
-
-                    <div class="col-md-12 text-center" style="padding-top: 15px;">
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('Save') }}
-                        </button>
+    
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Save') }}
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
+
         </div>
-      </div>
-    </div>
-</div>
-<!-- End modifyQuestionModal -->
+
+@endsection

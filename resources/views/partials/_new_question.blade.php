@@ -12,7 +12,14 @@
         <div class="modal-body">
             <div class="alert alert-info">
                 <b>
-                    {{ $cbt->name.' - '.$cbt->subject->name.' - '.$classsubject->arm->schoolclass->name }}<br  />
+                    {!! $cbt->name.' - '.$cbt->subject->name.' (<i>'.$cbt->term->name.' - <small>'.$cbt->term->session.'</small></i>)' !!}
+                    
+                    <div class="classes" style="padding-bottom: 15px;">
+                        @foreach ($cbt->arms as $arm)
+                            <span class="badge badge-info">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
+                        @endforeach
+                    </div>
+
                     Question <?php echo count($cbt->questions) + 1; ?> of {{ $cbt->no_questions }}
                 </b>
             </div>
@@ -20,7 +27,6 @@
                 <form method="POST" action="{{ route('questions.store') }}" enctype="multipart/form-data">
                     @csrf
                     
-                    <input type="hidden" name="classsubject_id" value="{{ $classsubject->id }}">
                     <input type="hidden" name="cbt_id" value="{{ $cbt->id }}">
 
                     <div class="form-group row"> 

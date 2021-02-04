@@ -1,9 +1,9 @@
-<!-- modifyQuestionModal -->
-<div class="modal fade" id="modifyQuestionModal{{ $question->id }}" tabindex="-1" role="dialog" aria-labelledby="modifyQuestionModal{{ $question->id }}Label" aria-hidden="true">
+<!-- questionDetailModal -->
+<div class="modal fade" id="questionDetailModal{{ $question->id }}" tabindex="-1" role="dialog" aria-labelledby="questionDetailModal{{ $question->id }}Label" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modifyQuestionModal{{ $question->id }}Label">Modify Question</h5>
+          <h5 class="modal-title" id="questionDetailModal{{ $question->id }}Label">Question Details</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -11,9 +11,36 @@
         <div class="modal-body">
             <div class="alert alert-info">
                 <b>
-                    {!! $cbt->name.' - '.$cbt->subject->name.' (<i>'.$cbt->term->name.' - <small>'.$cbt->term->session.'</small></i>)' !!}<br  />
+                    {!! $cbt->name.' - '.$cbt->subject->name.' (<i>'.$cbt->term->name.' - <small>'.$cbt->term->session.'</small></i>)' !!}
+                    
+                    <div class="classes" style="padding-bottom: 15px;">
+                        @foreach ($cbt->arms as $arm)
+                            <span class="badge badge-info">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
+                        @endforeach
+                    </div>
+
                     Question {{ $sn.' of '.$cbt->no_questions }}
                 </b>
+            </div>
+            <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-primary">Modify</a>
+            <div class="question-detail" style="padding-top: 10px">
+                <div class="question" style="padding: 10px 0">
+                    <b>Q: </b>{{ $question->question }}
+                </div>
+                <div class="question-photo" style="padding-bottom: 20px">
+                    @if (strlen($question->question_photo) > 0)
+                        <a href="{{ config('app.url') }}/images/questions/{{ $question->question_photo }}" target="_blank" title="Click to view">
+                            <img src="{{ config('app.url') }}/images/questions/{{ $question->question_photo }}" style="max-width: 220px; border: 1px solid #dfdede;" alt="Photo can't display" />
+                        </a>
+                    @endif
+                </div>
+                <div class="options">
+                    @if (strlen($question->option_a) > 0 OR strlen($question->option_a_photo))
+                    <div class="option">
+                        <b>Option A:</b>
+                    </div>
+                    @endif
+                </div>
             </div>
             <div class="create-form">
                 <form method="POST" action="{{ route('questions.update', $question->id) }}">
@@ -250,4 +277,4 @@
       </div>
     </div>
 </div>
-<!-- End modifyQuestionModal -->
+<!-- End questionDetailModal -->
