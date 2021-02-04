@@ -22,9 +22,6 @@
                     Question {{ $sn.' of '.$cbt->no_questions }}
                 </b>
             </div>
-            @if (($question->user_id == $user->id && $question->user_id == $user->id) OR $user->role == 'Director')
-                <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-primary">Modify</a>
-            @endif
             <div class="question-detail" style="padding-top: 10px">
                 <div class="question" style="padding: 10px 0">
                     <b>Question:</b><br />{{ $question->question }}
@@ -117,6 +114,11 @@
                     </div>
                 </div>
             </div>
+            @if (($question->user_id == $user->id && $question->user_id == $user->id) OR $user->role == 'Director')
+            <div padding: 20px 0;>
+                <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-primary">Modify details</a>
+            </div>
+            @endif
         </div>
       </div>
     </div>

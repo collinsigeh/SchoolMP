@@ -17,7 +17,7 @@
                     <div class="table-responsive">
                         <table class="table table-sm table-striped">
                             <tr>
-                                <th style="vertical-align: middle;">Lesson:</th>
+                                <th style="vertical-align: middle;">Question:</th>
                                 <td style="font-size: 1.2em;">{{ $question->question }}</td>
                             </tr>
                         </table>
@@ -26,8 +26,7 @@
                     <div class="form-group row mb-0">
                         <div class="col-md-12">
                             <div class="alert alert-info">
-                                <p><b>Hint: </b>To confirm the deletion of this lesson resource, type <b>DELETE</b> in the box provided and click the <b>Confirm</b> button.</p>
-                                <b>Note: </b>Deleting this resource will also delete it from every class using it. If you want to delete it for only this class, modify it instead.
+                                <b>Hint: </b>To confirm the deletion of this lesson resource, type <b>DELETE</b> in the box provided and click the <b>Confirm</b> button.
                             </div>
                         </div>
     
@@ -40,7 +39,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <input type="hidden" name="classsubject_id" value="{{ $classsubject->id }}">
+                        <input type="hidden" name="cbt_id" value="{{ $question->cbt_id }}">
 
                         <div class="col-md-3">
                             <button type="submit" class="btn btn-danger">

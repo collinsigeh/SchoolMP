@@ -174,7 +174,7 @@
                                               if(($question->user_id == $user->id && $question->user_id == $user->id) OR $user->role == 'Director')
                                               {
                                                 ?>
-                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmLessonDeletionModal{{ $question->id }}">X</button>
+                                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmQuestionDeletionModal{{ $question->id }}">X</button>
                                                 <?php
                                               }
                                             ?>

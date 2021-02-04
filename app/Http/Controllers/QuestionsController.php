@@ -537,9 +537,51 @@ class QuestionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id=0)
     {
-        //
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            $request->session()->flash('error', 'Error 4' );
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            'confirmation_to_delete' => ['required', 'in:DELETE'],
+            'cbt_id'        => ['required']
+        ]);
+
+        $question = Question::find($id);
+
+        if(empty($question))
+        {
+            $request->session()->flash('error', 'Error 2: Attempt to delete unavailable resource.' );
+            return redirect()->route('dashboard');
+        }
+        
+        if(count($question->questionattempts) > 0)
+        {
+            $request->session()->flash('error', 'Error 1: Attempt to delete question with linked resources.' );
+            return redirect()->route('dashboard');
+        }
+
+        $question->delete();
+        $request->session()->flash('success', 'Item deleted');
+        
+        return redirect()->route('cbts.show', $request->input('cbt_id'));
     }
 
     /**
