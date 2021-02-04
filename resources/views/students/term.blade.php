@@ -32,6 +32,11 @@
         <div class="welcome">
           <div class="row">
             <div class="col-md-8">
+                @if (count($enrolment->results) >= 1)
+                    <div class="alert alert-info">
+                      <b><u>Hint:</u></b><br />Click on a subject to view your performance and access the lessons and CBTs.
+                    </div>
+                @endif
                 <div class="alert alert-info">
                     <div style="margin-bottom: 30px;">
                       <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="collins-this-term-icon"> <span class="collins-this-term">{!! $enrolment->term->name.' - <small>'.$enrolment->term->session.'</small>' !!}</span>
@@ -71,11 +76,6 @@
                     </div>
                     <div class="body">                          
                         <div class="table-responsive bg-light">
-                            @if (count($enrolment->results) >= 1)
-                                <div class="alert alert-info">
-                                  Click on a subject to view your performance and access the lessons and CBTs.
-                                </div>
-                            @endif
                             <table class="table table-striped table-hover table-sm">
                                 @if (count($enrolment->results) < 1)
                                     <tr>

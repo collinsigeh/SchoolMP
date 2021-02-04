@@ -165,7 +165,7 @@
                             <tr>
                               <td>
                                 <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('students.term', $result_slip->enrolment_id) }}">
-                                  <img src="{{ config('app.url') }}/images/icons/subjects_icon.png" alt="subjects_icon" class="options-icon">  Back to subject list
+                                  <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="options-icon">  Back to {!! $result_slip->term->name.' - <small>'.$result_slip->term->session.'</small>' !!}
                                 </a>
                               </td>
                             </tr>
