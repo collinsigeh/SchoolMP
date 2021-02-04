@@ -114,11 +114,13 @@
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
                                           <td style="vertical-align: middle;">
-                                            <a class="collins-link-within-table" href="#">
+                                            <a class="collins-link-within-table" href="{{ route('cbts.show', $cbt->id) }}">
+                                              <b>
                                               {{ substr($cbt->name, 0, 42) }}
                                               @if (strlen($cbt->name) > 42)
                                                   ...
                                               @endif
+                                              </b>
                                               <br>
                                               @foreach ($cbt->arms as $arm)
                                                 <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
@@ -176,11 +178,13 @@
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
                                           <td style="vertical-align: middle;">
-                                            <a class="collins-link-within-table" href="#">
+                                            <a class="collins-link-within-table" href="{{ route('cbts.show', $cbt->id) }}">
+                                              <b>
                                               {{ substr($cbt->name, 0, 42) }}
                                               @if (strlen($cbt->name) > 42)
                                                   ...
                                               @endif
+                                              </b>
                                               <br>
                                               @foreach ($cbt->arms as $arm)
                                                 <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
@@ -238,11 +242,13 @@
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
                                           <td style="vertical-align: middle;">
-                                            <a class="collins-link-within-table" href="#">
+                                            <a class="collins-link-within-table" href="{{ route('cbts.show', $cbt->id) }}">
+                                              <b>
                                               {{ substr($cbt->name, 0, 42) }}
                                               @if (strlen($cbt->name) > 42)
                                                   ...
                                               @endif
+                                              </b>
                                               <br>
                                               @foreach ($cbt->arms as $arm)
                                                 <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
@@ -300,11 +306,13 @@
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
                                           <td style="vertical-align: middle;">
-                                            <a class="collins-link-within-table" href="#">
+                                            <a class="collins-link-within-table" href="{{ route('cbts.show', $cbt->id) }}">
+                                              <b>
                                               {{ substr($cbt->name, 0, 42) }}
                                               @if (strlen($cbt->name) > 42)
                                                   ...
                                               @endif
+                                              </b>
                                               <br>
                                               @foreach ($cbt->arms as $arm)
                                                 <span class="badge badge-secondary">{{ $arm->schoolclass->name.' '.$arm->name }}</span>
@@ -361,7 +369,7 @@
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
                                           <td style="vertical-align: middle;">
-                                            <a class="collins-link-within-table" href="#">
+                                            <a class="collins-link-within-table" href="{{ route('cbts.show', $cbt->id) }}">
                                               <b>
                                               {{ substr($cbt->name, 0, 42) }}
                                               @if (strlen($cbt->name) > 42)
