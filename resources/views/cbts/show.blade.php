@@ -104,7 +104,14 @@
                                             {!! '<span class="badge badge-danger">NOT Specified</span>' !!}
                                         </td>
                                     @else
-                                        <td>{!! $cbt->user->name.' - <small>'.$cbt->user->staff->phone.'</small>' !!}</td>
+                                        <td>
+                                            {{ $cbt->user->name }}
+                                            @if ($cbt->user->role == 'Staff')
+                                                {!!' - <small>'.$cbt->user->staff->phone.'</small>' !!}
+                                            @elseif ($cbt->user->role == 'Director')
+                                                {!!' - <small>'.$cbt->user->director->phone.'</small>' !!}
+                                            @endif
+                                        </td>
                                     @endif
                                   </tr>
                               </table>
@@ -246,16 +253,6 @@
 @include('partials._confirm_question_deletion')
 @endforeach
 <!-- End confirmQuestionDeletionModal Series -->
-
-<!-- modifyQuestionModal Series -->
-@php
-    $sn = 1;
-@endphp
-@foreach ($cbt->questions as $question)
-@include('partials._modify_question')
-<?php $sn++; ?>
-@endforeach
-<!-- End modifyQuestionModal Series -->
 
 <!-- questionDetailModal Series -->
 @php

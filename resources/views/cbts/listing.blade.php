@@ -146,7 +146,7 @@
                                               if($cbt->user_id == $user->id)
                                               {
                                                 ?>
-                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Details</button>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#cbtDetailModal{{ $cbt->id }}">Details</button>
                                                 <?php
                                               }
                                               echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
@@ -208,7 +208,7 @@
                                               if($cbt->user_id == $user->id)
                                               {
                                                 ?>
-                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Modify</button>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#cbtDetailModal{{ $cbt->id }}">Details</button>
                                                 <?php
                                               }
                                               echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
@@ -270,7 +270,7 @@
                                               if($cbt->user_id == $user->id)
                                               {
                                                 ?>
-                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Modify</button>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#cbtDetailModal{{ $cbt->id }}">Details</button>
                                                 <?php
                                               }
                                               echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
@@ -332,7 +332,7 @@
                                               if($cbt->user_id == $user->id)
                                               {
                                                 ?>
-                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Modify</button>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#cbtDetailModal{{ $cbt->id }}">Details</button>
                                                 <?php
                                               }
                                               echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
@@ -396,7 +396,7 @@
                                               if($cbt->user_id == $user->id)
                                               {
                                                 ?>
-                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modifyLessonModal{{ $cbt->id }}">Details</button>
+                                                <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#cbtDetailModal{{ $cbt->id }}">Details</button>
                                                 <?php
                                               }
                                               echo '<a href="'.route('cbts.show', $cbt->id).'" class="btn btn-sm btn-outline-primary">Questions</a>';
@@ -470,10 +470,10 @@
 @endforeach
 <!-- End confirmCBTDeletionModal Series -->
 
-<!-- modifyLessonModal Series -->
-@foreach ($classsubject->arm->cbts as $lesson)
-@include('partials._modify_lesson')
+<!-- cbtDetailModal Series -->
+@foreach ($classsubject->arm->cbts as $cbt)
+@include('partials._cbt_detail')
 @endforeach
-<!-- End modifyLessonModal Series -->
+<!-- End cbtDetailModal Series -->
 
 @endsection
