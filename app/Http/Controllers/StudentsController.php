@@ -1058,9 +1058,9 @@ class StudentsController extends Controller
         //check for the cbt status and attempt before granting access to exam instructions'
         if($data['cbt']->type == 'Practice Quiz')
         {
-            if($data['result_slip']->access_assignment != 'Yes')
+            if($data['result_slip']->enrolment->access_assignment != 'Yes')
             {
-                $request->session()->flash('error', 'You do NOT have the permission to partake in the selected CBT.');
+                $request->session()->flash('error', 'You do NOT 4have the permission to partake in the selected CBT.');
                 return redirect()->route('students.cbts', $data['result_slip']->id);
             }
         }
@@ -1068,7 +1068,7 @@ class StudentsController extends Controller
         {
             if($data['cbt']->type == 'Exam')
             {
-                if($data['result_slip']->access_exam != 'Yes')
+                if($data['result_slip']->enrolment->access_exam != 'Yes')
                 {
                     $request->session()->flash('error', 'You do NOT have the permission to partake in the selected CBT.');
                     return redirect()->route('students.cbts', $data['result_slip']->id);
@@ -1076,7 +1076,7 @@ class StudentsController extends Controller
             }
             else
             {
-                if($data['result_slip']->access_ca != 'Yes')
+                if($data['result_slip']->enrolment->access_ca != 'Yes')
                 {
                     $request->session()->flash('error', 'You do NOT have the permission to partake in the selected CBT.');
                     return redirect()->route('students.cbts', $data['result_slip']->id);
