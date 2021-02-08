@@ -37,6 +37,10 @@
                           {
                             echo '<span class="badge badge-info">Pending Approval</span>';
                           }
+                          if($cbt->type != 'Practice Quiz')
+                          {
+                              echo ' <a href="'.route('cbts.show', $cbt->id).'">View questions to update status</a>';
+                          }
                       @endphp
                     </td>
                   </tr>
