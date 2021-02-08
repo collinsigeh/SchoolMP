@@ -645,6 +645,8 @@ class CbtsController extends Controller
         }
         session(['classsubject_id' => $data['classsubject_id']]);
 
+        $data['manage_cbt'] = 'No';
+
         if($data['user']->role == 'Staff')
         {
             $db_check = array(
@@ -661,7 +663,13 @@ class CbtsController extends Controller
                 return  redirect()->route('dashboard');
             }
             $data['staff'] = $staff[0];
+            
+            if($data['staff']->manage_all_result == 'Yes' OR $data['staff']->manage_subjects == 'Yes')
+            {
+                $data['manage_cbt'] = 'Yes';
+            }
         }
+
 
         return view('cbts.show')->with($data);
     }

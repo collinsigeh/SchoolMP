@@ -28,6 +28,7 @@ Route::resource('/bankdetails', 'BankdetailsController');
 
 Route::resource('/calendars', 'CalendarsController');
 
+Route::get('/cbts/cbt_approval/{id}', 'CbtsController@cbt_approval')->name('cbts.cbt_approval');
 Route::get('/cbts/listing/{id}', 'CbtsController@listing')->name('cbts.listing');
 Route::get('/cbts/newexam/{id}', 'CbtsController@newexam')->name('cbts.newexam');
 Route::get('/cbts/new3rdtest/{id}', 'CbtsController@new3rdtest')->name('cbts.new3rdtest');

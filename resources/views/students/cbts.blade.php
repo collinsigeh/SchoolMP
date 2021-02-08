@@ -82,7 +82,7 @@
                                   @endphp
                                   @foreach ($result_slip->classsubject->arm->cbts as $cbt)
                                     <?php
-                                    if($cbt->subject_id == $result_slip->classsubject->subject_id && $cbt->status == 'Approved')
+                                    if($cbt->subject_id == $result_slip->classsubject->subject_id && $cbt->status == 'Approved' && $cbt->no_questions == count($cbt->questions))
                                     {
                                       ?>
                                       <tr>

@@ -24,11 +24,20 @@
           </div>
           <div class="col-4 text-right">
             <?php
-            if($cbt->user_id == $user->id && count($cbt->questions) < $cbt->no_questions)
+            if($cbt->user_id == $user->id && count($cbt->questions) != $cbt->no_questions)
             {
               ?>
               <button class="btn btn-primary" data-toggle="modal" data-target="#newQuestionModal">New Question</button>
               <?php
+            }
+            else
+            {
+                if(($manage_cbt == 'Yes' OR $user->role == 'Director') && $cbt->type != 'Practice Quiz')
+                {
+                ?>
+                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#cbtApprovalModal">CBT Approval</button>
+                <?php
+                }
             }
             ?>
           </div>
@@ -148,11 +157,20 @@
                         <div class="title">
                             {{ $cbt->name.' CBT Questions' }}
                             <?php
-                            if($cbt->user_id == $user->id && count($cbt->questions) < $cbt->no_questions)
+                            if($cbt->user_id == $user->id && count($cbt->questions) != $cbt->no_questions)
                             {
                               ?>
                               <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newQuestionModal">Add new</button>
                               <?php
+                            }
+                            else
+                            {
+                                if(($manage_cbt == 'Yes' OR $user->role == 'Director') && $cbt->type != 'Practice Quiz')
+                                {
+                                ?>
+                                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#cbtApprovalModal">CBT Approval</button>
+                                <?php
+                                }
                             }
                             ?>
                         </div>
@@ -247,6 +265,10 @@
 <!-- New Question Modal -->
 @include('partials._new_question')
 <!-- End New Question Modal -->
+
+<!-- CBT Approval Modal -->
+@include('partials._cbt_approval')
+<!-- End CBT Approval Modal -->
 
 <!-- confirmQuestionDeletionModal Series -->
 @foreach ($cbt->questions as $question)

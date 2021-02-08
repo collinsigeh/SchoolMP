@@ -1056,6 +1056,10 @@ class StudentsController extends Controller
         }
 
         //check for the cbt status and attempt before granting access to exam instructions'
+        if (count($data['cbt']->questions) != $data['cbt']->no_questions) {
+            $request->session()->flash('error', 'The CBT questions are not complete.');
+            return redirect()->route('students.cbts', $data['result_slip']->id);
+        }
         if ($data['cbt']->status != 'Approved') {
             $request->session()->flash('error', 'Attempt to view a yet to be approved CBT');
             return redirect()->route('students.cbts', $data['result_slip']->id);
