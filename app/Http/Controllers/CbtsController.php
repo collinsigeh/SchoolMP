@@ -884,6 +884,79 @@ class CbtsController extends Controller
     }
 
     /**
+     * Update the status of resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function cbt_approval(Request $request, $id=0)
+    {
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $cbt = Cbt::find($id);
+        if(empty($cbt))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($cbt->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+        $data['user'] = User::find($user_id);
+
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        
+        $data['school'] = School::find($school_id);
+
+        if(session('term_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $term_id = session('term_id');
+        
+        $data['term'] = Term::find($term_id);
+
+        $this->validate($request, [
+            'status'            => ['required', 'in:Approved,Rejected']
+        ]);
+                
+        if($request->input('classsubject_id') > 0)
+        {
+            $classsubject = Classsubject::find($request->input('classsubject_id'));
+            if(empty($classsubject))
+            {
+                return redirect()->route('dashboard');
+            }
+            elseif($classsubject->count() < 1)
+            {
+                return  redirect()->route('dashboard');
+            }
+        }
+                
+        $cbt->status = $request->input('status');
+
+        $cbt->save();
+
+        $request->session()->flash('success', 'Update saved!.');
+
+        return redirect()->route('cbts.show', $cbt->id);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

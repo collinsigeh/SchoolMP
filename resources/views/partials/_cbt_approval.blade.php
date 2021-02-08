@@ -108,7 +108,6 @@
             <div class="create-form">
                 <form method="POST" action="{{ route('cbts.cbt_approval', $cbt->id) }}">
                     @csrf
-                    @method('PUT')
                                         
                     <div class="form-group row mb-0">
                         <div class="col-md-12">
@@ -123,7 +122,7 @@
                             <select name="status" id="status" class="form-control">
                                 <option value="">Select a status</option>
                                 <option value="Approved">Approved</option>
-                                <option value="Rejected">Rejected</option>
+                                <option value="Rejected">NOT Approved</option>
                             </select>
     
                             @error('status')
