@@ -88,7 +88,28 @@
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
                                           <td style="vertical-align: middle;">
-                                            <a class="collins-link-within-table" href="{{ route('students.cbt', $cbt->id) }}">
+                                            <a class="collins-link-within-table" 
+                                                href="
+                                                @if ($cbt->type == 'Exam')
+                                                    @if ($result_slip->enrolment->access_exam == 'Yes')
+                                                        {{ route('students.cbt', $cbt->id) }}
+                                                    @else
+                                                        {{ '#' }}
+                                                    @endif
+                                                @elseif($cbt->type == '3rd Test' OR $cbt->type == '2nd Test' OR $cbt->type == '1st Test')
+                                                    @if ($result_slip->enrolment->access_ca == 'Yes')
+                                                        {{ route('students.cbt', $cbt->id) }}
+                                                    @else
+                                                        {{ '#' }}
+                                                    @endif
+                                                @else
+                                                    @if ($result_slip->enrolment->access_assignment == 'Yes')
+                                                        {{ route('students.cbt', $cbt->id) }}
+                                                    @else
+                                                        {{ '#' }}
+                                                    @endif
+                                                @endif
+                                                ">
                                               <b>
                                               {{ substr($cbt->name, 0, 42) }}
                                               @if (strlen($cbt->name) > 42)
@@ -112,12 +133,28 @@
                                                 }
                                             @endphp
                                             @if ($cbt->type == 'Practice Quiz')
-                                            <span class="badge badge-secondary">{{ $attempts.' practice attempts' }}</span>
-                                                <a href="{{ route('students.cbt', $cbt->id) }}" class="btn btn-sm btn-outline-primary">Take CBT</a>
+                                                <span class="badge badge-secondary">{{ $attempts.' practice attempts' }}</span>
+                                                @if ($result_slip->enrolment->access_assignment == 'Yes')
+                                                    <a href="{{ route('students.cbt', $cbt->id) }}" class="btn btn-sm btn-outline-primary">Take CBT</a>
+                                                @else
+                                                    <span class="badge badge-danger">NOT allowed participation</span>
+                                                @endif
                                             @else
                                                 <span class="badge badge-secondary">{{ $attempts.' of '.$cbt->no_attempts.' Attempts' }}</span>
                                                 @if ($cbt->no_attempts != count($cbt->attempts))
-                                                    <a href="{{ route('students.cbt', $cbt->id) }}" class="btn btn-sm btn-outline-primary">Take CBT</a>
+                                                    @if ($cbt->type == 'Exam')
+                                                        @if ($result_slip->enrolment->access_exam == 'Yes')
+                                                            <a href="{{ route('students.cbt', $cbt->id) }}" class="btn btn-sm btn-outline-primary">Take CBT</a>
+                                                        @else
+                                                            <span class="badge badge-danger">NOT allowed participation</span>
+                                                        @endif
+                                                    @else
+                                                        @if ($result_slip->enrolment->access_ca == 'Yes')
+                                                            <a href="{{ route('students.cbt', $cbt->id) }}" class="btn btn-sm btn-outline-primary">Take CBT</a>
+                                                        @else
+                                                            <span class="badge badge-danger">NOT allowed participation</span>
+                                                        @endif
+                                                    @endif
                                                 @endif
                                             @endif
                                           </td>

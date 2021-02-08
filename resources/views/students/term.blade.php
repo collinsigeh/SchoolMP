@@ -54,8 +54,6 @@
                               </tr>
                           </table>
                         </div>
-                      </div>
-                      <div class="col-md-6">
                         <div class="table-responsive">
                           <table class="table table-striped table-bordered table-hover table-sm">
                               <tr class="bg-light">
@@ -65,6 +63,75 @@
                                 <td><b>Closing date:</b></td><td>{{ date('D, d-M-Y', strtotime($enrolment->term->closing_date)) }}</td>
                               </tr>
                           </table>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="table-responsive collins-table-pem">
+                            <table class="table table-striped table-bordered table-hover table-sm">
+                                <tr>
+                                    <th colspan="2" class="text-center">TERMLY PRIVILEGES</th>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">To write exams:</th>
+                                    <td class="bg-light"> 
+                                        @php
+                                        if($enrolment->access_exam == 'Yes')
+                                        {
+                                            echo '<span class="badge badge-success">Permitted</span>';
+                                        }
+                                        else
+                                        {
+                                            echo '<span class="badge badge-danger">NOT permitted</span>';
+                                        }
+                                    @endphp
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">To partake in CA:</th>
+                                    <td class="bg-light">
+                                        @php
+                                        if($enrolment->access_ca == 'Yes')
+                                        {
+                                            echo '<span class="badge badge-success">Permitted</span>';
+                                        }
+                                        else
+                                        {
+                                            echo '<span class="badge badge-danger">NOT permitted</span>';
+                                        }
+                                    @endphp
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">To partake in assignments:</th>
+                                    <td class="bg-light">
+                                        @php
+                                        if($enrolment->access_assignment == 'Yes')
+                                        {
+                                            echo '<span class="badge badge-success">Permitted</span>';
+                                        }
+                                        else
+                                        {
+                                            echo '<span class="badge badge-danger">NOT permitted</span>';
+                                        }
+                                    @endphp
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">To access termly report:</th>
+                                    <td class="bg-light">
+                                        @php
+                                        if($enrolment->access_result == 'Yes')
+                                        {
+                                            echo '<span class="badge badge-success">Permitted</span>';
+                                        }
+                                        else
+                                        {
+                                            echo '<span class="badge badge-danger">NOT permitted</span>';
+                                        }
+                                    @endphp
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                       </div> 
                     </div>
