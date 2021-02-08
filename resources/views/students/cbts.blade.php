@@ -82,7 +82,7 @@
                                   @endphp
                                   @foreach ($result_slip->classsubject->arm->cbts as $cbt)
                                     <?php
-                                    if($cbt->subject_id == $result_slip->classsubject->subject_id)
+                                    if($cbt->subject_id == $result_slip->classsubject->subject_id && $cbt->status == 'Approved')
                                     {
                                       ?>
                                       <tr>
@@ -100,8 +100,23 @@
                                               @endif
                                             </a>
                                           </td>
-                                          <td style="vertical-align: middle">
-                                            
+                                          <td class="text-right" style="vertical-align: middle">
+                                            @php
+                                                $attempts = 0;
+                                                foreach($result_slip->enrolment->attempts as $attempt)
+                                                {
+                                                    if($attempt->cbt_id == $cbt->id)
+                                                    {
+                                                        $attempts++;
+                                                    }
+                                                }
+                                            @endphp
+                                            @if ($cbt->type == 'Practice Quiz')
+                                            <span class="badge badge-secondary">{{ $attempts.' practice attempts' }}</span>
+                                            @else
+                                            <span class="badge badge-secondary">{{ $attempts.' of '.$cbt->no_attempts.' Attempts' }}</span>
+                                            @endif
+                                            <a href="#" class="btn btn-sm btn-outline-primary">Take CBT</a>
                                           </td>
                                       </tr>
                                       <?php
