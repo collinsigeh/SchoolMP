@@ -113,10 +113,13 @@
                                             @endphp
                                             @if ($cbt->type == 'Practice Quiz')
                                             <span class="badge badge-secondary">{{ $attempts.' practice attempts' }}</span>
+                                                <a href="{{ route('students.cbt', $cbt->id) }}" class="btn btn-sm btn-outline-primary">Take CBT</a>
                                             @else
-                                            <span class="badge badge-secondary">{{ $attempts.' of '.$cbt->no_attempts.' Attempts' }}</span>
+                                                <span class="badge badge-secondary">{{ $attempts.' of '.$cbt->no_attempts.' Attempts' }}</span>
+                                                @if ($cbt->no_attempts != count($cbt->attempts))
+                                                    <a href="{{ route('students.cbt', $cbt->id) }}" class="btn btn-sm btn-outline-primary">Take CBT</a>
+                                                @endif
                                             @endif
-                                            <a href="{{ route('students.cbt', $cbt->id) }}" class="btn btn-sm btn-outline-primary">Take CBT</a>
                                           </td>
                                       </tr>
                                       <?php

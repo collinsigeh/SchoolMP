@@ -72,7 +72,7 @@
                 <li>Revise your answers before submission.</li>
                 <li>Ensure your answers are submitted once you've completed the CBT.</li>
                 @if (strlen($cbt->supervisor_pass) > 0)
-                    <li>To start this CBT, request the exam supervisor to enter his/her email and the supervisor passcode.</li>
+                    <li>To start this CBT, request the exam supervisor to enter his/her <b>email</b> and the <b>exam passcode</b>.</li>
                 @else
                     <li>To start this CBT, click on the "Start NOW" button.</li>
                 @endif
@@ -100,12 +100,12 @@
                     </div>
     
                     <div class="form-group row"> 
-                        <label for="supervisor_passcode" class="col-md-3 col-form-label text-md-right">{{ __('Supervisor Passcode:') }}</label>
+                        <label for="exam_passcode" class="col-md-3 col-form-label text-md-right">{{ __('Exam Passcode:') }}</label>
     
                         <div class="col-md-6">
-                            <input id="supervisor_passcode" type="password" class="form-control @error('supervisor_passcode') is-invalid @enderror" name="supervisor_passcode" value="{{ old('supervisor_passcode') }}" required autocomplete="supervisor_passcode" autofocus>
+                            <input id="exam_passcode" type="password" class="form-control @error('exam_passcode') is-invalid @enderror" name="exam_passcode" value="{{ old('exam_passcode') }}" required autocomplete="exam_passcode" autofocus>
     
-                            @error('supervisor_passcode')
+                            @error('exam_passcode')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
