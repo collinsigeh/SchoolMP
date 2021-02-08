@@ -4,136 +4,145 @@
 
 @section('content')
 
-<div class="container-fluid">
-    <div class="row">
-      @include('partials._student_sidebar')
-
-      <div class="col-md-10 main">
+<div class="container">
+    <div style="padding: 40px 0 10px 0;">
         <div class="row">
-          <div class="col-8">
-          <h3>{{ $cbt->name }} <?php if($cbt->type == 'Practice Quiz'){ echo ' - no.'.$cbt->id ;} ?></h3>
-          </div>
-          <div class="col-4 text-right">
-              
-          </div>
-        </div>
-        <hr />
-        <div class="pagenav">
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('students.term', $result_slip->enrolment_id) }}">{!! $result_slip->term->name.' - <small><i>'.$result_slip->term->session.'</i></small>' !!}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('students.subject', $result_slip->id) }}">{{ $cbt->subject->name }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('students.subject', $result_slip->id) }}">CBT</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $cbt->name }} <?php if($cbt->type == 'Practice Quiz'){ echo ' - no.'.$cbt->id ;} ?></li>
-            </ol>
-          </nav>
-          @include('partials._messages')
-        </div>
-
-        <div class="welcome">
-            <div class="row">
-                <div class="col-md-8">
-          
-                    <div class="alert alert-info">
-                      <div style="margin-bottom: 30px;">
-                        <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-this-term-icon"> <span class="collins-this-term">{{ $cbt->name }} <?php if($cbt->type == 'Practice Quiz'){ echo ' - no.'.$cbt->id ;} ?> {!! '(<i>'.$result_slip->term->name.' - <small>'.$result_slip->term->session.'</small></i>)' !!}</span>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-md-6">
-                            <div class="table-responsive">
-                              <table class="table table-striped table-bordered table-hover table-sm">
-                                  <tr class="bg-light">
-                                    <td width="130px"><b>Subject:</b></td><td>{{ $cbt->subject->name.' '.$result_slip->classsubject->arm->name }} </td>
-                                  </tr>
-                              </table>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="table-responsive">
-                              <table class="table table-striped table-bordered table-hover table-sm">
-                                  <tr class="bg-light">
-                                    <td width="130px"><b>Current attempt:</b></td>
-                                    <td>
-                                        @php
-                                            $attempts = 0;
-                                            foreach($result_slip->enrolment->attempts as $attempt)
-                                            {
-                                                if($attempt->cbt_id == $cbt->id)
-                                                {
-                                                    $attempts++;
-                                                }
-                                            }
-                                            $current_attempt = $attempts + 1;
-                                            if ($cbt->type == 'Practice Quiz') {
-                                                echo $current_attempt.' practice attempts';
-                                            } else {
-                                                echo $current_attempt.' of '.$cbt->no_attempts;
-                                            }
-                                        @endphp
-                                    </td>
-                                  </tr>
-                              </table>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div style="padding-bottom: 15px;"></div>
-
-                    <div class="resource-details">
-                        <div class="title">
-                            Instructions
-                        </div>
-                        <div class="body">
-                            
-                            <div class="alert alert-info">
-                                Follow instructions carefully.
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div style="padding-bottom: 15px;"></div>
-                
-                </div>
-
-
-                <div class="col-md-4">
-                    <div class="resource-details">
-                        <div class="title">
-                            More options
-                        </div>
-                        <div class="body">
-                          <div class="table-responsive">    
-                            <table class="table">
-                              <tr>
-                                <td>
-                                  <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('students.cbts', $result_slip->id) }}">
-                                    <img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="options-icon">  Back to CBT list
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('students.subject', $result_slip->id) }}">
-                                    <img src="{{ config('app.url') }}/images/icons/report1_icon.png" alt="report_icon" class="options-icon">  Back to my performance summary
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('students.term', $result_slip->enrolment_id) }}">
-                                    <img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="options-icon">  Back to {!! $result_slip->term->name.' - <small>'.$result_slip->term->session.'</small>' !!}
-                                  </a>
-                                </td>
-                              </tr>
-                            </table>
-                          </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-9">
+                <h3>{{ $cbt->name }} <?php if($cbt->type == 'Practice Quiz'){ echo ' - no.'.$cbt->id ;} ?></h3>
             </div>
-
+            <div class="col-3 text-right">
+                <a href="{{ route('students.cbts', $result_slip->id) }}" class="btn btn-primary">Back</a>
+            </div>
         </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-sm">
+            <tr class="bg-light">
+                <td width="130px"><b>Session term:</b></td>
+                <td>{!! $result_slip->term->name.' - <small><i>'.$result_slip->term->session.'</i></small>' !!}</td>
+            </tr>
+            <tr class="bg-light">
+                <td width="130px"><b>Subject:</b></td>
+                <td>{{ $cbt->subject->name }}</td>
+            </tr>
+            <tr class="bg-light">
+                <td width="130px"><b>Duration:</b></td>
+                <td>{{ $cbt->duration.' minutes' }}</td>
+            </tr>
+            <tr class="bg-light">
+                <td width="130px"><b>Current attempt:</b></td>
+                <td>
+                    @php
+                        $attempts = 0;
+                        foreach($result_slip->enrolment->attempts as $attempt)
+                        {
+                            if($attempt->cbt_id == $cbt->id)
+                            {
+                                $attempts++;
+                            }
+                        }
+                        $current_attempt = $attempts + 1;
+                        if ($cbt->type == 'Practice Quiz') {
+                            if($current_attempt == 1)
+                            {
+                                echo $current_attempt.'st practice attempt';
+                            }
+                            else
+                            {
+                                echo ' practice attempts';
+                            }
+                        } else {
+                            echo $current_attempt.' of '.$cbt->no_attempts;
+                        }
+                    @endphp
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="resource-details" style="margin: 20px 0;">
+        <div class="title">
+            Instructions
+        </div>
+        <div class="body">
+            
+            <p>Follow the instructions below carefully.</p>
+            <ul>
+                <li>There are {{ count($cbt->questions) }} questions in all.</li>
+                <li>For each question, select the correct option as you answer.</li>
+                <li>Revise your answers before submission.</li>
+                <li>Ensure your answers are submitted once you've completed the CBT.</li>
+                @if (strlen($cbt->supervisor_pass) > 0)
+                    <li>To start this CBT, request the exam supervisor to enter his/her email and the supervisor passcode.</li>
+                @else
+                    <li>To start this CBT, click on the "Start NOW" button.</li>
+                @endif
+            </ul>
+            
+            @if (strlen($cbt->supervisor_pass) > 0)
+            <div class="form" style="border: 1px solid #d5d5d5; padding: 40px 20px 0 20px;">
+                <form method="POST" action="{{ route('students.cbt_live', $cbt->id) }}">
+                    @csrf
+
+                    <input type="hidden" name="enrolment_id" value="{{ $result_slip->enrolment_id }}">
+
+                    <div class="form-group row"> 
+                        <label for="supervisor_email" class="col-md-3 col-form-label text-md-right">{{ __('Supervisor email:') }}</label>
+    
+                        <div class="col-md-6">
+                            <input id="supervisor_email" type="email" class="form-control @error('supervisor_email') is-invalid @enderror" name="supervisor_email" value="{{ old('supervisor_email') }}" required autocomplete="supervisor_email" autofocus>
+    
+                            @error('supervisor_email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+    
+                    <div class="form-group row"> 
+                        <label for="supervisor_passcode" class="col-md-3 col-form-label text-md-right">{{ __('Supervisor Passcode:') }}</label>
+    
+                        <div class="col-md-6">
+                            <input id="supervisor_passcode" type="password" class="form-control @error('supervisor_passcode') is-invalid @enderror" name="supervisor_passcode" value="{{ old('supervisor_passcode') }}" required autocomplete="supervisor_passcode" autofocus>
+    
+                            @error('supervisor_passcode')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+    
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-3">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Start NOW') }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            @else
+            <div class="form" style="border: 1px solid #d5d5d5; padding: 20px 20px 0 20px;">
+                <form method="POST" action="{{ route('students.cbt_live', $cbt->id) }}">
+                    @csrf
+
+                    <input type="hidden" name="enrolment_id" value="{{ $result_slip->enrolment_id }}">
+    
+                    <div class="form-group row mb-0">
+                        <div class="col-md-6 offset-md-3">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Start NOW') }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            @endif
+            
+        </div>
+    </div>
+</div>
+
 
 @endsection
