@@ -88,7 +88,7 @@
                                       <tr>
                                         <td style="width: 50px; vertical-align: middle;"><img src="{{ config('app.url') }}/images/icons/quiz1_icon.png" alt="cbt_icon" class="collins-table-item-icon"></td>
                                           <td style="vertical-align: middle;">
-                                            <a class="collins-link-within-table" href="{{ route('cbts.show', $cbt->id) }}">
+                                            <a class="collins-link-within-table" href="{{ route('students.cbt', $cbt->id) }}">
                                               <b>
                                               {{ substr($cbt->name, 0, 42) }}
                                               @if (strlen($cbt->name) > 42)
@@ -116,7 +116,7 @@
                                             @else
                                             <span class="badge badge-secondary">{{ $attempts.' of '.$cbt->no_attempts.' Attempts' }}</span>
                                             @endif
-                                            <a href="#" class="btn btn-sm btn-outline-primary">Take CBT</a>
+                                            <a href="{{ route('students.cbt', $cbt->id) }}" class="btn btn-sm btn-outline-primary">Take CBT</a>
                                           </td>
                                       </tr>
                                       <?php

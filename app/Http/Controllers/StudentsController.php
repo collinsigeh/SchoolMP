@@ -14,6 +14,7 @@ use App\Student;
 use App\Enrolment;
 use App\Order;
 use App\Result;
+use App\Cbt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Image;
@@ -978,7 +979,100 @@ class StudentsController extends Controller
         {
             return  redirect()->route('dashboard');
         }
+        session(['result_slip_id' => $data['result_slip']->id]);
 
         return view('students.cbts')->with($data);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function cbt(Request $request, $id = 0)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        if($id < 1)
+        {
+            $request->session()->flash('error', 'Error 1');
+            return redirect()->route('dashboard');
+        }
+
+        $user_id = Auth::user()->id;
+
+        $db_check = array(
+            'user_id' => $user_id
+        );
+        $data['user'] = User::find($user_id);
+        
+        if(session('school_id') < 1)
+        {
+            $request->session()->flash('error', 'Error 2');
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        
+        $data['school'] = School::find($school_id);
+        
+        if(session('result_slip_id') < 1)
+        {
+            $request->session()->flash('error', 'Error 3');
+            return redirect()->route('dashboard');
+        }
+        $data['result_slip'] = Result::find(session('result_slip_id'));
+        
+        $db_check = array(
+            'user_id'   => $data['user']->id,
+            'school_id' => $data['school']->id
+        );
+        $student = Student::where($db_check)->get();
+        if(empty($student))
+        {
+            $request->session()->flash('error', 'Error 4');
+            return  redirect()->route('dashboard');
+        }
+        elseif($student->count() < 1)
+        {
+            $request->session()->flash('error', 'Error 5');
+            return  redirect()->route('dashboard');
+        }
+        $data['student'] = $student[0];
+
+        $data['cbt'] = Cbt::find($id);
+        if(empty($data['cbt']))
+        {
+            $request->session()->flash('error', 'Error 6');
+            return redirect()->route('dashboard');
+        }
+        elseif($data['cbt']->count() < 1)
+        {
+            $request->session()->flash('error', 'Error 7');
+            return  redirect()->route('dashboard');
+        }
+
+        //check for the cbt status and attempt before granting access to exam instructions'
+        if ($data['cbt']->status != 'Approved') {
+            $request->session()->flash('error', 'Attempt to view a yet to be approved CBT');
+            return redirect()->route('students.cbts', $data['result_slip']->id);
+        }
+        $attempts = 0;
+        foreach($data['result_slip']->enrolment->attempts as $attempt)
+        {
+            if($attempt->cbt_id == $data['cbt']->id)
+            {
+                $attempts++;
+            }
+        }
+        if ($attempts >= $data['cbt']->no_attempts && $data['cbt']->type != 'Practice Quiz') {
+            $request->session()->flash('error', 'You have completed your allowed attempts for the selected CBT.');
+            return redirect()->route('students.cbts', $data['result_slip']->id);
+        }
+
+        return view('students.cbt')->with($data);
     }
 }
