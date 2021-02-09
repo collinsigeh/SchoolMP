@@ -1302,23 +1302,22 @@ class StudentsController extends Controller
         
         if(session('school_id') < 1)
         {
-            $request->session()->flash('error', 'Error 2');
+            $request->session()->flash('error', 'Error 1.1');
             return redirect()->route('dashboard');
         }
         $school_id = session('school_id');
         
-        $data['school'] = School::find($school_id);if(session('attempt_id') < 1)
+        $data['school'] = School::find($school_id);
+        
+        if(session('attempt_id') < 1)
         {
+            $request->session()->flash('error', 'Error 1.2');
             return redirect()->route('dashboard');
         }
-
         $attempt = Attempt::find(session('attempt_id'));
         if(empty($attempt))
         {
-            return redirect()->route('dashboard');
-        }
-        elseif($attempt->count() != 1)
-        {
+            $request->session()->flash('error', 'Error 1.3');
             return redirect()->route('dashboard');
         }
 
@@ -1329,7 +1328,7 @@ class StudentsController extends Controller
         if($id < 1 OR $id > count($questions))
         {
             $request->session()->flash('error', 'The requested question is out of range.');
-            return redirect()->route('student.cbt_started', 1);
+            return redirect()->route('students.cbt_started', 1);
         }
 
         $data['question_no'] = $id;
@@ -1337,5 +1336,16 @@ class StudentsController extends Controller
         $data['question'] = $questions[$real_question_no];
 
         return view('students.cbt_started')->with($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function cbt_submitted(Request $request, $id=0)
+    {
+        
     }
 }
