@@ -572,7 +572,7 @@ class QuestionsController extends Controller
             return redirect()->route('dashboard');
         }
         
-        if(count($question->questionattempts) > 0)
+        if(count($question->questionattempts) > 0 OR count($question->cbt->attempts) > 0)
         {
             $request->session()->flash('error', 'Error 1: Attempt to delete question with linked resources.' );
             return redirect()->route('dashboard');

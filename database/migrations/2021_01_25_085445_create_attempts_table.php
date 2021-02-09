@@ -21,6 +21,7 @@ class CreateAttemptsTable extends Migration
             $table->integer('cbt_id');
             $table->integer('enrolment_id');
             $table->integer('total_correct');// number of questions gotten correctly, zero (0) as default.
+            $table->enum('status', ['NOT Completed', 'Completed']);
             $table->integer('user_id'); // for the person who supervises this cbt attempt, zero (0) as default.
             $table->timestamps();
         });

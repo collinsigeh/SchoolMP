@@ -17,6 +17,7 @@ use App\Result;
 use App\Cbt;
 use App\Attempt;
 use App\Question;
+use App\Questionattempt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Image;
@@ -1272,6 +1273,7 @@ class StudentsController extends Controller
         $attempt->cbt_id = $data['cbt']->id;
         $attempt->enrolment_id = $data['result_slip']->enrolment_id;
         $attempt->total_correct = 0;
+        $attempt->status = 'NOT Completed';
         $attempt->user_id = $supervisor_id;
 
         $attempt->save();
@@ -1320,6 +1322,10 @@ class StudentsController extends Controller
             $request->session()->flash('error', 'Error 1.3');
             return redirect()->route('dashboard');
         }
+        if($attempt->status == 'Completed')
+        {
+            return redirect()->route('dashboard');
+        }
 
         $db_check = array(
             'cbt_id' => $attempt->cbt_id
@@ -1335,7 +1341,19 @@ class StudentsController extends Controller
         $real_question_no = $id - 1;
         $data['question'] = $questions[$real_question_no];
 
-        return view('students.cbt_started')->with($data);
+        $data['time_remaining'] = 0;
+        $time_spent = time() - strtotime($attempt->created_at);
+        $time_remaining = ($data['question']->cbt->duration * 60) - $time_spent;
+        if($time_remaining > 0)
+        {
+            $data['time_remaining'] = $time_remaining;
+        }
+        else
+        {
+            return redirect()->route('students.cbt_completed', $attempt->id);
+        }
+
+        return view('students.cbt_started_2')->with($data);
     }
 
     /**
@@ -1346,6 +1364,128 @@ class StudentsController extends Controller
      */
     public function cbt_submitted(Request $request, $id=0)
     {
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $question = Question::find($id);
+        if(empty($question))
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $this->validate($request, [
+            'question_no'   => ['required', 'numeric', 'min:1'],
+            'attempt_id'    => ['required', 'numeric', 'min:1']
+        ]);
+
+        $attempt = Attempt::find($request->input('attempt_id'));
+        if(empty($attempt))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($attempt->status == 'Completed')
+        {
+            return redirect()->route('dashboard');
+        }
+
+        // check if his time has expired to do nothing for expired time
+        $time_spent = time() - strtotime($attempt->created_at);
+        $time_remaining = ($question->cbt->duration * 60) - $time_spent;
+        if($time_remaining > 0)
+        {
+            $total_correct_subtraction = $total_correct_addition = 0;
+            $option_status = 'Wrong';
+            if($request->input('option') == $question->correct_option)
+            {
+                $option_status = 'Right';
+                $total_correct_addition = 1;
+            }
+            
+            // check if he has answered this question before in this very attempt this will determine 
+            // whether a new storage or an update of previous storage
+            $question_answered_prev = 'No';
+            $questionattempt_id = 0;
+            foreach ($attempt->questionattempts as $questionattempt) {
+                if ($question_answered_prev == 'No') {
+                    if($questionattempt->question_id == $id)
+                    {
+                        $question_answered_prev = 'Yes';
+                        $questionattempt_id = $questionattempt->id;
+                    }
+                }
+            }
+            if($question_answered_prev == 'Yes')
+            {
+                $questionattempt = Questionattempt::find($questionattempt_id);
+
+                if($questionattempt->option_status == 'Right')
+                {
+                    $total_correct_subtraction = 1;
+                }
+
+                $questionattempt->option_selected   = $request->input('option');
+                $questionattempt->option_status     = $option_status;
+            }
+            else
+            {
+                $questionattempt = new Questionattempt;
+
+                $questionattempt->school_id         = $attempt->school_id;
+                $questionattempt->term_id           = $attempt->term_id;
+                $questionattempt->cbt_id            = $attempt->cbt_id;
+                $questionattempt->enrolment_id      = $attempt->enrolment_id;
+                $questionattempt->attempt_id        = $attempt->id;
+                $questionattempt->question_id       = $question->id;
+                $questionattempt->option_selected   = $request->input('option');
+                $questionattempt->option_status     = $option_status;
+            }
+            $questionattempt->save();
+
+            $attempt->total_correct = $attempt->total_correct - $total_correct_subtraction + $total_correct_addition;
+            $attempt->save();
+        }
+        else
+        {
+            return redirect()->route('students.cbt_completed', $attempt->id);
+        }
+
+        // redirect using the next question (if available) details
+        if($request->input('question_no') < count($question->cbt->questions) && $time_remaining > 0)
+        {
+            $next_question = $request->input('question_no') + 1;
+            return redirect()->route('students.cbt_started', $next_question);
+        }
+        else
+        {
+            return redirect()->route('students.cbt_completed', $attempt->id);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function cbt_completed($id = 0)
+    {
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $data['attempt'] = $attempt = Attempt::find($id);
+        if(empty($data['attempt']))
+        {
+            return redirect()->route('dashboard');
+        }
         
+        if($attempt->status != 'Completed')
+        {
+            $attempt->status = 'Completed';
+            $attempt->save();
+        }
+
+        return view('students.cbt_completed')->with($data);
     }
 }

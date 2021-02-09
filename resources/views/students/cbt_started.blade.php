@@ -11,7 +11,8 @@
                 <h3>{{ $question->cbt->name }} <?php if($question->cbt->type == 'Practice Quiz'){ echo ' - no.'.$question->cbt->id ;} ?></h3>
             </div>
             <div class="col-4 text-right">
-                <b>Time remaining:</b> countdown_time
+                <div><b>Time remaining:</b> <span id="display" style="color:#FF0000;font-size:15px"></span></div>
+              <div><span id="submitted" style="color:#FF0000;font-size:15px"></span></div>
             </div>
         </div>
     </div>
@@ -33,7 +34,7 @@
             
             <div class="question-options">
                 <div class="form">
-                    <form method="POST" action="{{ route('students.cbt_submitted', $question->id) }}">
+                    <form method="POST" action="{{ route('students.cbt_submitted', $question->id) }}" id="MCQuestion">
                         @csrf
 
                         <input type="hidden" name="question_no" value="{{ $question_no }}">
@@ -147,12 +148,12 @@
                                 $prev_question = $question_no - 1;
                             @endphp
                             <div class="col-4 text-center">
-                                @if ($question_no < count($question->cbt->questions))
+                                @if ($question_no < count($question->cbt->questions) && $time_remaining > 0)
                                     <a href="{{ route('students.cbt_started', $next_question) }}" class="btn btn-outline-primary">Skip question</a>
                                 @endif
                             </div>
                             <div class="col-4 text-right">
-                                @if ($question_no > 1)
+                                @if ($question_no > 1 && $time_remaining > 0)
                                     <a href="{{ route('students.cbt_started', $prev_question) }}" class="btn btn-outline-primary">Back</a>
                                 @endif
                             </div>
@@ -165,5 +166,38 @@
     </div>
 </div>
 
-
 @endsection
+
+<script>
+    var div = document.getElementById('display');
+    var submitted = document.getElementById('submitted');
+
+      function CountDown(duration, display) {
+
+                var timer = duration, minutes, seconds;
+
+              var interVal=  setInterval(function () {
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
+
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+            display.innerHTML ="<b>" + minutes + "m : " + seconds + "s" + "</b>";
+                    if (timer > 0) {
+                       --timer;
+                    }else{
+               clearInterval(interVal)
+                        SubmitFunction();
+                     }
+
+               },1000);
+
+        }
+
+      function SubmitFunction(){
+        submitted.innerHTML="Time is up!";
+        document.getElementById('MCQuestion').submit();
+
+       }
+       CountDown('180',div);
+</script>
