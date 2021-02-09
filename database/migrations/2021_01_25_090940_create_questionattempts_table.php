@@ -21,7 +21,7 @@ class CreateQuestionattemptsTable extends Migration
             $table->integer('enrolment_id');
             $table->integer('attempt_id');
             $table->integer('question_id');
-            $table->enum('option_selected', ['A', 'B', 'C', 'D', 'E']);
+            $table->enum('option_selected', ['A', 'B', 'C', 'D', 'E', 'None']);
             $table->enum('option_status', ['Right', 'Wrong']);
             $table->timestamps();
         });

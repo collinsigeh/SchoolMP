@@ -15,6 +15,7 @@
             </div>
         </div>
     </div>
+    @include('partials._messages')
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-sm">
             <tr class="bg-light">
@@ -49,7 +50,7 @@
                             }
                             else
                             {
-                                echo ' practice attempts';
+                                echo 'Attempt number: '.$current_attempt;
                             }
                         } else {
                             echo $current_attempt.' of '.$cbt->no_attempts;
@@ -65,12 +66,12 @@
         </div>
         <div class="body">
             
-            <p>Follow the instructions below carefully.</p>
+            <p>Read the instructions below carefully.</p>
             <ul>
+                <li>Ensure you have a good internet connection before attempting this CBT.</li>
                 <li>There are {{ count($cbt->questions) }} questions in all.</li>
                 <li>For each question, select the correct option as you answer.</li>
-                <li>Revise your answers before submission.</li>
-                <li>Ensure your answers are submitted once you've completed the CBT.</li>
+                <li>Ensure your work is submitted once you've completed the CBT.</li>
                 @if (strlen($cbt->supervisor_pass) > 0)
                     <li>To start this CBT, request the exam supervisor to enter his/her <b>email</b> and the <b>exam passcode</b>.</li>
                 @else
@@ -82,8 +83,6 @@
             <div class="form" style="border: 1px solid #d5d5d5; padding: 40px 20px 0 20px;">
                 <form method="POST" action="{{ route('students.cbt_live', $cbt->id) }}">
                     @csrf
-
-                    <input type="hidden" name="enrolment_id" value="{{ $result_slip->enrolment_id }}">
 
                     <div class="form-group row"> 
                         <label for="supervisor_email" class="col-md-3 col-form-label text-md-right">{{ __('Supervisor email:') }}</label>
@@ -126,8 +125,6 @@
             <div class="form" style="border: 1px solid #d5d5d5; padding: 20px 20px 0 20px;">
                 <form method="POST" action="{{ route('students.cbt_live', $cbt->id) }}">
                     @csrf
-
-                    <input type="hidden" name="enrolment_id" value="{{ $result_slip->enrolment_id }}">
     
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-3">

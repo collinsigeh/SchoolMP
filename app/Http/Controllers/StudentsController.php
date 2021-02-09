@@ -15,6 +15,8 @@ use App\Enrolment;
 use App\Order;
 use App\Result;
 use App\Cbt;
+use App\Attempt;
+use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Image;
@@ -1105,5 +1107,235 @@ class StudentsController extends Controller
         }
 
         return view('students.cbt')->with($data);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function cbt_live(Request $request, $id = 0)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        if($id < 1)
+        {
+            $request->session()->flash('error', 'Error 1');
+            return redirect()->route('dashboard');
+        }
+
+        $user_id = Auth::user()->id;
+
+        $db_check = array(
+            'user_id' => $user_id
+        );
+        $data['user'] = User::find($user_id);
+        
+        if(session('school_id') < 1)
+        {
+            $request->session()->flash('error', 'Error 2');
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        
+        $data['school'] = School::find($school_id);
+        
+        if(session('result_slip_id') < 1)
+        {
+            $request->session()->flash('error', 'Error 3');
+            return redirect()->route('dashboard');
+        }
+        $data['result_slip'] = Result::find(session('result_slip_id'));
+        
+        $db_check = array(
+            'user_id'   => $data['user']->id,
+            'school_id' => $data['school']->id
+        );
+        $student = Student::where($db_check)->get();
+        if(empty($student))
+        {
+            $request->session()->flash('error', 'Error 4');
+            return  redirect()->route('dashboard');
+        }
+        elseif($student->count() < 1)
+        {
+            $request->session()->flash('error', 'Error 5');
+            return  redirect()->route('dashboard');
+        }
+        $data['student'] = $student[0];
+
+        $data['cbt'] = Cbt::find($id);
+        if(empty($data['cbt']))
+        {
+            $request->session()->flash('error', 'Error 6');
+            return redirect()->route('dashboard');
+        }
+        elseif($data['cbt']->count() < 1)
+        {
+            $request->session()->flash('error', 'Error 7');
+            return  redirect()->route('dashboard');
+        }
+
+        //check for the cbt status and attempt before granting access to exam instructions'
+        if($data['cbt']->type == 'Practice Quiz')
+        {
+            if($data['result_slip']->enrolment->access_assignment != 'Yes')
+            {
+                $request->session()->flash('error', 'You do NOT have the permission to partake in the selected CBT.');
+                return redirect()->route('students.cbts', $data['result_slip']->id);
+            }
+        }
+        else
+        {
+            if($data['cbt']->type == 'Exam')
+            {
+                if($data['result_slip']->enrolment->access_exam != 'Yes')
+                {
+                    $request->session()->flash('error', 'You do NOT have the permission to partake in the selected CBT.');
+                    return redirect()->route('students.cbts', $data['result_slip']->id);
+                }
+            }
+            else
+            {
+                if($data['result_slip']->enrolment->access_ca != 'Yes')
+                {
+                    $request->session()->flash('error', 'You do NOT have the permission to partake in the selected CBT.');
+                    return redirect()->route('students.cbts', $data['result_slip']->id);
+                }
+            }
+        }
+        if (count($data['cbt']->questions) != $data['cbt']->no_questions) {
+            $request->session()->flash('error', 'The CBT questions are not complete.');
+            return redirect()->route('students.cbts', $data['result_slip']->id);
+        }
+        if ($data['cbt']->status != 'Approved') {
+            $request->session()->flash('error', 'Attempt to view a yet to be approved CBT');
+            return redirect()->route('students.cbts', $data['result_slip']->id);
+        }
+        $attempts = 0;
+        foreach($data['result_slip']->enrolment->attempts as $attempt)
+        {
+            if($attempt->cbt_id == $data['cbt']->id)
+            {
+                $attempts++;
+            }
+        }
+        if ($attempts >= $data['cbt']->no_attempts && $data['cbt']->type != 'Practice Quiz') {
+            $request->session()->flash('error', 'You have completed your allowed attempts for the selected CBT.');
+            return redirect()->route('students.cbts', $data['result_slip']->id);
+        }
+
+        //creating the attempt
+        $supervisor_id = 0;
+        if(strlen($data['cbt']->supervisor_pass) > 0)
+        {
+            $this->validate($request, [
+                'supervisor_email' => ['required', 'email'],
+                'exam_passcode' => ['required']
+            ]);
+
+            if($request->input('exam_passcode') != $data['cbt']->supervisor_pass)
+            {
+                $request->session()->flash('error', 'Incorrect passcode.');
+                return redirect()->route('students.cbt', $data['cbt']->id);
+            }
+            $db_check = array(
+                'email' => $request->input('supervisor_email')
+            );
+            $supervisor = User::where($db_check)->get();
+            if(count($supervisor) < 1)
+            {
+                $request->session()->flash('error', 'Unrecognised supervisor email.');
+                return redirect()->route('students.cbt', $data['cbt']->id);
+            }elseif($supervisor[0]->role == 'Student')
+            {
+                $request->session()->flash('error', 'The supervisor email entered is for a student.');
+                return redirect()->route('students.cbt', $data['cbt']->id);
+            }elseif($supervisor[0]->role == 'Guardian')
+            {
+                $request->session()->flash('error', 'The supervisor email entered is for a guardian.');
+                return redirect()->route('students.cbt', $data['cbt']->id);
+            }
+
+            $supervisor_id = $supervisor[0]->id;
+        }
+
+        $attempt = new Attempt;
+
+        $attempt->school_id = $school_id;
+        $attempt->subject_id = $data['cbt']->subject_id;
+        $attempt->term_id = $data['cbt']->term_id;
+        $attempt->cbt_id = $data['cbt']->id;
+        $attempt->enrolment_id = $data['result_slip']->enrolment_id;
+        $attempt->total_correct = 0;
+        $attempt->user_id = $supervisor_id;
+
+        $attempt->save();
+        session(['attempt_id' => $attempt->id]);
+
+        return redirect()->route('students.cbt_started', 1);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function cbt_started(Request $request, $id = 1)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        $user_id = Auth::user()->id;
+
+        $db_check = array(
+            'user_id' => $user_id
+        );
+        $data['user'] = User::find($user_id);
+        
+        if(session('school_id') < 1)
+        {
+            $request->session()->flash('error', 'Error 2');
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        
+        $data['school'] = School::find($school_id);if(session('attempt_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $attempt = Attempt::find(session('attempt_id'));
+        if(empty($attempt))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($attempt->count() != 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $db_check = array(
+            'cbt_id' => $attempt->cbt_id
+        );
+        $questions = Question::where($db_check)->get();
+        if($id < 1 OR $id > count($questions))
+        {
+            $request->session()->flash('error', 'The requested question is out of range.');
+            return redirect()->route('student.cbt_started', 1);
+        }
+
+        $data['question_no'] = $id;
+        $real_question_no = $id - 1;
+        $data['question'] = $questions[$real_question_no];
+
+        return view('students.cbt_started')->with($data);
     }
 }
