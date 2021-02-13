@@ -54,17 +54,17 @@
                                         {
                                     ?>
                                         <tr>
-                                            <td>
+                                            <td style="vertical-align: middle">
                                                 <a class="collins-link-within-table" href="#"><img src="{{ config('app.url') }}/images/icons/voucher_icon.png" alt="payment_icon" class="collins-table-item-icon">  <b>{!! $itempayment->currency_symbol.' '.$itempayment->amount !!}</b></a>
                                             </td>
-                                            <td>
+                                            <td style="vertical-align: middle">
                                                 @if ($itempayment->item_id > 0)
                                                     {{ 'Payment for '.$itempayment->item->name }}
                                                 @else
                                                     {{ 'Payment for non-specified item'}}
                                                 @endif
                                             </td>
-                                            <td class="text-right">{{ date('d-M-Y', strtotime($itempayment->created_at)) }}</td>
+                                            <td class="text-right" style="vertical-align: middle">{{ date('d-M-Y', strtotime($itempayment->created_at)) }}</td>
                                         </tr>
                                     <?php
                                             $sn++;
@@ -94,7 +94,7 @@
                         <table class="table">
                             <tr>
                               <td>
-                                <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('students.term', $enrolment->id) }}"><img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="options-icon"> {!! $enrolment->term->name.' - <small>'.$enrolment->term->session.'</small>' !!}</a>
+                                <a class="btn btn-sm btn-block btn-outline-primary text-left" href="{{ route('students.term', $enrolment->id) }}"><img src="{{ config('app.url') }}/images/icons/terms_icon.png" alt="term_icon" class="options-icon"> {!! 'Back to '.$enrolment->term->name.' - <small>'.$enrolment->term->session.'</small>' !!}</a>
                                 
                               </td>
                             </tr>

@@ -1488,4 +1488,65 @@ class StudentsController extends Controller
 
         return view('students.cbt_completed')->with($data);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function payment_history($id = 0)
+    {
+        if(Auth::user()->status !== 'Active')
+        {
+            return view('welcome.inactive');
+        }
+
+        if($id < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+
+        $user_id = Auth::user()->id;
+
+        $db_check = array(
+            'user_id' => $user_id
+        );
+        $data['user'] = User::find($user_id);
+        
+        if(session('school_id') < 1)
+        {
+            return redirect()->route('dashboard');
+        }
+        $school_id = session('school_id');
+        
+        $data['school'] = School::find($school_id);
+        
+        $db_check = array(
+            'user_id'   => $data['user']->id,
+            'school_id' => $data['school']->id
+        );
+        $student = Student::where($db_check)->get();
+        if(empty($student))
+        {
+            return  redirect()->route('dashboard');
+        }
+        elseif($student->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+        $data['student'] = $student[0];
+        $data['enrolment'] = Enrolment::find($id);
+        if(empty($data['enrolment']))
+        {
+            return redirect()->route('dashboard');
+        }
+        elseif($data['enrolment']->count() < 1)
+        {
+            return  redirect()->route('dashboard');
+        }
+        session(['enrolment_id' => $data['enrolment']->id]);
+
+        return view('students.payment_history')->with($data);
+    }
 }

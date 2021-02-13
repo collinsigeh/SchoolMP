@@ -100,6 +100,7 @@ Route::get('/staff/new', 'StaffController@new')->name('staff.new');
 Route::post('/staff/add', 'StaffController@add')->name('staff.add');
 Route::resource('/staff', 'StaffController');
 
+Route::get('/students/payment_history/{id}', 'StudentsController@payment_history')->name('students.payment_history');
 Route::get('/students/cbt_completed/{id}', 'StudentsController@cbt_completed')->name('students.cbt_completed');
 Route::post('/students/cbt_submitted/{id}', 'StudentsController@cbt_submitted')->name('students.cbt_submitted');
 Route::get('/students/cbt_started/{id}', 'StudentsController@cbt_started')->name('students.cbt_started');
