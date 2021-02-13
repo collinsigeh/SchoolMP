@@ -171,7 +171,7 @@ class ResultsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id = 0)
+    public function show(Request $request, $id = 0)
     {
         if(Auth::user()->status !== 'Active')
         {
@@ -187,6 +187,17 @@ class ResultsController extends Controller
         if(empty($data['enrolment']))
         {
             return redirect()->route('dashboard');
+        }
+        
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+        if($user->role == 'Student')
+        {
+            if($data['enrolment']->access_result != 'Yes')
+            {
+                $request->session()->flash('error', 'You do NOT have permission to view the result for this term.');
+                return redirect()->route('students.term', $data['enrolment']->id);
+            }
         }
         
         return view('results.show')->with($data);

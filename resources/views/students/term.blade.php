@@ -185,13 +185,15 @@
                                 </a>
                               </td>
                             </tr>
+                            @if ($enrolment->result_status == 'Approved' && $enrolment->access_result == 'Yes')
                             <tr>
                               <td>
-                                <button class="btn btn-sm btn-block btn-outline-primary text-left"  data-toggle="modal" data-target="#feesBreakdownModal">
+                                <a class="btn btn-sm btn-block btn-outline-primary text-left"  href="{{ route('results.show', $enrolment->id) }}" target="_blank">
                                   <img src="{{ config('app.url') }}/images/icons/result_icon.png" alt="result_icon" class="options-icon">  Termly result
-                                </button>
+                                </a>
                               </td>
                             </tr>
+                            @endif
                         </table>
                       </div>
                     </div>
