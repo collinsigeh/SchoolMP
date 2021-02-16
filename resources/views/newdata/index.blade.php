@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<title> 
-		New Data
+		New data
     </title>
 
     <!-- Scripts -->
@@ -29,7 +29,7 @@
         <div style="padding: 40px 0 10px 0;">
             @include('partials._messages')
         </div>
-        <div class="resource-details text-center" style="margin: 20px 0;">
+        <div class="resource-details" style="margin: 20px 0; padding: 20px;">
             <p>Contact the system admin:</p>
             <ul>
                 <li>Call: <b><a href="tel:+2347032869266">+234 (0) 703 286 9266</a></b></li>

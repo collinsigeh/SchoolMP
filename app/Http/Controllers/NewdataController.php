@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\School;
 use Illuminate\Http\Request;
 
 class NewdataController extends Controller
@@ -31,31 +32,37 @@ class NewdataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create_staff($id=0)
+    public function create_staff(Request $request, $id=0)
     {
         if($id < 1)
         {
-            $request->session()->flash('error', 'You navigated to this page with the wrong URL.');
+            $request->session()->flash('error', 'ERROR 1: You navigated to this page using a wrong URL.');
             return redirect()->route('newdata.index');
         }
 
         $school = School::find($id);
         if(empty($school))
         {
-            $request->session()->flash('error', 'You navigated to this page with the wrong URL.');
-            return redirect()->route('newdata.index');
-        }
-        elseif($school->count != 1)
-        {
-            $request->session()->flash('error', 'You navigated to this page with the wrong URL.');
+            $request->session()->flash('error', 'ERROR 2: You navigated to this page using a wrong URL.');
             return redirect()->route('newdata.index');
         }
 
         $data['school'] = $school;
 
-        return view('newdata.create_staff');
+        return view('newdata.create_staff')->with($data);
     }
 
+    /**
+     * Store a newly created staff resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store_staff(Request $request)
+    {
+        return redirect()->route('newdata.index');
+    }
+    
     /**
      * Store a newly created resource in storage.
      *

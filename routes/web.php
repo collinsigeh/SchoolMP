@@ -65,6 +65,10 @@ Route::get('/lessons/newphoto/{id}', 'LessonsController@newphoto')->name('lesson
 Route::get('/lessons/newtext/{id}', 'LessonsController@newtext')->name('lessons.newtext');
 Route::resource('/lessons', 'LessonsController');
 
+Route::post('/newdata/store_staff', 'newdataController@store_staff')->name('newdata.store_staff');
+Route::get('/newdata/create_staff/{id}', 'NewdataController@create_staff')->name('newdata.create_staff');
+Route::resource('/newdata', 'NewdataController');
+
 Route::get('/orders/all', 'OrdersController@all')->name('orders.all');
 Route::get('/orders/detail/{id}', 'OrdersController@detail')->name('orders.detail');
 Route::put('orders/changedetail/{id}', 'OrdersController@changedetail')->name('orders.changedetail');
