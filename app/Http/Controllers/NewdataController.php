@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Newdata extends Controller
+class NewdataController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class Newdata extends Controller
      */
     public function index()
     {
-        //
+        return view('newdata.index');
     }
 
     /**
@@ -23,7 +23,37 @@ class Newdata extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->route('newdata.index');
+    }    
+
+    /**
+     * Show the form for creating a new staff resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create_staff($id=0)
+    {
+        if($id < 1)
+        {
+            $request->session()->flash('error', 'You navigated to this page with the wrong URL.');
+            return redirect()->route('newdata.index');
+        }
+
+        $school = School::find($id);
+        if(empty($school))
+        {
+            $request->session()->flash('error', 'You navigated to this page with the wrong URL.');
+            return redirect()->route('newdata.index');
+        }
+        elseif($school->count != 1)
+        {
+            $request->session()->flash('error', 'You navigated to this page with the wrong URL.');
+            return redirect()->route('newdata.index');
+        }
+
+        $data['school'] = $school;
+
+        return view('newdata.create_staff');
     }
 
     /**
@@ -34,7 +64,7 @@ class Newdata extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('newdata.index');
     }
 
     /**
@@ -43,9 +73,9 @@ class Newdata extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id=0)
     {
-        //
+        return redirect()->route('newdata.index');
     }
 
     /**
@@ -54,9 +84,9 @@ class Newdata extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id=0)
     {
-        //
+        return redirect()->route('newdata.index');
     }
 
     /**
@@ -66,9 +96,9 @@ class Newdata extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id=0)
     {
-        //
+        return redirect()->route('newdata.index');
     }
 
     /**
@@ -77,8 +107,8 @@ class Newdata extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id=0)
     {
-        //
+        return redirect()->route('newdata.index');
     }
 }
