@@ -31,7 +31,7 @@
         </div>
         @include('partials._messages')
         <div class="create-form">
-            <form method="POST" action="{{ route('newdata.store_staff') }}">
+            <form method="POST" action="{{ route('newdata.store_staff') }}" enctype="multipart/form-data">
                 @csrf
 
                 <div style="padding-top: 20px;"><h5>School info:</h5></div>
@@ -52,7 +52,7 @@
                         <label for="designation" class="col-md-12 col-form-label">{{ __('Select your designation:') }}</label>
                         
                         <div class="col-md-12">
-                            <select id="gender" class="form-control @error('gender') is-invalid @enderror" name="gender" required autocomplete="gender" autofocus>
+                            <select id="designation" class="form-control @error('designation') is-invalid @enderror" name="designation" required autocomplete="designation" autofocus>
                                 <option value="Admin">Admin</option>
                                 <option value="Bursar">Bursar</option>
                                 <option value="Teacher">Teacher</option>
@@ -121,6 +121,20 @@
                     </div>
 
                     <div class="form-group row"> 
+                        <label for="qualification" class="col-md-12 col-form-label">{{ __('What\'s your qualification?') }}</label>
+        
+                        <div class="col-md-12">
+                            <input id="qualification" type="text" class="form-control @error('qualification') is-invalid @enderror" name="qualification" value="{{ old('qualification') }}" required autocomplete="qualification" autofocus>
+                            <small class="text-muted">State you highest qualification. E.g. M.Ed (School Management)</small>
+                            @error('qualification')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row"> 
                         <label for="pic" class="col-md-12 col-form-label">{{ __('Add your picture:') }}</label>
 
                         <div class="col-md-12">
@@ -138,7 +152,7 @@
                         <label for="email" class="col-md-12 col-form-label">{{ __('What\'s your email? (Optional)') }}</label>
         
                         <div class="col-md-12">
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="email@example.com" required autocomplete="email" autofocus>
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="email@example.com" autocomplete="email" autofocus>
                             <small class="text-muted">Fill this field with a valid email you can access. Otherwise leave it blank.</small>
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -152,23 +166,9 @@
                         <label for="address" class="col-md-12 col-form-label">{{ __('What\'s your address? (Optional)') }}</label>
         
                         <div class="col-md-12">
-                            <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" placeholder="123 alphabet close, Studyview, Lagos" required autocomplete="address" autofocus>
+                            <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" autocomplete="address" autofocus>
                             
                             @error('address')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row"> 
-                        <label for="qualification" class="col-md-12 col-form-label">{{ __('What\'s your qualification? (Optional)') }}</label>
-        
-                        <div class="col-md-12">
-                            <input id="qualification" type="text" class="form-control @error('qualification') is-invalid @enderror" name="qualification" value="{{ old('qualification') }}" placeholder="M.Ed (School Management)" required autocomplete="qualification" autofocus>
-                            <small class="text-muted">State you highest qualification. E.g. M.Ed (School Management)</small>
-                            @error('qualification')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
