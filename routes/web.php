@@ -66,7 +66,7 @@ Route::get('/lessons/newtext/{id}', 'LessonsController@newtext')->name('lessons.
 Route::resource('/lessons', 'LessonsController');
 
 Route::get('/newdata/submission_success/{id}', 'NewdataController@submission_success')->name('newdata.submission_success');
-Route::post('/newdata/store_staff', 'newdataController@store_staff')->name('newdata.store_staff');
+Route::post('/newdata/store_staff', 'NewdataController@store_staff')->name('newdata.store_staff');
 Route::get('/newdata/create_staff/{id}', 'NewdataController@create_staff')->name('newdata.create_staff');
 Route::resource('/newdata', 'NewdataController');
 
