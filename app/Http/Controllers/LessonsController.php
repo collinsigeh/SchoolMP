@@ -448,7 +448,8 @@ class LessonsController extends Controller
                 $image = $request->file('photo');
                 $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
                 $location = public_path('images/lesson_photo/' . $filename);
-                Image::make($image)->save($location);
+                $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+                Image::make($image)->resize(300,300)->save($new_location);
     
                 $medialink = $filename;
             }
