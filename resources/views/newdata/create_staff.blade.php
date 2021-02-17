@@ -71,6 +71,34 @@
                             @enderror
                         </div>
                     </div>
+
+                    <div class="form-group row"> 
+                        <label for="my_classes" class="col-md-12 col-form-label">{{ __('What clases are you responsible for?') }}</label>
+        
+                        <div class="col-md-12">
+                            <textarea id="my_classes" class="form-control @error('my_classes') is-invalid @enderror" name="my_classes" value="{{ old('my_classes') }}" placeholder="Primary 1 A, Nursery 2 Gold class, JSS 1 Eagle class" required autocomplete="my_classes" autofocus></textarea>
+                            <small class="text-muted">These are classes where you mark the class attendance and do other class teacher duties.<br><b>Note: </b>Separate each class with a comma. Example; Primary 1 A, Nursery 2 Gold class, JSS 1 Eagle class etc.<br>Enter <b>None</b> if you are NOT responsible for any class.</small>
+                            @error('my_classes')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row"> 
+                        <label for="my_subjects" class="col-md-12 col-form-label">{{ __('What subjects are you responsible for?') }}</label>
+        
+                        <div class="col-md-12">
+                            <textarea id="my_subjects" class="form-control @error('my_subjects') is-invalid @enderror" name="my_subjects" value="{{ old('my_subjects') }}" placeholder="Mathematics Primary 1 A, Mathematics Primary 1 B, Mathematics Primary 2 A, Mathematics JSS 1 Eagle class, French Nursery 3 Gold class, French Primary 1 A, French Primary 2 A" required autocomplete="my_subjects" autofocus></textarea>
+                            <small class="text-muted">Please specify each class arm along with the subjects.<br><b>Note: </b>Separate each subject-class arm pair with a comma. Example: Mathematics Primary 1 A, Mathematics Primary 1 B, Mathematics Primary 2 A, Mathematics JSS 1 Eagle class, French Nursery 3 Gold class, French Primary 1 A, French Primary 2 A etc.<br>Enter <b>None</b> if you are NOT responsible for any subject.</small>
+                            @error('my_subjects')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
 
                 <div style="padding-top: 20px;"><h5>Personal info:</h5></div>
