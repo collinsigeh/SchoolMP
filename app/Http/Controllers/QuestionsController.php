@@ -109,7 +109,8 @@ class QuestionsController extends Controller
             $image = $request->file('question_photo');
             $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/questions/' . $filename);
-            Image::make($image)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $question_photolink = $filename;
         }
@@ -123,7 +124,8 @@ class QuestionsController extends Controller
             $image = $request->file('option_a_photo');
             $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/questions/' . $filename);
-            Image::make($image)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $option_a_photolink = $filename;
         }
@@ -137,7 +139,8 @@ class QuestionsController extends Controller
             $image = $request->file('option_b_photo');
             $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/questions/' . $filename);
-            Image::make($image)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $option_b_photolink = $filename;
         }
@@ -151,7 +154,8 @@ class QuestionsController extends Controller
             $image = $request->file('option_c_photo');
             $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/questions/' . $filename);
-            Image::make($image)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $option_c_photolink = $filename;
         }
@@ -165,7 +169,8 @@ class QuestionsController extends Controller
             $image = $request->file('option_d_photo');
             $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/questions/' . $filename);
-            Image::make($image)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $option_d_photolink = $filename;
         }
@@ -179,7 +184,8 @@ class QuestionsController extends Controller
             $image = $request->file('option_e_photo');
             $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/questions/' . $filename);
-            Image::make($image)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $option_e_photolink = $filename;
         }
@@ -390,7 +396,8 @@ class QuestionsController extends Controller
             $image = $request->file('question_photo');
             $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/questions/' . $filename);
-            Image::make($image)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $question_photolink = $filename;
         }
@@ -404,7 +411,8 @@ class QuestionsController extends Controller
             $image = $request->file('option_a_photo');
             $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/questions/' . $filename);
-            Image::make($image)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $option_a_photolink = $filename;
         }
@@ -418,7 +426,8 @@ class QuestionsController extends Controller
             $image = $request->file('option_b_photo');
             $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/questions/' . $filename);
-            Image::make($image)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $option_b_photolink = $filename;
         }
@@ -432,7 +441,8 @@ class QuestionsController extends Controller
             $image = $request->file('option_c_photo');
             $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/questions/' . $filename);
-            Image::make($image)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $option_c_photolink = $filename;
         }
@@ -446,7 +456,8 @@ class QuestionsController extends Controller
             $image = $request->file('option_d_photo');
             $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/questions/' . $filename);
-            Image::make($image)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $option_d_photolink = $filename;
         }
@@ -460,7 +471,8 @@ class QuestionsController extends Controller
             $image = $request->file('option_e_photo');
             $filename = $school_id . '-' . time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/questions/' . $filename);
-            Image::make($image)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $option_e_photolink = $filename;
         }
