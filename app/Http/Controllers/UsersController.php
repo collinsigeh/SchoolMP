@@ -141,7 +141,8 @@ class UsersController extends Controller
             $image = $request->file('pic');
             $filename = time() . '-' . rand(1,9) . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/profile/' . $filename);
-            Image::make($image)->resize(300,300)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $user->pic = $filename;
         }
@@ -274,7 +275,8 @@ class UsersController extends Controller
             $image = $request->file('pic');
             $filename = time() . '-' . rand(1,9) . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/profile/' . $filename);
-            Image::make($image)->resize(300,300)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $user->pic = $filename;
         }
@@ -1114,7 +1116,8 @@ class UsersController extends Controller
             $image = $request->file('pic');
             $filename = time() . '-' . rand(1,9) . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/profile/' . $filename);
-            Image::make($image)->resize(300,300)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $user->pic = $filename;
         }
