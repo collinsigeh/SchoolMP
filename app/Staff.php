@@ -23,4 +23,13 @@ class Staff extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    /**
+     * Get the newstaffdata details that belong to this staff account.
+     *
+     */
+    public function staff()
+    {
+        return $this->hasOne('App\Newstaffdata');
+    }
 }

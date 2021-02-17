@@ -6,6 +6,7 @@ use Auth;
 use App\User;
 use App\School;
 use App\Staff;
+use App\Newstaffdata;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Image;
@@ -69,6 +70,8 @@ class NewdataController extends Controller
         $this->validate($request, [
             'school_id'     => ['required'],
             'designation'   => ['required', 'string', 'max:191'],
+            'my_classes'    => ['required'],
+            'my_subjects'   => ['required'],
             'name'          => ['required', 'string', 'max:191'],
             'phone'         => ['required', 'string', 'max:191'],
             'gender'        => ['required'],
@@ -176,6 +179,15 @@ class NewdataController extends Controller
         $staff->created_by                  = $user->id;
 
         $staff->save();
+
+        $newstaffdata = new Newstaffdata;
+
+        $newstaffdata->staff_id     = $staff->id;
+        $newstaffdata->my_classes   = $request->input('my_classes');
+        $newstaffdata->my_subjects  = $request->input('my_subjects');
+        $newstaffdata->status       = 'Pending';
+
+        $newstaffdata->save();
 
         
         $request->session()->flash('success', 'Your details have been submitted successfully.');
