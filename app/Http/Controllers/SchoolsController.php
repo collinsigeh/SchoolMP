@@ -127,7 +127,8 @@ class SchoolsController extends Controller
             $image = $request->file('logo');
             $filename = time() . '-' . rand(1,9) . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/school/' . $filename);
-            Image::make($image)->resize(300,300)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
 
             $school->logo = $filename;
         }
@@ -284,7 +285,8 @@ class SchoolsController extends Controller
             $image = $request->file('logo');
             $filename = time() . '-' . rand(1,9) . '.' . $image->getClientOriginalExtension();
             $location = public_path('images/school/' . $filename);
-            Image::make($image)->resize(300,300)->save($location);
+            $new_location = str_replace('shms/public', 'shms.briigo.com', $location);
+            Image::make($image)->resize(300,300)->save($new_location);
             $old_logo = $school->logo;
 
             $school->logo = $filename;
