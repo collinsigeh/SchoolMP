@@ -74,7 +74,7 @@
                             <small>
                                 <div class="alert alert-info">
                                     <b><u>Hint:</u></b><br/>
-                                    Select the designation that best describes your role in the school.
+                                    <ul><li>Select the designation that best describes your role in the school.</li></ul>
                                 </div>
                             </small>
                         </div>
@@ -95,7 +95,11 @@
                             <small>
                                 <div class="alert alert-info">
                                     <b><u>Hint:</u></b><br/>
-                                    These are classes where you mark the class attendance and do other class teacher duties.<br><b>Note: </b>Separate each class with a comma. Example; Primary 1 A, Nursery 2 Gold class, JSS 1 Eagle class etc.<br>Enter <b>None</b> if you are NOT responsible for any class.
+                                    <ul>
+                                        <li><b>Note: </b>Separate each class with a comma.</li>
+                                        <li><b>Example:</b> Primary 1 A, Nursery 2 Gold class, JSS 1 Eagle class etc.</li>
+                                        <li>Enter <b>None</b> if you are NOT responsible for any class.</li>
+                                    </ul>
                                 </div>
                             </small>
                         </div>
@@ -117,7 +121,13 @@
                             <small>
                                 <div class="alert alert-info">
                                     <b><u>Hint:</u></b><br/>
-                                    Please specify each class arm along with the subjects.<br><b>Note: </b>Separate each subject-class arm pair with a comma. Example: Mathematics Primary 1 A, Mathematics Primary 1 B, Mathematics Primary 2 A, Mathematics JSS 1 Eagle class, French Nursery 3 Gold class, French Primary 1 A, French Primary 2 A etc.<br>Enter <b>None</b> if you are NOT responsible for any subject.
+                                    <ul>
+                                        <li>These are classes where you mark the class attendance and do other class teacher duties.</li>
+                                        <li>Please specify each class arm along with the subjects.</li>
+                                        <li><b>Note: </b>Separate each subject-class arm pair with a comma.</li>
+                                        <li><b>Example:</b> Mathematics Primary 1 A, Mathematics Primary 1 B, Mathematics JSS 1 Eagle class etc.</li>
+                                        <li>Enter <b>None</b> if you are NOT responsible for any subject.</li>
+                                    </ul>
                                 </div>
                             </small>
                         </div>
@@ -187,7 +197,7 @@
                             <small>
                                 <div class="alert alert-info">
                                     <b><u>Hint:</u></b><br/>
-                                    State you highest qualification. E.g. M.Ed (School Management)
+                                    <ul><li>State you highest qualification. E.g. M.Ed (School Management)</li></ul>
                                 </div>
                             </small>
                         </div>
@@ -209,7 +219,10 @@
                             <small>
                                 <div class="alert alert-info">
                                     <b><u>Hint:</u></b><br/>
-                                    Preferred picture size: 300 x 300 px
+                                    <ul>
+                                        <li>Preferred picture size: 300 x 300 px (others allowed)</li>
+                                        <li>Maximum file size: 2MB</li>
+                                    </ul>
                                 </div>
                             </small>
                         </div>
@@ -231,7 +244,7 @@
                             <small>
                                 <div class="alert alert-info">
                                     <b><u>Hint:</u></b><br/>
-                                    Fill this field with a valid email you can access. Otherwise leave it blank.
+                                    <ul><li>Fill this field with a valid email you can access. Otherwise leave it blank.</li></ul>
                                 </div>
                             </small>
                         </div>
