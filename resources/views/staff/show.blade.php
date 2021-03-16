@@ -130,6 +130,21 @@
                                 </tr>
                             </table>
                         </div>
+                        @if (!empty($staff_extradata))
+                            <h5>Staff reg. details</h5>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover table-sm">
+                                    <tr>
+                                        <th class="bg-light">Subject I teach:</th>
+                                       <td>{{ $staff_extradata->my_subjects }}</td> 
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">Classes I oversee:</th>
+                                       <td>{{ $staff_extradata->my_classes }}</td> 
+                                    </tr>
+                                </table>
+                            </div>
+                        @endif
                     </div>
                 </div>
         

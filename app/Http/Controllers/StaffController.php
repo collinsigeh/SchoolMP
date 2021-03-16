@@ -21,6 +21,7 @@ use App\Enrolment;
 use App\Classteacher;
 use App\Classsubject;
 use App\Arm;
+use App\Newstaffdata;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Image;
@@ -356,6 +357,7 @@ class StaffController extends Controller
         {
             return  redirect()->route('dashboard');
         }
+        $data['staff_extradata'] = Newstaffdata::where('staff_id', $id)->first();
 
         return view('staff.show')->with($data);
     }
